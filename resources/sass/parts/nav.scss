@@ -1,0 +1,25 @@
+.nav-box{
+    background-color: hsla(104, 19%, 43%, 0.7);
+    font-family: $nav-family;
+    width:100%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:1;
+    nav {
+        a{
+            width:fit-content;
+            text-decoration: none;
+            color:#E8E3D7;
+            padding: 10px 15px;
+            line-height:20px;
+            transition: all 0.2s ease;
+            display:inline-block;
+            font-variation-settings:  "wght" 600;
+            text-align: center;
+        }
+    }
+}

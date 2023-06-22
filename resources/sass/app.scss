@@ -1,0 +1,42 @@
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import 'bootstrap/scss/bootstrap';
+
+@import 'parts/nav';
+@import 'firstPage/section-1.scss';
+@import 'firstPage/section-2.scss';
+@import 'firstPage/section-3-and-4.scss';
+@import 'parts/footer';
+@import 'parts/login';
+
+body, body * {
+    margin: 0;
+}
+body{
+    box-sizing: border-box;
+    width:100%;
+    background-color: #EFEFEF;
+}
+h1, .h1{
+    font-family: $headings-family;
+    position:absolute;
+    top:50%;
+    left:150px;
+    color:#a6ff00;
+    font-size: 40px;
+    letter-spacing: 0.4px;
+    font-weight: 300;
+}
+h2{
+    font-size: 30px;
+    font-family: $headings-family;
+}
+div, p {
+    font-family: $nav-family;
+    font-size: 16px;
+    @media (max-width:750px) {
+        font-size: 14px;
+    }
+}

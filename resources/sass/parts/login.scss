@@ -1,0 +1,15 @@
+.login-page{
+    padding: 160px 0 40px;
+    min-height:calc(100vh - 100px);
+    .pink{
+        background-color: #da949e;
+        border: #da949e solid 1px;
+    }
+    a.btn.btn-link{
+        color:#d97382;
+    }
+    input:focus{
+        box-shadow: none;
+        border: #d97382 1px solid;
+    }
+}
