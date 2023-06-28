@@ -174,15 +174,9 @@ class ThirdAndFourthSec{
             this.ulDOM.style.transform = `translateY(${ transformTo  }px)`;
 
         }
-        this.ulBoxDOM.addEventListener("touchstart", touchStart, false);
-        this.ulBoxDOM.addEventListener("touchmove", touchMove, false);
-        this.ulBoxDOM.addEventListener("touchend", touchEnd, false);
-
-
-
+        this.ulBoxDOM.addEventListener("touchstart", touchStart,  { passive: false });
+        this.ulBoxDOM.addEventListener("touchmove", touchMove,  { passive: false });
+        this.ulBoxDOM.addEventListener("touchend", touchEnd,  { passive: false });
     }
-
-
-
 }
 export { ThirdAndFourthSec}

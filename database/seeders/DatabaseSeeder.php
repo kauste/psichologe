@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             'role' => 7,
         ]);
         DB::table('first_pages')->insert([
+            'user_id' => 1,
             'email' => 'r.stasioniene@gmail.com',
             'telephone_number'=> '61212345',
             'facebook'=> 'https://www.facebook.com/romalda.stasioniene',

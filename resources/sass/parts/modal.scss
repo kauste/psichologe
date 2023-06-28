@@ -1,8 +1,116 @@
+@namespace xlink 'http://www.w3.org/2000/svg/xlink';
+body:has(.modal-box){
+    .modal-box{
+        backdrop-filter: blur(4px);
+    }
+
+}
 .modal-box{
-    position:absolute;
+    position:fixed;
     z-index: 10;
-    width: 100vw;
-    height:100vw;
+    top:0;
+    left:0;
+    width: 100%;
+    height:100%;
     background-color: #595c5962;
     display:none;
+    .modal{
+        padding:50px 40px 30px;
+        border-radius: 2px;
+        height:80vh;
+        margin-left: 50%;
+        margin-top: 50vh;
+        transform: translate(-50%, -50%);
+        background-color: $bg;
+        width: min(1000px, 96vw);
+        display:flex;
+        flex-direction: column;
+        .heading-box{
+            margin-bottom:20px;
+        }
+        .modal-ul-box{
+            overflow-y: auto;
+        }
+        .modal-ul-box::-webkit-scrollbar {
+            width: 10px;
+            margin-right: 10px;
+        }
+        .modal-ul-box::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    
+        }
+        .modal-ul-box::-webkit-scrollbar-thumb {
+            background-color : $green;
+            -webkit-border-radius: 0.375rem;
+        }
+        .modal-ul-box li{
+            padding:7px 0;
+            display:grid;
+            grid-template-columns: 2fr 6fr 0.5fr 2fr 0.3fr;
+            align-items: center;
+            .edit-actions{
+                display:flex;
+                gap:7px;
+                justify-content: space-around;
+                .svg-box{
+                    margin:0 2px;
+                    border: #333 solid 2px;
+                    border-radius: 50%;
+                    width:fit-content;
+                    height:fit-content;
+                    place-self: center;
+                    cursor:pointer;
+                    &:has(.delete-svg){
+                        padding: 9px;
+                        background-color: #CCC;
+                        &:hover{
+                            background-color: #BBB;
+                        }
+                        .delete-svg{
+                            width:22px;
+                            height:22px;
+                        }
+                    }
+                    &:has(.edit-svg){
+                        padding: 5px;
+                        background-color: $pink;
+                        &:hover{
+                            background-color: #d9adb4
+                        }
+                        .edit-svg{
+                            width:30px;
+                            height:30px;
+                            transform: rotate(-30deg);
+        
+                        }
+                    }
+
+
+                }
+            }
+            .date, .about, .position{
+                padding:0 7px;
+                display: flex;
+                align-items: center;
+            }
+            .position.small{
+                font-style: italic;
+                color:#999;
+            }
+            div:not(.--edit, .--delete, .edit--actions, .update--actions)[contenteditable="true"]{
+                height:100%;
+                padding: 10px 10px 20px;
+                border:1px solid #333;
+                border-left:none;
+            }
+            div:not(.--edit, .--delete, .edit--actions, .update--actions):first-of-type[contenteditable="true"]{
+                border-left:1px solid #333;;
+            }
+            .update-actions{
+                button{
+                    width: max(90%, 120px);
+                }
+            }
+        }
+    } 
 }

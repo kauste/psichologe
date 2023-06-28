@@ -22,6 +22,8 @@ Auth::routes(['register' => false]);
 
 Route::prefix('admin')->name('back-')->middleware('role:7')->group(function(){
     Route::get('first-pg', [FirstPageController::class, 'index'])->name('first-pg');
+    Route::post('update-about', [FirstPageController::class, 'updateAbout'])->name('update-about');
+
 
 });
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -27,7 +27,7 @@ function firstSectionAnimation(){
         easing: 'ease',
         fill: 'forwards',
       }
-    const h1 = document.querySelector('h1');
+    const h1 = document.querySelector('h1') || document.querySelector('.h1') ;
       
     const lastImg = document.querySelectorAll('.section--1 > img').length;
     let visibleChild = 1;

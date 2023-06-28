@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\FirstPgImages;
 use App\Models\Education;
 use App\Models\Work;
-
-
+use App\Models\User;
 
 class FirstPage extends Model
 {
@@ -20,6 +19,10 @@ class FirstPage extends Model
     }
     public function works(){
         return $this->hasMany(Work::class, 'first_page_id', 'id');
+    }
+    public function user()
+    {
+        return $this->hasOne(User::class);
     }
     use HasFactory;
 }

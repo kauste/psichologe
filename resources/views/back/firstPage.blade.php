@@ -40,9 +40,9 @@
             </svg>
         </div>
     </section>
-    <section class="section-3 section--3">
+    <section id="education" class="section-3 section--3">
         <div class="education-box">
-            <div class="edit-svg-box">
+            <div class="edit-svg-box --edit">
                 <svg>
                     <use xlink:href="#edit"></use>
                 </svg>
@@ -76,9 +76,9 @@
             </div>
         </div>
     </section>
-    <section class="section-4 section--4">
+    <section id="work" class="section-4 section--4">
         <div class="work-box">
-            <div class="edit-svg-box">
+            <div class="edit-svg-box --edit">
                 <svg>
                     <use xlink:href="#edit"></use>
                 </svg>
