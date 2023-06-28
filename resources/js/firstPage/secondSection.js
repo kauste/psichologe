@@ -1,61 +1,73 @@
-
-function secondSectionAppearAnimation(){
-  const section2 = document.querySelector('.section--2');
-  const heading = section2.querySelector('.--heading > h2');
-  const paragraph = section2.querySelector('.--paragraph > p');
-    const headingAppear = [
-                            {transform: 'translateY(0)', opacity: 0.7},
-                            {transform: 'translateY(-30px)', opacity: 1},
-                          ]
-    const headingAppearOptions =  {
-                                    duration: 1000,
-                                    easing: 'ease',
-                                    iterations:1,
-                                    fill: 'forwards'
-                                  }
-    const paragraphAppear = [
-                              {transform: 'translateY(0)', opacity: 0.7},
-                              {transform: 'translateY(-30px)', opacity: 1},
-                            ]
-    const paragraphAppearOptions =  {
-                                      duration: 1000,
-                                      easing: 'ease',
-                                      iterations:1,
-                                      fill: 'forwards',
-                                      delay:1000
-                                    }
-    window.addEventListener('scroll', function scrolledToSeconSection() {
-
-      if(window.scrollY >= window.innerHeight / 3){
-        heading.animate(headingAppear, headingAppearOptions)
-        paragraph.animate(paragraphAppear, paragraphAppearOptions)
-        window.removeEventListener('scroll', scrolledToSeconSection);
-      }
-    })
+class SecondSection{
+    constructor(selector){
+        this.selector = selector;
+        this.sectionDOM;
+        this.headingDOM;
+        this.paragraphBoxDOM;
+        this.paragraphDOM;
+        this.bambooDOM;
+        this.init()
+    }
+    init(){
+        this.setVariables()
+        this.setBambooHeight()
+        this.onAppear()
+        this.resizeWindow()
+        this.changeParagraph()
+    }
+    setVariables(){
+        this.sectionDOM = document.querySelector(this.selector);
+        this.headingDOM = this.sectionDOM.querySelector('.--heading > h2');
+        this.paragraphBoxDOM = this.sectionDOM.querySelector('.--paragraph');
+        this.paragraphDOM = this.sectionDOM.querySelector('.--paragraph p');
+        this.bambooDOM = this.sectionDOM.querySelector('.--bamboo');
+    }
+    setBambooHeight(){
+        const paragraphHeight = this.paragraphDOM.offsetHeight;
+        this.bambooDOM.style.height = paragraphHeight + 150 + 'px';
+    }
+    onAppear(){
+        const headingAppear = [
+            {transform: 'translateY(0)', opacity: 0.7},
+            {transform: 'translateY(-30px)', opacity: 1},
+          ]
+        const headingAppearOptions =  {
+                            duration: 1000,
+                            easing: 'ease',
+                            iterations:1,
+                            fill: 'forwards'
+                        }
+        const paragraphAppear = [
+                    {transform: 'translateY(0)', opacity: 0.7},
+                    {transform: 'translateY(-30px)', opacity: 1},
+                    ]
+        const paragraphAppearOptions =  {
+                            duration: 1000,
+                            easing: 'ease',
+                            iterations:1,
+                            fill: 'forwards',
+                            delay:1000
+                            }
+        const scrolledToSeconSection = () => {
+            if(window.scrollY >= window.innerHeight / 3){
+              this.headingDOM.animate(headingAppear, headingAppearOptions)
+              this.paragraphDOM.animate(paragraphAppear, paragraphAppearOptions)
+              window.removeEventListener('scroll', scrolledToSeconSection);
+            }
+        }
+        window.addEventListener('scroll', scrolledToSeconSection)
+    }
+    resizeWindow(){
+        window.addEventListener("resize", () => {
+            const paragraphHeight = this.paragraphDOM.offsetHeight;
+            this.bambooDOM.style.height = paragraphHeight + 150 + 'px';
+          });
+    }
+    changeParagraph(){
+        this.paragraphDOM.addEventListener('input', () => {
+            const paragraphHeight = this.paragraphDOM.offsetHeight;
+            this.bambooDOM.style.height = paragraphHeight + 150 + 'px';
+          });
+    }
 }
-function setBambooHeight(){
-  const section2 = document.querySelector('.section--2');
-  const paragraphBox = section2.querySelector('.--paragraph');
-  const paragraph = paragraphBox.querySelector('p');
-  const paragraphHeight = paragraph.offsetHeight;
-  paragraphBox.style.height = paragraphHeight + 50 + 'px';
-  const bamboo = section2.querySelector('.--bamboo');
-  bamboo.style.height = paragraphHeight + 150 + 'px';
-}
-function watchResize(){
-  const section2 = document.querySelector('.section--2');
-  const paragraphBox = section2.querySelector('.--paragraph');
-  const paragraph = section2.querySelector('p');
-  const bamboo = section2.querySelector('.--bamboo');
-    window.addEventListener("resize", () => {
-        const paragraphHeight = paragraph.offsetHeight;
-        paragraphBox.style.height = paragraphHeight + 50 + 'px';
-        bamboo.style.height = paragraphHeight + 150 + 'px';
-      });
-}
-function secondSection(){
-    secondSectionAppearAnimation()
-    setBambooHeight()
-    watchResize()
-}
-export default secondSection;
+export { SecondSection };

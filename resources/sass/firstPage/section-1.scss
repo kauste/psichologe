@@ -16,3 +16,14 @@
         object-position: top;
      }    
 }
+.back-ofice{
+    .section-1-box{
+        position:relative;
+        .edit-svg-box{
+            position:absolute;
+            z-index: 2;
+            top:100px;
+            right:calc((100vw - 1000px) / 2 + 20px)
+        }
+    }
+}

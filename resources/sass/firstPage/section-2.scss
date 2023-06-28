@@ -55,12 +55,34 @@
             opacity:0.7;
             position:relative;
             p{
-                position:absolute;
+                width:100%;
                 top:30px;
                 left:0;
                 color:#101e17;
                 line-height: 1.6em;
             }
+        }
+    }
+}
+.back-ofice{
+    .in-sec-2{
+
+        .edit-svg-box{
+            position:absolute;
+            top:calc(100vh + 110px);
+            right:20px;
+        }
+        .paragraph{
+            p[contenteditable='true']{
+                padding: 10px 10px 20px;
+                border:1px solid #333;
+            }
+            .update-actions{
+                position: absolute;
+                bottom: -5px;
+                right: 20px;
+            }
+
         }
     }
 }

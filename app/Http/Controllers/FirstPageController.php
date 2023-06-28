@@ -6,18 +6,13 @@ use App\Models\FirstPage;
 
 class FirstPageController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        dump('ce');
-        return view('back.firstPage');
+        $data = FirstPage::first();
+        return view('back.firstPage', ['data' => $data ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         //

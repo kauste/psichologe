@@ -10,6 +10,7 @@
 @import 'firstPage/section-3-and-4.scss';
 @import 'parts/footer';
 @import 'parts/login';
+@import 'parts/modal';
 
 body, body * {
     margin: 0;
@@ -17,7 +18,7 @@ body, body * {
 body{
     box-sizing: border-box;
     width:100%;
-    background-color: #EFEFEF;
+    background-color: $bg;
 }
 h1, .h1{
     font-family: $headings-family;
@@ -39,4 +40,38 @@ div, p {
     @media (max-width:750px) {
         font-size: 14px;
     }
+}
+.edit-svg-box{
+    width: fit-content;
+    border: 2px solid #222;
+    padding: 5px;
+    border-radius: 50%;
+    background-color: $pink;
+    cursor: pointer;
+    &:hover{
+        background-color: #d9adb4
+    }
+    svg{
+        fill:#222;
+        width:30px;
+        height:30px;
+        transform: rotate(-30deg);
+    }
+}
+.update-actions{
+    flex-wrap: wrap;
+    gap:20px;
+    justify-content: end;
+    display:none;
+    button{
+        border:2px solid #333;
+        padding: 8px 20px;
+    }
+    .update-btn{
+        background-color: #a6ff00;
+    }
+    .cancel-btn{
+        background: #CCC;
+    }
+
 }

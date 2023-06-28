@@ -15,8 +15,6 @@ class Role
      */
     public function handle(Request $request, Closure $next, $role): Response
     {
-        dump('vo');
-        dump($request->user);
         if($request->user === null & $role === 7){
             abort(404);
         }

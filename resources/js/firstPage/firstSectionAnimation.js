@@ -11,7 +11,8 @@ function firstSectionAnimation(){
                 };
     const imgAppearTiming = {
               ...imgDisappearTiming,   
-              direction: 'reverse', delay:2000
+              direction: 'reverse', 
+              delay:2000
             }
   
     const h1Opacity = [

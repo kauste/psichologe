@@ -23,7 +23,7 @@
             </svg>
         </div>
     </section>
-        <section class="section-3 section--3">
+    <section class="section-3 section--3">
         <div class="education-box">
             <div class="heading-box">
                 <h2>Išsilavinimas/Kursai</h2>
