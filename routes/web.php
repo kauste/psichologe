@@ -20,9 +20,13 @@ Route::get('/', [FrontController::class, 'firstPage'])->name('first-page');
 
 Auth::routes(['register' => false]);
 
-Route::prefix('admin')->name('back-')->middleware('role:7')->group(function(){
+Route::prefix('admin')->name('back-')->middleware('auth')->group(function(){
     Route::get('first-pg', [FirstPageController::class, 'index'])->name('first-pg');
     Route::post('update-about', [FirstPageController::class, 'updateAbout'])->name('update-about');
+    Route::post('update-education', [FirstPageController::class, 'updateEducation'])->name('update-education');
+    Route::post('update-work', [FirstPageController::class, 'updatework'])->name('update-work');
+
+
 
 
 });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FirstPage;
 use Illuminate\Http\Request;
+use App\Models\Education;
 use Auth;
 
 class FirstPageController extends Controller
@@ -19,6 +20,19 @@ class FirstPageController extends Controller
         FirstPage::where('user_id', Auth::user()->id)->update(['about_me' => $request->about]);
         return response()->json(['msg' =>'msg']);
     }
+
+    public function updateEducation(Request $request){
+        $newData = $request->all();
+        dump($newData);
+        $education = Education::find((int) $newData[3]);
+        $education->date = $newData[0];
+        $education->about_education = $newData[1];
+        $education->priority = (int) $newData[2];
+        $education->first_page_id = Auth::user()->id;
+        $education->save();
+        return response()->json(['msg' => 'data is edited']);
+    }
+
     public function create()
     {
         //

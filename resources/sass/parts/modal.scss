@@ -1,10 +1,4 @@
-@namespace xlink 'http://www.w3.org/2000/svg/xlink';
-body:has(.modal-box){
-    .modal-box{
-        backdrop-filter: blur(4px);
-    }
 
-}
 .modal-box{
     position:fixed;
     z-index: 10;
@@ -14,6 +8,9 @@ body:has(.modal-box){
     height:100%;
     background-color: #595c5962;
     display:none;
+    &.show{
+        display:flex;
+    }
     .modal{
         padding:50px 40px 30px;
         border-radius: 2px;
@@ -23,21 +20,24 @@ body:has(.modal-box){
         transform: translate(-50%, -50%);
         background-color: $bg;
         width: min(1000px, 96vw);
-        display:flex;
         flex-direction: column;
+        backdrop-filter: blur(20px);
+        display:flex;
         .heading-box{
             margin-bottom:20px;
         }
         .modal-ul-box{
             overflow-y: auto;
+            scroll-behavior: smooth
+
         }
         .modal-ul-box::-webkit-scrollbar {
             width: 10px;
             margin-right: 10px;
+
         }
         .modal-ul-box::-webkit-scrollbar-track {
             box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    
         }
         .modal-ul-box::-webkit-scrollbar-thumb {
             background-color : $green;

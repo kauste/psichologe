@@ -18,6 +18,8 @@
     <!-- Scripts -->
     <script>
     const editAboutRoute = "{{route('back-update-about')}}";
+    const educationUpdateRoute = "{{route('back-update-education')}}";
+    const workUpdateRoute = "{{route('back-update-work')}}";
     </script>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
