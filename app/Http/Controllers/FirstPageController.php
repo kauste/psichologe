@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\FirstPage;
 use Illuminate\Http\Request;
 use App\Models\Education;
+use App\Models\Work;
 use Auth;
 
 class FirstPageController extends Controller
@@ -20,61 +21,62 @@ class FirstPageController extends Controller
         FirstPage::where('user_id', Auth::user()->id)->update(['about_me' => $request->about]);
         return response()->json(['msg' =>'msg']);
     }
+    public function createEducation(Request $request){
+        $data = $request->all();
+        $education = new Education;
+        $education->date = $data['education-date'];
+        $education->about_education = $data['education-about'];
+        $education->priority = (int) $data['education-priority'];
+        $education->first_page_id = Auth::user()->id;
+        $education->save();
 
-    public function updateEducation(Request $request){
+        return response()->json(['msg' => 'data is edited']);
+
+    }
+    public function updateEducation(Request $request)
+    {
+        dump(Education::find((int) $request->eduId));
+
         $newData = $request->all();
-        dump($newData);
-        $education = Education::find((int) $newData[3]);
-        $education->date = $newData[0];
-        $education->about_education = $newData[1];
-        $education->priority = (int) $newData[2];
+        $education = Education::find((int) $request->eduId);
+        $education->date = $newData['education-date'];
+        $education->about_education = $newData['education-about'];
+        $education->priority = (int) $newData['education-priority'];
         $education->first_page_id = Auth::user()->id;
         $education->save();
         return response()->json(['msg' => 'data is edited']);
     }
+    public function deleteEducation(Request $request){
+        Education::where('id', (int) $request->id)->delete();
+        return response()->json(['msg' => 'deleted']);
+    }
+    public function createWork(Request $request){
 
-    public function create()
+        $data = $request->all();
+        $work = new Work;
+        $work->date = $data['work-date'];
+        $work->about_work = $data['work-about'];
+        $work->priority = (int) $data['work-priority'];
+        $work->first_page_id = Auth::user()->id;
+        $work->save();
+
+        return response()->json(['msg' => 'data is created']);
+
+    }
+    public function updateWork(Request $request)
     {
-        //
+        $newData = $request->all();
+        $work = Work::find((int) $request->workId);
+        $work->date = $newData['work-date'];
+        $work->about_work = $newData['work-about'];
+        $work->priority = (int) $newData['work-priority'];
+        $work->first_page_id = Auth::user()->id;
+        $work->save();
+        return response()->json(['msg' => 'data is edited']);
+    }
+    public function deleteWork(Request $request){
+        Work::where('id', (int) $request->id)->delete();
+        return response()->json(['msg' => 'deleted']);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(FirstPage $firstPage)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(FirstPage $firstPage)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateFirstPageRequest $request, FirstPage $firstPage)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(FirstPage $firstPage)
-    {
-        //
-    }
 }

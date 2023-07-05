@@ -17,13 +17,18 @@
 
     <!-- Scripts -->
     <script>
-    const editAboutRoute = "{{route('back-update-about')}}";
-    const educationUpdateRoute = "{{route('back-update-education')}}";
-    const workUpdateRoute = "{{route('back-update-work')}}";
+        const editAboutRoute = "{{route('back-update-about')}}";
+        const educationUpdateRoute = "{{route('back-update-education')}}";
+        const workUpdateRoute = "{{route('back-update-work')}}";
+        const educationStoreRoute = "{{route('back-store-education')}}";
+        const workStoreRoute = "{{route('back-store-work')}}";
+        const educationDeleteRoute = "{{route('back-delete-education')}}";
+        const workDeleteRoute = "{{route('back-delete-work')}}";
     </script>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
+    @include('parts.loader')
     <div class="nav-box">
         <nav class="--nav">
             <a href="#" class="active">Apie mane</a>
@@ -96,32 +101,8 @@
         <main class="">
             @yield('content')
         </main>
-        <footer>
-            <div class="content">
-                <div class="left">
-                    <h5>Susisiekite!</h5>
-                    <div>&#43;370 {{substr($data->telephone_number, 0, 3)}} {{substr($data->telephone_number, 2, 5)}}</div>
-                    <a href="mailto:{{$data->email}}?subject=Mail from site">{{$data->email}}</a>
-                </div>
-                <div class="right">
-                    @if($data->facebook)
-                    <a href="{{$data->facebook}}" target="_blank">
-                        <svg>
-                            <use xlink:href="#fb"></use>
-                        </svg>
-                    </a>
-                    @endif
-                    @if($data->linkedin)
-                    <a href="{{$data->linkedin}}" target="_blank">
-                        <svg>
-                            <use xlink:href="#linkedin"></use>
-                        </svg>
-                    </a>
-                    @endif
-                </div>
-            </div>
-        </footer>
-        
+        @include('parts.footer')
+
         <svg version="1.0" xmlns="http://www.w3.org/2000/svg"  style="display:none">
         <symbol id="leave" viewBox="0 0 1166.000000 1280.000000">
             <g transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)" fill="inherit" stroke="none">
@@ -203,6 +184,14 @@
             <g transform="translate(0.000000,1226.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
                 <path d="M1374 11287 c-748 -535 -1361 -976 -1363 -980 -3 -8 953 -876 3616 -3285 606 -548 1100 -1002 1098 -1009 -3 -9 -4304 -5395 -4513 -5650 l-34 -43 143 51 c144 51 254 77 2209 519 195 44 522 118 726 164 l371 84 1612 1473 c887 811 1616 1474 1620 1474 7 0 803 -719 3936 -3557 l580 -526 3 65 c3 56 5 63 18 52 8 -6 16 -10 17 -8 2 2 88 303 191 669 103 366 223 788 266 937 l77 273 -362 422 c-2246 2625 -2875 3362 -2875 3367 0 3 920 847 2045 1875 l2045 1869 -93 64 c-50 34 -778 530 -1617 1102 -1109 755 -1528 1036 -1538 1028 -9 -7 -33 8 -88 53 -63 53 -78 60 -89 49 -7 -8 -643 -803 -1414 -1766 -770 -964 -1404 -1753 -1409 -1752 -4 0 -34 33 -68 72 -54 64 -943 1103 -2582 3020 -305 356 -557 647 -562 647 -4 0 -62 -43 -130 -96 -68 -53 -126 -91 -129 -86 -7 10 -343 402 -345 402 0 0 -613 -438 -1362 -973z"/>
             </g>
+        </symbol>
+        <symbol id="plus" viewBox="0 0 24 24"stroke="inherit">
+            <path d="M6 12H18" stroke="inherit" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 18V6" stroke="inherit" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </symbol>
+        <symbol viewBox="0 0 24 24" id="back" stroke="inherit">
+            <path d="M9.57 5.92993L3.5 11.9999L9.57 18.0699" stroke="inherit" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M20.5 12H3.67004" stroke="inherit" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
         </symbol>
     </svg>
 </body>

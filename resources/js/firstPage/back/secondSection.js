@@ -4,8 +4,8 @@ function secondSectionUpdate(){
     const actionsDOM = section2DOM.querySelector('.update--actions')
     const cancelDOM =  actionsDOM.querySelector('.--cancel');
     const updateDOM =  actionsDOM.querySelector('.--update');
-
     const paragraphDOM = section2DOM.querySelector('.--paragraph p')
+    const loadeBoxDOM = document.querySelector('.loader--box');
 
     editDOM.addEventListener('click', () => {
         actionsDOM.style.display = 'flex';
@@ -17,11 +17,15 @@ function secondSectionUpdate(){
             paragraphDOM.setAttribute('contenteditable', false)
         })
         updateDOM.addEventListener('click', () => {
-            axios.post(editAboutRoute, {about:paragraphDOM.innerText})
+            loadeBoxDOM.style.display = 'block';
+
+            axios.put(editAboutRoute, {about:paragraphDOM.innerText})
             .then(_ => {
                 paragraphDOM.innerText = paragraphDOM.innerText;
                 actionsDOM.style.display = 'none';
                 paragraphDOM.setAttribute('contenteditable', false)
+                loadeBoxDOM.style.display = 'none';
+
             })
         })
     }

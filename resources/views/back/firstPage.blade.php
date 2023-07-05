@@ -2,7 +2,9 @@
 
 @section('content')
 <div class="page--1 back--office back-ofice">
-@include('back.editEducationModal')
+@include('back.educationCRUDmodal')
+@include('back.workCRUDmodal')
+
     <section class="section-1-box">
         <div class="edit-svg-box">
             <svg>
@@ -64,9 +66,9 @@
                 <div class="edu-ul-box ul--box">
                     <ul class="education-ul">
                     @forelse ($data->educations as $edu)
-                        <li class="one-education">
-                            <div class="date">{{$edu->date}}</div>
-                            <div class="about-edu">{{$edu->about_education}}</div>
+                        <li class="one-education" id="education-{{$edu->id}}">
+                            <div class="date education--date">{{$edu->date}}</div>
+                            <div class="about-edu education--about">{{$edu->about_education}}</div>
                         </li>
                     @empty
                         <div>Šiuo metu duomenys neprieinami</div>
@@ -100,9 +102,9 @@
                 <div class="work-ul-box ul--box">
                     <ul class="work-ul">
                     @forelse ($data->works as $key => $work)
-                        <li class="one-work">
-                            <div class="date">{{$work->date}}</div>
-                            <div class="about-work">{{$work->about_work}}</div>
+                        <li class="one-work" id="work-{{$work->id}}">
+                            <div class="date work--date">{{$work->date}}</div>
+                            <div class="about-work work--about">{{$work->about_work}}</div>
                         </li>
                     @empty
                         <div>Šiuo metu duomenys neprieinami</div>

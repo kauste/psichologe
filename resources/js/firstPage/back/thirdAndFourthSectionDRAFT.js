@@ -1,53 +1,38 @@
 import axios from "axios";
 
-class thirdAndFourthSection{
+class thirdAndFourthSectionUpdate{
     constructor(selector){
         this.selector = selector;
         this.sectionDOM;
         this.sectionUlDOM;
         this.sectionliDOMS;
         this.modalBoxDOM;
-        this.addBtnDOM;
-        this.addBoxDOM;
-        this.storeActionsDOM;
-        this.cancelBtnDOM;
-        this.storeBtnDOM;
-        this.backBtnDOM;
         this.modalDOM;
         this.ulBoxDOM;
         this.ulDOM
         this.liDOMS;
         this.editSectionBtnDOM;
         this.editItemBtnDOMS;
+        // this.editableData = [];
         this.liChildernDOMS;
         this.editableData = {};
-        this.createdData = {};
         this.openLi = null;
         this.deleteItemBtnDOMS;
-        this.loadeBoxDOM;
         this.init();
     }
-
     init(){
         this.setVariables();
         this.showModal();
         this.letEditItem();
         this.letDeleteItem();
-        this.letCreate()
-        this.store()
-        this.back()
+
     }
     setVariables(){
+        this.liID =
         this.sectionDOM = document.querySelector(this.selector)
         this.sectionUlDOM = this.sectionDOM.querySelector('.ul--box ul');
         this.sectionliDOMS = this.sectionUlDOM.querySelectorAll('li');
         this.modalBoxDOM = document.querySelector(`.--${this.sectionDOM.id}`)
-        this.addBtnDOM = this.modalBoxDOM.querySelector('.add--btn');
-        this.addBoxDOM = this.modalBoxDOM.querySelector('.add--box');
-        this.storeActionsDOM = this.addBoxDOM.querySelector('.store--actions');
-        this.cancelBtnDOM = this.storeActionsDOM.querySelector('.--cancel');
-        this.storeBtnDOM = this.storeActionsDOM.querySelector('.--store');
-        this.backBtnDOM = this.modalBoxDOM.querySelector('.back--btn');
         this.modalDOM = this.modalBoxDOM.querySelector(`.--modal`)
         this.ulBoxDOM = this.modalBoxDOM.querySelector('.ul--box');
         this.ulDOM = this.modalBoxDOM.querySelector('ul');
@@ -55,7 +40,8 @@ class thirdAndFourthSection{
         this.editItemBtnDOMS = this.modalBoxDOM.querySelectorAll('ul li .--edit')
         this.deleteItemBtnDOMS = this.modalBoxDOM.querySelectorAll('ul li .--delete')
         this.editSectionBtnDOM = this.sectionDOM.querySelector('.--edit')
-        this.loadeBoxDOM = document.querySelector('.loader--box')        
+        this.editableData = {}
+        
     }
     showModal(){
         this.editSectionBtnDOM.addEventListener('click', () => {
@@ -142,8 +128,6 @@ class thirdAndFourthSection{
 
         const update = () => {
                 const updateRoute = eval(`${this.sectionDOM.id}UpdateRoute`);
-                console.log(this.liChildernDOMS)
-                console.log(updateRoute)
 
                 this.liChildernDOMS.forEach(element => {
                     switch(true){
@@ -159,14 +143,11 @@ class thirdAndFourthSection{
                     }
                 })
                 const openLiId = this.openLi.id.replace(this.sectionDOM.id + '-edit-', '')
-                this.loadeBoxDOM.style.display = 'block';
                 axios.put(updateRoute + '/' + openLiId, this.editableData)
                 .then(res => {
                     console.log(res.data.msg)
                     this.closeItem()
-                    cancelBtnDOM.removeEventListener('click', cancel)
-
-                    this.loadeBoxDOM.style.display = 'none';
+                    updateBtnDOM.addEventListener('click', update)
                 })
         }
 
@@ -235,14 +216,13 @@ class thirdAndFourthSection{
 
         const doDelete = () => {
             const openLiId = this.openLi.id.replace(this.sectionDOM.id + '-edit-', '')
-            this.loadeBoxDOM.style.display = 'block';
             axios.delete(eval(`${this.sectionDOM.id}DeleteRoute`) + '/' + openLiId)
             .then(res => {
                 const sectionLidDOM = this.sectionDOM.querySelector(`#${this.sectionDOM.id}-${openLiId}`)
+
                 this.sectionUlDOM.removeChild(sectionLidDOM)
                 this.ulDOM.removeChild(this.openLi)
                 this.openLi = null;
-                this.loadeBoxDOM.style.display = 'none';
             })
             cancelBtnDOM.removeEventListener('click', cancel)
         }
@@ -297,14 +277,59 @@ class thirdAndFourthSection{
          }
          this.openLi = null;
     }
+}
 
+class thirdAndFourthSectionAdd{
+    constructor(selector){
+        this.selector = selector;
+        this.sectionDOM;
+        this.sectionUlDOM;
+        this.addBtnDOM;
+        this.backBtnDOM;
+        this.modalBoxDOM;
+        this.modalDOM;
+        this.ulBoxDOM;
+        this.ulDOM
+        this.liDOMS;
+        this.addBoxDOM;
+        this.updateActionsDOM;
+        this.cancelBtnDOM;
+        this.storeBtnDOM;
+        this.createdData = {};
+        this.init();
+    }
+    init(){
+        this.setVariables()
+        this.letCreate()
+        this.store()
+        this.back()
+    }
+    setVariables(){
+        this.sectionDOM = document.querySelector(this.selector);
+        this.sectionUlDOM = this.sectionDOM.querySelector('.ul--box ul');
+
+        this.modalBoxDOM = document.querySelector(`.--${this.sectionDOM.id}`);
+        this.modalDOM = this.modalBoxDOM.querySelector('.--modal');
+        this.addBtnDOM = this.modalBoxDOM.querySelector('.add--btn');
+        this.backBtnDOM = this.modalBoxDOM.querySelector('.back--btn');
+        this.ulBoxDOM = this.modalBoxDOM.querySelector('.ul--box');
+        this.ulDOM = this.ulBoxDOM.querySelector('ul');
+        this.liDOMS = this.ulDOM.querySelectorAll('li');
+        this.addBoxDOM = this.modalBoxDOM.querySelector('.add--box');
+        this.updateActionsDOM = this.addBoxDOM.querySelector('.update--actions');
+        this.cancelBtnDOM = this.updateActionsDOM.querySelector('.--cancel');
+        this.storeBtnDOM = this.updateActionsDOM.querySelector('.--store');
+    }
     letCreate(){
         this.addBtnDOM.addEventListener('click', () => {
+            console.log(this.ulBoxDOM)
             this.ulBoxDOM.style.display = 'none';
             this.addBoxDOM.style.display = 'grid';
             this.addBtnDOM.style.display = 'none';
             this.backBtnDOM.style.display = 'block';
-            this.modalDOM.style.marginTop = (window.innerHeight  / 2 - this.modalDOM.offsetHeight / 2) + 'px';
+            this.modalDOM.style.height = 'fit-content';
+            console.log(window.innerHeight)
+            this.modalDOM.style.marginTop = (window.innerHeight  / 2 - this.modalDOM.offsetHeight/ 2).toString() + 'px';
 
         })
     }
@@ -320,7 +345,7 @@ class thirdAndFourthSection{
     }
     store(){
         this.storeBtnDOM.addEventListener('click', () => {
-            const contentDOMS = this.addBoxDOM.querySelectorAll('.--form > div:not(.store--actions)');
+            const contentDOMS = this.addBoxDOM.querySelectorAll(':scope > .--form > div:not(.update--actions)');
             contentDOMS.forEach(contentDOM => {
                 switch(true){
                     case contentDOM.classList.contains(`${this.sectionDOM.id}--date`):
@@ -335,7 +360,7 @@ class thirdAndFourthSection{
                 }
             })
             const priority = parseInt(this.createdData[`${this.sectionDOM.id}-priority`]);
-            const newDataHTML = `   <li class="one-education" id="education-edit-${this.liDOMS.length}">
+            const newDataHTML = `   <li class="one-education" id="education-edit-${this.liDOMS.length}}">
                                         <div class="date education--date">${this.createdData[`${this.sectionDOM.id}-date`]}</div>
                                         <div class="about education--about">${this.createdData[`${this.sectionDOM.id}-about`]}</div>
                                         <div class="position education--priority ${priority > 0 ? '' : 'small'}">${priority > 0 ? priority : 'nesvarbu'}</div>
@@ -365,23 +390,15 @@ class thirdAndFourthSection{
                                         <div class="about-edu education--about">${this.createdData[`${this.sectionDOM.id}-about`]}</div>
                                     </li>`
 
-            this.loadeBoxDOM.style.display = 'block';
-            axios.post(eval(`${this.sectionDOM.id}StoreRoute`), this.createdData)
+
+            axios.post(educationCreateRoute, this.createdData)
             .then(res => {
                 this.ulDOM.innerHTML = newDataHTML + this.ulDOM.innerHTML;
-                this.ulDOM.replaceWith(this.ulDOM.cloneNode(true));
-                this.sectionUlDOM.innerHTML = sectionDataHTML + this.sectionUlDOM.innerHTML;
-                this.sectionUlDOM.replaceWith(this.sectionUlDOM.cloneNode(true));
-                this.addBoxDOM.replaceWith(this.addBoxDOM.cloneNode(true))
-                this.init()
-                const contentDOMS = this.addBoxDOM.querySelectorAll('.--form > div:not(.store--actions)');
-                contentDOMS.forEach(contentDOM => contentDOM.innerText = '')
-                this.loadeBoxDOM.style.display = 'none';
-
+                this. setVariables()
                 console.log(res.data.msg)
             })
         })
     }
-}
 
-export { thirdAndFourthSection };
+}
+export { thirdAndFourthSectionUpdate, thirdAndFourthSectionAdd };

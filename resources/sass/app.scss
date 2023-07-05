@@ -5,6 +5,7 @@
 @import 'bootstrap/scss/bootstrap';
 
 @import 'parts/nav';
+@import 'parts/loader';
 @import 'firstPage/section-1.scss';
 @import 'firstPage/section-2.scss';
 @import 'firstPage/section-3-and-4.scss';
@@ -70,7 +71,7 @@ div, p {
         transform: rotate(-30deg);
     }
 }
-.update-actions{
+.update-actions, .delete-actions{
     flex-wrap: wrap;
     gap:20px;
     justify-content: end;
@@ -85,5 +86,9 @@ div, p {
     .cancel-btn{
         background: #CCC;
     }
-
+}
+.modal-add-box {
+    .update-actions{
+        display:flex;
+    }
 }

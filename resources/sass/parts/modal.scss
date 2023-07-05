@@ -6,18 +6,22 @@
     left:0;
     width: 100%;
     height:100%;
-    background-color: #595c5962;
+    background-color: #595c5900;
     display:none;
+    justify-content: center;
+    align-items: center;
     &.show{
         display:flex;
     }
     .modal{
-        padding:50px 40px 30px;
+        padding:50px 40px;
         border-radius: 2px;
         height:80vh;
-        margin-left: 50%;
-        margin-top: 50vh;
-        transform: translate(-50%, -50%);
+        margin-left: max(calc(50% - 500px), 2vw);
+        margin-top: 10vh;
+        justify-self: center;
+        // transform: scale(0);
+        opacity:0.5;
         background-color: $bg;
         width: min(1000px, 96vw);
         flex-direction: column;
@@ -25,11 +29,36 @@
         display:flex;
         .heading-box{
             margin-bottom:20px;
+            display:flex;
+            justify-content: space-between;
+            align-items: baseline;
+            .add-back-btns{
+                display:flex;
+                flex-wrap: wrap;
+                .add-btn, .back-btn{
+                    width:60px;
+                    height:60px;
+                    border-radius: 50%;
+                    border: 4px solid $pink;
+                    stroke:#333;
+                    box-shadow: 0 0 0 3px #333;
+                    cursor: pointer;
+                    transition: 0.3s ease all;
+                    fill:none;
+                    &:hover{
+                        background-color: #333;
+                        stroke:$pink,
+                    }
+                }
+                .back-btn{
+                    display:none;
+                }
+            }
+            
         }
         .modal-ul-box{
             overflow-y: auto;
             scroll-behavior: smooth
-
         }
         .modal-ul-box::-webkit-scrollbar {
             width: 10px;
@@ -43,12 +72,46 @@
             background-color : $green;
             -webkit-border-radius: 0.375rem;
         }
-        .modal-ul-box li{
+        .modal-ul-box li, .modal-add-box > .names, .modal-add-box > .form{
+            width:100%;
             padding:7px 0;
             display:grid;
-            grid-template-columns: 2fr 6fr 0.5fr 2fr 0.3fr;
+            grid-template-columns: 150px calc(100% - 380px) 80px 120px 30px;
             align-items: center;
-            .edit-actions{
+         
+            .date, .about, .position{
+                padding:0 7px;
+                display: flex;
+                align-items: center;
+            }
+            .position.small{
+                font-style: italic;
+                color:#999;
+            }
+            div{
+                height:100%;
+            }
+            div:not(.--edit, .--delete, .edit--actions, .update--actions)[contenteditable="true"]{
+                padding: 10px 10px 20px;
+                border:1px solid #333;
+                border-left:none;
+                display: inline-block;
+
+            }
+            div:not(.--edit, .--delete, .edit--actions, .update--actions):first-of-type[contenteditable="true"]{
+                border-left:1px solid #333;;
+            }
+            .update-actions, .delete-actions{
+                button{
+                    width: max(90%, 120px);
+                }
+            }
+        }
+        .modal-add-box > .names{
+            letter-spacing: 0.3vw;
+        }
+        .modal-ul-box li{
+           .edit-actions{
                 display:flex;
                 gap:7px;
                 justify-content: space-around;
@@ -88,29 +151,49 @@
 
                 }
             }
-            .date, .about, .position{
-                padding:0 7px;
-                display: flex;
-                align-items: center;
-            }
-            .position.small{
-                font-style: italic;
-                color:#999;
-            }
-            div:not(.--edit, .--delete, .edit--actions, .update--actions)[contenteditable="true"]{
-                height:100%;
-                padding: 10px 10px 20px;
-                border:1px solid #333;
-                border-left:none;
-            }
-            div:not(.--edit, .--delete, .edit--actions, .update--actions):first-of-type[contenteditable="true"]{
-                border-left:1px solid #333;;
-            }
-            .update-actions{
-                button{
-                    width: max(90%, 120px);
-                }
-            }
         }
+        .modal-add-box {
+            div:not(.--edit, .--delete, .edit--actions, .update--actions)[contenteditable="true"]{
+                width:100%;
+                height:100%;
+            }
+
+        }
+        .modal-add-box{
+            display:none;
+        }
+
     } 
+}
+@keyframes open-modal {
+    0%{
+        opacity: 0.5;
+    }
+    100% {
+        opacity:1;
+    }
+}
+@keyframes open-modal-box {
+    0%{
+        background-color: #595c5900;
+    }
+    100% {
+        background-color: #595c5962;
+    }
+}
+@keyframes close-modal {
+    0%{
+        opacity: 1;
+    }
+    100%{
+        opacity:0.5;
+    }
+}
+@keyframes close-modal-box {
+    0%{
+        background-color: #595c5962;
+    }
+    100%{
+        background-color: #595c5900;
+    }
 }
