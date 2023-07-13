@@ -1,77 +1,64 @@
 import { CRUDmodal } from "./CRUDmodal";
 
-class ThirdAndFourthSection extends CRUDmodal{
-    closeItem(){
-        let i = 0;
-        for (let element of this.openLi.children) {
-            if(element.classList.contains('edit--actions')){
-                element.style.display = 'flex'
-            }
-            else if(element.classList.contains('update--actions')){
-                element.style.display = 'none'
-            }
-            else if(element.classList.contains('delete--actions')){
-                element.style.display = 'none'
-            }
-            else{
-                this.liChildernDOMS.forEach(element => {
-                    switch(true){
-                        case element.classList.contains(`--date`):
-                        element.innerText = this.editableData[`${this.selector}-date`];
-                        break;
-                        case element.classList.contains(`--about`):
-                        element.innerText = this.editableData[`${this.selector}-about`];
-                        break;
-                        case element.classList.contains(`--priority`):
-                        element.innerText = this.editableData[`${this.selector}-priority`];
-                        break;
-                    }
-                })
-                const openLiId = this.openLi.id.replace(this.selector + '-edit-', '')
-                const changedLiDOM = Array.from(this.sectionliDOMS).filter(child => child.id.replace(this.selector + '-', '') === openLiId)[0];
-                const changedLiItemsDOMS = changedLiDOM.querySelectorAll('div');
+class FirstSection extends CRUDmodal{
+    constructor(selector){
+        super(selector)
+        this.imgBoxDOM;
+        this.imgDOM;
+        this.boxHeight;
+        this.imgHeight
+        this.priority;
+       this.prevPicPos;
+       this.marginHeight;
+        this.additionalHeight;
 
-                changedLiItemsDOMS.forEach(element => {
-                    switch(true){
-                        case element.classList.contains(`${this.selector}--date`):
-                        element.innerText = this.editableData[`${this.selector}-date`];
-                        break;
-                        case element.classList.contains(`${this.selector}--about`):
-                        element.innerText = this.editableData[`${this.selector}-about`];
-                        break;
-                    }
-                })                          
-                element.setAttribute('contenteditable', false);
-            }
-            ++i;
-         }
-         this.openLi = null;
+    }
+    closeItem(){
+        const editActionsDOM = this.openLi.querySelector('.edit--actions');
+        editActionsDOM.style.display = 'flex';
+
+        const updateActionsDOM = this.openLi.querySelector('.update--actions');
+        updateActionsDOM.style.display = 'none'
+
+        this.imgBoxDOM.style.border = 'none';
+        this.priority.setAttribute('contenteditable', false);
+        this.priority.style.border = 'none';
+        this.openLi.classList.remove('editable');
+        this.openLi = null;
+    }
+    setItemVariables(){
+        this.liChildernDOMS = this.openLi.querySelectorAll(':scope > div:not(.edit--actions, .update--actions, .delete--actions > .--priority, img');
+        this.imgBoxDOM = this.openLi.querySelector('.profilePic--img')
+        this.priority = this.openLi.querySelector('.--priority')
+        this.boxHeight =  this.imgBoxDOM.offsetHeight;
+        this.imgDOM = this.imgBoxDOM.querySelector('img')
+        this.imgHeight = this.imgDOM.offsetHeight;
+
     }
     letEditItem(){
+
         this.editItemBtnDOMS.forEach(editItemBtn => {
             editItemBtn.addEventListener('click', () => {
                 if(this.openLi){
-                    this.ulBoxDOM.scrollTop = this.openLi.offsetTop - this.openLi.offsetHeight - 10;
-                    this.liChildernDOMS.forEach(child => child.style.cssText = 'border-width: 2px; border-color:#ba2f47')
+                    this.ulBoxDOM.scrollTop = this.openLi.offsetTop - 137;
+                    this.imgBoxDOM.style.outline = '2px solid #ba2f47';
+                    this.priority.style.cssText = 'border-width:2px; border-color: #ba2f47';
                 }
                 else{
                     this.openLi = editItemBtn.closest('li');
-                    this.liChildernDOMS = this.openLi.querySelectorAll(':scope > div:not(.edit--actions, .update--actions, .delete--actions)');
-                    this.liChildernDOMS.forEach(element => {
-                            element.style.cssText = 'border-width: 1px; border-color:#333'
-                            element.setAttribute('contenteditable', true);
-                            switch(true){
-                                case element.classList.contains(`--date`):
-                                this.editableData[`${this.selector}-date`] = element.innerText;
-                                break;
-                                case element.classList.contains(`--about`):
-                                this.editableData[`${this.selector}-about`] = element.innerText;
-                                break;
-                                case element.classList.contains(`--priority`):
-                                this.editableData[`${this.selector}-priority`] = element.innerText;
-                                break;
-                            }
-                    })
+                    this.setItemVariables()
+                    this.priority.setAttribute('contenteditable', true);
+
+                    this.additionalHeight = this.imgHeight - this.boxHeight;
+                    this.marginHeight = this.additionalHeight;
+                    console.log('tasmargin' + this.marginHeight )
+                    this.imgBoxDOM.style.setProperty('--boxHeight',  this.imgHeight + this.additionalHeight + 'px');
+                    this.imgBoxDOM.style.setProperty('--borderHeight', this.additionalHeight + 'px');
+                    this.imgBoxDOM.style.setProperty('--marginHeight', this.marginHeight + 'px');
+
+                    this.openLi.classList.add('editable');
+                    this.letDrag();
+
                     const editActionsDOM = this.openLi.querySelector('.edit--actions');
                     editActionsDOM.style.display = 'none';
 
@@ -83,30 +70,80 @@ class ThirdAndFourthSection extends CRUDmodal{
             })
         }, {once:true});
     }
+    letDrag(){
+        this.imgDOM.setAttribute('drabable', true);
+
+        this.imgDOM.addEventListener('dragstart', (event) => {
+            console.log('start')
+            // this.prevPicPos = event.clientY;
+        })
+        // this.imgDOM.addEventListener('drag', (e) => {
+        //     console.log('+ clientY ' +  e.clientY)
+
+            // if((this.marginHeight + e.clientY - this.prevPicPos) > this.additionalHeight){
+            //      this.marginHeight = this.additionalHeight;
+            // }
+            // else if((this.marginHeight + e.clientY - this.prevPicPos) < 0){
+            //     this.marginHeight = 0;
+            // }
+            // else{
+            //     this.marginHeight += (e.clientY - this.prevPicPos);
+            // }
+            // this.imgBoxDOM.style.setProperty('--marginHeight', this.marginHeight + 'px');
+            // this.prevPicPos = e.clientY;
+        // })
+        
+        this.imgDOM.addEventListener('dragend', (e) => {
+            e.preventDefault();
+
+            // console.log(e.clientY)
+            // console.log(this.prevPicPos)
+            console.log('end')
+
+
+        //     if((this.marginHeight + e.clientY - this.prevPicPos) > this.additionalHeight){
+        //         this.marginHeight = this.additionalHeight;
+        //    }
+        //    else if((this.marginHeight + e.clientY - this.prevPicPos) < 0){
+        //        console.log('this.marginHeight: '+ (this.marginHeight))
+        //        console.log('this.marginHeight: '+ (this.marginHeight + e.clientY - this.prevPicPos))
+        //        console.log('+ e.clientY ' + e.clientY)
+        //        console.log('+ this.prevPicPos ' +  this.prevPicPos)
+
+
+        //        this.marginHeight = 0;
+        //    }
+        //    else{
+        //        console.log('ce: ' + this.marginHeight)
+        //        this.marginHeight += e.clientY - this.prevPicPos;
+
+        //    }
+            // console.log(this.marginHeight)
+            // console.log(this.imgHeight)
+            // console.log(this.imgHeight / 100 * this.marginHeight)
+
+
+        })
+
+    }
     updateItem(){
         const cancelBtnDOM = this.openLi.querySelector('.update--actions > .--cancel');
         const updateBtnDOM = this.openLi.querySelector('.update--actions > .--update');
 
         const cancel = () => {
-            this.liChildernDOMS.forEach((element) => {
-                switch(true){
-                    case element.classList.contains(`${this.selector}--date`):
-                    element.innerText = this.editableData[`${this.selector}-date`];
-                    break;
-                    case element.classList.contains(`${this.selector}--about`):
-                        element.innerText = this.editableData[`${this.selector}-about`];
-                    break;
-                    case element.classList.contains(`${this.selector}--priority`):
-                    element.innerText = this.editableData[`${this.selector}-priority`];
-                    break;
-                }
-            })
+            this.imgBoxDOM.style.outline = 'none';
+            this.imgBoxDOM.style.setProperty('--boxHeight',  0);
+            this.imgBoxDOM.style.setProperty('--borderHeight', 0);
+            this.openLi.classList.remove('editable');
             updateBtnDOM.removeEventListener('click', update)
             this.closeItem()
         }
 
         const update = () => {
+            this.imgBoxDOM.style.outline = 'none';
                 const updateRoute = eval(`${this.selector}UpdateRoute`);
+
+
                 this.liChildernDOMS.forEach(element => {
                     switch(true){
                         case element.classList.contains(`${this.selector}--date`):
@@ -135,6 +172,7 @@ class ThirdAndFourthSection extends CRUDmodal{
         cancelBtnDOM.addEventListener('click', cancel, {once:true})
         updateBtnDOM.addEventListener('click', update, {once:true})
     }
+
     letDeleteItem(){
         this.deleteItemBtnDOMS.forEach(deleteItemBtn => {
             deleteItemBtn.addEventListener('click', (e) => {
@@ -280,4 +318,4 @@ class ThirdAndFourthSection extends CRUDmodal{
 
     }
 }
-export { ThirdAndFourthSection }
+export { FirstSection }

@@ -14,14 +14,15 @@ class FirstPageController extends Controller
     public function index()
     {
         $data = FirstPage::first();
-        return view('back.firstPage', ['data' => $data ]);
+
+        return view('back.firstPage', ['data' => $data, 'area' => null ]);
     }
     public function updateAbout(Request $request){
         // validacija, kad ne per daug raidziu butu
         FirstPage::where('user_id', Auth::user()->id)->update(['about_me' => $request->about]);
         return response()->json(['msg' =>'msg']);
     }
-    public function createEducation(Request $request){
+    public function storeEducation(Request $request){
         $data = $request->all();
         $education = new Education;
         $education->date = $data['education-date'];
@@ -50,7 +51,7 @@ class FirstPageController extends Controller
         Education::where('id', (int) $request->id)->delete();
         return response()->json(['msg' => 'deleted']);
     }
-    public function createWork(Request $request){
+    public function storeWork(Request $request){
 
         $data = $request->all();
         $work = new Work;

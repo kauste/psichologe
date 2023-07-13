@@ -3,11 +3,19 @@
 @section('content')
 <div class="page--1">
     <section class="section-1 section--1">
-    @forelse ($data->images as $key => $image)
-        <img class="{{$image->is_right ? 'right' : 'left'}}" style="opacity:{{$key === 0 ? 1 : 0}}" src="{{asset('images/'. $image->picture_path)}}" alt="psichologe Alytuje Romalda Stasioniene"/>
-    @empty
-        <img class="right" style="opacity:1" src="./images/bg2.webp" alt="psichologe Alytuje Romalda Stasioniene"/>
-    @endforelse
+        <div class="edu-ul-box ul--box">
+            <ul class="education-ul">
+            @forelse ($data->images as $key => $image)
+                <li class="one-education">
+                    <img class="{{$image->is_right ? 'right' : 'left'}}" style="opacity:{{$key === 0 ? 1 : 0}}" src="{{asset('images/'. $image->picture_path)}}" alt="psichologe Alytuje Romalda Stasioniene"/>
+                </li>
+            @empty
+                <li class="one-education">
+                    <img class="right" style="opacity:1" src="./images/bg2.webp" alt="psichologe Alytuje Romalda Stasioniene"/>
+                </li>
+            @endforelse
+            </ul>
+        </div>
         <h1>Psichologė Alytuje <div>Romalda Stasionienė</div></h1>
     </section>
     <section class="section-2 section--2">

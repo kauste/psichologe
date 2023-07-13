@@ -232,7 +232,6 @@ class thirdAndFourthSectionUpdate{
 
     closeItem(){
         let i = 0;
-        console.log(this.openLi.children)
         for (let element of this.openLi.children) {
             if(element.classList.contains('edit--actions')){
                 element.style.display = 'flex'
@@ -322,13 +321,11 @@ class thirdAndFourthSectionAdd{
     }
     letCreate(){
         this.addBtnDOM.addEventListener('click', () => {
-            console.log(this.ulBoxDOM)
             this.ulBoxDOM.style.display = 'none';
             this.addBoxDOM.style.display = 'grid';
             this.addBtnDOM.style.display = 'none';
             this.backBtnDOM.style.display = 'block';
             this.modalDOM.style.height = 'fit-content';
-            console.log(window.innerHeight)
             this.modalDOM.style.marginTop = (window.innerHeight  / 2 - this.modalDOM.offsetHeight/ 2).toString() + 'px';
 
         })

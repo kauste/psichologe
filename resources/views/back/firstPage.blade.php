@@ -2,21 +2,33 @@
 
 @section('content')
 <div class="page--1 back--office back-ofice">
-@include('back.educationCRUDmodal')
-@include('back.workCRUDmodal')
+{{-- @include('back.educationCRUDmodal')
+@include('back.workCRUDmodal') --}}
+@include('back.CRUDmodal.modal')
 
-    <section class="section-1-box">
-        <div class="edit-svg-box">
-            <svg>
-                <use xlink:href="#edit"></use>
-            </svg>
-        </div>
-            <div class="section-1 section--1">
-            <img class="right" style="opacity:1" src="./../images/psichologe_alytuje_1.webp" alt="psichologe Alytuje Romalda Stasioniene"/>
-            <img class="right" style="opacity:0" src="./../images/psichologe_alytuje_2.webp" alt="psichologe Alytuje Romalda Stasioniene"/>
-            <img class="left" style="opacity:0" src="./../images/psichologe_alytuje_3.webp" alt="psichologe Alytuje Romalda Stasioniene"/>
-            <img class="left" style="opacity:0" src="./../images/psichologe_alytuje_4.webp" alt="psichologe Alytuje Romalda Stasioniene"/>
-            <div class="h1">Psichologė Alytuje <div>Romalda Stasionienė</div>
+
+    <section id="profilePic" class="section-1-box" >
+        <div class="section-1 section--1">
+            <div class="ul--box ul-box">
+
+                <ul class="profile-pic-ul --profilePic">
+                <div class="edit-svg-box --edit">
+                    <svg>
+                        <use xlink:href="#edit"></use>
+                    </svg>
+                </div>
+                @forelse ($data->images as $key => $image)
+                    <li class="one-profile-pic" id="profilePic-{{$image->id}}" style="opacity:{{$key === 0 ? '1' : '0'}}">
+                        <img class="{{$image->is_right ? 'right' : 'left'}}"  src="{{asset('/images/' . $image->picture_path) }}" alt="psichologe Alytuje Romalda Stasioniene"/>
+                    </li>
+                @empty
+                    <li class="one-profile-pic" id="profilePic-1">
+                        <img class="right" style="opacity:1" src="./../images/psichologe_alytuje_1.webp" alt="psichologe Alytuje Romalda Stasioniene"/>
+                    </li>
+                @endforelse
+                </ul>
+                <div class="h1">Psichologė Alytuje <div>Romalda Stasionienė</div>
+            </div>
         </div>
     </section>
     <section class="section-2 section--2">
@@ -42,7 +54,7 @@
             </svg>
         </div>
     </section>
-    <section id="education" class="section-3 section--3">
+    <section id="education" class="section-3 section--3 --education">
         <div class="education-box">
             <div class="edit-svg-box --edit">
                 <svg>
@@ -78,7 +90,7 @@
             </div>
         </div>
     </section>
-    <section id="work" class="section-4 section--4">
+    <section id="work" class="section-4 section--4 --work">
         <div class="work-box">
             <div class="edit-svg-box --edit">
                 <svg>

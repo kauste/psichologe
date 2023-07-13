@@ -6,6 +6,11 @@
                 <div>&#43;370 {{substr($data->telephone_number, 0, 3)}} {{substr($data->telephone_number, 2, 5)}}</div>
                 <a href="mailto:{{$data->email}}?subject=Mail from site">{{$data->email}}</a>
             </div>
+            <div class="middle">
+                <a href="#" class="active">Apie mane</a>
+                <a href="#">Straipsniai</a>
+                <a href="#">Kontaktai</a>
+            </div>
             <div class="right">
                 @if($data->facebook)
                 <a href="{{$data->facebook}}" target="_blank">

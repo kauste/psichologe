@@ -4,7 +4,7 @@ function firstSectionAnimation(){
       {opacity:0},
     ]
     const imgDisappearTiming = {
-                  duration: 4000,
+                  duration: 2000,
                   iterations: 1,
                   easing: 'ease',
                   fill: 'forwards'
@@ -22,20 +22,20 @@ function firstSectionAnimation(){
         {opacity:1},
       ]
     const h1Timing = {
-        duration:8000,
+        duration:4000,
         iteration:1,
         easing: 'ease',
         fill: 'forwards',
       }
     const h1 = document.querySelector('h1') || document.querySelector('.h1') ;
       
-    const lastImg = document.querySelectorAll('.section--1 > img').length;
+    const lastImg = document.querySelectorAll('.section--1 li').length;
     let visibleChild = 1;
     if(lastImg > 1){
       setInterval(() => {
-          const visibleImg = document.querySelector(`.section--1 img:nth-child( ${visibleChild} )`)
+          const visibleImg = document.querySelector(`.section--1 li:nth-of-type( ${visibleChild}) `)
           visibleChild = visibleChild >= lastImg ? 1 : ++visibleChild;
-          const nextVisibleImg = document.querySelector(`.section--1 img:nth-child( ${visibleChild} )`)
+          const nextVisibleImg = document.querySelector(`.section--1 li:nth-of-type( ${visibleChild}) `)
     
           visibleImg.animate(imgOpacity, imgDisappearTiming);
           nextVisibleImg.animate(imgOpacity, imgAppearTiming);

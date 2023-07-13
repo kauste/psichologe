@@ -72,14 +72,99 @@
             background-color : $green;
             -webkit-border-radius: 0.375rem;
         }
-        .modal-ul-box li, .modal-add-box > .names, .modal-add-box > .form{
+        .modal-ul-box li, .modal-add-box  .names, .modal-add-box  .form{
             width:100%;
             padding:7px 0;
-            display:grid;
-            grid-template-columns: 150px calc(100% - 380px) 80px 120px 30px;
-            align-items: center;
-         
-            .date, .about, .position{
+            &.one-work, &.one-education{
+                grid-template-columns: 150px calc(100% - 380px) 80px 120px 30px;
+                display:grid;
+                align-items: center;
+            }
+            &.one-profile-pic{
+                margin-bottom: 50px;
+                list-style: none;
+                display:grid;
+                align-items: center;
+                width:100%;
+                grid-template-columns: min(500px, 60vw) 1fr 1fr 30px;
+                .priority-box{
+                    justify-content: center;
+                    .priority{
+                        height:fit-content
+                    }
+                }
+                .img-box {
+                    width: min(500px, 60vw);
+                    height:$ratio;
+                    overflow: hidden;
+                    position: relative;
+                    background-color: #3333336d;
+                        img{
+                            height: auto;
+                            width:100%;
+                            object-fit: cover;
+                            object-position: 0% 0%;
+                        }
+                        .line{
+                            width: 100%;
+                            height: 2px;
+                            background-color: #e26a7e;
+                            position: absolute;
+                            top: calc(50% - 1px);
+                            left: 0;
+                            display:none;
+                        }
+                    }
+                
+                &.editable{
+                    .img-box {
+                        height: var(--boxHeight);
+                        overflow: visible;
+                        .line{
+                            display:inline-block;
+                        }
+                        img{
+                            margin-top:var(--marginHeight);
+                            cursor:crosshair;
+                        }
+                        position:relative;
+                        &:before{
+                            content:'';
+                            display:inline-block;
+                            position:absolute;
+                            width:100%;
+                            backdrop-filter: blur(5px);
+                            background-color: #999999a5;
+                            top:0;
+                            left:0;
+                            height: var(--borderHeight);
+                            // height:calc(100% - $ratio);
+                            // box-shadow:  0 calc(100% + $ratio) 0 #999999a5 ;
+                            // box-shadow: 0 calc($ratio / 2 + 2em) 0 -30px red;
+
+                        }
+                        &:after{
+                            height: var(--borderHeight);
+                            content:'';
+                            display:inline-block;
+                            position:absolute;
+                            width:100%;
+                            background-color: #999999a5;
+                            backdrop-filter: blur(5px);
+                            bottom:0;
+                            left:0;
+                            // height:calc(100% - $ratio);
+                        }
+                    }
+                }
+                img{
+                    width:100%;
+
+                }
+
+            }
+
+            .date, .about, .position, .priority-box{
                 padding:0 7px;
                 display: flex;
                 align-items: center;
@@ -93,6 +178,9 @@
             }
             div:not(.--edit, .--delete, .edit--actions, .update--actions)[contenteditable="true"]{
                 padding: 10px 10px 20px;
+                &.priority{
+                    padding: 10px;
+                }
                 border:1px solid #333;
                 border-left:none;
                 display: inline-block;
@@ -103,6 +191,7 @@
             }
             .update-actions, .delete-actions{
                 button{
+                    height: fit-content;
                     width: max(90%, 120px);
                 }
             }

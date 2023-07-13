@@ -6,74 +6,104 @@ body{
     height:250px;
     background: rgb(218,218,218);
     box-sizing: border-box;
-    .content-box{
-        background: rgba(218, 218, 218, 0.8);
-        width:100%;
-        position:absolute;
-        height:250px;
-        bottom:0;
-        display:flex;
-        justify-content: center;
-        .content{
-            width: min(1140px, (100vw - 60px));
+        .content-box{
+            // background: rgba(218, 218, 218, 0.8);
+            width:100%;
+            position:absolute;
+            height:250px;
+            bottom:0;
             display:flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            .left{
-                width: max-content;
-                display: flex;
-                flex-direction: column;    
-                h5{
-                    font-weight: normal;
-                    font-size: 20px;
-                    padding-bottom: 10px;
-                    color: #e26a7e,
-                }
+            .content{
+                width: min(1140px, (100vw - 60px));
+                display:grid;
+                grid-template-columns: repeat(3, 1fr);
+                align-items: center;
+                height:60%;
                 a{
                     text-decoration: none;
                     color:#555;
-                    box-shadow: 0 4px 0 0px rgb(218,218,218), 0 1px 0 0px #e26a7e, ;
+                    box-shadow: 0 4px 0 0px rgb(218,218,218), 0 1px 0 0px $deepPink, ;
                     transition: box-shadow 0.3s ease;
                     &:hover{
-                        box-shadow: 50px 4px 0 0px rgb(218,218,218), 0 1px 0 0px #e26a7e, ;
+                        box-shadow: 50px 4px 0 0px rgb(218,218,218), 0 1px 0 0px $deepPink, ;
     
                     }
                 }
-        }
-       
-        }
-    }
-
-    .right{
-        display:flex;
-        gap: 25px;
-        svg{
-            fill:#555;
-            height:35px;
-            width:25px;
-            // -webkit-mask-image: linear-gradient(45deg,#000 25%,rgba(0,0,0,.2) 50%,#000 75%);
-            // mask-image: linear-gradient(45deg,#000 25%,rgba(0,0,0,.2) 50%,#000 75%);
-            // -webkit-mask-size: 800%;
-            // mask-size: 800%;
-            // -webkit-mask-position: 0;
-            // mask-position: 0;
-            // transform: fill 3s ease;
-        }
-        svg:hover {
-            animation: change-color 1s ease forwards;
-            @keyframes change-color {
-                to{
-                    fill:#e26a7e;
+                .left{
+                    justify-self: start;
+                    width: max(100%, max-content);
+                    display: flex;
+                    flex-direction: column;    
+                    h5{
+                        font-weight: normal;
+                        font-size: 20px;
+                        padding-bottom: 10px;
+                        color: $deepPink,
+                    }
                 }
+                .middle{
+                    display:flex;
+                    flex-wrap: wrap;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 10px;
+                    width:100%;
+                    height:100%;
+                    border-left: $deepPink 1px solid;
+                    border-right: $deepPink 1px solid;
+                    a{
+                        width:fit-content;
+                    }
+
+                }
+                .right{
+                    justify-self: end;
+                    display:flex;
+                    gap: 25px;
+                    a{
+                        background-color: $deepPink;
+                        box-sizing: content-box;
+                        border-radius: 50%;
+                        width:50px;
+                        height:50px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        svg{
+                            fill:rgb(218,218,218);
+                            height:20px;
+                            width:20px;
+                        }
+                        &:hover {
+                            animation:drop-shadow 0.5s ease forwards;
+                            @keyframes drop-shadow {
+                                from{
+                                    box-shadow: 0 0 5px #BBB;
+                                }
+                                to{
+                                    box-shadow: 2px 2px 5px #BBB;
+            
+                                }
+                                
+                            }
+                            svg{
+                                animation: change-color 0.5s ease forwards;
+                                @keyframes change-color {
+                                    to{
+                                        fill:#BBB;
+                                    }
+                                }
+                            }
+                        }
+                    }
+            
+                }
+        
             }
-
-
-            // transition: mask-position 2s ease,-webkit-mask-position 2s ease;
-            // -webkit-mask-position: 120%;
-            // mask-position: 120%;
-            // opacity: 1;
         }
-    }
 
     }
 }

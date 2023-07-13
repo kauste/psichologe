@@ -15,8 +15,11 @@ return new class extends Migration
     {
         Schema::create('first_pg_images', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(FirstPage::class)->nullable();
+            $table->foreignIdFor(FirstPage::class)->default(1);
             $table->boolean('is_right');
+            $table->unsignedTinyInteger('priority')->nullable();
+            $table->string('object_position', 20)->nullable();
+            $table->string('face-cordinations', 50)->nullable();
             $table->string('picture_path', 150);
             $table->timestamps();
         });
