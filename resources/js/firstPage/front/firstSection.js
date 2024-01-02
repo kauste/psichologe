@@ -1,4 +1,15 @@
-function firstSectionAnimation(){
+class FirstSecAnimation{
+  constructor(){
+    this.visibleChild = 1;
+    this.visibleImg;
+    this.nextVisibleImg;
+    this.setVariables();
+    this.animation();
+  }
+  setVariables(){
+    this.nextVisibleImg = document.querySelector(`.section--1 li:nth-of-type( ${this.visibleChild}) `)
+  }
+  animation(){
     const imgOpacity = [
       {opacity:1},
       {opacity:0},
@@ -7,13 +18,12 @@ function firstSectionAnimation(){
                   duration: 2000,
                   iterations: 1,
                   easing: 'ease',
-                  fill: 'forwards'
+                  fill: 'forwards',
                 };
     const imgAppearTiming = {
               ...imgDisappearTiming,   
               direction: 'reverse', 
-              delay:2000
-            }
+            };
   
     const h1Opacity = [
         {opacity:1},
@@ -23,31 +33,31 @@ function firstSectionAnimation(){
       ]
     const h1Timing = {
         duration:4000,
-        iteration:1,
+        iterations:1,
         easing: 'ease',
         fill: 'forwards',
       }
     const h1 = document.querySelector('h1') || document.querySelector('.h1') ;
       
     const lastImg = document.querySelectorAll('.section--1 li').length;
-    let visibleChild = 1;
+
     if(lastImg > 1){
       setInterval(() => {
-          const visibleImg = document.querySelector(`.section--1 li:nth-of-type( ${visibleChild}) `)
-          visibleChild = visibleChild >= lastImg ? 1 : ++visibleChild;
-          const nextVisibleImg = document.querySelector(`.section--1 li:nth-of-type( ${visibleChild}) `)
-    
-          visibleImg.animate(imgOpacity, imgDisappearTiming);
-          nextVisibleImg.animate(imgOpacity, imgAppearTiming);
-    
-          if(nextVisibleImg.classList.contains('left') && visibleImg.classList.contains('right') 
-          || visibleImg.classList.contains('left') && nextVisibleImg.classList.contains('right')){
+          this.visibleImg = this.nextVisibleImg;
+          this.visibleChild = this.visibleChild >= lastImg ? 1 : ++this.visibleChild;
+          this.nextVisibleImg = document.querySelector(`.section--1 li:nth-of-type( ${this.visibleChild}) `)
+
+          this.visibleImg.animate(imgOpacity, imgDisappearTiming);
+          this.nextVisibleImg.animate(imgOpacity, imgAppearTiming);
+          if((this.nextVisibleImg.classList.contains('left') && this.visibleImg.classList.contains('right')) 
+          || (this.visibleImg.classList.contains('left') && this.nextVisibleImg.classList.contains('right'))){
             setTimeout(() => {
-              nextVisibleImg.classList.contains('left') ? h1.style.cssText = 'right:150px; left:unset' : h1.style.cssText = 'left:150px; right:unset';
-            }, 3000)
+              this.nextVisibleImg.classList.contains('left') ? h1.style.cssText = 'right:150px; left:unset' : h1.style.cssText = 'left:150px; right:unset';
+            }, 2000)
             h1.animate(h1Opacity, h1Timing)
           }
       }, 20000)
     }
   }
-  export default firstSectionAnimation;
+}
+export default FirstSecAnimation;

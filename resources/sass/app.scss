@@ -6,9 +6,9 @@
 
 @import 'parts/nav';
 @import 'parts/loader';
-@import 'firstPage/section-1.scss';
-@import 'firstPage/section-2.scss';
-@import 'firstPage/section-3-and-4.scss';
+@import 'front/firstPage/section-1.scss';
+@import 'front/firstPage/section-2.scss';
+@import 'front/firstPage/section-3-and-4.scss';
 @import 'parts/footer';
 @import 'parts/login';
 @import 'parts/modal';
@@ -42,6 +42,7 @@ h1, .h1{
     font-size: 40px;
     letter-spacing: 0.4px;
     font-weight: 300;
+    z-index:1;
 }
 h2{
     font-size: 30px;

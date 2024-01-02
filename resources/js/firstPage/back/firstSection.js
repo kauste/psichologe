@@ -77,21 +77,21 @@ class FirstSection extends CRUDmodal{
             console.log('start')
             // this.prevPicPos = event.clientY;
         })
-        // this.imgDOM.addEventListener('drag', (e) => {
-        //     console.log('+ clientY ' +  e.clientY)
+        this.imgDOM.addEventListener('drag', (e) => {
+            console.log('+ clientY ' +  e.clientY)
 
-            // if((this.marginHeight + e.clientY - this.prevPicPos) > this.additionalHeight){
-            //      this.marginHeight = this.additionalHeight;
-            // }
-            // else if((this.marginHeight + e.clientY - this.prevPicPos) < 0){
-            //     this.marginHeight = 0;
-            // }
-            // else{
-            //     this.marginHeight += (e.clientY - this.prevPicPos);
-            // }
-            // this.imgBoxDOM.style.setProperty('--marginHeight', this.marginHeight + 'px');
-            // this.prevPicPos = e.clientY;
-        // })
+            if((this.marginHeight + e.clientY - this.prevPicPos) > this.additionalHeight){
+                 this.marginHeight = this.additionalHeight;
+            }
+            else if((this.marginHeight + e.clientY - this.prevPicPos) < 0){
+                this.marginHeight = 0;
+            }
+            else{
+                this.marginHeight += (e.clientY - this.prevPicPos);
+            }
+            this.imgBoxDOM.style.setProperty('--marginHeight', this.marginHeight + 'px');
+            this.prevPicPos = e.clientY;
+        })
         
         this.imgDOM.addEventListener('dragend', (e) => {
             e.preventDefault();

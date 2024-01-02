@@ -1,182 +1,52 @@
-class ThirdAndFourthSec{
-    constructor(selector){
-        this.selector = selector;
-        this.sectionDOM;
-        this.ulBoxDOM;
-        this.ulDOM;
-        this.downBtnDOM;
-        this.upBtnDOM;
-        this.transformOptions;
-        this.ulBoxHeight;
-        this.ulHeight;
-        this.liHeight;
-        this.currTransform = 0;
-        this.isGoingDown = true;
-        this.touchPose;
-        this.init()
-    }
-    init(){
-        this.setVariables()
-        this.resizeWindow()
-        this.sectionAppear()
-        this.setScroll()
+import Swiper from 'swiper';
+import { Navigation } from 'swiper/modules';
+class ListSwiper{
+    constructor(section){
+        this.section = section;
+        this.swiper;
+        this.nextBtn;
+        this.prevBtn;
+        this.setVariables();
+        this.initialiseSwiper();
+        this.onSlideChange();
     }
     setVariables(){
-        this.sectionDOM = document.querySelector(this.selector);
-        this.ulBoxDOM = this.sectionDOM.querySelector('.ul--box');
-        this.ulDOM = this.ulBoxDOM.querySelector('ul');
-        this.downBtnDOM = this.sectionDOM.querySelector('.ch--down');
-        this.upBtnDOM = this.sectionDOM.querySelector('.ch--up');
-        this.ulBoxHeight = this.ulBoxDOM.offsetHeight;
-        this.ulHeight = this.ulDOM.offsetHeight;
-        this.liHeight = this.ulDOM.querySelector('li').offsetHeight;
-        this.transformOptions = {
-            duration: 1200,
-            easing: 'ease',
-            iterations:1,
-        }
+        this.nextBtn = document.querySelector(this.section + ' .swiper--button--next')
+        this.prevBtn = document.querySelector(this.section + ' .swiper--button--prev')
     }
-    resizeWindow(){
-        window.addEventListener('resize', () => {
-            this.liHeight = this.ulDOM.querySelector('li').offsetHeight;
-            if(this.currTransform !== 0){
-                this.currTransform = 0;
-                this.ulDOM.style = `transform:translateY(0)`;
-
-            }
+    initialiseSwiper(){
+        this.swiper = new Swiper(this.section + ' .--swiper', {
+            direction: 'vertical',
+            speed: 900,
+            modules: [ Navigation ],
+            slidesPerView: 5,
+            slidesPerGroup: 5,
+            navigation: {
+                nextEl: this.section + ' .swiper--button--next',
+                prevEl: this.section + ' .swiper--button--prev',
+            },
+            allowTouchMove: true,
+        
         })
     }
-    sectionAppear(){
-        const secrionappearAnim = [
-            {opacity:0.5},
-            {opacity:1}
-        ]
-        const secrionappearOptions = {
-            duration: 2000,
-            iterations: 1,
-            easing: 'ease',
-            fill:'forwards'
-        }
-        const onScrollHandler = () => {
-            if((this.sectionDOM.getBoundingClientRect().top - window.innerHeight / 3 * 2  <=  0)){
-                this.sectionDOM.animate(secrionappearAnim, secrionappearOptions)
-                window.removeEventListener('scroll', onScrollHandler);
+    onSlideChange(){
+        this.swiper.on('slideChange', () => {
+            if(this.swiper.isBeginning && !this.prevBtn.classList.contains('disabled')){
+                this.prevBtn.classList.add('disabled')
             }
-        }
-        window.addEventListener('scroll', onScrollHandler)
-    }
-    setScroll(){
-        if(this.ulBoxHeight === this.ulHeight){
-            this.downBtnDOM.style.display = 'none';
-            this.upBtnDOM.style.display = 'none';
-        }
-        else {
-            this.downBtnDOM.addEventListener('click', this.scrollDown)
-            this.touch()
-        }
-    }
-
-    scrollDown = () => {
-        this.upBtnDOM.addEventListener('click', this.scrollUp)
-        this.upBtnDOM.classList.remove('disabled');
-        let transformTo;
-        if(this.ulHeight + this.currTransform - this.ulBoxHeight > this.ulBoxHeight){
-            transformTo = this.currTransform - this.ulBoxHeight;
-        }
-        else{
-            transformTo = -1 * (this.ulHeight - this.ulBoxHeight);
-            this.downBtnDOM.removeEventListener('click', this.scrollDown)
-            this.downBtnDOM.classList.add('disabled')
-        }
-        const transformAnim = [
-            {transform: `translateY(${ this.currTransform }px)`},
-            {transform: `translateY(${ transformTo }px)`},
-        ]
-        this.ulDOM.animate(transformAnim, this.transformOptions)
-        setTimeout(() => {
-            this.ulDOM.style = `transform:translateY(${ transformTo }px)`;
-        }, this.transformOptions.duration)
-
-        this.currTransform = transformTo;
-    }
-    scrollUp = () => {
-        this.downBtnDOM.addEventListener('click', this.scrollDown)
-        this.downBtnDOM.classList.remove('disabled');
-        let transformTo;
-        if(this.currTransform < -1 * this.ulBoxHeight){
-            transformTo = this.currTransform + this.ulBoxHeight;
-        }
-        else{
-            transformTo = 0;
-            this.upBtnDOM.removeEventListener('click', this.scrollUp)
-            this.upBtnDOM.classList.add('disabled')
-        }
-        const transformAnim = [
-            {transform: `translateY(${ this.currTransform }px)`},
-            {transform: `translateY(${ transformTo }px)`},
-        ]
-        this.ulDOM.animate(transformAnim, this.transformOptions)
-        setTimeout(() => {
-            this.ulDOM.style = `transform:translateY(${ transformTo }px)`;
-        }, this.transformOptions.duration)
-
-        this.currTransform = transformTo;
-    }
-    touch(){
-        const touchStart = (e) => {
-            e.preventDefault();
-            this.touchPose = e.changedTouches[0].clientY;
-            this.ulBoxDOM.removeEventListener("touchstart", touchStart);
-        }
-        const touchMove = (e) => {
-            e.preventDefault();
-            if(this.touchPose > e.changedTouches[0].clientY
-            && -1* this.currTransform - 1 <= this.ulHeight - this.ulBoxHeight){
-                -1* this.currTransform - 1 === this.ulHeight - this.ulBoxHeight ? this.currTransform -= 1 : this.currTransform -= 2;
-                this.ulDOM.style = `transform: translateY(${ this.currTransform}px)`;
-                if(this.upBtnDOM.classList.contains('disabled')){
-                    this.upBtnDOM.classList.remove('disabled');
-                    this.upBtnDOM.addEventListener('click', this.scrollUp)
-                }
-                if(-1 * this.currTransform === this.ulHeight - this.ulBoxHeight){
-                    this.downBtnDOM.removeEventListener('click', this.scrollDown)
-                    this.downBtnDOM.classList.add('disabled')
-                }
-                this.isGoingDown = true;
-
+            else if(!this.swiper.isBeginning && this.prevBtn.classList.contains('disabled')){
+                this.prevBtn.classList.remove('disabled');
             }
-            else if(this.touchPose < e.changedTouches[0].clientY
-            &&  this.currTransform + 1 <= 0){
-                -1* this.currTransform - 1 === 0 ? this.currTransform += 1 : this.currTransform += 2;
-                this.ulDOM.style = `transform: translateY(${ this.currTransform}px)`;
-                if(this.currTransform === 0){
-                    this.upBtnDOM.removeEventListener('click', this.scrollUp)
-                    this.upBtnDOM.classList.add('disabled')
-                }
-                if(this.downBtnDOM.classList.contains('disabled')){
-                    this.downBtnDOM.classList.remove('disabled');
-                    this.downBtnDOM.addEventListener('click', this.scrollDown)
-                }
-                this.isGoingDown = false;
+            if(this.swiper.isEnd && !this.nextBtn.classList.contains('disabled')){
+                this.nextBtn.classList.add('disabled')
             }
-            this.touchPose = e.changedTouches[0].clientY;
-           
-        }
-        const touchEnd = (e) => {
-            e.preventDefault();
-            let transformTo;
-            if(this.isGoingDown){
-                transformTo = Math.floor(this.currTransform / this.liHeight ) * this.liHeight;
+            else if(!this.swiper.isEnd && this.nextBtn.classList.contains('disabled')){
+                this.nextBtn.classList.remove('disabled');
             }
-            else {
-                transformTo = Math.ceil(this.currTransform / this.liHeight ) * this.liHeight;
-            }
-            this.ulDOM.style.transform = `translateY(${ transformTo  }px)`;
-
-        }
-        this.ulBoxDOM.addEventListener("touchstart", touchStart,  { passive: false });
-        this.ulBoxDOM.addEventListener("touchmove", touchMove,  { passive: false });
-        this.ulBoxDOM.addEventListener("touchend", touchEnd,  { passive: false });
+        });
     }
 }
-export { ThirdAndFourthSec}
+export default ListSwiper;
+
+
+
