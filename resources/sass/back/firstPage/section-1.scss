@@ -1,12 +1,12 @@
 .section-1-box{
-    height:100vh;
+    height:var(--sec-1-height);
 }
 .section-1{
     position:absolute;
     top:0;
     left:0;
     width:100%;
-    height:100vh;
+    height:var(--sec-1-height);
     z-index:0;
     background-color: #101e17;
     .ul-box{
@@ -14,7 +14,7 @@
         z-index:1;
         top:0;
         width:100%;
-        height:100vh;
+        height:var(--sec-1-height);
         .profile-pic-ul{
             padding:0;
             list-style: none;
@@ -29,11 +29,9 @@
                 z-index: 0;
                 top:0;
                 img{
-
                     width:100%;
-                    height:100vh;
+                    height:var(--sec-1-height);
                     object-fit: cover;
-                    object-position: 0% 0%;
                  }  
             }
         }
@@ -44,7 +42,6 @@
     position:relative;
     .section-1-box{
         position:relative;
-        height:100vh;
         .edit-svg-box{
             position:absolute;
             z-index: 2;

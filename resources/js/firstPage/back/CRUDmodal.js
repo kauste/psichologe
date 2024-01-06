@@ -57,7 +57,6 @@ class CRUDmodal{
     setEditVariables(){
         axios.get(`${eval(this.selector + 'EditRoute')}`)
         .then(res => {
-            console.log(`${eval(this.selector + 'EditRoute')}`)
             this.ulBoxDOM.innerHTML = res.data.html;
             this.modalDOM = this.modalBoxDOM.querySelector(`.--modal`)
             this.modalDOM.style.animation = 'open-modal 0.5s ease forwards';
@@ -66,7 +65,11 @@ class CRUDmodal{
             this.liDOMS = this.ulDOM.querySelectorAll('li');
             this.editItemBtnDOMS = this.modalBoxDOM.querySelectorAll('ul li .--edit')
             this.deleteItemBtnDOMS = this.modalBoxDOM.querySelectorAll('ul li .--delete')
-            
+            // le specific
+            if(typeof this.setSpecificVariables === 'function') {
+                this.setSpecificVariables();
+            }
+
             this.letEditItem();
             this.letDeleteItem();
             this.setCreateVariables()

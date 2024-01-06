@@ -1,8 +1,8 @@
   <ul class="profile-pic-ul --profilePic">
-      @forelse ($data->images as $img)
-      <li class="one-profile-pic" id="profilePic-edit-{{$img->id}}">
+      @forelse ($data->images as $image)
+      <li class="one-profile-pic" id="profilePic-edit-{{$image->id}}">
             <div class="img-box profilePic--img">
-                <img src="{{asset('/images/' .  $img->picture_path) }}" alt="image"/>
+                <img style="object-position:0 {{$image->object_y_position}}%" src="{{asset('/images/' .  $image->picture_path) }}" alt="image"/>
                 <span class="line --line"></span>
             </div>
             <div class="priority-box">
@@ -12,7 +12,7 @@
                 <div class="--priority priority">nesvarbu</div>
             @endif
                 </div>
-          <div class="edit--actions edit-actions">
+          <div class="edit--actions edit-actions" style="display:flex">
               <div class="svg-box --edit">
                   <svg class="edit-svg">
                       <use xlink:href="#edit"></use>
@@ -24,7 +24,7 @@
                   </svg> 
               </div>
           </div>
-          <div class="update-actions update--actions">
+          <div class="update-actions update--actions" style="display:none">
               <button class="cancel-btn --cancel" type="button">Atšaukti</button>
               <button class="update-btn --update" type="button">Redaguoti</button>
           </div>

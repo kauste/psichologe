@@ -95,15 +95,13 @@
                 }
                 .img-box {
                     width: min(500px, 60vw);
-                    height:$ratio;
                     overflow: hidden;
                     position: relative;
                     background-color: #3333336d;
                         img{
-                            height: auto;
+                            height: 100%;
                             width:100%;
                             object-fit: cover;
-                            object-position: 0% 0%;
                         }
                         .line{
                             width: 100%;
@@ -118,7 +116,6 @@
                 
                 &.editable{
                     .img-box {
-                        height: var(--boxHeight);
                         overflow: visible;
                         .line{
                             display:inline-block;

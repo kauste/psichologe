@@ -50,6 +50,8 @@ Route::prefix('admin')->name('back-')->middleware('auth')->group(function(){
     })->name('edit-profile-pic');
     Route::get('create-profile-pic', function () {
          return response()->json(['html' => view('back.CRUDmodal.profilePicCreate')->render()]);
-        })->name('create-profile-pic');
+    })->name('create-profile-pic');
+    Route::put('update-profile-pic-position', [FirstPageController::class, 'updateProfilePicPosition'])->name('update-profile-pic-position');
+
 });
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
             'linkedin' => 'https://www.linkedin.com/in/romalda-stasioniene-a26167212/',
             'about_me' => 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla, nam. Obcaecati, cum laboriosam. Sunt, tempore at porro eligendi perspiciatis odit doloremque beatae impedit consequatur totam maiores dicta, ratione doloribus nulla repellendus ex sequi pariatur dolorum nam consectetur cum nostrum accusamus. Molestias numquam sapiente magnam quod libero modi dicta unde temporibus ipsam sint corporis quaerat quam dolorum totam eos velit id optio in, ex quo ad dolor est fugit? Dolores odit expedita est libero optio asperiores explicabo neque, laboriosam obcaecati at blanditiis itaque ut eligendi! Quod voluptas eveniet tempora molestiae, modi nam laboriosam sapiente minus optio odio at molestias fugit culpa.'
         ]);
-        foreach(range(1, 4) as $i){
+        foreach(range(1, 5) as $i){
             DB::table('first_pg_images')->insert([
                 'first_page_id' => 1,
                 'is_right' => $i < 3 ? 1 : 0,

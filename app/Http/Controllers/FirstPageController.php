@@ -6,6 +6,8 @@ use App\Models\FirstPage;
 use Illuminate\Http\Request;
 use App\Models\Education;
 use App\Models\Work;
+use App\Models\FirstPgImages;
+
 use Auth;
 
 class FirstPageController extends Controller
@@ -78,6 +80,13 @@ class FirstPageController extends Controller
     public function deleteWork(Request $request){
         Work::where('id', (int) $request->id)->delete();
         return response()->json(['msg' => 'deleted']);
+    }
+    public function updateProfilePicPosition(Request $request){
+        dump($request->all()['objectYposition']);
+        FirstPgImages::where('id', $request->all()['picId'])
+                    ->update(['object_y_position' => $request->all()['objectYposition']]);
+
+        return response()->json(['msg' => 'ok']);
     }
 
 }
