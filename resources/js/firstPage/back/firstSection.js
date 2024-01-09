@@ -1,8 +1,8 @@
 import { CRUDmodal } from "./CRUDmodal";
 
 class FirstSection extends CRUDmodal{
-    constructor(selector){
-        super(selector)
+    constructor(CRUDmodalVars, cssStyles){
+        super(CRUDmodalVars, cssStyles, 'profilePic')
         this.openLiId;
         this.secImgDOM;
         this.imgsBoxesDOMS;
@@ -17,32 +17,64 @@ class FirstSection extends CRUDmodal{
         this.marginHeight;
         this.additionalHeight;
         this.objectYposition;
-        // this.setSpecificVariables();
-        this.laikinai()
+    }
 
-    }
-    laikinai(){
-        this.setEditVariables()
-        this.modalBoxDOM.classList.add('show');
-        this.modalBoxDOM.style.animation = 'open-modal-box 0.5s ease forwards';
-    }
     setSpecificVariables(){
         this.imgsBoxesDOMS = document.querySelectorAll('.profilePic--img');
         const imgsWidth = this.imgsBoxesDOMS[0].querySelector('img').clientWidth;
-        // const rootStyles = getComputedStyle(document.documentElement);
-        // const secHeight = parseInt(rootStyles.getPropertyValue('--sec-1-height'));
-
         const secHeight = window.innerHeight;
         const screenWith = parseInt(window.screen.width);
-        // console.log(screenWith)
-        // console.log(secHeight)
-        // console.log(screenWith / secHeight)
         this.boxHeight = secHeight * imgsWidth / screenWith;
         this.imgsBoxesDOMS.forEach(imgBoxDOM => {
+            console.log(this.boxHeight);
             imgBoxDOM.style.height = this.boxHeight + 'px';
         });
     }
+    openBorderCSS(){
+        this.liChildernDOMS.forEach((element, i) => {
+            element.style.cssText = 'border-top: 1px solid #333; border-bottom:1px solid #333;'
+            if(i === 0){
+                element.style.borderLeft = '1px solid #333'
+            }
+            else if (i === 1){
+                element.style.borderRight = ' 1px solid #333'
+            }
+        })
+    }
+    removeOpenBorderCSS(){
+        this.liChildernDOMS.forEach((element) => {
+            element.style.border = 'none';
+        })
+    }
+    warningBorderCSS(){
+        this.ulBoxDOM.scrollTop = this.openLi.offsetTop - this.openLi.offsetHeight - 10;
+        this.liChildernDOMS.forEach((child, i) => {
+            child.style.border = this.warningBorderCSSCSS;
+            if(i === 0) child.style.borderRight = 'none'
+            if (i === 1) child.style.borderLeft = 'none';
+            
+        })
+    }
     // let edit
+    letEditItemHandler = (editItemBtn) => (e) => {
+        e.preventDefault();
+        if(this.openLi){
+            this.warningBorderCSS()
+        }
+        else{
+            this.openLi = editItemBtn.closest('li');
+            this.setItemsDOMS();
+            this.openBorderCSS()
+
+            this.setItemVariables();
+            this.setElementConfig();
+            this.letDrag();
+            this.changeToEditButtons();
+
+            this.cancelBtnDOM.addEventListener('click', this.cancelEdit, {once:true})
+            this.updateBtnDOM.addEventListener('click', this.update, {once:true})
+        }
+    }
     setItemsDOMS(){
         this.liChildernDOMS = this.openLi.querySelectorAll(':scope > div:not(.edit--actions, .update--actions, .delete--actions > .--priority, img');
         this.imgBoxDOM = this.openLi.querySelector('.profilePic--img')
@@ -105,31 +137,7 @@ class FirstSection extends CRUDmodal{
         const updateActionsDOM = this.openLi.querySelector('.update--actions');
         updateActionsDOM.style.display = (updateActionsDOM.style.display === 'none') ? 'flex' : 'none';
     }
-    letEditItemHandler = (editItemBtn) => (e) => {
-        e.preventDefault();
-        e.stopPropagation()
-        if(this.openLi){
-            this.ulBoxDOM.scrollTop = this.openLi.offsetTop - 137;
-            this.imgBoxDOM.style.outline = '2px solid #ba2f47';
-            this.priority.style.cssText = 'border-width:2px; border-color: #ba2f47';
-        }
-        else{
-            this.openLi = editItemBtn.closest('li');
-            this.setItemsDOMS();
-            this.setItemVariables();
-            this.setElementConfig();
-            this.letDrag();
 
-            this.changeToEditButtons();
-            this.cancelBtnDOM.addEventListener('click', this.cancelEdit, {once:true})
-            this.updateBtnDOM.addEventListener('click', this.update, {once:true})
-        }
-    }
-    letEditItem(){
-        this.editItemBtnDOMS.forEach(editItemBtn => {
-            editItemBtn.addEventListener('click', this.letEditItemHandler(editItemBtn))
-        }, {once:true});
-    }
 
     // close/update edit
     closeItemConfig(){
@@ -156,21 +164,18 @@ class FirstSection extends CRUDmodal{
     cancelEdit = () => {
         this.updateBtnDOM.removeEventListener('click', this.update)
         this.closeItem()
+        this.removeOpenBorderCSS();
     }
     update = () => {
         this.objectYposition = parseFloat(100 - (100  / this.additionalHeight * this.marginHeight)).toFixed(2);
-
-
         this.loadeBoxDOM.style.display = 'block';
-
-            axios.put(updateImageRoute, {picId:this.openLiId, objectYposition:this.objectYposition})
-            .then(res => {
-                console.log(res.data.msg)
-                this.cancelBtnDOM.removeEventListener('click', this.cancel)
-                this.closeItem()
-                this.loadeBoxDOM.style.display = 'none';
-            })
-        // this.closeItem()
+        axios.put(updateImageRoute, {picId:this.openLiId, objectYposition:this.objectYposition})
+        .then(res => {
+            console.log(res.data.msg)
+            this.cancelBtnDOM.removeEventListener('click', this.cancel)
+            this.closeItem()
+            this.loadeBoxDOM.style.display = 'none';
+        })
 
             // this.liChildernDOMS.forEach(element => {
             //     switch(true){
@@ -190,44 +195,27 @@ class FirstSection extends CRUDmodal{
     }
 
 
-    letDeleteItem(){
-        this.deleteItemBtnDOMS.forEach(deleteItemBtn => {
-            deleteItemBtn.addEventListener('click', (e) => {
-                if(this.openLi && this.openLi.id !== e.target.closest('li').id){
-                    this.ulBoxDOM.scrollTop = this.openLi.offsetTop - this.openLi.offsetHeight - 10;
-                    this.liChildernDOMS.forEach((child, i) => {
-                        child.style.cssText = 'border-top: 2px solid #ba2f47; border-bottom: 2px solid #ba2f47';
-                        if(i === 0){
-                            child.style.borderLeft = '2px solid #ba2f47'
-                        }
-                        else if (i === this.liChildernDOMS.length - 1){
-                            child.style.borderRight = ' 2px solid #ba2f47'
-                        }
-                    })
-                }
-                else{
-                    this.openLi = deleteItemBtn.closest('li');                    
-                    this.liChildernDOMS = this.openLi.querySelectorAll(':scope > div:not(.edit--actions, .update--actions, .delete--actions)');
-                    this.liChildernDOMS.forEach((element, i) => {
-                        element.style.cssText = 'border-top: 1px solid #333; border-bottom:1px solid #333;'
-                        if(i === 0){
-                            element.style.borderLeft = '1px solid #333'
-                        }
-                        else if (i === this.liChildernDOMS.length - 1){
-                            element.style.borderRight = ' 1px solid #333'
-                        }
-                    })
-                    const editActionsDOM = this.openLi.querySelector('.edit--actions');
 
-                    editActionsDOM.style.display = 'none';
 
-                    const deleteActionsDOM = this.openLi.querySelector('.delete--actions');
-                    deleteActionsDOM.style.display = 'flex'
+    letDeleteItemHandler = (e) => {
+        if(this.openLi && this.openLi.id !== e.target.closest('li').id){
+            this.warningBorderCSS()
+        }
+        else{
+            this.openLi = e.target.closest('li');                    
+            this.liChildernDOMS = this.openLi.querySelectorAll(':scope > div:not(.edit--actions, .update--actions, .delete--actions)');
+            this.openBorderCSS()
+            this.changeToDeleteButtons();
 
-                    this.deleteItem();
-                }
-            })
-        }, {once:true});
+            this.deleteItem();
+        }
+    }
+    changeToDeleteButtons(){
+        const editActionsDOM = this.openLi.querySelector('.edit--actions');
+        editActionsDOM.style.display = 'none';
+
+        const deleteActionsDOM = this.openLi.querySelector('.delete--actions');
+        deleteActionsDOM.style.display = 'flex'
     }
     deleteItem(){
         const cancelBtnDOM = this.openLi.querySelector('.delete--actions > .--cancel');
@@ -235,10 +223,7 @@ class FirstSection extends CRUDmodal{
         const deleteBtnDOM = this.openLi.querySelector('.delete--actions > .--delete');
 
         const cancel = () => {
-            this.liChildernDOMS = this.openLi.querySelectorAll(':scope > div:not(.edit--actions, .update--actions, .delete--actions)');
-            this.liChildernDOMS.forEach((element) => {
-                element.style.border = 'none'
-            })
+            this.removeOpenBorderCSS();
             const editActionsDOM = this.openLi.querySelector('.edit--actions');
             editActionsDOM.style.display = 'flex';
             const deleteActionsDOM = this.openLi.querySelector('.delete--actions');
@@ -253,7 +238,7 @@ class FirstSection extends CRUDmodal{
             const openLiId = this.openLi.id.replace(this.selector + '-edit-', '')
             this.loadeBoxDOM.style.display = 'block';
             axios.delete(eval(`${this.selector}DeleteRoute`) + '/' + openLiId)
-            .then(res => {
+            .then(_ => {
                 const sectionLidDOM = this.sectionDOM.querySelector(`#${this.selector}-${openLiId}`)
                 this.sectionUlDOM.removeChild(sectionLidDOM)
                 this.ulDOM.removeChild(this.openLi)
@@ -267,7 +252,7 @@ class FirstSection extends CRUDmodal{
     }
     store(){
         this.storeBtnDOM.addEventListener('click', () => {
-            this.contentDOMS.forEach(contentDOM => {
+            this.createInputsDOMS.forEach(contentDOM => {
                 switch(true){
                     case contentDOM.classList.contains(`${this.selector}--date`):
                         this.createdData[`${this.selector}-date`] = contentDOM.innerText;
@@ -320,16 +305,16 @@ class FirstSection extends CRUDmodal{
                 this.sectionUlDOM.replaceWith(this.sectionUlDOM.cloneNode(true));
                 this.addBoxDOM.replaceWith(this.addBoxDOM.cloneNode(true))
                 this.init()
-                this.contentDOMS.forEach(contentDOM => contentDOM.innerText = '')
+                this.createInputsDOMS.forEach(contentDOM => contentDOM.innerText = '')
                 this.loadeBoxDOM.style.display = 'none';
-                this.contentDOMS.forEach(child => child.style.cssText = 'border-width: 1px; border-color:#333')
+                this.createInputsDOMS.forEach(child => child.style.cssText = 'border-width: 1px; border-color:#333')
 
                 console.log(res.data.msg)
             })
         })
         this.cancelBtnDOM.addEventListener('click', () => {
-            this.contentDOMS.forEach(contentDOM => contentDOM.innerText = '')
-            this.contentDOMS.forEach(child => child.style.cssText = 'border-width: 1px; border-color:#333')
+            this.createInputsDOMS.forEach(contentDOM => contentDOM.innerText = '')
+            this.createInputsDOMS.forEach(child => child.style.cssText = 'border-width: 1px; border-color:#333')
 
         })
 

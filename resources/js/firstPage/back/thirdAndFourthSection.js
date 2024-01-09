@@ -3,6 +3,7 @@ import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
 
 class ThirdAndFourthSection extends CRUDmodal{
+    
     closeItem(){
         let i = 0;
         for (let element of this.openLi.children) {
@@ -214,7 +215,7 @@ class ThirdAndFourthSection extends CRUDmodal{
     }
     store(){
         this.storeBtnDOM.addEventListener('click', () => {
-            this.contentDOMS.forEach(contentDOM => {
+            this.createInputsDOMS.forEach(contentDOM => {
                 switch(true){
                     case contentDOM.classList.contains(`${this.selector}--date`):
                         this.createdData[`${this.selector}-date`] = contentDOM.innerText;
@@ -267,16 +268,16 @@ class ThirdAndFourthSection extends CRUDmodal{
                 this.sectionUlDOM.replaceWith(this.sectionUlDOM.cloneNode(true));
                 this.addBoxDOM.replaceWith(this.addBoxDOM.cloneNode(true))
                 this.init()
-                this.contentDOMS.forEach(contentDOM => contentDOM.innerText = '')
+                this.createInputsDOMS.forEach(contentDOM => contentDOM.innerText = '')
                 this.loadeBoxDOM.style.display = 'none';
-                this.contentDOMS.forEach(child => child.style.cssText = 'border-width: 1px; border-color:#333')
+                this.createInputsDOMS.forEach(child => child.style.cssText = 'border-width: 1px; border-color:#333')
 
                 console.log(res.data.msg)
             })
         })
         this.cancelBtnDOM.addEventListener('click', () => {
-            this.contentDOMS.forEach(contentDOM => contentDOM.innerText = '')
-            this.contentDOMS.forEach(child => child.style.cssText = 'border-width: 1px; border-color:#333')
+            this.createInputsDOMS.forEach(contentDOM => contentDOM.innerText = '')
+            this.createInputsDOMS.forEach(child => child.style.cssText = 'border-width: 1px; border-color:#333')
 
         })
 

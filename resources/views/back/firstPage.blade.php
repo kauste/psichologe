@@ -8,7 +8,6 @@
     <section id="profilePic" class="section-1-box">
         <div class="section-1 section--1">
             <div class="ul--box ul-box">
-
                 <ul class="profile-pic-ul --profilePic">
                     <div class="edit-svg-box --edit">
                         <svg>

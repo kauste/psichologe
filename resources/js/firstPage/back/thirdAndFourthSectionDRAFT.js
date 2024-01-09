@@ -48,7 +48,6 @@ class thirdAndFourthSectionUpdate{
             this.modalBoxDOM.classList.add('show');
             this.modalDOM.style.animation = 'open-modal 0.5s ease forwards';
             this.modalBoxDOM.style.animation = 'open-modal-box 0.5s ease forwards';
-
             this.closeModal();
         })
     }
@@ -342,8 +341,8 @@ class thirdAndFourthSectionAdd{
     }
     store(){
         this.storeBtnDOM.addEventListener('click', () => {
-            const contentDOMS = this.addBoxDOM.querySelectorAll(':scope > .--form > div:not(.update--actions)');
-            contentDOMS.forEach(contentDOM => {
+            const createInputsDOMS = this.addBoxDOM.querySelectorAll(':scope > .--form > div:not(.update--actions)');
+            createInputsDOMS.forEach(contentDOM => {
                 switch(true){
                     case contentDOM.classList.contains(`${this.sectionDOM.id}--date`):
                         this.createdData[`${this.sectionDOM.id}-date`] = contentDOM.innerText;
