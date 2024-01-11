@@ -1,20 +1,19 @@
 import axios from "axios";
-import CRUDmodalVars from "./CRUDmodalVars";
 
 class CRUDmodal {
-    constructor(CRUDmodalVars, cssStyles, selector){
+    constructor(cssStyles, selector){
         //css
         this.warningBorderCSS = cssStyles.warningBorderStyle,
+        this.selector = selector;
 
         //modal DOMS
-        this.modalBoxDOM = CRUDmodalVars.modalBoxDOM;
-        this.modalDOM = CRUDmodalVars.modalDOM;
-        this.addBtnDOM = CRUDmodalVars.addBtnDOM;
-        this.backBtnDOM = CRUDmodalVars.backBtnDOM;
-        this.ulBoxDOM = CRUDmodalVars.ulBoxDOM;
-        this.addBoxDOM = CRUDmodalVars.addBoxDOM;
+        this.modalBoxDOM;
+        this.modalDOM;
+        this.addBtnDOM;
+        this.backBtnDOM;
+        this.ulBoxDOM;
+        this.addBoxDOM;
         //section DOMS
-        this.selector = selector;
         this.sectionDOM;
         this.sectionUlBoxDOM
         this.sectionUlDOM;
@@ -50,6 +49,12 @@ class CRUDmodal {
 
     }
     setSectionVariables(){
+        this.modalBoxDOM= document.querySelector('.modal--box'),
+        this.modalDOM= document.querySelector('.modal--box .--modal'),
+        this.addBtnDOM= document.querySelector('.modal--box .add--btn'),
+        this.backBtnDOM= document.querySelector('.modal--box .back--btn'),
+        this.ulBoxDOM= document.querySelector('.modal--box .ul--box'),
+        this.addBoxDOM= document.querySelector('.modal--box .add--box'),
         this.loadeBoxDOM = document.querySelector('.loader--box')  
         this.sectionDOM = document.querySelector(`#${this.selector}`)
         this.sectionUlBoxDOM = this.sectionDOM.querySelector('.ul--box');
@@ -78,6 +83,8 @@ class CRUDmodal {
         .then(res => {
             this.addBoxDOM.innerHTML = res.data.html;
             this.setCreateVariables()
+            if(typeof this.letCreateItem === 'function') this.letCreateItem();
+
             // this.store()
 
         })
@@ -88,7 +95,7 @@ class CRUDmodal {
         this.editDeleleBtnsDOMS = this.modalBoxDOM.querySelectorAll('ul li .edit--actions')
     }
     setCreateVariables(){
-            this.createInputsDOMS = this.addBoxDOM.querySelectorAll('.--form > div:not(.store--actions, .add--img), .--form input');
+            this.createInputsDOMS = this.addBoxDOM.querySelectorAll('.--form > div:not(.store--actions, .add--img, .file--input--box), .--form input');
             this.storeActionsDOM = this.addBoxDOM.querySelector('.store--actions');
             this.cancelBtnDOM = this.storeActionsDOM.querySelector('.--cancel');
             this.storeBtnDOM = this.storeActionsDOM.querySelector('.--store');
@@ -117,11 +124,14 @@ class CRUDmodal {
             this.addBtnDOM.style.display = 'none';
             this.backBtnDOM.style.display = 'block';
             this.modalDOM.style.height = 'fit-content';
-            this.modalDOM.style.marginTop = (window.innerHeight  / 2 - this.modalDOM.offsetHeight / 2) + 'px';
+            this.modalDOM.style.marginTop = (window.innerHeight  / 2 - this.modalDOM.ffsetHeight / 2) + 'px';
         }
     }
     backModalHandler = () => {
+        console.log(Array.from(this.createInputsDOMS));
+        console.log(Array.from(this.createInputsDOMS).forEach(input => console.log(input)))
         if(this.createInputsDOMS && Array.from(this.createInputsDOMS).some(contentDOM => contentDOM.innerText !== '')){
+            console.log('ce');
             this.createInputsDOMS.forEach(child => child.style.cssText = 'border-width: 2px; border-color:#ba2f47')
         }
         else{            

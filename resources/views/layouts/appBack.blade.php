@@ -33,7 +33,8 @@
 
         const profilePicCreateRoute = "{{route('back-create-profile-pic')}}";
         const profilePicEditRoute = "{{route('back-edit-profile-pic')}}";
-        const updateImageRoute = "{{route('back-update-profile-pic-position')}}"
+        const profilePicUpdateRoute = "{{route('back-update-profile-pic-position')}}";
+        const profilePicDeleteRoute = "{{route('back-delete-profile-pic')}}";
     
     </script>
     @vite(['resources/sass/appBack.scss', 'resources/js/appBack.js'])

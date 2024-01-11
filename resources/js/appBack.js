@@ -4,7 +4,6 @@ import navigation from './nav';
 import { SecondSection, secondSectionUpdate } from './firstPage/back/secondSection';
 import { ListSwiper, ThirdAndFourthSecAppear, ThirdAndFourthSection  } from './firstPage/back/thirdAndFourthSection';
 import { FirstSecAnimation, FirstSection } from './firstPage/back/firstSection';
-import CRUDmodalVars from './firstPage/back/CRUDmodalVars';
 import cssStyles from './firstPage/back/cssStyles';
 window.axios = axios;
 
@@ -14,7 +13,7 @@ navigation();
 if(document.querySelector('.page--1')){
     new FirstSecAnimation()
     
-    new FirstSection(CRUDmodalVars, cssStyles);
+    new FirstSection(cssStyles);
 
     new SecondSection('.section--2')
     new ThirdAndFourthSecAppear('.section--3')

@@ -1,15 +1,19 @@
 import { CRUDmodal } from "./CRUDmodal";
+import { FileInputActivator } from "./FileInputsActivator";
 
 class FirstSection extends CRUDmodal{
-    constructor(CRUDmodalVars, cssStyles){
-        super(CRUDmodalVars, cssStyles, 'profilePic')
+    constructor(cssStyles){
+        super(cssStyles, 'profilePic')
+        this.selector = 'profilePic';
         this.openLiId;
         this.secImgDOM;
         this.imgsBoxesDOMS;
         this.imgBoxDOM;
         this.imgDOM;
         this.updateBtnDOM;
-        this.cancelBtnDOM;
+        this.cancelEditBtnDOM;
+        this.deleteBtnDOM;
+        this.cancelDeleteBtnDOM;
         this.priority;
         this.prevPicPos;
         this.boxHeight;
@@ -30,7 +34,7 @@ class FirstSection extends CRUDmodal{
             imgBoxDOM.style.height = this.boxHeight + 'px';
         });
     }
-    openBorderCSS(){
+    borderOpenCSS(){
         this.liChildernDOMS.forEach((element, i) => {
             element.style.cssText = 'border-top: 1px solid #333; border-bottom:1px solid #333;'
             if(i === 0){
@@ -41,15 +45,15 @@ class FirstSection extends CRUDmodal{
             }
         })
     }
-    removeOpenBorderCSS(){
+    removeBorderCSS(){
         this.liChildernDOMS.forEach((element) => {
             element.style.border = 'none';
         })
     }
-    warningBorderCSS(){
-        this.ulBoxDOM.scrollTop = this.openLi.offsetTop - this.openLi.offsetHeight - 10;
+    borderWarningCSS(){
+        this.ulBoxDOM.scrollTop = this.openLi.offsetTop - 137;
         this.liChildernDOMS.forEach((child, i) => {
-            child.style.border = this.warningBorderCSSCSS;
+            child.style.border = this.warningBorderCSS;
             if(i === 0) child.style.borderRight = 'none'
             if (i === 1) child.style.borderLeft = 'none';
             
@@ -59,30 +63,29 @@ class FirstSection extends CRUDmodal{
     letEditItemHandler = (editItemBtn) => (e) => {
         e.preventDefault();
         if(this.openLi){
-            this.warningBorderCSS()
+            this.borderWarningCSS()
         }
         else{
             this.openLi = editItemBtn.closest('li');
-            this.setItemsDOMS();
-            this.openBorderCSS()
-
-            this.setItemVariables();
+            this.setEditItemsDOMS();
+            this.borderOpenCSS()
+            this.changeToEditButtons();
+            this.setEditItemVariables();
             this.setElementConfig();
             this.letDrag();
-            this.changeToEditButtons();
 
-            this.cancelBtnDOM.addEventListener('click', this.cancelEdit, {once:true})
+            this.cancelEditBtnDOM.addEventListener('click', this.cancelEdit, {once:true})
             this.updateBtnDOM.addEventListener('click', this.update, {once:true})
         }
     }
-    setItemsDOMS(){
+    setEditItemsDOMS(){
         this.liChildernDOMS = this.openLi.querySelectorAll(':scope > div:not(.edit--actions, .update--actions, .delete--actions > .--priority, img');
         this.imgBoxDOM = this.openLi.querySelector('.profilePic--img')
         this.priority = this.openLi.querySelector('.--priority')
-        this.cancelBtnDOM = this.openLi.querySelector('.update--actions > .--cancel');
+        this.cancelEditBtnDOM = this.openLi.querySelector('.update--actions > .--cancel');
         this.updateBtnDOM = this.openLi.querySelector('.update--actions > .--update');
     }
-    setItemVariables(){
+    setEditItemVariables(){
         this.openLiId = this.openLi.id.replace(this.selector + '-edit-', '')
         this.imgDOM = this.imgBoxDOM.querySelector('img')
         this.imgDOM.style.height = 'auto';
@@ -95,8 +98,6 @@ class FirstSection extends CRUDmodal{
     }
     setElementConfig(){
         this.secImgDOM = document.querySelector('#profilePic-' + this.openLiId + '> img')
-        console.log('#profilePic-' + this.openLiId)
-        console.log(this.secImgDOM)
         this.priority.setAttribute('contenteditable', true);
         this.imgBoxDOM.style.height = this.imgHeight + this.additionalHeight + 'px'
         this.imgBoxDOM.style.setProperty('--borderHeight', this.additionalHeight + 'px');
@@ -148,32 +149,30 @@ class FirstSection extends CRUDmodal{
         this.imgBoxDOM.style.height = this.boxHeight + 'px'
         this.imgBoxDOM.style.setProperty('--borderHeight', 0);
         this.imgBoxDOM.style.setProperty('--marginHeight', 0);
-        console.log(this.objectYposition)
         this.imgDOM.style.objectPosition = '0px ' + this.objectYposition + '%';
         this.secImgDOM.style.objectPosition = '0px ' + this.objectYposition + '%';
         this.priority.style.border = 'none';
         this.imgBoxDOM.style.outline = 'none';
     }
-    closeItem(){
+    closeItemEdit(){
         this.closeItemConfig()
         this.changeToEditButtons();
+        this.removeBorderCSS();
         // should be last
         this.openLi = null;
     }
 
     cancelEdit = () => {
         this.updateBtnDOM.removeEventListener('click', this.update)
-        this.closeItem()
-        this.removeOpenBorderCSS();
+        this.closeItemEdit()
     }
     update = () => {
         this.objectYposition = parseFloat(100 - (100  / this.additionalHeight * this.marginHeight)).toFixed(2);
         this.loadeBoxDOM.style.display = 'block';
-        axios.put(updateImageRoute, {picId:this.openLiId, objectYposition:this.objectYposition})
+        axios.put(eval(`${this.selector}UpdateRoute`), {picId:this.openLiId, objectYposition:this.objectYposition})
         .then(res => {
-            console.log(res.data.msg)
-            this.cancelBtnDOM.removeEventListener('click', this.cancel)
-            this.closeItem()
+            this.cancelEditBtnDOM.removeEventListener('click', this.cancel)
+            this.closeItemEdit()
             this.loadeBoxDOM.style.display = 'none';
         })
 
@@ -193,62 +192,57 @@ class FirstSection extends CRUDmodal{
 
 
     }
-
-
-
-
+    // delete
     letDeleteItemHandler = (e) => {
         if(this.openLi && this.openLi.id !== e.target.closest('li').id){
-            this.warningBorderCSS()
+            this.borderWarningCSS()
         }
         else{
             this.openLi = e.target.closest('li');                    
-            this.liChildernDOMS = this.openLi.querySelectorAll(':scope > div:not(.edit--actions, .update--actions, .delete--actions)');
-            this.openBorderCSS()
             this.changeToDeleteButtons();
-
-            this.deleteItem();
+            this.setDeleteItemsDOMS()
+            this.borderOpenCSS()
+            this.cancelDeleteBtnDOM.addEventListener('click', this.cancelDeleteItem, {once:true})
+            this.deleteBtnDOM.addEventListener('click', this.deleteItem, {once:true})
         }
     }
     changeToDeleteButtons(){
         const editActionsDOM = this.openLi.querySelector('.edit--actions');
-        editActionsDOM.style.display = 'none';
-
+        editActionsDOM.style.display = editActionsDOM.style.display ==='none' ? 'flex' : 'none';
+        
         const deleteActionsDOM = this.openLi.querySelector('.delete--actions');
-        deleteActionsDOM.style.display = 'flex'
+        deleteActionsDOM.style.display = deleteActionsDOM.style.display === 'flex'? 'none' : 'flex';
     }
-    deleteItem(){
-        const cancelBtnDOM = this.openLi.querySelector('.delete--actions > .--cancel');
+    setDeleteItemsDOMS(){
+        this.liChildernDOMS = this.openLi.querySelectorAll(':scope > div:not(.edit--actions, .update--actions, .delete--actions, .delete--actions > .--priority, img');
+        this.cancelDeleteBtnDOM = this.openLi.querySelector('.delete--actions > .--cancel');
+        this.deleteBtnDOM = this.openLi.querySelector('.delete--actions > .--delete');
+    }
+    cancelDeleteItem = () => {
+        this.changeToDeleteButtons();
+        this.removeBorderCSS();
 
-        const deleteBtnDOM = this.openLi.querySelector('.delete--actions > .--delete');
-
-        const cancel = () => {
-            this.removeOpenBorderCSS();
-            const editActionsDOM = this.openLi.querySelector('.edit--actions');
-            editActionsDOM.style.display = 'flex';
-            const deleteActionsDOM = this.openLi.querySelector('.delete--actions');
-            deleteActionsDOM.style.display = 'none'
+        this.deleteBtnDOM.removeEventListener('click', this.deleteItem)
+        this.openLi = null;
+        
+    }
+    deleteItem = () => {
+        const openLiId = this.openLi.id.replace(this.selector + '-edit-', '')
+        this.loadeBoxDOM.style.display = 'block';
+        axios.delete(eval(`${this.selector}DeleteRoute`) + '/' + openLiId)
+        .then(_ => {
+            const sectionLidDOM = this.sectionDOM.querySelector(`#${this.selector}-${openLiId}`)
+            this.sectionUlDOM.removeChild(sectionLidDOM)
+            this.ulDOM.removeChild(this.openLi)
             this.openLi = null;
-            deleteBtnDOM.removeEventListener('click', doDelete)
-
-        }
-        cancelBtnDOM.addEventListener('click', cancel, {once:true})
-
-        const doDelete = () => {
-            const openLiId = this.openLi.id.replace(this.selector + '-edit-', '')
-            this.loadeBoxDOM.style.display = 'block';
-            axios.delete(eval(`${this.selector}DeleteRoute`) + '/' + openLiId)
-            .then(_ => {
-                const sectionLidDOM = this.sectionDOM.querySelector(`#${this.selector}-${openLiId}`)
-                this.sectionUlDOM.removeChild(sectionLidDOM)
-                this.ulDOM.removeChild(this.openLi)
-                this.openLi = null;
-                this.loadeBoxDOM.style.display = 'none';
-            })
-            cancelBtnDOM.removeEventListener('click', cancel)
-        }
-        deleteBtnDOM.addEventListener('click', doDelete, {once:true})
-
+            this.loadeBoxDOM.style.display = 'none';
+        })
+        this.cancelDeleteBtnDOM.removeEventListener('click', this.cancelDeleteItem)
+    }
+    // create
+    letCreateItem = () => {
+        const inputBoxDOM = document.querySelector('.file--input--box');
+        new FileInputActivator(inputBoxDOM);
     }
     store(){
         this.storeBtnDOM.addEventListener('click', () => {

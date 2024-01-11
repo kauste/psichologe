@@ -19,11 +19,25 @@ class FirstPageController extends Controller
 
         return view('back.firstPage', ['data' => $data, 'area' => null ]);
     }
+        // propfile Pic
+    public function updateProfilePicPosition(Request $request){
+        FirstPgImages::where('id', $request->all()['picId'])
+                    ->update(['object_y_position' => $request->all()['objectYposition']]);
+
+        return response()->json(['msg' => 'ok']);
+    }
+    public function deleteProfilePic(Request $request)
+    {
+        FirstPgImages::destroy((int) $request->openLiId);
+        return response()->json(['msg' => 'ok']);
+    }
+    // about
     public function updateAbout(Request $request){
         // validacija, kad ne per daug raidziu butu
         FirstPage::where('user_id', Auth::user()->id)->update(['about_me' => $request->about]);
         return response()->json(['msg' =>'msg']);
     }
+    // education
     public function storeEducation(Request $request){
         $data = $request->all();
         $education = new Education;
@@ -53,6 +67,7 @@ class FirstPageController extends Controller
         Education::where('id', (int) $request->id)->delete();
         return response()->json(['msg' => 'deleted']);
     }
+    // work
     public function storeWork(Request $request){
 
         $data = $request->all();
@@ -81,12 +96,6 @@ class FirstPageController extends Controller
         Work::where('id', (int) $request->id)->delete();
         return response()->json(['msg' => 'deleted']);
     }
-    public function updateProfilePicPosition(Request $request){
-        dump($request->all()['objectYposition']);
-        FirstPgImages::where('id', $request->all()['picId'])
-                    ->update(['object_y_position' => $request->all()['objectYposition']]);
 
-        return response()->json(['msg' => 'ok']);
-    }
 
 }
