@@ -16,11 +16,11 @@
                     </div>
                     @forelse ($data->images as $key => $image)
                     <li class="one-profile-pic" id="profilePic-{{$image->id}}" style="opacity:{{$key === 0 ? '1' : '0'}}">
-                        <img class="{{$image->is_right ? 'right' : 'left'}}" src="{{asset('/images/' . $image->picture_path) }}" alt="psichologe Alytuje Romalda Stasioniene" style="object-position:0 {{$image->object_y_position}}%" />
+                        <img class="{{$image->is_right ? 'right' : 'left'}}" src="{{asset('/images/' . $image->picture_path) }}" alt="psichologe Alytuje Romalda Stasioniene" style="object-position:0 {{$image->object_y_pos_percent}}%" />
                     </li>
                     @empty
                     <li class="one-profile-pic" id="profilePic-1">
-                        <img class="right" src="./../images/psichologe_alytuje_1.webp" alt="psichologe Alytuje Romalda Stasioniene" style="object-position:{{$image->object_y_position}}; opacity:1" />
+                        <img class="right" src="./../images/psichologe_alytuje_1.webp" alt="psichologe Alytuje Romalda Stasioniene" style="object-position:{{$image->object_y_pos_percent}}; opacity:1" />
                     </li>
                     @endforelse
                 </ul>

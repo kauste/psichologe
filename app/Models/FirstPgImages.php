@@ -9,7 +9,7 @@ use App\Models\FirstPage;
 
 class FirstPgImages extends Model
 {
-    protected $fillable = ['object_y_position'];
+    protected $fillable = ['is_right','priority','object_y_pos_percent', 'picture_path'];
     public function page(){
         return $this->balongsTo(FirstPage::class, 'first_page_id', 'id');
     }

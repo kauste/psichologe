@@ -51,6 +51,7 @@ Route::prefix('admin')->name('back-')->middleware('auth')->group(function(){
     Route::get('create-profile-pic', function () {
          return response()->json(['html' => view('back.CRUDmodal.profilePicCreate')->render()]);
     })->name('create-profile-pic');
+    Route::post('store-profile-pic', [FirstPageController::class, 'storeProfilePic'])->name('store-profile-pic');
     Route::put('update-profile-pic-position', [FirstPageController::class, 'updateProfilePicPosition'])->name('update-profile-pic-position');
     Route::delete('delete-profile-pic/{openLiId?}', [FirstPageController::class, 'deleteProfilePic'])->name('delete-profile-pic');
 

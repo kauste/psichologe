@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Education;
 use App\Models\Work;
 use App\Models\FirstPgImages;
+use Illuminate\Support\Facades\Validator;
+
 
 use Auth;
 
@@ -20,9 +22,41 @@ class FirstPageController extends Controller
         return view('back.firstPage', ['data' => $data, 'area' => null ]);
     }
         // propfile Pic
+    public function storeProfilePic(Request $request)
+    {
+        $picture = $request->file('picture');
+        $objectYposition = $request->input('objectYposition');
+        $isRight = $request->input('is_right');
+        dump( $isRight);
+
+        $validator = Validator::make([
+            'picture' => $picture,
+            'objectYposition' => $objectYposition,
+            'is_right' => $isRight,
+        ], [
+            'picture' => 'required|image|mimes:jpg,bmp,png,webp',
+            'objectYposition' => 'required|decimal:0,2',
+            'is_right' => 'required|boolean'
+        ]);
+        if($validator->fails()){
+            return response()->json(['errors' => $validator->errors()->all()]);
+        };
+
+        $ext = $picture->getClientOriginalExtension();
+        $name = pathinfo($picture->getClientOriginalName(), PATHINFO_FILENAME);
+        $fileName = $name. '-' . rand(100000, 999999). '.' . $ext;
+        $picture->move(public_path().'/images', $fileName);
+        //HARDCORE is_right
+        $image = FirstPgImages::create([
+            'picture_path' => $fileName,
+            'object_y_pos_percent' => $objectYposition,
+            'is_right' => $isRight
+        ]);
+        return response()->json(['message' => 'New profile picture is created.', 'imageId' => $image->id]);
+    }
     public function updateProfilePicPosition(Request $request){
         FirstPgImages::where('id', $request->all()['picId'])
-                    ->update(['object_y_position' => $request->all()['objectYposition']]);
+                    ->update(['object_y_pos_percent' => $request->all()['objectYposition']]);
 
         return response()->json(['msg' => 'ok']);
     }

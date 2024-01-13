@@ -13,6 +13,7 @@ class CRUDmodal {
         this.backBtnDOM;
         this.ulBoxDOM;
         this.addBoxDOM;
+        this.messageDOM;
         //section DOMS
         this.sectionDOM;
         this.sectionUlBoxDOM
@@ -40,6 +41,7 @@ class CRUDmodal {
     }
 
     init(){
+        this.setModalVariables();
         this.setSectionVariables();
         this.renderEditDeleteContent();
         this.renderCreateContent();
@@ -48,19 +50,22 @@ class CRUDmodal {
         this.backBtnDOM.addEventListener('click', this.backModalHandler)
 
     }
+    setModalVariables(){
+        this.modalBoxDOM= document.querySelector('.modal--box');
+        this.modalDOM= this.modalBoxDOM.querySelector('.--modal');
+        this.addBtnDOM= this.modalBoxDOM.querySelector('.add--btn');
+        this.backBtnDOM= this.modalBoxDOM.querySelector('.back--btn');
+        this.ulBoxDOM= this.modalBoxDOM.querySelector('.ul--box');
+        this.addBoxDOM= this.modalBoxDOM.querySelector('.add--box');
+        this.messageDOM = this.modalBoxDOM.querySelector('.--message');
+    }
     setSectionVariables(){
-        this.modalBoxDOM= document.querySelector('.modal--box'),
-        this.modalDOM= document.querySelector('.modal--box .--modal'),
-        this.addBtnDOM= document.querySelector('.modal--box .add--btn'),
-        this.backBtnDOM= document.querySelector('.modal--box .back--btn'),
-        this.ulBoxDOM= document.querySelector('.modal--box .ul--box'),
-        this.addBoxDOM= document.querySelector('.modal--box .add--box'),
-        this.loadeBoxDOM = document.querySelector('.loader--box')  
-        this.sectionDOM = document.querySelector(`#${this.selector}`)
+        this.loadeBoxDOM = document.querySelector('.loader--box');
+        this.sectionDOM = document.querySelector(`#${this.selector}`);
         this.sectionUlBoxDOM = this.sectionDOM.querySelector('.ul--box');
         this.sectionUlDOM = this.sectionDOM.querySelector('.ul--box ul');
         this.sectionliDOMS = this.sectionUlDOM.querySelectorAll('li');
-        this.editSectionBtnDOM = this.sectionDOM.querySelector('.--edit')
+        this.editSectionBtnDOM = this.sectionDOM.querySelector('.--edit');
     }
     renderEditDeleteContent(){
         if(this.ulBoxDOM.innerHTML.trim() === ''){
@@ -74,6 +79,7 @@ class CRUDmodal {
 
                     const deleteItemBtnDOM = buttons.querySelector('.--delete');
                     deleteItemBtnDOM.addEventListener('click', this.letDeleteItemHandler)
+
                 });
             })
         }
@@ -105,8 +111,8 @@ class CRUDmodal {
         this.modalBoxDOM.classList.add('show');
         this.modalBoxDOM.style.animation = 'open-modal-box 0.5s ease forwards';
         this.modalDOM.style.animation = 'open-modal 0.5s ease forwards';
-        if(typeof this.setSpecificVariables === 'function') {
-            this.setSpecificVariables();
+        if(typeof this.setSpecific === 'function') {
+            this.setSpecific();
         }
         // this.closeModal();
         this.modalBoxDOM.addEventListener('click', this.closeModalHandler)
@@ -115,31 +121,30 @@ class CRUDmodal {
     }
     nextModalHandler = () => {
         if(this.openLi){
+            console.log('jo')
             this.ulBoxDOM.scrollTop = this.openLi.offsetTop - this.openLi.offsetHeight - 10;
-            this.liChildernDOMS.forEach(child => child.style.cssText = 'border-width: 2px; border-color:#ba2f47')
+            this.liChildernDOMS.forEach(child => child.style.border = this.warningBorderCSS)
         }
         else{
             this.ulBoxDOM.style.display = 'none';
             this.addBoxDOM.style.display = 'grid';
             this.addBtnDOM.style.display = 'none';
             this.backBtnDOM.style.display = 'block';
-            this.modalDOM.style.height = 'fit-content';
+            this.modalDOM.style.paddingBottom = '100px';
             this.modalDOM.style.marginTop = (window.innerHeight  / 2 - this.modalDOM.ffsetHeight / 2) + 'px';
         }
     }
     backModalHandler = () => {
-        console.log(Array.from(this.createInputsDOMS));
-        console.log(Array.from(this.createInputsDOMS).forEach(input => console.log(input)))
         if(this.createInputsDOMS && Array.from(this.createInputsDOMS).some(contentDOM => contentDOM.innerText !== '')){
             console.log('ce');
-            this.createInputsDOMS.forEach(child => child.style.cssText = 'border-width: 2px; border-color:#ba2f47')
+            this.createInputsDOMS.forEach(child => child.style.border = this.warningBorderCSS)
         }
         else{            
             this.ulBoxDOM.style.display = 'block';
             this.addBoxDOM.style.display = 'none';
             this.addBtnDOM.style.display = 'block';
             this.backBtnDOM.style.display = 'none';
-            this.modalDOM.style.height = '80vh';
+            this.modalDOM.style.paddingBottom = '50px';
             this.modalDOM.style.marginTop = '10vh';
         }
     }
@@ -163,6 +168,15 @@ class CRUDmodal {
                 this.modalBoxDOM.removeEventListener('click', this.closeModalHandler)
             }
         }
+    }
+    showMsg(msg){
+        this.messageDOM.innerHTML = msg;;
+        this.messageDOM.style.display = 'block';
+        console.log(this.messageDOM)
+        setTimeout(() => {
+            this.messageDOM.innerHTML = '';
+            this.messageDOM.style.display = 'none';
+        }, 20000)
     }
 }
 

@@ -8,11 +8,11 @@
                 <ul class="profile-pic-ul">
                     @forelse ($data->images as $key => $image)
                     <li class="one-profile-pic {{$image->is_right ? 'right' : 'left'}}" style="opacity:{{$key === 0 ? 1 : 0}}">
-                        <img style="object-position:0 {{$image->object_y_position}}%" src="{{asset('images/'. $image->picture_path)}}" alt="psichologe Alytuje Romalda Stasioniene" />
+                        <img style="object-position:0 {{$image->object_y_pos_percent}}%" src="{{asset('images/'. $image->picture_path)}}" alt="psichologe Alytuje Romalda Stasioniene" />
                     </li>
                     @empty
                     <li class="one-profile-pic">
-                        <img class="right" style="object-position:0 {{$image->object_y_position}}vh; opacity:1" src="./images/bg2.webp" alt="psichologe Alytuje Romalda Stasioniene" />
+                        <img class="right" style="object-position:0 {{$image->object_y_pos_percent}}vh; opacity:1" src="./images/bg2.webp" alt="psichologe Alytuje Romalda Stasioniene" />
                     </li>
                     @endforelse
                 </ul>

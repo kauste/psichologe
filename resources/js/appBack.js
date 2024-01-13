@@ -1,9 +1,9 @@
 import 'bootstrap';
 import axios from 'axios';
 import navigation from './nav';
+import { FirstSecAnimation, FirstSection } from './firstPage/back/firstSection';
 import { SecondSection, secondSectionUpdate } from './firstPage/back/secondSection';
 import { ListSwiper, ThirdAndFourthSecAppear, ThirdAndFourthSection  } from './firstPage/back/thirdAndFourthSection';
-import { FirstSecAnimation, FirstSection } from './firstPage/back/firstSection';
 import cssStyles from './firstPage/back/cssStyles';
 window.axios = axios;
 
@@ -11,9 +11,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 navigation();
 if(document.querySelector('.page--1')){
-    new FirstSecAnimation()
+    const firstSecAnimation = new FirstSecAnimation()
+    new FirstSection(cssStyles, firstSecAnimation);
     
-    new FirstSection(cssStyles);
 
     new SecondSection('.section--2')
     new ThirdAndFourthSecAppear('.section--3')
