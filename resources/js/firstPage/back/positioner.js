@@ -10,24 +10,26 @@ class Positioner{
         this.imgHeigh;
         this.marginHeight;
         this.additionalHeight;
-        // this.setBoxesSize();
+        this.setBoxesSize();
     }
 
     setBoxesSize(){
-        console.log('aaaa')
         this.imgsBoxesDOMS = document.querySelectorAll(this.selector);
         const imgDOM = this.imgsBoxesDOMS[0].querySelector('img')
         const imgsWidth = imgDOM.clientWidth;
         const secHeight = window.innerHeight;
         const screenWith = parseInt(window.screen.width);
         this.boxHeight = secHeight * imgsWidth / screenWith;
-        console.log(secHeight , imgsWidth , screenWith, this.boxHeight)
+        console.log(imgsWidth)
 
     }
     doSetBoxesSize(){
         this.imgsBoxesDOMS.forEach(imgBoxDOM => {
-            imgBoxDOM.style.height = this.boxHeight + 'px';
+            this.doSetBoxSize(imgBoxDOM)
         });
+    }
+    doSetBoxSize(imgBoxDOM){
+        imgBoxDOM.style.height = this.boxHeight + 'px';
     }
     init(){
         this.imgDOM = this.imgBoxDOM.querySelector('img')
@@ -87,10 +89,8 @@ class Positioner{
         this.imgBoxDOM.style.setProperty('--borderHeight', 0);
         this.imgBoxDOM.style.setProperty('--marginHeight', 0);
         this.imgDOM.style.objectPosition = '0px ' + this.objectYposition + '%';
-        console.log(this.secImgDOM)
         if(this.secImgDOM){
            this.secImgDOM.style.objectPosition = '0px ' + this.objectYposition + '%';
-           console.log(this.secImgDOM.style.objectPosition)
         }
         this.imgBoxDOM.style.outline = 'none';
     }

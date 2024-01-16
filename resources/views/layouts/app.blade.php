@@ -16,25 +16,6 @@
 
 
     <!-- Scripts -->
-    <script>
-        const editAboutRoute = "{{route('back-update-about')}}";
-
-        const educationCreateRoute = "{{route('back-create-education')}}";
-        const educationEditRoute = "{{route('back-edit-education')}}";
-        const educationUpdateRoute = "{{route('back-update-education')}}";
-        const educationStoreRoute = "{{route('back-store-education')}}";
-        const educationDeleteRoute = "{{route('back-delete-education')}}";
-
-        const workCreateRoute = "{{route('back-create-work')}}";
-        const workEditRoute = "{{route('back-edit-work')}}";
-        const workUpdateRoute = "{{route('back-update-work')}}";
-        const workStoreRoute = "{{route('back-store-work')}}";
-        const workDeleteRoute = "{{route('back-delete-work')}}";
-
-        const profilePicCreateRoute = "{{route('back-create-profile-pic')}}";
-        const profilePicEditRoute = "{{route('back-edit-profile-pic')}}";
-    
-    </script>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>

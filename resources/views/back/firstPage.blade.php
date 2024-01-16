@@ -4,7 +4,7 @@
 <div class="page--1 back--office back-ofice">
     {{-- @include('back.educationCRUDmodal')
 @include('back.workCRUDmodal') --}}
-    @include('back.CRUDmodal.modal')
+    @include('back.CRUDmodal.profilePic.modal')
     <section id="profilePic" class="section-1-box">
         <div class="section-1 section--1">
             <div class="ul--box ul-box">
@@ -15,7 +15,7 @@
                         </svg>
                     </div>
                     @forelse ($data->images as $key => $image)
-                    <li class="one-profile-pic" id="profilePic-{{$image->id}}" style="opacity:{{$key === 0 ? '1' : '0'}}">
+                    <li class="one-profile-pic" id="profilePic-{{$image->id}}" style="opacity:{{$key === 0 ? '1' : '0'}}" data-priority={{$image->priority ?? 0}}>
                         <img class="{{$image->is_right ? 'right' : 'left'}}" src="{{asset('/images/' . $image->picture_path) }}" alt="psichologe Alytuje Romalda Stasioniene" style="object-position:0 {{$image->object_y_pos_percent}}%" />
                     </li>
                     @empty
@@ -51,7 +51,7 @@
             </svg>
         </div>
     </section>
-    <section id="education" class="section-3 section--3 --education">
+    <section id="education" class="section-3">
         <div class="education-box">
             <div class="edit-svg-box --edit">
                 <svg>

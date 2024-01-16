@@ -6,8 +6,8 @@
                 <span class="line --line"></span>
             </div>
             <div class="priority-box">
-            @if($data->priority && $data->priority > 0)
-                <div class="--priority priority">$data->priority</div>
+            @if($image->priority)
+                <div class="--priority priority">{{$image->priority}}</div>
             @else
                 <div class="--priority priority">nesvarbu</div>
             @endif

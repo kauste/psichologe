@@ -1,63 +1,62 @@
-import axios from "axios";
-
 class CRUDmodal {
     constructor(cssStyles, selector){
         //css
         this.warningBorderCSS = cssStyles.warningBorderStyle,
         this.selector = selector;
-
-        //modal DOMS
-        this.modalBoxDOM;
-        this.modalDOM;
-        this.addBtnDOM;
-        this.backBtnDOM;
-        this.ulBoxDOM;
-        this.addBoxDOM;
-        this.messageDOM;
         //section DOMS
         this.sectionDOM;
         this.sectionUlBoxDOM
         this.sectionUlDOM;
         this.sectionliDOMS;
         this.editSectionBtnDOM;
-        //modal content
+        //modal DOMS
+        this.modalBoxDOM;
+        this.modalDOM;
+        this.messageDOM;
+        this.h2DOM;
+        this.addBtnDOM;
+        this.backBtnDOM;
+        this.ulBoxDOM;
+        this.addBoxDOM;
+        this.addBoxForm;
         this.createInputsDOMS;
-        // edit delete btns doms
+        // edit delete btns DOMS
         this.ulDOM
         this.liDOMS;
         this.editDeleleBtnsDOMS;
-        //
+        //store actions DOMS
         this.storeActionsDOM;
         this.cancelBtnDOM;
         this.storeBtnDOM;
-        
+        // open item
+        this.openItemDOM = null;
+        this.openItemId = null;
         this.liChildernDOMS;
-        this.openLi = null;
+        // dara collectors
         this.createdData = {};
         this.editableData = {};
         this.loadeBoxDOM;
-        this.thirdAndFrourthSec;
         this.init();
     }
 
     init(){
+        console.log('init')
         this.setModalVariables();
         this.setSectionVariables();
-        this.renderEditDeleteContent();
-        this.renderCreateContent();
-        this.editSectionBtnDOM.addEventListener('click', this.showModalHandler)
-        this.addBtnDOM.addEventListener('click', this.nextModalHandler)
-        this.backBtnDOM.addEventListener('click', this.backModalHandler)
-
+        this.setCreateVariables();
+        this.setEditDeleteVariables();
+        this.setCRUDListeners();
+        this.setSectionListeners();
     }
     setModalVariables(){
         this.modalBoxDOM= document.querySelector('.modal--box');
-        this.modalDOM= this.modalBoxDOM.querySelector('.--modal');
-        this.addBtnDOM= this.modalBoxDOM.querySelector('.add--btn');
-        this.backBtnDOM= this.modalBoxDOM.querySelector('.back--btn');
-        this.ulBoxDOM= this.modalBoxDOM.querySelector('.ul--box');
-        this.addBoxDOM= this.modalBoxDOM.querySelector('.add--box');
-        this.messageDOM = this.modalBoxDOM.querySelector('.--message');
+        this.modalDOM = this.modalBoxDOM.querySelector('.--modal');
+        this.h2DOM = this.modalDOM.querySelector('h2');
+        this.messageDOM = this.modalDOM.querySelector('.--message');
+        this.addBtnDOM= this.modalDOM.querySelector('.add--btn');
+        this.backBtnDOM= this.modalDOM.querySelector('.back--btn');
+        this.ulBoxDOM= this.modalDOM.querySelector('.ul--box');
+        this.addBoxDOM= this.modalDOM.querySelector('.add--box');
     }
     setSectionVariables(){
         this.loadeBoxDOM = document.querySelector('.loader--box');
@@ -67,97 +66,71 @@ class CRUDmodal {
         this.sectionliDOMS = this.sectionUlDOM.querySelectorAll('li');
         this.editSectionBtnDOM = this.sectionDOM.querySelector('.--edit');
     }
-    renderEditDeleteContent(){
-        if(this.ulBoxDOM.innerHTML.trim() === ''){
-            axios.get(`${eval(this.selector + 'EditRoute')}`)
-            .then(res => {
-                this.ulBoxDOM.innerHTML = res.data.html;
-                this.setEditDeleteVariables()
-                this.editDeleleBtnsDOMS.forEach(buttons => {
-                    const editItemBtnDOM = buttons.querySelector('.--edit');
-                    editItemBtnDOM.addEventListener('click', this.letEditItemHandler(editItemBtnDOM))
-
-                    const deleteItemBtnDOM = buttons.querySelector('.--delete');
-                    deleteItemBtnDOM.addEventListener('click', this.letDeleteItemHandler)
-
-                });
-            })
-        }
-    }
-    renderCreateContent(){
-        axios.get(`${eval(this.selector + 'CreateRoute')}`)
-        .then(res => {
-            this.addBoxDOM.innerHTML = res.data.html;
-            this.setCreateVariables()
-            if(typeof this.letCreateItem === 'function') this.letCreateItem();
-
-            // this.store()
-
-        })
-    }
     setEditDeleteVariables(){
         this.ulDOM = this.modalBoxDOM.querySelector('ul');
         this.liDOMS = this.ulDOM.querySelectorAll('li');
         this.editDeleleBtnsDOMS = this.modalBoxDOM.querySelectorAll('ul li .edit--actions')
     }
     setCreateVariables(){
-            this.createInputsDOMS = this.addBoxDOM.querySelectorAll('.--form > div:not(.store--actions, .add--img, .file--input--box), .--form input');
+            this.addBoxForm = this.addBoxDOM.querySelector('.--form');
+            this.createInputsDOMS = this.addBoxDOM.querySelectorAll(".--form input[type='file']"); // coud not be input[type='radio']
             this.storeActionsDOM = this.addBoxDOM.querySelector('.store--actions');
             this.cancelBtnDOM = this.storeActionsDOM.querySelector('.--cancel');
             this.storeBtnDOM = this.storeActionsDOM.querySelector('.--store');
     }
-
+    setCRUDListeners(){
+        console.log('yes')
+        this.editSectionBtnDOM.addEventListener('click', this.showModalHandler)
+        this.addBtnDOM.addEventListener('click', this.nextModalHandler)
+        this.backBtnDOM.addEventListener('click', this.backModalHandler)
+    }
+    setSectionListeners(){
+        this.editDeleleBtnsDOMS.forEach(buttons => {
+          this.activateItemEditDeleteBtns(buttons)
+        });
+        if(typeof this.setCreateItemVariables === 'function') this.setCreateItemVariables();
+    }
+    activateItemEditDeleteBtns(parent){
+        const editItemBtnDOM = parent.querySelector('.--edit');
+        editItemBtnDOM.addEventListener('click', (e) => { this.letEditItemHandler(editItemBtnDOM, e) })
+        const deleteItemBtnDOM = parent.querySelector('.--delete');
+        deleteItemBtnDOM.addEventListener('click', (e) => { this.letDeleteItemHandler(e) } )
+    }
     showModalHandler = () => {
         this.modalBoxDOM.classList.add('show');
         this.modalBoxDOM.style.animation = 'open-modal-box 0.5s ease forwards';
         this.modalDOM.style.animation = 'open-modal 0.5s ease forwards';
-        if(typeof this.setSpecific === 'function') {
+        if(typeof this.setSpecific === 'function' && !this.positioner) {
             this.setSpecific();
         }
-        // this.closeModal();
         this.modalBoxDOM.addEventListener('click', this.closeModalHandler)
 
 
     }
     nextModalHandler = () => {
-        if(this.openLi){
-            console.log('jo')
-            this.ulBoxDOM.scrollTop = this.openLi.offsetTop - this.openLi.offsetHeight - 10;
-            this.liChildernDOMS.forEach(child => child.style.border = this.warningBorderCSS)
+        if(this.openItemDOM){
+            this.ulBoxDOM.scrollTop = this.openItemDOM.offsetTop - this.openItemDOM.oo - 10;
+            this.borderWarningCSS()
         }
         else{
-            this.ulBoxDOM.style.display = 'none';
-            this.addBoxDOM.style.display = 'grid';
-            this.addBtnDOM.style.display = 'none';
-            this.backBtnDOM.style.display = 'block';
-            this.modalDOM.style.paddingBottom = '100px';
-            this.modalDOM.style.marginTop = (window.innerHeight  / 2 - this.modalDOM.ffsetHeight / 2) + 'px';
+            this.toggleNexBackStyles();
         }
     }
     backModalHandler = () => {
-        if(this.createInputsDOMS && Array.from(this.createInputsDOMS).some(contentDOM => contentDOM.innerText !== '')){
-            console.log('ce');
-            this.createInputsDOMS.forEach(child => child.style.border = this.warningBorderCSS)
+        if(this.createInputsDOMS && Array.from(this.createInputsDOMS).some(contentDOM => (contentDOM && contentDOM.value !== undefined && contentDOM.value?.trim() !== ''))){
+            this.addBoxForm.style.border = this.warningBorderCSS;
         }
-        else{            
-            this.ulBoxDOM.style.display = 'block';
-            this.addBoxDOM.style.display = 'none';
-            this.addBtnDOM.style.display = 'block';
-            this.backBtnDOM.style.display = 'none';
-            this.modalDOM.style.paddingBottom = '50px';
-            this.modalDOM.style.marginTop = '10vh';
+        else{    
+            this.toggleNexBackStyles();        
         }
     }
     closeModalHandler = (e) => {
         if(e.target === this.modalBoxDOM){
-            if(this.openLi){
-                this.ulBoxDOM.scrollTop = this.openLi.offsetTop - this.openLi.offsetHeight - 10;
-                this.liChildernDOMS.forEach(child => child.style.cssText = 'border-width: 2px; border-color:#ba2f47')
-
+            if(this.openItemDOM){
+                this.borderWarningCSS();
             }
-            else if(this.createInputsDOMS && Array.from(this.createInputsDOMS).some(contentDOM => contentDOM.innerText !== '')){
-                this.createInputsDOMS.forEach(child => child.style.cssText = 'border-width: 2px; border-color:#ba2f47')
-
+            else  if(this.createInputsDOMS && Array.from(this.createInputsDOMS).some(contentDOM => (contentDOM && contentDOM.value !== undefined && contentDOM.value?.trim() !== ''))){
+                this.addBoxForm.style.border = this.warningBorderCSS;
             }
             else{
                 this.modalDOM.style.animation = 'close-modal 0.5s ease forwards';
@@ -169,15 +142,67 @@ class CRUDmodal {
             }
         }
     }
-    showMsg(msg){
-        this.messageDOM.innerHTML = msg;;
+    toggleNexBackStyles(){
+        this.ulBoxDOM.style.display = this.ulBoxDOM.style.display === 'none' ? 'block' : 'none';
+        this.addBoxDOM.style.display = this.addBoxDOM.style.display === 'grid' ? 'none' : 'grid';
+        this.addBtnDOM.style.display = this.addBtnDOM.style.display === 'none' ? 'block' :'none';
+        this.backBtnDOM.style.display = this.backBtnDOM.style.display === 'block' ? 'none' : 'block';
+        this.modalDOM.style.paddingBottom = this.modalDOM.style.paddingBottom === '100px' ? '50px' : '100px';
+        const createModalHeight = (window.innerHeight  / 2 - this.modalDOM.offsetHeight / 2) + 'px';
+        this.modalDOM.style.marginTop = this.modalDOM.style.marginTop = createModalHeight ? '10vh' : createModalHeight;
+    }
+
+    letEditItemHandler(editItemBtn, e){ console.log('default')}
+    letDeleteItemHandler(e) {console.log('default')}
+
+    changeToEditButtons(){
+        const editActionsDOM = this.openItemDOM.querySelector('.edit--actions');
+        editActionsDOM.style.display = (editActionsDOM.style.display === 'none') ? 'flex' : 'none';
+       
+        const updateActionsDOM = this.openItemDOM.querySelector('.update--actions');
+        updateActionsDOM.style.display = (updateActionsDOM.style.display === 'none') ? 'flex' : 'none';
+    }
+    changeToDeleteButtons(){
+        const editActionsDOM = this.openItemDOM.querySelector('.edit--actions');
+        editActionsDOM.style.display = editActionsDOM.style.display ==='none' ? 'flex' : 'none';
+        
+        const deleteActionsDOM = this.openItemDOM.querySelector('.delete--actions');
+        deleteActionsDOM.style.display = deleteActionsDOM.style.display === 'flex'? 'none' : 'flex';
+    }
+    borderOpenCSS(){
+        this.liChildernDOMS.forEach((element, i) => {
+            element.style.cssText = 'border-top: 1px solid #333; border-bottom:1px solid #333;'
+            if(i === 0){
+                element.style.borderLeft = '1px solid #333'
+            }
+            else if (i === 1){
+                element.style.borderRight = ' 1px solid #333'
+            }
+        })
+    }
+    borderWarningCSS(){
+        this.ulBoxDOM.scrollTop = this.openItemDOM.offsetTop - 137;
+        this.liChildernDOMS.forEach((child, i) => {
+            child.style.border = this.warningBorderCSS;
+            if(i === 0) child.style.borderRight = 'none'
+            if (i === 1) child.style.borderLeft = 'none';
+            
+        })
+    }
+    removeBorderCSS(){
+        this.liChildernDOMS.forEach((element) => {
+            element.style.border = 'none';
+        })
+    }
+    showMsg(msgHTML){
+        this.messageDOM.innerHTML = msgHTML;;
         this.messageDOM.style.display = 'block';
-        console.log(this.messageDOM)
         setTimeout(() => {
             this.messageDOM.innerHTML = '';
             this.messageDOM.style.display = 'none';
         }, 20000)
     }
+
 }
 
 export { CRUDmodal };

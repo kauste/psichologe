@@ -31,8 +31,6 @@
         const workStoreRoute = "{{route('back-store-work')}}";
         const workDeleteRoute = "{{route('back-delete-work')}}";
 
-        const profilePicCreateRoute = "{{route('back-create-profile-pic')}}";
-        const profilePicEditRoute = "{{route('back-edit-profile-pic')}}";
         const profilePicUpdateRoute = "{{route('back-update-profile-pic-position')}}";
         const profilePicDeleteRoute = "{{route('back-delete-profile-pic')}}";
         const profilePicStoreRoute = "{{route('back-store-profile-pic')}}";

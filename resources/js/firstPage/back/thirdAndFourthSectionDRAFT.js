@@ -16,7 +16,7 @@ class thirdAndFourthSectionUpdate{
         // this.editableData = [];
         this.liChildernDOMS;
         this.editableData = {};
-        this.openLi = null;
+        this.openItemDOM = null;
         this.deleteItemBtnDOMS;
         this.init();
     }
@@ -70,13 +70,13 @@ class thirdAndFourthSectionUpdate{
     letEditItem(){
         this.editItemBtnDOMS.forEach(editItemBtn => {
             editItemBtn.addEventListener('click', () => {
-                if(this.openLi){
-                    this.ulBoxDOM.scrollTop = this.openLi.offsetTop - this.openLi.offsetHeight - 10;
+                if(this.openItemDOM){
+                    this.ulBoxDOM.scrollTop = this.openItemDOM.offsetTop - this.openItemDOM.offsetHeight - 10;
                     this.liChildernDOMS.forEach(child => child.style.cssText = 'border-width: 2px; border-color:#ba2f47')
                 }
                 else{
-                    this.openLi = editItemBtn.closest('li');
-                    this.liChildernDOMS = this.openLi.querySelectorAll(':scope > div:not(.edit--actions, .update--actions, .delete--actions)');
+                    this.openItemDOM = editItemBtn.closest('li');
+                    this.liChildernDOMS = this.openItemDOM.querySelectorAll(':scope > div:not(.edit--actions, .update--actions, .delete--actions)');
                     this.liChildernDOMS.forEach(element => {
                             element.style.cssText = 'border-width: 1px; border-color:#333'
                             element.setAttribute('contenteditable', true);
@@ -92,10 +92,10 @@ class thirdAndFourthSectionUpdate{
                                 break;
                             }
                     })
-                    const editActionsDOM = this.openLi.querySelector('.edit--actions');
+                    const editActionsDOM = this.openItemDOM.querySelector('.edit--actions');
                     editActionsDOM.style.display = 'none';
 
-                    const updateActionsDOM = this.openLi.querySelector('.update--actions');
+                    const updateActionsDOM = this.openItemDOM.querySelector('.update--actions');
                     updateActionsDOM.style.display = 'flex'
 
                     this.updateItem();
@@ -104,8 +104,8 @@ class thirdAndFourthSectionUpdate{
         }, {once:true});
     }
     updateItem(){
-        const cancelBtnDOM = this.openLi.querySelector('.update--actions > .--cancel');
-        const updateBtnDOM = this.openLi.querySelector('.update--actions > .--update');
+        const cancelBtnDOM = this.openItemDOM.querySelector('.update--actions > .--cancel');
+        const updateBtnDOM = this.openItemDOM.querySelector('.update--actions > .--update');
 
         const cancel = () => {
             this.liChildernDOMS.forEach((element) => {
@@ -141,7 +141,7 @@ class thirdAndFourthSectionUpdate{
                         break;
                     }
                 })
-                const openLiId = this.openLi.id.replace(this.sectionDOM.id + '-edit-', '')
+                const openLiId = this.openItemDOM.id.replace(this.sectionDOM.id + '-edit-', '')
                 axios.put(updateRoute + '/' + openLiId, this.editableData)
                 .then(res => {
                     console.log(res.data.msg)
@@ -157,8 +157,8 @@ class thirdAndFourthSectionUpdate{
     letDeleteItem(){
         this.deleteItemBtnDOMS.forEach(deleteItemBtn => {
             deleteItemBtn.addEventListener('click', (e) => {
-                if(this.openLi && this.openLi.id !== e.target.closest('li').id){
-                    this.ulBoxDOM.scrollTop = this.openLi.offsetTop - this.openLi.offsetHeight - 10;
+                if(this.openItemDOM && this.openItemDOM.id !== e.target.closest('li').id){
+                    this.ulBoxDOM.scrollTop = this.openItemDOM.offsetTop - this.openItemDOM.offsetHeight - 10;
                     this.liChildernDOMS.forEach((child, i) => {
                         child.style.cssText = 'border-top: 2px solid #ba2f47; border-bottom: 2px solid #ba2f47';
                         if(i === 0){
@@ -170,8 +170,8 @@ class thirdAndFourthSectionUpdate{
                     })
                 }
                 else{
-                    this.openLi = deleteItemBtn.closest('li');                    
-                    this.liChildernDOMS = this.openLi.querySelectorAll(':scope > div:not(.edit--actions, .update--actions, .delete--actions)');
+                    this.openItemDOM = deleteItemBtn.closest('li');                    
+                    this.liChildernDOMS = this.openItemDOM.querySelectorAll(':scope > div:not(.edit--actions, .update--actions, .delete--actions)');
                     this.liChildernDOMS.forEach((element, i) => {
                         element.style.cssText = 'border-top: 1px solid #333; border-bottom:1px solid #333;'
                         if(i === 0){
@@ -181,11 +181,11 @@ class thirdAndFourthSectionUpdate{
                             element.style.borderRight = ' 1px solid #333'
                         }
                     })
-                    const editActionsDOM = this.openLi.querySelector('.edit--actions');
+                    const editActionsDOM = this.openItemDOM.querySelector('.edit--actions');
 
                     editActionsDOM.style.display = 'none';
 
-                    const deleteActionsDOM = this.openLi.querySelector('.delete--actions');
+                    const deleteActionsDOM = this.openItemDOM.querySelector('.delete--actions');
                     deleteActionsDOM.style.display = 'flex'
 
                     this.deleteItem();
@@ -194,34 +194,34 @@ class thirdAndFourthSectionUpdate{
         }, {once:true});
     }
     deleteItem(){
-        const cancelBtnDOM = this.openLi.querySelector('.delete--actions > .--cancel');
+        const cancelBtnDOM = this.openItemDOM.querySelector('.delete--actions > .--cancel');
 
-        const deleteBtnDOM = this.openLi.querySelector('.delete--actions > .--delete');
+        const deleteBtnDOM = this.openItemDOM.querySelector('.delete--actions > .--delete');
 
         const cancel = () => {
-            this.liChildernDOMS = this.openLi.querySelectorAll(':scope > div:not(.edit--actions, .update--actions, .delete--actions)');
+            this.liChildernDOMS = this.openItemDOM.querySelectorAll(':scope > div:not(.edit--actions, .update--actions, .delete--actions)');
             this.liChildernDOMS.forEach((element) => {
                 element.style.border = 'none'
             })
-            const editActionsDOM = this.openLi.querySelector('.edit--actions');
+            const editActionsDOM = this.openItemDOM.querySelector('.edit--actions');
             editActionsDOM.style.display = 'flex';
-            const deleteActionsDOM = this.openLi.querySelector('.delete--actions');
+            const deleteActionsDOM = this.openItemDOM.querySelector('.delete--actions');
             deleteActionsDOM.style.display = 'none'
-            this.openLi = null;
+            this.openItemDOM = null;
             deleteBtnDOM.removeEventListener('click', doDelete)
 
         }
         cancelBtnDOM.addEventListener('click', cancel, {once:true})
 
         const doDelete = () => {
-            const openLiId = this.openLi.id.replace(this.sectionDOM.id + '-edit-', '')
+            const openLiId = this.openItemDOM.id.replace(this.sectionDOM.id + '-edit-', '')
             axios.delete(eval(`${this.sectionDOM.id}DeleteRoute`) + '/' + openLiId)
             .then(res => {
                 const sectionLidDOM = this.sectionDOM.querySelector(`#${this.sectionDOM.id}-${openLiId}`)
 
                 this.sectionUlDOM.removeChild(sectionLidDOM)
-                this.ulDOM.removeChild(this.openLi)
-                this.openLi = null;
+                this.ulDOM.removeChild(this.openItemDOM)
+                this.openItemDOM = null;
             })
             cancelBtnDOM.removeEventListener('click', cancel)
         }
@@ -231,7 +231,7 @@ class thirdAndFourthSectionUpdate{
 
     closeItem(){
         let i = 0;
-        for (let element of this.openLi.children) {
+        for (let element of this.openItemDOM.children) {
             if(element.classList.contains('edit--actions')){
                 element.style.display = 'flex'
             }
@@ -255,7 +255,7 @@ class thirdAndFourthSectionUpdate{
                         break;
                     }
                 })
-                const openLiId = this.openLi.id.replace(this.sectionDOM.id + '-edit-', '')
+                const openLiId = this.openItemDOM.id.replace(this.sectionDOM.id + '-edit-', '')
                 const changedLiDOM = Array.from(this.sectionliDOMS).filter(child => child.id.replace(this.sectionDOM.id + '-', '') === openLiId)[0];
                 const changedLiItemsDOMS = changedLiDOM.querySelectorAll('div');
 
@@ -273,7 +273,7 @@ class thirdAndFourthSectionUpdate{
             }
             ++i;
          }
-         this.openLi = null;
+         this.openItemDOM = null;
     }
 }
 

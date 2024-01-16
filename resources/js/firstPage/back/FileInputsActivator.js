@@ -37,7 +37,6 @@ class FileInputsActivator{
     }
     activateInput(){
       this.inputDOM = this.inputBoxDOM.querySelector('[type="file"]')
-      console.log(this.inputDOM)
       this.inputDOM.addEventListener('change', this.fileInputHandler);
     }
 
@@ -48,20 +47,17 @@ class FileInputsActivator{
         this.imgBoxDOM.style.display = 'block';
         this.labelDOM.innerText = '';
         this.positioner = new Positioner('.create--profilePic--img', this.imgBoxDOM, null)
-        this.positioner.setBoxesSize()
         this.positioner.init()
     }
     clearInput(){
       this.file = '';
+      this.inputDOM.value = null;
       this.imgDOM.src = '#';
       this.imgBoxDOM.style.display = 'none';
       this.labelDOM.innerText = 'Nuotrauka nepasirinkta';
     }
     getObjectPosition(){
       return this.positioner.returnObjectPosition();
-    }
-    getFile(){
-      return this.file;
     }
 
   }

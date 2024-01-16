@@ -23,6 +23,11 @@ Auth::routes(['register' => false]);
 
 Route::prefix('admin')->name('back-')->middleware('auth')->group(function(){
     Route::get('first-pg', [FirstPageController::class, 'index'])->name('first-pg');
+    //profile Pic
+    Route::post('store-profile-pic', [FirstPageController::class, 'storeProfilePic'])->name('store-profile-pic');
+    Route::put('update-profile-pic-position', [FirstPageController::class, 'updateProfilePic'])->name('update-profile-pic-position');
+    Route::delete('delete-profile-pic/{openLiId?}', [FirstPageController::class, 'deleteProfilePic'])->name('delete-profile-pic');
+    //about
     Route::put('update-about', [FirstPageController::class, 'updateAbout'])->name('update-about');
     // education
     Route::get('edit-education', function () {
@@ -44,16 +49,7 @@ Route::prefix('admin')->name('back-')->middleware('auth')->group(function(){
     Route::put('update-work/{workId?}', [FirstPageController::class, 'updatework'])->name('update-work');
     Route::post('store-work', [FirstPageController::class, 'storeWork'])->name('store-work');
     Route::delete('delete-work/{id?}', [FirstPageController::class, 'deleteWork'])->name('delete-work');
-    //profile Pic
-    Route::get('edit-profile-pic', function () {
-        return response()->json(['html' => view('back.CRUDmodal.profilePicEditDelete', ['data' => FirstPage::first()])->render()]);
-    })->name('edit-profile-pic');
-    Route::get('create-profile-pic', function () {
-         return response()->json(['html' => view('back.CRUDmodal.profilePicCreate')->render()]);
-    })->name('create-profile-pic');
-    Route::post('store-profile-pic', [FirstPageController::class, 'storeProfilePic'])->name('store-profile-pic');
-    Route::put('update-profile-pic-position', [FirstPageController::class, 'updateProfilePicPosition'])->name('update-profile-pic-position');
-    Route::delete('delete-profile-pic/{openLiId?}', [FirstPageController::class, 'deleteProfilePic'])->name('delete-profile-pic');
+    
 
     
 

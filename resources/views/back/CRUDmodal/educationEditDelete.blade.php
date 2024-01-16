@@ -4,7 +4,7 @@
           <div class="date education--date">{{$edu->date}}</div>
           <div class="about education--about">{{$edu->about_education}}</div>
           {{-- butu galima visai paziureti, kad nerasytu man skaiciu nereikalingu --}}
-          <div class="position education--priority {{$edu->priority && $edu->priority > 0 ? '' : 'small'}}">{{$edu->priority && $edu->priority > 0 ? $edu->priority : ' nesvarbu'}}</div>
+          <div class="position --priority {{$edu->priority && $edu->priority > 0 ? '' : 'small'}}">{{$edu->priority && $edu->priority > 0 ? $edu->priority : ' nesvarbu'}}</div>
           <div class="edit--actions edit-actions">
               <div class="svg-box --edit">
                   <svg class="edit-svg">

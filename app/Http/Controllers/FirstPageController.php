@@ -17,8 +17,10 @@ class FirstPageController extends Controller
 
     public function index()
     {
-        $data = FirstPage::first();
+        $data = FirstPage::with(['images' => function($query){
+                            $query->orderByRaw('priority IS NULL, priority');
 
+                        }])->first();
         return view('back.firstPage', ['data' => $data, 'area' => null ]);
     }
         // propfile Pic
@@ -27,7 +29,6 @@ class FirstPageController extends Controller
         $picture = $request->file('picture');
         $objectYposition = $request->input('objectYposition');
         $isRight = $request->input('is_right');
-        dump( $isRight);
 
         $validator = Validator::make([
             'picture' => $picture,
@@ -46,24 +47,53 @@ class FirstPageController extends Controller
         $name = pathinfo($picture->getClientOriginalName(), PATHINFO_FILENAME);
         $fileName = $name. '-' . rand(100000, 999999). '.' . $ext;
         $picture->move(public_path().'/images', $fileName);
-        //HARDCORE is_right
         $image = FirstPgImages::create([
             'picture_path' => $fileName,
             'object_y_pos_percent' => $objectYposition,
             'is_right' => $isRight
         ]);
-        return response()->json(['message' => 'New profile picture is created.', 'imageId' => $image->id]);
-    }
-    public function updateProfilePicPosition(Request $request){
-        FirstPgImages::where('id', $request->all()['picId'])
-                    ->update(['object_y_pos_percent' => $request->all()['objectYposition']]);
 
-        return response()->json(['msg' => 'ok']);
+        $url = asset('/images/'. $fileName);
+        $modalHTML = view('back.CRUDmodal.profilePic.newPicInModal', ['url' => $url, 
+                                                                      'objectYposition' => $objectYposition])->render();
+        $sectionHTML = view('back.CRUDmodal.profilePic.newPicInModal', ['url' => $url, 
+                                                                        'objectYposition' => $objectYposition,
+                                                                        'isRight' => $image->is_right])->render();                                               
+        return response()->json(['message' => 'New profile picture is created.', 
+                                 'modalHTML' => $modalHTML,
+                                 'sectionHTML' => $sectionHTML,
+                                 'imageId' => $image->id,
+                                ]);
+    }
+    public function updateProfilePic(Request $request){
+        $imgData = $request->all();
+        $imgData['priority'] = (int) $imgData['priority'];
+        $imgData['priority'] = $imgData['priority'] ? $imgData['priority'] : null;
+        $validator = Validator::make($imgData, [
+            'picId' => 'required|integer|exists:first_pg_images,id',
+            'objectYposition' => 'required|decimal:0,2|min:0|max:100',
+            'priority' => 'nullable|integer|max:255|min:1',
+        ]);
+        if($validator->fails()){
+            return response()->json(['errors' => $validator->errors()->all()]);
+        };
+        FirstPgImages::where('id', $imgData['picId'])
+                    ->update(['object_y_pos_percent' => $imgData['objectYposition'],
+                              'priority' => $imgData['priority']]);
+
+        return response()->json(['message' => 'Image data is updated.']);
     }
     public function deleteProfilePic(Request $request)
     {
+        $image = FirstPgImages::find((int) $request->openLiId);
+        if($image){
+            $pic_path = public_path() . '/images/'. $image->picture_path;
+            if (file_exists($pic_path)) {
+                unlink($pic_path);
+            }
+        }
         FirstPgImages::destroy((int) $request->openLiId);
-        return response()->json(['msg' => 'ok']);
+        return response()->json(['message' => 'Image is deleted.']);
     }
     // about
     public function updateAbout(Request $request){
@@ -86,7 +116,6 @@ class FirstPageController extends Controller
     }
     public function updateEducation(Request $request)
     {
-        dump(Education::find((int) $request->eduId));
 
         $newData = $request->all();
         $education = Education::find((int) $request->eduId);

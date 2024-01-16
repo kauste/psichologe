@@ -59,12 +59,12 @@
                     }
                 }
             }
-            .message{
-                padding:4px;
+            .message {
+                padding: 4px;
                 background-color: $hotPink;
                 border-radius: 6px 0 12px 0px;
-                color:$bg;
-                display:none;
+                color: $bg;
+                display: none;
             }
         }
         //scrollbar
@@ -209,6 +209,14 @@
                 border: 1px solid #333;
                 border-left: none;
                 display: inline-block;
+            }
+            div:not(
+                    .--edit,
+                    .--delete,
+                    .edit--actions,
+                    .update--actions
+                )[contenteditable="false"] {
+                border: none;
             }
             div:not(
                     .--edit,
