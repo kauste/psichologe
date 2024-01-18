@@ -18,9 +18,14 @@ class FirstPageController extends Controller
     public function index()
     {
         $data = FirstPage::with(['images' => function($query){
-                            $query->orderByRaw('priority IS NULL, priority');
-
-                        }])->first();
+                                    $query->orderByRaw('priority IS NULL, priority');
+                                },
+                                'educations'=> function($query){
+                                    $query->orderByRaw('priority IS NULL, priority');
+                                },
+                                'works' => function($query){
+                                    $query->orderByRaw('priority IS NULL, priority');
+                                },])->first();
         return view('back.firstPage', ['data' => $data, 'area' => null ]);
     }
         // propfile Pic
@@ -56,7 +61,7 @@ class FirstPageController extends Controller
         $url = asset('/images/'. $fileName);
         $modalHTML = view('back.CRUDmodal.profilePic.newPicInModal', ['url' => $url, 
                                                                       'objectYposition' => $objectYposition])->render();
-        $sectionHTML = view('back.CRUDmodal.profilePic.newPicInModal', ['url' => $url, 
+        $sectionHTML = view('back.CRUDmodal.profilePic.newPicInSec', ['url' => $url, 
                                                                         'objectYposition' => $objectYposition,
                                                                         'isRight' => $image->is_right])->render();                                               
         return response()->json(['message' => 'New profile picture is created.', 
@@ -103,43 +108,62 @@ class FirstPageController extends Controller
     }
     // education
     public function storeEducation(Request $request){
-        $data = $request->all();
-        $education = new Education;
-        $education->date = $data['education-date'];
-        $education->about_education = $data['education-about'];
-        $education->priority = (int) $data['education-priority'];
-        $education->first_page_id = Auth::user()->id;
-        $education->save();
+        $data = $request->data;
+        $validator = Validator::make($data, [
+            'date' => 'required|min:4|max:50',
+            'about' => 'required|min:4|max:150',
+            'priority' => 'nullable|integer|min:1|max:255',
+        ]);
+        if($validator->fails()){
+            return response()->json(['errors' => $validator->errors()->all()]);
+        };
+        $education = Education::create([
+            'date' => $data['date'],
+            'about_education' => $data['about'],
+            'priority' => $data['priority'],
+        ]);
 
-        return response()->json(['msg' => 'data is edited']);
+        $url = asset('/images/'. $fileName);
+        $modalHTML = view('back.CRUDmodal.education.newEduInModal', ['edu' => $education])->render();
+        $sectionHTML = view('back.CRUDmodal.education.newEduInSec', ['edu' => $education])->render();                                            
+        return response()->json(['message' => 'New education is created.', 
+                                 'modalHTML' => $modalHTML,
+                                 'sectionHTML' => $sectionHTML,
+                                 'educationId' => $education->id,
+                                ]);
 
     }
     public function updateEducation(Request $request)
     {
 
-        $newData = $request->all();
-        $education = Education::find((int) $request->eduId);
-        $education->date = $newData['education-date'];
-        $education->about_education = $newData['education-about'];
-        $education->priority = (int) $newData['education-priority'];
-        $education->first_page_id = Auth::user()->id;
-        $education->save();
-        return response()->json(['msg' => 'data is edited']);
+        $data = $request->data;
+        $data['priority'] = (int) $data['priority'] ? (int) $data['priority'] : null;
+        $id = (int) $request->id;
+        $validator = Validator::make($data, [
+            'date' => 'required|min:4|max:50',
+            'about' => 'required|min:4|max:150',
+            'priority' => 'nullable|integer|min:1|max:255',
+        ]);
+        if($validator->fails()){
+            return response()->json(['errors' => $validator->errors()->all()]);
+        };
+        $education = Education::find($id);
+        $education->update([
+            'date' => $data['date'],
+            'about_education' => $data['about'],
+            'priority' => $data['priority'],
+        ]);
+
+        return response()->json(['message' => 'Education data is updated.']);
     }
     public function deleteEducation(Request $request){
-        Education::where('id', (int) $request->id)->delete();
-        return response()->json(['msg' => 'deleted']);
+        Education::destroy((int) $request->id);
+        return response()->json(['message' => 'Education is deleted']);
     }
     // work
     public function storeWork(Request $request){
 
-        $data = $request->all();
-        $work = new Work;
-        $work->date = $data['work-date'];
-        $work->about_work = $data['work-about'];
-        $work->priority = (int) $data['work-priority'];
-        $work->first_page_id = Auth::user()->id;
-        $work->save();
+
 
         return response()->json(['msg' => 'data is created']);
 

@@ -3,9 +3,11 @@ import axios from "axios";
 class thirdAndFourthSectionUpdate{
     constructor(selector){
         this.selector = selector;
+        //section
         this.sectionDOM;
         this.sectionUlDOM;
         this.sectionliDOMS;
+        // modal
         this.modalBoxDOM;
         this.modalDOM;
         this.ulBoxDOM;
@@ -217,9 +219,9 @@ class thirdAndFourthSectionUpdate{
             const openLiId = this.openItemDOM.id.replace(this.sectionDOM.id + '-edit-', '')
             axios.delete(eval(`${this.sectionDOM.id}DeleteRoute`) + '/' + openLiId)
             .then(res => {
-                const sectionLidDOM = this.sectionDOM.querySelector(`#${this.sectionDOM.id}-${openLiId}`)
+                const secItemDOM = this.sectionDOM.querySelector(`#${this.sectionDOM.id}-${openLiId}`)
 
-                this.sectionUlDOM.removeChild(sectionLidDOM)
+                this.sectionUlDOM.removeChild(secItemDOM)
                 this.ulDOM.removeChild(this.openItemDOM)
                 this.openItemDOM = null;
             })

@@ -40,23 +40,12 @@ class CRUDmodal {
     }
 
     init(){
-        console.log('init')
-        this.setModalVariables();
         this.setSectionVariables();
+        this.setModalVariables();
         this.setCreateVariables();
         this.setEditDeleteVariables();
         this.setCRUDListeners();
         this.setSectionListeners();
-    }
-    setModalVariables(){
-        this.modalBoxDOM= document.querySelector('.modal--box');
-        this.modalDOM = this.modalBoxDOM.querySelector('.--modal');
-        this.h2DOM = this.modalDOM.querySelector('h2');
-        this.messageDOM = this.modalDOM.querySelector('.--message');
-        this.addBtnDOM= this.modalDOM.querySelector('.add--btn');
-        this.backBtnDOM= this.modalDOM.querySelector('.back--btn');
-        this.ulBoxDOM= this.modalDOM.querySelector('.ul--box');
-        this.addBoxDOM= this.modalDOM.querySelector('.add--box');
     }
     setSectionVariables(){
         this.loadeBoxDOM = document.querySelector('.loader--box');
@@ -66,6 +55,17 @@ class CRUDmodal {
         this.sectionliDOMS = this.sectionUlDOM.querySelectorAll('li');
         this.editSectionBtnDOM = this.sectionDOM.querySelector('.--edit');
     }
+    setModalVariables(){
+        this.modalBoxDOM= document.querySelector(`.${this.selector}--modal--box`);
+        this.modalDOM = this.modalBoxDOM.querySelector('.--modal');
+        this.h2DOM = this.modalDOM.querySelector('h2');
+        this.messageDOM = this.modalDOM.querySelector('.--message');
+        this.addBtnDOM= this.modalDOM.querySelector('.add--btn');
+        this.backBtnDOM= this.modalDOM.querySelector('.back--btn');
+        this.ulBoxDOM= this.modalDOM.querySelector('.ul--box');
+        this.addBoxDOM= this.modalDOM.querySelector('.add--box');
+    }
+
     setEditDeleteVariables(){
         this.ulDOM = this.modalBoxDOM.querySelector('ul');
         this.liDOMS = this.ulDOM.querySelectorAll('li');
@@ -73,13 +73,12 @@ class CRUDmodal {
     }
     setCreateVariables(){
             this.addBoxForm = this.addBoxDOM.querySelector('.--form');
-            this.createInputsDOMS = this.addBoxDOM.querySelectorAll(".--form input[type='file']"); // coud not be input[type='radio']
+            this.createInputsDOMS = this.addBoxDOM.querySelectorAll(".--form input[type='file'], .--form div[contenteditable='true']"); // coud not be input[type='radio']
             this.storeActionsDOM = this.addBoxDOM.querySelector('.store--actions');
             this.cancelBtnDOM = this.storeActionsDOM.querySelector('.--cancel');
             this.storeBtnDOM = this.storeActionsDOM.querySelector('.--store');
     }
     setCRUDListeners(){
-        console.log('yes')
         this.editSectionBtnDOM.addEventListener('click', this.showModalHandler)
         this.addBtnDOM.addEventListener('click', this.nextModalHandler)
         this.backBtnDOM.addEventListener('click', this.backModalHandler)
@@ -117,10 +116,14 @@ class CRUDmodal {
         }
     }
     backModalHandler = () => {
-        if(this.createInputsDOMS && Array.from(this.createInputsDOMS).some(contentDOM => (contentDOM && contentDOM.value !== undefined && contentDOM.value?.trim() !== ''))){
+        if(this.createInputsDOMS 
+        && (Array.from(this.createInputsDOMS).some(contentDOM => (contentDOM && contentDOM.value !== undefined && contentDOM.value?.trim() !== ''))
+            || Array.from(this.createInputsDOMS).some(contentDOM => (contentDOM && contentDOM.innerText.trim() !== '')))
+        ){
             this.addBoxForm.style.border = this.warningBorderCSS;
         }
         else{    
+            this.addBoxForm.style.border = 'none';
             this.toggleNexBackStyles();        
         }
     }
@@ -129,10 +132,14 @@ class CRUDmodal {
             if(this.openItemDOM){
                 this.borderWarningCSS();
             }
-            else  if(this.createInputsDOMS && Array.from(this.createInputsDOMS).some(contentDOM => (contentDOM && contentDOM.value !== undefined && contentDOM.value?.trim() !== ''))){
+            else  if(this.createInputsDOMS 
+                && (Array.from(this.createInputsDOMS).some(contentDOM => (contentDOM && contentDOM.value !== undefined && contentDOM.value?.trim() !== ''))
+                || Array.from(this.createInputsDOMS).some(contentDOM => (contentDOM && contentDOM.innerText.trim() !== '')))
+            ){
                 this.addBoxForm.style.border = this.warningBorderCSS;
             }
             else{
+                this.addBoxForm.style.border = 'none';
                 this.modalDOM.style.animation = 'close-modal 0.5s ease forwards';
                 this.modalBoxDOM.style.animation = 'close-modal-box 0.5s ease forwards';
                 setTimeout(() => {
@@ -181,7 +188,7 @@ class CRUDmodal {
         })
     }
     borderWarningCSS(){
-        this.ulBoxDOM.scrollTop = this.openItemDOM.offsetTop - 137;
+        this.ulBoxDOM.scrollTop = this.scrollToItem;
         this.liChildernDOMS.forEach((child, i) => {
             child.style.border = this.warningBorderCSS;
             if(i === 0) child.style.borderRight = 'none'

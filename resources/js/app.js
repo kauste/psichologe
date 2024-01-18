@@ -12,10 +12,12 @@ navigation();
 if(document.querySelector('.page--1')){
     new FirstSecAnimation();
     new SecondSection('.section--2')
-    new ThirdAndFourthSecAppear('.section--3')
-    new ListSwiper('.section--3')
-    new ThirdAndFourthSecAppear('.section--4')
-    new ListSwiper('.section--4')
+    // sec 3
+    new ThirdAndFourthSecAppear('#education')
+    new ListSwiper('#education')
+    // sec 4
+    new ThirdAndFourthSecAppear('#work')
+    new ListSwiper('#work')
 
 }
 

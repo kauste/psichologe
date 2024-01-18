@@ -1,25 +1,28 @@
-import { CRUDmodal } from "./CRUDmodal";
-import { FileInputActivator } from "./FileInputsActivator";
-import Positioner from "./Positioner";
-
+import { CRUDmodal } from "../CRUDmodal";
+import { FileInputActivator } from "../parts/FileInputsActivator";
+import Positioner from "../parts/positioner";
 class FirstSection extends CRUDmodal{
     constructor(cssStyles, firstSecAnimation){
         super(cssStyles, 'profilePic')
         this.selector = 'profilePic';
         this.firstSecAnimation = firstSecAnimation;
+        this.maxImagesPriorities = 256;
+        this.scrollToItem;
+        //section
+        this.secItemDOM
         this.secImgBoxDOM;
         this.secImgDOM;
+        //modal
         this.imgBoxDOM;
         this.imgDOM;
+        this.priorityDOM;
+        //modal buttons
         this.updateBtnDOM;
         this.cancelEditBtnDOM;
         this.deleteBtnDOM;
         this.cancelDeleteBtnDOM;
         this.storeBtnDOM;
         this.cancelStoreBtnDOM;
-
-        this.priorityDOM;
-        this.maxImagesPriorities = 256;
         //classes
         this.fileInputActivator;
         this.positioner;       
@@ -28,7 +31,10 @@ class FirstSection extends CRUDmodal{
         this.positioner = new Positioner('.' + this.selector + '--img');
         this.positioner.doSetBoxesSize()
     }
-
+    borderWarningCSS(){
+        super.borderWarningCSS();
+        this.scrollToItem = this.openItemDOM.offsetTop - 137
+    }
     // edit
     letEditItemHandler(editItemBtn, e) {
         e.preventDefault();
@@ -39,7 +45,7 @@ class FirstSection extends CRUDmodal{
             this.openItemDOM = editItemBtn.closest('li');
             this.setEditItemVariables();
             this.changeToEditButtons();
-            this.borderOpenCSS()
+            // this.borderOpenCSS()
             this.positioner.imgBoxDOM = this.openItemDOM.querySelector('.profilePic--img');
             this.positioner.secImgDOM = this.secImgDOM;
             this.positioner.init();
@@ -48,21 +54,19 @@ class FirstSection extends CRUDmodal{
         }
     }
     setEditItemVariables(){
+        //modal
+        this.openItemId = this.openItemDOM.id.replace(this.selector + '-edit-', '')
         this.liChildernDOMS = this.openItemDOM.querySelectorAll(':scope > div:not(.edit--actions, .update--actions, .delete--actions > .--priority, img');
         this.imgBoxDOM = this.openItemDOM.querySelector('.profilePic--img')
         this.priorityDOM = this.openItemDOM.querySelector('.--priority')
         this.cancelEditBtnDOM = this.openItemDOM.querySelector('.update--actions > .--cancel');
         this.updateBtnDOM = this.openItemDOM.querySelector('.update--actions > .--update');
-        console.log(this.openItemDOM)
-        this.openItemId = this.openItemDOM.id.replace(this.selector + '-edit-', '')
+        // section
         this.secImgBoxDOM = document.querySelector('#profilePic-' + this.openItemId);
         this.secImgDOM = this.secImgBoxDOM.querySelector('img')
+        // make editable
         this.priorityDOM.setAttribute('contenteditable', true);
         this.openItemDOM.classList.add('editable');
-    }
-    cancelEdit = () => {
-        this.updateBtnDOM.removeEventListener('click', this.update)
-        this.closeItemEdit()
     }
     update = () => {
         const objectYposition = this.positioner.returnObjectPosition();
@@ -78,7 +82,6 @@ class FirstSection extends CRUDmodal{
                 this.updateBtnDOM.addEventListener('click', this.update, {once:true})
             }
             else if(res.data.message){
-
                 this.showMsg(res.data.message)
                 this.cancelEditBtnDOM.removeEventListener('click', this.cancel)
 
@@ -88,7 +91,6 @@ class FirstSection extends CRUDmodal{
             this.loadeBoxDOM.style.display = 'none';
         })
     }
-    
     changePositionInSec(){
         const priority = parseInt(this.priorityDOM.innerText) ? parseInt(this.priorityDOM.innerText) : this.maxImagesPriorities;
         this.sectionUlDOM.removeChild(this.secImgBoxDOM);
@@ -119,6 +121,10 @@ class FirstSection extends CRUDmodal{
         // should be last
         this.openItemDOM = null;
     }
+    cancelEdit = () => {
+        this.updateBtnDOM.removeEventListener('click', this.update)
+        this.closeItemEdit()
+    }
 
     // delete
     letDeleteItemHandler(e){
@@ -140,13 +146,8 @@ class FirstSection extends CRUDmodal{
         this.cancelDeleteBtnDOM = this.openItemDOM.querySelector('.delete--actions > .--cancel');
         this.deleteBtnDOM = this.openItemDOM.querySelector('.delete--actions > .--delete');
         this.openItemId = this.openItemDOM.id.replace(this.selector + '-edit-', '');
-    }
-    cancelDelete = () => {
-        this.changeToDeleteButtons();
-        this.removeBorderCSS();
+        this.secItemDOM = this.sectionDOM.querySelector(`#${this.selector}-${this.openItemId}`);
 
-        this.deleteBtnDOM.removeEventListener('click', this.delete)
-        this.openItemDOM = null;
     }
     delete = () => {
         this.loadeBoxDOM.style.display = 'block';
@@ -154,8 +155,7 @@ class FirstSection extends CRUDmodal{
         .then(res => {
             if(res.data.message){
                 this.showMsg(res.data.message);
-                const sectionLidDOM = this.sectionDOM.querySelector(`#${this.selector}-${this.openItemId}`);
-                this.sectionUlDOM.removeChild(sectionLidDOM);
+                this.sectionUlDOM.removeChild(this.secItemDOM);
                 this.firstSecAnimation.animation();
                 this.ulDOM.removeChild(this.openItemDOM);
                 this.openItemDOM = null;
@@ -167,11 +167,20 @@ class FirstSection extends CRUDmodal{
         })
         this.cancelDeleteBtnDOM.removeEventListener('click', this.cancelDelete);
     }
+    cancelDelete = () => {
+        this.changeToDeleteButtons();
+        this.removeBorderCSS();
+
+        this.deleteBtnDOM.removeEventListener('click', this.delete)
+        this.openItemDOM = null;
+        this.openItemId = null;
+    }
+
     // create
     setCreateItemVariables (){
-        const inputBoxDOM = document.querySelector('.file--input--box');
-        this.storeBtnDOM = document.querySelector('.store--actions .--store');
-        this.cancelStoreBtnDOM = document.querySelector('.store--actions .--cancel');
+        const inputBoxDOM = this.addBoxDOM.querySelector('.file--input--box');
+        this.storeBtnDOM = this.addBoxDOM.querySelector('.store--actions .--store');
+        this.cancelStoreBtnDOM = this.addBoxDOM.querySelector('.store--actions .--cancel');
         this.fileInputActivator = new FileInputActivator(inputBoxDOM);
         this.letCreateItem();
     }
@@ -206,13 +215,9 @@ class FirstSection extends CRUDmodal{
             }
             this.fileInputActivator.clearInput()
             this.loadeBoxDOM.style.display = 'none';
-        })
-           
+        })    
     }
-    cancelCreate(){
-        this.addBoxForm.style.border = 'none';
-        this.fileInputActivator.clearInput()
-    }
+
     appendEditDeleteModal(imageId, modalHTML){
         let li = document.createElement('li')
         li.classList.add('one-profile-pic');
@@ -233,82 +238,10 @@ class FirstSection extends CRUDmodal{
         this.sectionUlDOM.append(li);
         this.firstSecAnimation.animation()
     }
+    cancelCreate(){
+        this.addBoxForm.style.border = 'none';
+        this.fileInputActivator.clearInput()
+    }
 }
-
-class FirstSecAnimation{
-    constructor(){
-      this.imgOpacity;
-      this.imgDisappearTiming;
-      this.imgAppearTiming;
-      this.h1Opacity;
-      this.h1Timing;
-      this.h1;
-      this.visibleChild = 1;
-      this.visibleImg;
-      this.nextVisibleImg;
-      this.intervalId
-      this.setVariables();
-      this.animation();
-    }
-    setVariables(){
-      this.nextVisibleImg = document.querySelector(`.section--1 li:nth-of-type( ${this.visibleChild}) `)
-      this.imgOpacity = [
-        {opacity:1},
-        {opacity:0},
-      ]
-      this.imgDisappearTiming = {
-                    duration: 2000,
-                    iterations: 1,
-                    easing: 'ease',
-                    fill: 'forwards',
-                  };
-      this.imgAppearTiming = {
-                ...this.imgDisappearTiming,   
-                direction: 'reverse', 
-              };
-    
-      this.h1Opacity = [
-          {opacity:1},
-          {opacity:0, offset: 0.4},
-          {opacity:0, offset: 0.7},
-          {opacity:1},
-        ]
-      this.h1Timing = {
-          duration:4000,
-          iterations:1,
-          easing: 'ease',
-          fill: 'forwards',
-        }
-        this.h1 = document.querySelector('h1') || document.querySelector('.h1') ;
-    }
-    animation(){
-      const lastImg = document.querySelectorAll('.section--1 li').length;
-
-      clearInterval(this.intervalId);
-      if(lastImg > 1){
-
-        this.intervalId = setInterval(() => {
-            // console.log(this.nextVisibleImg)
-            this.visibleImg = this.nextVisibleImg;
-            this.visibleChild = this.visibleChild >= lastImg ? 1 : ++this.visibleChild;
-            this.nextVisibleImg = document.querySelector(`.section--1 li:nth-of-type( ${this.visibleChild}) `)
   
-            this.visibleImg.animate(this.imgOpacity, this.imgDisappearTiming);
-            this.nextVisibleImg.animate(this.imgOpacity, this.imgAppearTiming);
-            if((this.nextVisibleImg.classList.contains('left') && this.visibleImg.classList.contains('right')) 
-            || (this.visibleImg.classList.contains('left') && this.nextVisibleImg.classList.contains('right'))){
-              setTimeout(() => {
-                this.nextVisibleImg.classList.contains('left') ? this.h1.style.cssText = 'right:150px; left:unset' : this.h1.style.cssText = 'left:150px; right:unset';
-              }, 2000)
-              this.h1.animate(this.h1Opacity, this.h1Timing)
-            }
-        }, 20000)
-      }
-    }
-    clearAnimation(){
-        clearInterval(this.intervalId);
-    }
-  }
-  export default FirstSecAnimation;
-  
-export { FirstSection, FirstSecAnimation }
+export default FirstSection;

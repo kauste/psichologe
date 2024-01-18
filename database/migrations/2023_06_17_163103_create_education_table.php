@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('date', 50);
             $table->string('about_education', 150);
-            $table->unsignedTinyInteger('priority')->default(0);
+            $table->unsignedTinyInteger('priority')->nullable();
             $table->foreignIdFor(FirstPage::class)->nullable();
             $table->timestamps();
         });

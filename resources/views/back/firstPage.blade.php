@@ -5,6 +5,8 @@
     {{-- @include('back.educationCRUDmodal')
 @include('back.workCRUDmodal') --}}
     @include('back.CRUDmodal.profilePic.modal')
+    @include('back.CRUDmodal.education.modal')
+
     <section id="profilePic" class="section-1-box">
         <div class="section-1 section--1">
             <div class="ul--box ul-box">
@@ -40,7 +42,7 @@
             </div>
             <div class="--paragraph paragraph">
                 <p>{{$data->about_me}}</p>
-                <div class="update-actions update--actions">
+                <div class="update-actions update--actions" style="display:none">
                     <button class="cancel-btn --cancel" type="button">Atšaukti</button>
                     <button class="update-btn --update" type="button">Redaguoti</button>
                 </div>
@@ -65,7 +67,7 @@
                 <div class="swiper --swiper ul--box">
                     <ul class="swiper-wrapper swiper--wrapper">
                         @forelse ($data->educations as $edu)
-                        <li class="one-education swiper-slide" id="education-{{$edu->id}}">
+                        <li class="one-education swiper-slide" id="education-{{$edu->id}}" data-priority={{$edu->priority ?? 0}}>
                             <div class="date">{{$edu->date}}</div>
                             <div class="about-edu">{{$edu->about_education}}</div>
                         </li>
@@ -87,7 +89,7 @@
             </div>
         </div>
     </section>
-    <section id="work" class="section-4 section--4 --work">
+    <section id="work" class="section-4">
         <div class="work-box">
             <div class="edit-svg-box --edit">
                 <svg>

@@ -30,13 +30,7 @@ Route::prefix('admin')->name('back-')->middleware('auth')->group(function(){
     //about
     Route::put('update-about', [FirstPageController::class, 'updateAbout'])->name('update-about');
     // education
-    Route::get('edit-education', function () {
-        return response()->json(['html' => view('back.CRUDmodal.educationEditDelete', ['data' => FirstPage::first()])->render()]);
-    })->name('edit-education');
-    Route::get('create-education', function () {
-         return response()->json(['html' => view('back.CRUDmodal.educationCreate')->render()]);
-        })->name('create-education');
-    Route::put('update-education/{eduId?}', [FirstPageController::class, 'updateEducation'])->name('update-education');
+    Route::put('update-education/{id?}', [FirstPageController::class, 'updateEducation'])->name('update-education');
     Route::post('store-education', [FirstPageController::class, 'storeEducation'])->name('store-education');
     Route::delete('delete-education/{id?}', [FirstPageController::class, 'deleteEducation'])->name('delete-education');
     // work
@@ -46,7 +40,7 @@ Route::prefix('admin')->name('back-')->middleware('auth')->group(function(){
     Route::get('create-work', function () {
          return response()->json(['html' => view('back.CRUDmodal.workCreate')->render()]);
         })->name('create-work');
-    Route::put('update-work/{workId?}', [FirstPageController::class, 'updatework'])->name('update-work');
+    Route::put('update-work/{id?}', [FirstPageController::class, 'updatework'])->name('update-work');
     Route::post('store-work', [FirstPageController::class, 'storeWork'])->name('store-work');
     Route::delete('delete-work/{id?}', [FirstPageController::class, 'deleteWork'])->name('delete-work');
     

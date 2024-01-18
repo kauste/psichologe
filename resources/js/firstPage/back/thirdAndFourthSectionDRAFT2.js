@@ -202,8 +202,8 @@ class ThirdAndFourthSection extends CRUDmodal{
             this.loadeBoxDOM.style.display = 'block';
             axios.delete(eval(`${this.selector}DeleteRoute`) + '/' + openLiId)
             .then(res => {
-                const sectionLidDOM = this.sectionDOM.querySelector(`#${this.selector}-${openLiId}`)
-                this.sectionUlDOM.removeChild(sectionLidDOM)
+                const secItemDOM = this.sectionDOM.querySelector(`#${this.selector}-${openLiId}`)
+                this.sectionUlDOM.removeChild(secItemDOM)
                 this.ulDOM.removeChild(this.openItem)
                 this.openItem = null;
                 this.loadeBoxDOM.style.display = 'none';

@@ -80,6 +80,9 @@ class ListSwiper{
             }
         });
     }
+    update(){
+        this.swiper.update();
+    }
 }
 
 export { ListSwiper, ThirdAndFourthSecAppear};

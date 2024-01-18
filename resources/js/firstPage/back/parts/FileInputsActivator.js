@@ -1,4 +1,4 @@
-import Positioner from "./Positioner";
+import Positioner from "./positioner";
 
 class FileInputsActivator{
     constructor(){

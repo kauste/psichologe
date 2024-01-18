@@ -34,7 +34,7 @@
             </svg>
         </div>
     </section>
-    <section class="section-3 section--3">
+    <section class="section-3" id="education">
         <div class="education-box">
             <div class="heading-box">
                 <h2>Išsilavinimas/Kursai</h2>
@@ -43,9 +43,9 @@
                 <div class="swiper --swiper">
                     <ul class="swiper-wrapper swiper--wrapper">
                         @forelse ($data->educations as $edu)
-                        <li class="one-education swiper-slide">
-                            <div class="date">{{$edu->date}}</div>
-                            <div class="about-edu">{{$edu->about_education}}</div>
+                        <li class="one-education swiper-slide" id="education-{{$edu->id}}">
+                            <div class="date --date">{{$edu->date}}</div>
+                            <div class="about-edu --about">{{$edu->about_education}}</div>
                         </li>
                         @empty
                         <li>Šiuo metu duomenys neprieinami</li>

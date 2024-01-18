@@ -7,7 +7,6 @@
     <div class="form --form one-work">
         <div class="date work--date" contenteditable="true"></div>
         <div class="about work--about" contenteditable="true"></div>
-        {{-- butu galima visai paziureti, kad nerasytu man skaiciu nereikalingu --}}
         <div class="position --priority" contenteditable="true"></div>
         <div class="update-actions store--actions">
             <button class="cancel-btn --cancel" type="button">Atšaukti</button>

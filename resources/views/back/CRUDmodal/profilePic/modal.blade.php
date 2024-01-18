@@ -1,8 +1,8 @@
-<div class="modal-box modal--box">
+<div class="modal-box profilePic--modal--box">
     <div class="modal --modal">
         <div class="heading-box">
             <div class="first-line">
-                <h2></h2>
+                <h2>Profilio nuotraukos</h2>
                 <div class="add-back-btns">
                     <svg class="add-btn add--btn">
                         <use xlink:href="#plus"></use>
@@ -45,7 +45,7 @@
                         <button class="cancel-btn --cancel" type="button">Atšaukti</button>
                         <button class="update-btn --update" type="button">Redaguoti</button>
                     </div>
-                    <div class="delete-actions delete--actions">
+                    <div class="delete-actions delete--actions" style="display:none">
                         <button class="cancel-btn --cancel" type="button">Atšaukti</button>
                         <button class="delete-btn --delete" type="button">Ištrinti</button>
                     </div>

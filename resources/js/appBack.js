@@ -1,27 +1,38 @@
 import 'bootstrap';
 import axios from 'axios';
-import navigation from './nav';
-import { FirstSecAnimation, FirstSection } from './firstPage/back/firstSection';
-import { SecondSection, secondSectionUpdate } from './firstPage/back/secondSection';
-import cssStyles from './firstPage/back/cssStyles';
-import { ThirdAndFourthSection } from './firstPage/back/thirdAndFourthSection';
 window.axios = axios;
-
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+// parts
+import navigation from './nav';
+import cssStyles from './firstPage/back/parts/cssStyles';
+// from front
+import FirstSecAnimation from './firstPage/front/firstSection';
+import { ListSwiper, ThirdAndFourthSecAppear } from './firstPage/front/thirdAndFourthSection';
+// from back
+import FirstSection from './firstPage/back/sections/firstSection';
+import { SecondSection, secondSectionUpdate } from './firstPage/back/sections/secondSection';
+import { ThirdAndFourthSection } from './firstPage/back/sections/thirdAndFourthSection';
+
 
 navigation();
 if(document.querySelector('.page--1')){
+    // sec 1
     const firstSecAnimation = new FirstSecAnimation()
     new FirstSection(cssStyles, firstSecAnimation);
-    
-    // new ThirdAndFourthSection(cssStyles, 'education')
+    // sec 2
     // new SecondSection('.section--2')
-    // new ThirdAndFourthSecAppear('education')
-    // new ListSwiper('.section--3')
+
+    // sec 3
+    new ThirdAndFourthSecAppear('#education')
+    // new ListSwiper('#education')
+    new ThirdAndFourthSection(cssStyles, 'education', educationUpdateRoute, educationStoreRoute, educationDeleteRoute, new ListSwiper('#education'))
+
+    //sec4
+    // new ThirdAndFourthSecAppear('#work')
+    // new ListSwiper('#work')
+    // new ThirdAndFourthSection(cssStyles, 'work', workUpdateRoute, workStoreRoute, workDeleteRoute)
 
 
-    // new ThirdAndFourthSecAppear('.section--4')
-    // new ListSwiper('.section--4')
 
 }
 if(document.querySelector('.back--office')){
