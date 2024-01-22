@@ -1,107 +1,101 @@
-class SecondSection{
-    constructor(selector){
+class SecondSectionUpdate{
+    constructor(selector, messageClass){
         this.selector = selector;
+        this.messageClass = messageClass;
         this.sectionDOM;
-        this.headingDOM;
-        this.paragraphBoxDOM;
+        this.editDOM;
+        this.actionsDOM;
+        this.cancelDOM;
+        this.updateDOM;
         this.paragraphDOM;
-        this.bambooDOM;
-        this.init()
-    }
-    init(){
-        this.setVariables()
-        this.setBambooHeight()
-        this.onAppear()
-        this.resizeWindow()
-        this.changeParagraph()
+        this.paragraphContent;
+        this.loadeBoxDOM;
+        this.setVariables();
+        this.listenToClicks();
     }
     setVariables(){
-        this.sectionDOM = document.querySelector(this.selector);
-        this.headingDOM = this.sectionDOM.querySelector('.--heading > h2');
-        this.paragraphBoxDOM = this.sectionDOM.querySelector('.--paragraph');
-        this.paragraphDOM = this.sectionDOM.querySelector('.--paragraph p');
-        this.bambooDOM = this.sectionDOM.querySelector('.--bamboo');
+        this.sectionDOM = document.querySelector(this.selector)
+        this.editDOM = this.sectionDOM.querySelector('.--edit')
+        this.actionsDOM = this.sectionDOM.querySelector('.update--actions')
+        this.cancelDOM = this.actionsDOM.querySelector('.--cancel');
+        this.updateDOM = this.actionsDOM.querySelector('.--update');
+        this.paragraphDOM = this.sectionDOM.querySelector('.--paragraph p')
+        this.paragraphContent = this.paragraphDOM.innerText;
+        this.loadeBoxDOM = document.querySelector('.loader--box');
     }
-    setBambooHeight(){
-        const paragraphHeight = this.paragraphDOM.offsetHeight;
-        this.bambooDOM.style.height = paragraphHeight + 150 + 'px';
-    }
-    onAppear(){
-        const headingAppear = [
-            {transform: 'translateY(0)', opacity: 0.7},
-            {transform: 'translateY(-30px)', opacity: 1},
-          ]
-        const headingAppearOptions =  {
-                            duration: 1000,
-                            easing: 'ease',
-                            iterations:1,
-                            fill: 'forwards'
-                        }
-        const paragraphAppear = [
-                    {transform: 'translateY(0)', opacity: 0.7},
-                    {transform: 'translateY(-30px)', opacity: 1},
-                    ]
-        const paragraphAppearOptions =  {
-                            duration: 1000,
-                            easing: 'ease',
-                            iterations:1,
-                            fill: 'forwards',
-                            delay:1000
-                            }
-        const scrolledToSeconSection = () => {
-            if(window.scrollY >= window.innerHeight / 3){
-              this.headingDOM.animate(headingAppear, headingAppearOptions)
-              this.paragraphDOM.animate(paragraphAppear, paragraphAppearOptions)
-              window.removeEventListener('scroll', scrolledToSeconSection);
-            }
-        }
-        window.addEventListener('scroll', scrolledToSeconSection)
-    }
-    resizeWindow(){
-        window.addEventListener("resize", () => {
-            const paragraphHeight = this.paragraphDOM.offsetHeight;
-            this.bambooDOM.style.height = paragraphHeight + 150 + 'px';
-          });
-    }
-    changeParagraph(){
-        this.paragraphDOM.addEventListener('input', () => {
-            const paragraphHeight = this.paragraphDOM.offsetHeight;
-            this.bambooDOM.style.height = paragraphHeight + 150 + 'px';
-          });
-    }
-}
 
-function secondSectionUpdate(){
-    const section2DOM = document.querySelector('.section--2')
-    const editDOM = section2DOM.querySelector('.--edit')
-    const actionsDOM = section2DOM.querySelector('.update--actions')
-    const cancelDOM =  actionsDOM.querySelector('.--cancel');
-    const updateDOM =  actionsDOM.querySelector('.--update');
-    const paragraphDOM = section2DOM.querySelector('.--paragraph p')
-    const loadeBoxDOM = document.querySelector('.loader--box');
+    listenToClicks(){
+        this.editDOM.addEventListener('click', this.letEdit);
+        this. cancelDOM.addEventListener('click', this.cancel);
+        this.updateDOM.addEventListener('click', this.update)
 
-    editDOM.addEventListener('click', () => {
-        actionsDOM.style.display = 'flex';
-        paragraphDOM.setAttribute('contenteditable', true)
-    })
-    if(actionsDOM.style.display !== 'none'){
-        cancelDOM.addEventListener('click', () => {
-            actionsDOM.style.display = 'none';
-            paragraphDOM.setAttribute('contenteditable', false)
-        })
-        updateDOM.addEventListener('click', () => {
-            loadeBoxDOM.style.display = 'block';
+    }
+    letEdit = () =>{
+        this.actionsDOM.style.display = 'flex';
+        this.paragraphDOM.setAttribute('contenteditable', true)
+    }
+    cancel = () => {
+        this.actionsDOM.style.display = 'none';
+        this.paragraphDOM.setAttribute('contenteditable', false)
+        this.paragraphDOM.innerText = this.paragraphContent;
 
-            axios.put(editAboutRoute, {about:paragraphDOM.innerText})
-            .then(_ => {
-                paragraphDOM.innerText = paragraphDOM.innerText;
-                actionsDOM.style.display = 'none';
-                paragraphDOM.setAttribute('contenteditable', false)
-                loadeBoxDOM.style.display = 'none';
+    }
+    update = () => {
+        this.loadeBoxDOM.style.display = 'block';
 
+            axios.put(editAboutRoute, {about:this.paragraphDOM.innerText})
+            .then(res => {
+                if(res.data.errors){  
+                    let errorsHTML = '';
+                    res.data.errors.forEach(error => {
+                        errorsHTML += `<div>${error}</div>`
+                    })
+                    this.messageClass.showMsg(errorsHTML)
+                }
+                else
+                {
+                    this.paragraphDOM.innerText = this.paragraphDOM.innerText;
+                    this.actionsDOM.style.display = 'none';
+                    this.paragraphDOM.setAttribute('contenteditable', false)
+                    this.paragraphContent = this.paragraphDOM.innerText;
+                    this.messageClass.showMsg(res.data.message)
+                }
+                this.loadeBoxDOM.style.display = 'none';
             })
-        })
     }
-}
 
-export { SecondSection, secondSectionUpdate };
+}
+// function secondSectionUpdate(){
+//     const sectionDOM = document.querySelector('.section--2')
+//     const editDOM = sectionDOM.querySelector('.--edit')
+//     const actionsDOM = sectionDOM.querySelector('.update--actions')
+//     const cancelDOM =  actionsDOM.querySelector('.--cancel');
+//     const updateDOM =  actionsDOM.querySelector('.--update');
+//     const paragraphDOM = sectionDOM.querySelector('.--paragraph p')
+//     const loadeBoxDOM = document.querySelector('.loader--box');
+
+//     editDOM.addEventListener('click', () => {
+//         actionsDOM.style.display = 'flex';
+//         paragraphDOM.setAttribute('contenteditable', true)
+//     })
+//     if(actionsDOM.style.display !== 'none'){
+//         cancelDOM.addEventListener('click', () => {
+//             actionsDOM.style.display = 'none';
+//             paragraphDOM.setAttribute('contenteditable', false)
+//         })
+//         updateDOM.addEventListener('click', () => {
+//             loadeBoxDOM.style.display = 'block';
+
+//             axios.put(editAboutRoute, {about:paragraphDOM.innerText})
+//             .then(_ => {
+//                 paragraphDOM.innerText = paragraphDOM.innerText;
+//                 actionsDOM.style.display = 'none';
+//                 paragraphDOM.setAttribute('contenteditable', false)
+//                 loadeBoxDOM.style.display = 'none';
+
+//             })
+//         })
+//     }
+// }
+
+export default SecondSectionUpdate;

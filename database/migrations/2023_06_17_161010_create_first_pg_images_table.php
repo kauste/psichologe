@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedTinyInteger('priority')->nullable();
             $table->decimal('object_y_pos_percent', 5, 2)->default(0);
             $table->string('picture_path', 150);
+            $table->json('extra_data')->nullable();
             $table->timestamps();
         });
     }

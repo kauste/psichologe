@@ -18,6 +18,8 @@ use App\Models\FirstPage;
 */
 
 Route::get('/', [FrontController::class, 'firstPage'])->name('first-page');
+Route::get('/articles', [FrontController::class, 'articlesPage'])->name('articles-page');
+
 
 Auth::routes(['register' => false]);
 
@@ -34,18 +36,8 @@ Route::prefix('admin')->name('back-')->middleware('auth')->group(function(){
     Route::post('store-education', [FirstPageController::class, 'storeEducation'])->name('store-education');
     Route::delete('delete-education/{id?}', [FirstPageController::class, 'deleteEducation'])->name('delete-education');
     // work
-    Route::get('edit-work', function () {
-        return response()->json(['html' => view('back.CRUDmodal.workEditDelete', ['data' => FirstPage::first()])->render()]);
-    })->name('edit-work');
-    Route::get('create-work', function () {
-         return response()->json(['html' => view('back.CRUDmodal.workCreate')->render()]);
-        })->name('create-work');
     Route::put('update-work/{id?}', [FirstPageController::class, 'updatework'])->name('update-work');
     Route::post('store-work', [FirstPageController::class, 'storeWork'])->name('store-work');
     Route::delete('delete-work/{id?}', [FirstPageController::class, 'deleteWork'])->name('delete-work');
-    
-
-    
-
 });
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

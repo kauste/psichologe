@@ -8,8 +8,8 @@
         padding: 80px 0 40px;
     }
     .work-box {
-        background-color: hsla(104, 19%, 43%, 0.965);
-        color: #fff;
+        background-color: $electric;
+        color: $bg;
     }
     .education-box {
         background-color: hsla(0, 0%, 100%, 0.945);
@@ -66,91 +66,76 @@
                     }
                 }
             }
-            .swiper-button-prev, .swiper-button-next {
-                    position: absolute;
-                    width: 60px;
-                    height: 60px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    &:has(.chevron-up) {
-                        top: -20px;
-                        right: -50px;
-                        @media (max-width: 650px) {
-                            right: 0;
-                            top: -125px;
-                        }
+            .swiper-button-prev,
+            .swiper-button-next {
+                &:has(.chevron-up) {
+                    top: -20px;
+                    right: -50px;
+                    @media (max-width: 650px) {
+                        right: 0;
+                        top: -125px;
                     }
-                    &:has(.chevron-down) {
-                        bottom: -20px;
-                        right: -50px;
-                        @media (max-width: 650px) {
-                            right: 0;
-                            bottom: -60px;
-                        }
+                }
+                &:has(.chevron-down) {
+                    bottom: -20px;
+                    right: -50px;
+                    @media (max-width: 650px) {
+                        right: 0;
+                        bottom: -60px;
                     }
+                }
+            }
+        }
+        .education-swiper-box {
+            .swiper-button-prev,
+            .swiper-button-next {
+                &:not(.disabled) {
                     .chevron {
-                        width: 20px;
-                        height: 20px;
-                        padding: 10px;
-                        box-sizing: content-box;
-                        border-radius: 50%;
-                        &.chevron-up {
-                            transform: rotateZ(90deg);
-                        }
-                        &.chevron-down {
-                            transform: rotateZ(270deg);
-                        }
+                        background-color: $electric;
+                        fill: $bg;
+                        box-shadow: -4px 0px 0 6px $bg, -4px 0px 0 8px $electric;
+                        transition: all 0.25s ease-in;
                     }
-            }
-        }
-        .education-swiper-box{
-            .swiper-button-prev, .swiper-button-next{
-                &:not(.disabled){
-                    .chevron{
-                        background-color: hsl(104, 19%, 43%);
-                        fill:#fff;
-                        box-shadow: -4px 0px 0 6px #fff, -4px 0px 0 8px hsla(104, 19%, 43%, 0.965);
-                        transition:all 0.25s ease-in;
-                    }
-                    &:hover{
-                        cursor:pointer;
-                        .chevron{
-                            box-shadow: 0 0 0 0 #fff, -4px 0px 0 8px hsla(104, 19%, 43%, 0.965);
-
+                    &:hover {
+                        cursor: pointer;
+                        .chevron {
+                            box-shadow: 0 0 0 0 $bg, -4px 0px 0 8px $electric;
                         }
                     }
                 }
-                &.disabled{
-                    .chevron{
+                &.disabled {
+                    .chevron {
                         background-color: rgb(155, 169, 148);
-                        box-shadow: -4px 0px 0 6px #fff, -4px 0px 0 8px rgb(218,218,218);
-                        fill:#fff;
+                        box-shadow: -4px 0px 0 6px $bg,
+                            -4px 0px 0 8px rgb(218, 218, 218);
+                        fill: $bg;
                     }
                 }
             }
         }
-        .work-swiper-box{
-            .swiper-button-prev, .swiper-button-next{
-                &:not(.disabled){
-                    .chevron{
-                        background-color: #fff;
-                        fill:hsla(104, 19%, 43%);
-                        box-shadow: -4px 0px 0 6px  hsla(104, 19%, 43%), -4px 0px 0 8px #fff;
-                        transition:all 0.25s ease-in;
+        .work-swiper-box {
+            .swiper-button-prev,
+            .swiper-button-next {
+                &:not(.disabled) {
+                    .chevron {
+                        background-color: $bg;
+                        fill: $electric;
+                        box-shadow: -4px 0px 0 6px $electric, -4px 0px 0 8px $bg;
+                        transition: all 0.25s ease-in;
                     }
-                    &:hover{
-                        cursor:pointer;
-                        .chevron{
-                            box-shadow: 0 0 0 0  hsla(104, 19%, 43%), -4px 0px 0 8px #fff;
+                    &:hover {
+                        cursor: pointer;
+                        .chevron {
+                            box-shadow: 0 0 0 0 $electric, -4px 0px 0 8px $bg;
                         }
                     }
                 }
-                &.disabled{
-                    .chevron{
-                        background-color: rgb(218,218,218);
-                        box-shadow: -4px 0px 0 6px hsla(104, 19%, 43%), -4px 0px 0 8px  rgb(155, 169, 148);;
-                        fill:hsla(104, 19%, 43%)
+                &.disabled {
+                    .chevron {
+                        background-color: rgb(218, 218, 218);
+                        box-shadow: -4px 0px 0 6px $electric,
+                            -4px 0px 0 8px rgb(155, 169, 148);
+                        fill: $electric;
                     }
                 }
             }
@@ -168,14 +153,13 @@
     }
 }
 
-.section-4{
+.section-4 {
     padding-bottom: 80px;
 }
-.back-ofice{
-    .edit-svg-box{
-        position:absolute;
-        right:20px;
-        top:20px;
+.back-ofice {
+    .edit-svg-box {
+        position: absolute;
+        right: 20px;
+        top: 20px;
     }
-    
 }

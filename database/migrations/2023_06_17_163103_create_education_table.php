@@ -15,9 +15,10 @@ return new class extends Migration
         Schema::create('education', function (Blueprint $table) {
             $table->id();
             $table->string('date', 50);
-            $table->string('about_education', 150);
+            $table->string('about', 150);
             $table->unsignedTinyInteger('priority')->nullable();
-            $table->foreignIdFor(FirstPage::class)->nullable();
+            $table->foreignIdFor(FirstPage::class)->default(1);
+            $table->json('extra_data')->nullable();
             $table->timestamps();
         });
     }

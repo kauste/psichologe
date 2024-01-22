@@ -15,11 +15,8 @@ return new class extends Migration
         Schema::create('first_pages', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class);
-            $table->string('email', 50);
-            $table->string('telephone_number', 8);
-            $table->string('facebook', 100)->nullable();
-            $table->string('linkedin', 100)->nullable();
-            $table->string('about_me', 1000);
+            $table->string('about_me', 5000);
+            $table->json('extra_data')->nullable();
             $table->timestamps();
         });
     }

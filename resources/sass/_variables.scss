@@ -1,13 +1,37 @@
 $nav-family: 'Quicksand', sans-serif;
 $headings-family: 'Poiret One', cursive;
 $pink: #E9C1C8;
+$electric:#17453F;
+$electricTransp:#17453fe7;
+$bg:#E8E3D7;
+$violet: #7E3F54;
+$green: #24331c ;
+$lightGreenGray:#CFD2BF;
+$warmGradient:linear-gradient(315deg, $lightGreenGray 0%, $green 100%);
+
+
+$grey:#6E717B;
+$greyTransp:#6e717b63;
+
+
+$pinkTransp: #e9c1c821;
+$bgTransp:#e8e3d720;
+$warmDarkGrey:#1f1f1f;
+$electricMaby:#1A2A1F;
 $deepPink: #e26a7e;
 $hotPink:#f26d85;
-$bg: #EFEFEF;
-$green: #a6ff00;
-$violet: #7E3F54;;
+$salad: #a6ff00;
+$saladTransp:#a6ff007d;
+// $electric:#2B302D;
 $black: #161616;
+
+
+//sizes
 $ratio: min(calc(500px * 9 / 16), calc(60vw * 9 / 16));
+$footerHeight: 250px;
+$footerMargin:50px;
+$mainMinHeight: calc(100vh - $footerHeight - $footerMargin);
+$radius:30px;
 :root{
     --sec-1-height:100vh;
 }

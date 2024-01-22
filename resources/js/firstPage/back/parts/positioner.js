@@ -14,6 +14,7 @@ class Positioner{
     }
 
     setBoxesSize(){
+        console.log('yo');
         this.imgsBoxesDOMS = document.querySelectorAll(this.selector);
         const imgDOM = this.imgsBoxesDOMS[0].querySelector('img')
         const imgsWidth = imgDOM.clientWidth;

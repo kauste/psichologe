@@ -70,4 +70,4 @@ class SecondSection{
           });
     }
 }
-export { SecondSection };
+export default SecondSection;

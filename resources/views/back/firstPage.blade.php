@@ -1,16 +1,14 @@
 @extends('layouts.appBack')
-
 @section('content')
-<div class="page--1 back--office back-ofice">
-    {{-- @include('back.educationCRUDmodal')
-@include('back.workCRUDmodal') --}}
+<div class="about--me--page back--office back-ofice">
     @include('back.CRUDmodal.profilePic.modal')
     @include('back.CRUDmodal.education.modal')
-
+    @include('back.CRUDmodal.work.modal')
     <section id="profilePic" class="section-1-box">
         <div class="section-1 section--1">
             <div class="ul--box ul-box">
-                <ul class="profile-pic-ul --profilePic">
+            <img src="./../images/psichologe_alytuje_3.webp">
+                {{-- <ul class="profile-pic-ul --profilePic">
                     <div class="edit-svg-box --edit">
                         <svg>
                             <use xlink:href="#edit"></use>
@@ -25,12 +23,12 @@
                         <img class="right" src="./../images/psichologe_alytuje_1.webp" alt="psichologe Alytuje Romalda Stasioniene" style="object-position:{{$image->object_y_pos_percent}}; opacity:1" />
                     </li>
                     @endforelse
-                </ul>
-                <div class="h1">Psichologė Alytuje <div>Romalda Stasionienė</div>
+                </ul> --}}
+                <div class="h1"><div>Psichologė Alytuje </div><div>Romalda Stasionienė</div>
                 </div>
             </div>
     </section>
-    <section class="section-2 section--2">
+    <section id="about" class="section-2">
         <div class="in-sec-2">
             <div class="edit-svg-box --edit">
                 <svg>
@@ -67,9 +65,9 @@
                 <div class="swiper --swiper ul--box">
                     <ul class="swiper-wrapper swiper--wrapper">
                         @forelse ($data->educations as $edu)
-                        <li class="one-education swiper-slide" id="education-{{$edu->id}}" data-priority={{$edu->priority ?? 0}}>
+                        <li class="one-education swiper-slide" id="education-{{$edu->id}}" data-priority={{$edu->priority ?? null}}>
                             <div class="date">{{$edu->date}}</div>
-                            <div class="about-edu">{{$edu->about_education}}</div>
+                            <div class="about-edu">{{$edu->about}}</div>
                         </li>
                         @empty
                         <div>Šiuo metu duomenys neprieinami</div>
@@ -103,9 +101,9 @@
                 <div class="swiper --swiper ul--box">
                     <ul class="swiper-wrapper swiper--wrapper">
                         @forelse ($data->works as $key => $work)
-                        <li class="one-work swiper-slide" id="work-{{$work->id}}">
+                        <li class="one-work swiper-slide" id="work-{{$work->id}}" data-priority={{$work->priority ?? null}}>
                             <div class="date">{{$work->date}}</div>
-                            <div class="about-work">{{$work->about_work}}</div>
+                            <div class="about-work">{{$work->about}}</div>
                         </li>
                         @empty
                         <div>Šiuo metu duomenys neprieinami</div>

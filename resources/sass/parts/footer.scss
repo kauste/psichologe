@@ -1,16 +1,16 @@
 body{
     footer{
-    margin-top:50px;
+    margin-top:$footerMargin;
     position: relative;
     color:#555;
-    height:250px;
+    height:$footerHeight;
     background: rgb(218,218,218);
     box-sizing: border-box;
         .content-box{
             // background: rgba(218, 218, 218, 0.8);
             width:100%;
             position:absolute;
-            height:250px;
+            height:$footerHeight;
             bottom:0;
             display:flex;
             justify-content: center;

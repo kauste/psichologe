@@ -27,23 +27,21 @@
         const educationStoreRoute = "{{route('back-store-education')}}";
         const educationDeleteRoute = "{{route('back-delete-education')}}";
 
-        const workCreateRoute = "{{route('back-create-work')}}";
-        const workEditRoute = "{{route('back-edit-work')}}";
         const workUpdateRoute = "{{route('back-update-work')}}";
         const workStoreRoute = "{{route('back-store-work')}}";
         const workDeleteRoute = "{{route('back-delete-work')}}";
-
-
 
     </script>
     @vite(['resources/sass/appBack.scss', 'resources/js/appBack.js'])
 </head>
 <body>
+    @inject('contacts', 'App\Services\Contacts')
     @include('parts.loader')
     <div class="nav-box">
         <nav class="--nav">
-            <a href="#" class="active">Apie mane</a>
-            <a href="#">Straipsniai</a>
+            <a href="{{route('back-first-pg')}}" class="{{$pageName === 'firstPage' ? 'active' : ''}}">Apie mane</a>
+            <a href="#">Paslaugos</a>
+            <a href="#" class="{{$pageName === 'aboutPage' ? 'active' : ''}}">Straipsniai</a>
             <a href="#">Kontaktai</a>
             @if(Auth::user()?->role === 7)
             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -56,6 +54,7 @@
         </nav>
     </div>
     <main class="">
+        <div class="message top-message top--message"></div>
         @yield('content')
     </main>
     @include('parts.footer')

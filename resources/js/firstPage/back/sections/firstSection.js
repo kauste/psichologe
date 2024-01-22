@@ -10,7 +10,7 @@ class FirstSection extends CRUDmodal{
         this.scrollToItem;
         //section
         this.secItemDOM
-        this.secImgBoxDOM;
+        this.secItemDOM;
         this.secImgDOM;
         //modal
         this.imgBoxDOM;
@@ -30,6 +30,8 @@ class FirstSection extends CRUDmodal{
     setSpecific(){
         this.positioner = new Positioner('.' + this.selector + '--img');
         this.positioner.doSetBoxesSize()
+        console.log('kakakak')
+
     }
     borderWarningCSS(){
         super.borderWarningCSS();
@@ -62,8 +64,8 @@ class FirstSection extends CRUDmodal{
         this.cancelEditBtnDOM = this.openItemDOM.querySelector('.update--actions > .--cancel');
         this.updateBtnDOM = this.openItemDOM.querySelector('.update--actions > .--update');
         // section
-        this.secImgBoxDOM = document.querySelector('#profilePic-' + this.openItemId);
-        this.secImgDOM = this.secImgBoxDOM.querySelector('img')
+        this.secItemDOM = document.querySelector('#profilePic-' + this.openItemId);
+        this.secImgDOM = this.secItemDOM.querySelector('img')
         // make editable
         this.priorityDOM.setAttribute('contenteditable', true);
         this.openItemDOM.classList.add('editable');
@@ -71,7 +73,8 @@ class FirstSection extends CRUDmodal{
     update = () => {
         const objectYposition = this.positioner.returnObjectPosition();
         this.loadeBoxDOM.style.display = 'block';
-        axios.put(eval(`${this.selector}UpdateRoute`), {picId:this.openItemId, objectYposition:objectYposition, priority:this.priorityDOM.innerText})
+        const priority = parseInt(this.priorityDOM.innerText) ? parseInt(this.priorityDOM.innerText) : null;
+        axios.put(eval(`${this.selector}UpdateRoute`), {picId:this.openItemId, objectYposition:objectYposition, priority:priority})
         .then(res => {
             if(res.data.errors){
                 let errorsHTML = '';
@@ -85,30 +88,23 @@ class FirstSection extends CRUDmodal{
                 this.showMsg(res.data.message)
                 this.cancelEditBtnDOM.removeEventListener('click', this.cancel)
 
-                this.changePositionInSec()
+                this.changePositionInSec(priority)
+                this.changePositionInModal(priority)
                 this.closeItemEdit()
             }
             this.loadeBoxDOM.style.display = 'none';
         })
     }
-    changePositionInSec(){
-        const priority = parseInt(this.priorityDOM.innerText) ? parseInt(this.priorityDOM.innerText) : this.maxImagesPriorities;
-        this.sectionUlDOM.removeChild(this.secImgBoxDOM);
-        this.secImgBoxDOM.dataset.priority = priority;
-        let afterImage = null;
-        const imagesList = Array.from(this.sectionUlDOM.querySelectorAll('li'))
-        for (let i = 0; i < imagesList.length; i++) {
-            const li = imagesList[i];
-            if (li.dataset.priority && li.dataset.priority > priority) {
-                afterImage = li;
-                break;
-            }
-        }
-        if (afterImage) {
-            this.sectionUlDOM.insertBefore(this.secImgBoxDOM, afterImage);
-        } else {
-            this.sectionUlDOM.appendChild(this.secImgBoxDOM);
-        }
+    changePositionInSec(priority){
+        this.sectionUlDOM.removeChild(this.secItemDOM);
+        this.secItemDOM.dataset.priority = priority;
+        this.insertItemInList(this.sectionUlDOM, this.secItemDOM)
+    }
+    changePositionInModal(priority){
+        this.ulDOM.removeChild(this.openItemDOM)
+        this.openItemDOM.dataset.priority = priority;
+        this.insertItemInList(this.ulDOM, this.openItemDOM)
+        this.activateItemEditDeleteBtns(this.openItemDOM)
     }
     closeItemEdit(){
         this.changeToEditButtons();

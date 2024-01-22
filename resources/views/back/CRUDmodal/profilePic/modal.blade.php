@@ -17,7 +17,7 @@
         <div class="modal-ul-box ul--box">
             <ul class="profile-pic-ul --profilePic">
                 @forelse ($data->images as $image)
-                <li class="one-profile-pic" id="profilePic-edit-{{$image->id}}">
+                <li class="one-profile-pic" id="profilePic-edit-{{$image->id}}" data-priority="">
                     <div class="img-box profilePic--img">
                         <img style="object-position:0 {{$image->object_y_pos_percent}}%" src="{{asset('/images/' .  $image->picture_path) }}" alt="image" />
                         <span class="line --line"></span>

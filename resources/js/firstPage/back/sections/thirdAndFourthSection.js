@@ -83,7 +83,8 @@ class ThirdAndFourthSection extends CRUDmodal{
         this.loadeBoxDOM.style.display = 'block';
         const dateInnerText = this.dateDOM.innerText;
         const aboutInnerText = this.aboutDOM.innerText;
-        const priorityInnerText = this.priorityDOM.innerText;
+        const priorityInnerText = parseInt(this.priorityDOM.innerText) ? parseInt(this.priorityDOM.innerText) : null;
+
         const data = {date:dateInnerText,
                       about:aboutInnerText,
                       priority:priorityInnerText}
@@ -99,9 +100,11 @@ class ThirdAndFourthSection extends CRUDmodal{
             }
             else if(res.data.message){
                 this.cancelEditBtnDOM.removeEventListener('click', this.cancel)
-                this.changePositionInSec()
-                this.closeItemEdit()
+
+                this.changePositionInSec(priorityInnerText)
+                this.changePositionInModal(priorityInnerText)
                 this.applyPriorityConfig();
+                this.closeItemEdit()
                 this.showMsg(res.data.message)
             }
             this.loadeBoxDOM.style.display = 'none';
@@ -118,25 +121,17 @@ class ThirdAndFourthSection extends CRUDmodal{
         this.priorityDOM.innerText = parseInt(this.priorityDOM.innerText) ? parseInt(this.priorityDOM.innerText) : 'nesvarbu';
         this.priorityDOM.style.cssText = parseInt(this.priorityDOM.innerText) ? 'color:#000; font-style:normal;': 'color:#999; font-style:italic;';
     }
-    changePositionInSec(){
-        const priority = parseInt(this.priorityDOM.innerText) ? parseInt(this.priorityDOM.innerText) : this.maxImagesPriorities;
+    changePositionInSec(priority){
         this.sectionUlDOM.removeChild(this.secItemDOM);
         this.secItemDOM.dataset.priority = priority;
-        let afterImage = null;
-        const imagesList = Array.from(this.sectionUlDOM.querySelectorAll('li'))
-        for (let i = 0; i < imagesList.length; i++) {
-            const li = imagesList[i];
-            if (li.dataset.priority && li.dataset.priority > priority) {
-                afterImage = li;
-                break;
-            }
-        }
-        if (afterImage) {
-            this.sectionUlDOM.insertBefore(this.secItemDOM, afterImage);
-        } else {
-            this.sectionUlDOM.appendChild(this.secItemDOM);
-        }
+        this.insertItemInList(this.sectionUlDOM, this.secItemDOM)
 
+    }
+    changePositionInModal(priority){
+        this.ulDOM.removeChild(this.openItemDOM)
+        this.openItemDOM.dataset.priority = priority;
+        this.insertItemInList(this.ulDOM, this.openItemDOM)
+        this.activateItemEditDeleteBtns(this.openItemDOM)
     }
     closeItemEdit(){
         this.changeToEditButtons();
@@ -219,17 +214,16 @@ class ThirdAndFourthSection extends CRUDmodal{
     }
     letCreateItem(){
         this.storeBtnDOM.addEventListener('click', () => { this.store() });
-        this.cancelBtnDOM.addEventListener('click', () => { this.cancelCreate() });
+        this.cancelBtnDOM.addEventListener('click', () => { this.clearCreate() });
     }
     store (){
         this.loadeBoxDOM.style.display = 'block';
-        const dateInnerText = this.dateDOM.innerText;
-        const aboutInnerText = this.aboutDOM.innerText;
-        const priorityInnerText = parseInt(this.priorityDOM.innerText) ? parseInt(this.priorityDOM.innerText) : null;
+        const dateInnerText = this.dateCreateDOM.innerText;
+        const aboutInnerText = this.aboutCreateDOM.innerText;
+        const priorityInnerText = parseInt(this.priorityCreateDOM.innerText) ? parseInt(this.priorityCreateDOM.innerText) : null;
         const data = {date:dateInnerText,
                       about:aboutInnerText,
                       priority:priorityInnerText};
-
         axios.post(this.storeRoute, {data:data})
         .then(res => {
             if(res.data.errors){  
@@ -240,33 +234,35 @@ class ThirdAndFourthSection extends CRUDmodal{
                 this.showMsg(errorsHTML)
             }
             else if(res.data.message){
-                this.appendEditDeleteModal(res.data.modalHTML, res.data.educationId, priorityInnerText)
-                this.appendSection(res.data.sectionHTML, res.data.educationId, priorityInnerText)
-                this.showMsg(res.data.message)
+                this.appendEditDeleteModal(res.data.modalHTML, res.data.itemId, priorityInnerText)
+                this.appendSection(res.data.sectionHTML, res.data.itemId, priorityInnerText)
+                this.clearCreate();
+                this.showMsg(res.data.message);
             }
-            this.fileInputActivator.clearInput()
             this.loadeBoxDOM.style.display = 'none';
         })
     }
 
-    appendEditDeleteModal(modalHTML, educationId, priority){
+    appendEditDeleteModal(modalHTML, itemId, priority){
         let li = document.createElement('li')
         li.classList.add('one-education');
-        li.id = `education-edit-${educationId}`;
+        li.id = `education-edit-${itemId}`;
         li.innerHTML = modalHTML;
-        const listLength = Array.from(this.sectionUlDOM.querySelectorAll(`li`)).length
-        if(priority && listLength > priority){
-            const afterItem = this.sectionUlDOM.querySelector(`li:nth-of-type(${priority})`)
-            this.sectionUlDOM.insertBefore(li, afterItem);
-        }
-        else{
-            this.sectionUlDOM.appendChild(li);
-        }
-    }
-    appendSection(sectionHTML, priority){
+        li.dataset.priority = priority;
+        this.insertItemInList(this.ulDOM, li)
+        this.activateItemEditDeleteBtns(li)
 
     }
-    cancelCreate(){
+    appendSection(sectionHTML, itemId, priority){
+        let li = document.createElement('li')
+        li.classList.add('one-education', 'swiper-slide');
+        li.id = `education-${itemId}`;
+        li.dataset.priority = priority;
+        li.innerHTML = sectionHTML;
+        this.insertItemInList(this.sectionUlDOM, li)
+    }
+
+    clearCreate(){
         this.dateCreateDOM.innerText = '';
         this.aboutCreateDOM.innerText = '';
         this.priorityCreateDOM.innerText = '';

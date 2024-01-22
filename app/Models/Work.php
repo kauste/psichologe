@@ -9,6 +9,9 @@ use App\Models\FirstPage;
 class Work extends Model
 {
     use HasFactory;
+    
+    protected $fillable = ['date', 'about', 'priority', 'first_page_id'];
+
     public function page(){
         return $this->balongsTo(FirstPage::class, 'first_page_id', 'id');
     }

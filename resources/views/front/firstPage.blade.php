@@ -1,27 +1,60 @@
 @extends('layouts.app')
-
 @section('content')
-<div class="page--1">
+@inject('contacts', 'App\Services\Contacts')
+
+<div class="about--me--page">
     <div class="section-1-box">
         <section class="section-1 section--1">
-            <div class="ul-box ul--box">
-                <ul class="profile-pic-ul">
-                    @forelse ($data->images as $key => $image)
-                    <li class="one-profile-pic {{$image->is_right ? 'right' : 'left'}}" style="opacity:{{$key === 0 ? 1 : 0}}">
-                        <img style="object-position:0 {{$image->object_y_pos_percent}}%" src="{{asset('images/'. $image->picture_path)}}" alt="psichologe Alytuje Romalda Stasioniene" />
-                    </li>
-                    @empty
-                    <li class="one-profile-pic">
-                        <img class="right" style="object-position:0 {{$image->object_y_pos_percent}}vh; opacity:1" src="./images/bg2.webp" alt="psichologe Alytuje Romalda Stasioniene" />
-                    </li>
-                    @endforelse
+            <div class="img-box">
+                <img src="{{asset('images/psichologe_alytuje_9.webp')}}">
+            </div>
+            <div class="services">
+                <ul>
+                    <li>Konsultavimas</li>
+                    <li>Psichologinis įvertinimas</li>
+                    <li>Mokymai</li>
                 </ul>
             </div>
-            <h1>Psichologė Alytuje <div>Romalda Stasionienė</div>
+            <div class="citations-box">
+                <img src="{{asset('images/bg3.webp')}}">
+                <div class="citations">
+                    <ul>
+                        <li>Labiausiai meilės reikia tiems, kuriuos sunkiausia mylėti.</li>
+                    </ul>
+                    <div class="swiper-button-next round-button pink">
+                        <svg class="chevron chevron-right">
+                            <use xlink:href="#chevron"></use>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <h1>
+                <div class="duties">Psichologė Alytuje</div>
+                <div class="full-name">Romalda Stasionienė</div>
             </h1>
+            <div class="contacts">
+                <div class="tel-num">&#43;370 {{substr($contacts->telephone_number, 0, 3)}} {{substr($contacts->telephone_number, 2, 5)}}</div>
+                <a class="email" href="mailto:{{$contacts->email}}?subject=Mail from site">{{$contacts->email}}</a>
+                <div class="media">
+                    @if($contacts->facebook)
+                    <a class="round-button pink" href="{{$contacts->facebook}}" target="_blank">
+                        <svg>
+                            <use xlink:href="#fb"></use>
+                        </svg>
+                    </a>
+                    @endif
+                    @if($contacts->linkedin)
+                    <a class="round-button pink" href="{{$contacts->linkedin}}" target="_blank">
+                        <svg>
+                            <use xlink:href="#linkedin"></use>
+                        </svg>
+                    </a>
+                    @endif
+                </div>
+            </div>
         </section>
     </div>
-    <section class="section-2 section--2">
+    <section id="about" class="section-2">
         <div class="in-sec-2">
             <div class="heading-box --heading">
                 <h2>Apie mane</h2>
@@ -45,7 +78,7 @@
                         @forelse ($data->educations as $edu)
                         <li class="one-education swiper-slide" id="education-{{$edu->id}}">
                             <div class="date --date">{{$edu->date}}</div>
-                            <div class="about-edu --about">{{$edu->about_education}}</div>
+                            <div class="about-edu --about">{{$edu->about}}</div>
                         </li>
                         @empty
                         <li>Šiuo metu duomenys neprieinami</li>
@@ -65,8 +98,9 @@
             </div>
         </div>
     </section>
-    <section class="section-4 section--4">
+    <section id="work" class="section-4">
         <div class="work-box">
+            <img class="bg-img" src="{{asset('images/bg4.png')}}" alt="background image">
             <div class="heading-box">
                 <h2>Darbo patirtis</h2>
             </div>
@@ -76,7 +110,7 @@
                         @forelse ($data->works as $key => $work)
                         <li class="one-work swiper-slide">
                             <div class="date">{{$work->date}}</div>
-                            <div class="about-work">{{$work->about_work}}</div>
+                            <div class="about-work">{{$work->about}}</div>
                         </li>
                         @empty
                         <div>Šiuo metu duomenys neprieinami</div>

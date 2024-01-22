@@ -8,39 +8,28 @@ import cssStyles from './firstPage/back/parts/cssStyles';
 // from front
 import FirstSecAnimation from './firstPage/front/firstSection';
 import { ListSwiper, ThirdAndFourthSecAppear } from './firstPage/front/thirdAndFourthSection';
+import SecondSection from './firstPage/front/secondSection';
 // from back
 import FirstSection from './firstPage/back/sections/firstSection';
-import { SecondSection, secondSectionUpdate } from './firstPage/back/sections/secondSection';
+import SecondSectionUpdate from './firstPage/back/sections/secondSection';
 import { ThirdAndFourthSection } from './firstPage/back/sections/thirdAndFourthSection';
+import TopMessage from './firstPage/back/parts/topMessage';
+import NavStyles from './nav';
 
-
-navigation();
-if(document.querySelector('.page--1')){
+new NavStyles('.--nav', '#fff', '#E9C1C8');
+if(document.querySelector('.about--me--page')){
     // sec 1
-    const firstSecAnimation = new FirstSecAnimation()
-    new FirstSection(cssStyles, firstSecAnimation);
+    // const firstSecAnimation = new FirstSecAnimation()
+    // new FirstSection(cssStyles, firstSecAnimation);
     // sec 2
-    // new SecondSection('.section--2')
 
+    new SecondSection('#about')
+    new SecondSectionUpdate('#about', new TopMessage);
     // sec 3
     new ThirdAndFourthSecAppear('#education')
-    // new ListSwiper('#education')
     new ThirdAndFourthSection(cssStyles, 'education', educationUpdateRoute, educationStoreRoute, educationDeleteRoute, new ListSwiper('#education'))
-
     //sec4
-    // new ThirdAndFourthSecAppear('#work')
-    // new ListSwiper('#work')
-    // new ThirdAndFourthSection(cssStyles, 'work', workUpdateRoute, workStoreRoute, workDeleteRoute)
-
-
-
+    new ThirdAndFourthSecAppear('#work')
+    new ThirdAndFourthSection(cssStyles, 'work', workUpdateRoute, workStoreRoute, workDeleteRoute, new ListSwiper('#work'))
 }
-if(document.querySelector('.back--office')){
-    if(document.querySelector('.page--1')){
-        secondSectionUpdate();
-        // new ThirdAndFourthSection('education');
-        // new ThirdAndFourthSection('work');
 
-
-    }
-}

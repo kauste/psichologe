@@ -162,6 +162,18 @@ class CRUDmodal {
     letEditItemHandler(editItemBtn, e){ console.log('default')}
     letDeleteItemHandler(e) {console.log('default')}
 
+    insertItemInList(ulDOM, itemToInsert){
+        let afterItem = null;
+        const itemsList = Array.from( ulDOM.querySelectorAll(`li`))
+        for(let i = 0; i < itemsList.length; i++){
+            let listItemPriority = parseInt(itemsList[i].dataset.priority) ? parseInt(itemsList[i].dataset.priority) : null;
+            if (!listItemPriority || (listItemPriority && listItemPriority >= itemToInsert.dataset.priority)) {
+                afterItem = itemsList[i];
+                break;
+            }
+        }
+        afterItem ? ulDOM.insertBefore(itemToInsert, afterItem) : ulDOM.appendChild(itemToInsert);
+    }
     changeToEditButtons(){
         const editActionsDOM = this.openItemDOM.querySelector('.edit--actions');
         editActionsDOM.style.display = (editActionsDOM.style.display === 'none') ? 'flex' : 'none';
