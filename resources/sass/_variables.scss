@@ -4,26 +4,21 @@ $pink: #E9C1C8;
 $electric:#17453F;
 $electricTransp:#17453fe7;
 $bg:#E8E3D7;
+$bgTransp:#e8e3d720;
 $violet: #7E3F54;
 $green: #24331c ;
 $lightGreenGray:#CFD2BF;
 $warmGradient:linear-gradient(315deg, $lightGreenGray 0%, $green 100%);
-
+$northenGradient: radial-gradient(18% 28% at 18% 71%, #FFFFFF4D 4%, #073AFF00 100%),radial-gradient(31% 43% at 7% 98%, #17453fe7 96%, #073AFF00 100%),radial-gradient(35% 56% at 91% 74%, #17453F 66%, #073AFF00 100%),radial-gradient(74% 86% at 67% 38%, #E9C1C826 1%, #073AFF00 100%),linear-gradient(125deg, #427A6DFF 1%, #17453FFF 100%);
 
 $grey:#6E717B;
-$greyTransp:#6e717b63;
+$greyTransp:#6e717b6b;
+$black: #161616;
 
 
-$pinkTransp: #e9c1c821;
-$bgTransp:#e8e3d720;
-$warmDarkGrey:#1f1f1f;
-$electricMaby:#1A2A1F;
 $deepPink: #e26a7e;
 $hotPink:#f26d85;
 $salad: #a6ff00;
-$saladTransp:#a6ff007d;
-// $electric:#2B302D;
-$black: #161616;
 
 
 //sizes

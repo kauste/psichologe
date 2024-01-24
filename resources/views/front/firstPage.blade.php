@@ -6,7 +6,7 @@
     <div class="section-1-box">
         <section class="section-1 section--1">
             <div class="img-box">
-                <img src="{{asset('images/psichologe_alytuje_9.webp')}}">
+                <img src="{{asset('images/psichologe_alytuje_11.webp')}}">
             </div>
             <div class="services">
                 <ul>
@@ -85,12 +85,12 @@
                         @endforelse
                     </ul>
                 </div>
-                <div class="swiper-button-prev swiper--button--prev disabled">
+                <div class="swiper-button-prev round-button electric lardge swiper--button--prev disabled">
                     <svg class="chevron chevron-up">
                         <use xlink:href="#chevron"></use>
                     </svg>
                 </div>
-                <div class="swiper-button-next swiper--button--next">
+                <div class="swiper-button-next round-button electric lardge swiper--button--next">
                     <svg class="chevron chevron-down">
                         <use xlink:href="#chevron"></use>
                     </svg>
@@ -100,7 +100,6 @@
     </section>
     <section id="work" class="section-4">
         <div class="work-box">
-            <img class="bg-img" src="{{asset('images/bg4.png')}}" alt="background image">
             <div class="heading-box">
                 <h2>Darbo patirtis</h2>
             </div>
@@ -117,12 +116,12 @@
                         @endforelse
                     </ul>
                 </div>
-                <div class="swiper-button-prev swiper--button--prev disabled">
+                <div class="swiper-button-prev round-button pink lardge swiper--button--prev disabled">
                     <svg class="chevron chevron-up">
                         <use xlink:href="#chevron"></use>
                     </svg>
                 </div>
-                <div class="swiper-button-next swiper--button--next">
+                <div class="swiper-button-next round-button lardge pink swiper--button--next">
                     <svg class="chevron chevron-down">
                         <use xlink:href="#chevron"></use>
                     </svg>
