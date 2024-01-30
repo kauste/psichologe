@@ -3,57 +3,67 @@
 @inject('contacts', 'App\Services\Contacts')
 
 <div class="about--me--page">
-    <div class="section-1-box">
-        <section class="section-1 section--1">
-            <div class="img-box">
-                <img src="{{asset('images/psichologe_alytuje_11.webp')}}">
-            </div>
-            <div class="services">
-                <ul>
-                    <li>Konsultavimas</li>
-                    <li>Psichologinis įvertinimas</li>
-                    <li>Mokymai</li>
-                </ul>
-            </div>
-            <div class="citations-box">
-                <img src="{{asset('images/bg3.webp')}}">
-                <div class="citations">
-                    <ul>
-                        <li>Labiausiai meilės reikia tiems, kuriuos sunkiausia mylėti.</li>
+    <section id="hero" class="section-1">
+        <div class="img-box">
+            <img src="{{asset('images/psichologe_alytuje_11.webp')}}">
+        </div>
+        <div class="services">
+            <ul>
+                <li>Konsultavimas</li>
+                <li>Psichologinis įvertinimas</li>
+                <li>Mokymai</li>
+            </ul>
+        </div>
+        <div class="citations-box">
+            <img src="{{asset('images/bg3.webp')}}">
+            <div class="citations">
+                <div class="swiper citations--swiper">
+                    <ul class="swiper-wrapper">
+                        @foreach ($citations ?? [] as $citation)
+                        <li class="swiper-slide">
+                            <div>{{$citation->citation}}</div>
+                            @if($citation->author)
+                            <small>{{$citation->author}}</small>
+                            @endif
+                        </li>
+                        @endforeach
                     </ul>
-                    <div class="swiper-button-next round-button pink">
+                </div>
+                <div class="swiper-button-next">
+                    <div class="round-button pink">
                         <svg class="chevron chevron-right">
                             <use xlink:href="#chevron"></use>
                         </svg>
                     </div>
                 </div>
             </div>
-            <h1>
-                <div class="duties">Psichologė Alytuje</div>
-                <div class="full-name">Romalda Stasionienė</div>
-            </h1>
-            <div class="contacts">
-                <div class="tel-num">&#43;370 {{substr($contacts->telephone_number, 0, 3)}} {{substr($contacts->telephone_number, 2, 5)}}</div>
-                <a class="email" href="mailto:{{$contacts->email}}?subject=Mail from site">{{$contacts->email}}</a>
-                <div class="media">
-                    @if($contacts->facebook)
-                    <a class="round-button pink" href="{{$contacts->facebook}}" target="_blank">
-                        <svg>
-                            <use xlink:href="#fb"></use>
-                        </svg>
-                    </a>
-                    @endif
-                    @if($contacts->linkedin)
-                    <a class="round-button pink" href="{{$contacts->linkedin}}" target="_blank">
-                        <svg>
-                            <use xlink:href="#linkedin"></use>
-                        </svg>
-                    </a>
-                    @endif
-                </div>
+        </div>
+        <h1>
+            <div class="duties">Psichologė Alytuje</div>
+            <div class="full-name">Romalda Stasionienė</div>
+        </h1>
+        <div class="contacts">
+            <div style="display:block" class="tel-num tel-desktop">&#43;370 {{substr($contacts->telephone_number, 0, 3)}} {{substr($contacts->telephone_number, 2, 5)}}</div>
+            <a style="display:none" class=" tel-num tel-mobile" href="tel:+370{{str_replace([' ', '-'], '', $contacts->telephone_number)}}" target="_blank">&#43;370 {{substr($contacts->telephone_number, 0, 3)}} {{substr($contacts->telephone_number, 2, 5)}}</a>
+            <a class="email" href="mailto:{{$contacts->email}}?subject=Mail from site">{{$contacts->email}}</a>
+            <div class="media">
+                @if($contacts->facebook)
+                <a class="round-button pink" href="{{$contacts->facebook}}" target="_blank">
+                    <svg>
+                        <use xlink:href="#fb"></use>
+                    </svg>
+                </a>
+                @endif
+                @if($contacts->linkedin)
+                <a class="round-button pink" href="{{$contacts->linkedin}}" target="_blank">
+                    <svg>
+                        <use xlink:href="#linkedin"></use>
+                    </svg>
+                </a>
+                @endif
             </div>
-        </section>
-    </div>
+        </div>
+    </section>
     <section id="about" class="section-2">
         <div class="in-sec-2">
             <div class="heading-box --heading">
@@ -67,7 +77,7 @@
             </svg>
         </div>
     </section>
-    <section class="section-3" id="education">
+    <section id="education" class="section-3" >
         <div class="education-box">
             <div class="heading-box">
                 <h2>Išsilavinimas/Kursai</h2>

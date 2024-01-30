@@ -12,7 +12,8 @@
 @import "parts/footer";
 @import "parts/login";
 @import "parts/modal";
-@import "front/articlesPage/all-articles";
+@import "front/artickes";
+
 
 body,
 body * {
@@ -31,9 +32,12 @@ body::-webkit-scrollbar-track {
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 body::-webkit-scrollbar-thumb {
-    background-color: $violet;
+    background-color: $lightGrey;
+    box-shadow: inset 2px 2px 6px $grey;
+
     -webkit-border-radius: 0.375rem;
 }
+
 main {
     min-height: $mainMinHeight;
 }
@@ -59,18 +63,26 @@ p {
     height: 16px;
     padding: 13px;
     box-sizing: content-box;
-    transition:all 0.25s ease-in;
+    transition: all 0.25s ease-in;
     &.chevron-up {
-        transform: rotateZ(90deg);
+        transform: rotate(180deg);
     }
-    &.chevron-down {
-        transform: rotateZ(270deg);
+    &.chevron-left {
+        transform: rotate(90deg);
     }
     &.chevron-right {
-        transform: rotateZ(180deg);
+        transform: rotate(270deg);
+    }
+    svg {
+        fill: $electric;
     }
 }
-.round-button{
+.media {
+    .round-button.pink svg {
+        fill: $grey;
+    }
+}
+.round-button {
     width: 45px;
     height: 45px;
     box-sizing: content-box;
@@ -78,8 +90,8 @@ p {
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    transition:all 0.25s ease-in;
-    &.disabled{
+    transition: all 0.25s ease-in;
+    &.disabled {
         // background: linear-gradient(
         //     315deg,
         //     rgba(232, 227, 215, 1) 0%,
@@ -87,13 +99,13 @@ p {
         // );
         // background: $bg;
         box-shadow: 12px 12px 16px 0 rgba(255, 255, 255, 0.3) inset,
-        -8px -8px 12px 0 rgba(0, 0, 0, 0.25) inset;
+            -8px -8px 12px 0 rgba(0, 0, 0, 0.25) inset;
         svg {
             fill: transparent;
         }
-        opacity:0.5;
+        opacity: 0.5;
     }
-    &.pink:not(.disabled){
+    &.pink:not(.disabled) {
         cursor: pointer;
         background: linear-gradient(
             315deg,
@@ -101,19 +113,17 @@ p {
             rgba(233, 193, 200, 1) 100%
         );
         box-shadow: 12px 12px 16px 0 rgba(255, 255, 255, 0.3) inset,
-        -8px -8px 12px 0 rgba(0, 0, 0, 0.25) inset;
-        svg {
-            fill: $grey;
-        }
+            -8px -8px 12px 0 rgba(0, 0, 0, 0.25) inset;
+
         &:hover {
             box-shadow: inset 12px 12px 16px 0 rgba(0, 0, 0, 0.15),
                 inset -8px -8px 12px 0 rgba(255, 255, 255, 0.3);
         }
     }
-    &.electric:not(.disabled){
+    &.electric:not(.disabled) {
         cursor: pointer;
         box-shadow: 12px 12px 16px 0 rgba(29, 73, 65, 0.25) inset,
-        -8px -8px 12px 0 rgba(0, 0, 0, 0.5) inset;
+            -8px -8px 12px 0 rgba(0, 0, 0, 0.5) inset;
         background-color: $electric;
         svg {
             fill: $bg;
@@ -122,14 +132,11 @@ p {
             box-shadow: inset 12px 12px 16px 0 rgba(0, 0, 0, 0.25),
                 inset -8px -8px 12px 0 rgba(29, 73, 65, 0.25);
         }
-
     }
-    &.lardge{
+    &.lardge {
         width: 60px;
         height: 60px;
     }
-
-    
 }
 .tags-nav {
     width: max(calc((100vw - 1000px) / 2), 230px);
@@ -137,10 +144,15 @@ p {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    color: $bg;
     a {
         height: 25px;
         text-decoration: none;
+        font-size: 19px;
+        color: $bg;
+        &.active {
+            font-weight: 600;
+            color: $pink;
+        }
     }
 }
 .paginator-box {
@@ -151,7 +163,7 @@ p {
         font-size: 17px;
         width: 20px;
         height: 20px;
-        color: $hotPink;
+        color: $pink;
         font-weight: 500;
         text-decoration: none;
         transition: all 0.3s linear;

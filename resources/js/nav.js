@@ -1,10 +1,13 @@
 
 
 class NavStyles{
-    constructor(selector, color, activeColor){
+    constructor(selector, color, activeColor, fontSize, activeFontSize, activeTransform){
         this.selector = selector;
         this.color = color;
         this.activeColor = activeColor;
+        this.fontSize = fontSize;
+        this.activeFontSize = activeFontSize;
+        this.activeTransform = activeTransform
         this.navDOM;
         this.navLinksDOMS;
         this.setDOMS;;
@@ -12,15 +15,13 @@ class NavStyles{
         this.hoverOptions;
         this.unHoverOptions;
         this.setVariables();
-        this.setNavStyles();
-        this.animation();
     }
     setVariables(){
         this.navDOM = document.querySelector(this.selector);
         this.navLinksDOMS = this.navDOM.querySelectorAll('a');
         this.hoverFontWeight = [
-            {  fontVariationSettings: "'wght' 400", letterSpacing: '0px', fontSize: '17px', color:this.color},
-            { fontVariationSettings: "'wght' 500", letterSpacing: '0.05px', fontSize: '17.2px', color:this.activeColor},
+            {  fontVariationSettings: "'wght' 400", letterSpacing: '0px', fontSize: this.fontSize, color:this.color, transform:'translate(0)'},
+            { fontVariationSettings: "'wght' 500", letterSpacing: '0.05px', fontSize: this.activeFontSize, color:this.activeColor, transform:`translate(${this.activeTransform})`},
         ];
         this.hoverOptions = {
             duration: 300,
@@ -40,10 +41,10 @@ class NavStyles{
     setNavStyles(){
         this.navLinksDOMS.forEach(navLink => {
             if(navLink.classList.contains('active')){
-                navLink.style.cssText =  `font-variation-settings: 'wght' 600; letter-spacing: 0.05px; font-size: 17.2px; color: ${this.activeColor}; `
+                navLink.style.cssText =  `font-variation-settings: 'wght' 600; letter-spacing: 0.05px; font-size: ${this.activeFontSize}; color: ${this.activeColor}; `
         
             }else{
-                navLink.style.cssText = `font-variation-settings: 'wght' 400; letter-spacing: 0; font-size: 17px; color: ${this.color}; border-bottom: none`;
+                navLink.style.cssText = `font-variation-settings: 'wght' 400; letter-spacing: 0; font-size: ${this.fontSize}; color: ${this.color}; border-bottom: none`;
             } 
             const linkWidth = navLink.offsetWidth;
             navLink.style.width = linkWidth + 20 + 'px';

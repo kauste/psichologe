@@ -19,16 +19,19 @@ use App\Models\FirstPage;
 
 Route::get('/', [FrontController::class, 'firstPage'])->name('first-page');
 Route::get('/articles', [FrontController::class, 'articlesPage'])->name('articles-page');
+Route::get('/article/{article}', [FrontController::class, 'articlePage'])->name('article-page');
+
 
 
 Auth::routes(['register' => false]);
 
 Route::prefix('admin')->name('back-')->middleware('auth')->group(function(){
     Route::get('first-pg', [FirstPageController::class, 'index'])->name('first-pg');
-    //profile Pic
-    Route::post('store-profile-pic', [FirstPageController::class, 'storeProfilePic'])->name('store-profile-pic');
-    Route::put('update-profile-pic-position', [FirstPageController::class, 'updateProfilePic'])->name('update-profile-pic-position');
-    Route::delete('delete-profile-pic/{openLiId?}', [FirstPageController::class, 'deleteProfilePic'])->name('delete-profile-pic');
+    //citations
+    Route::put('update-citation/{id?}', [FirstPageController::class, 'updateCitation'])->name('update-citation');
+    Route::post('store-citation', [FirstPageController::class, 'storeCitation'])->name('store-citation');
+    Route::delete('delete-citation/{id?}', [FirstPageController::class, 'deleteCitation'])->name('delete-citation');
+    // work
     //about
     Route::put('update-about', [FirstPageController::class, 'updateAbout'])->name('update-about');
     // education

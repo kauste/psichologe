@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\FirstPage;
+use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use App\Models\FirstPage;
+use App\Models\Citation;
 use App\Models\Education;
 use App\Models\Work;
-use App\Models\FirstPgImages;
-use Illuminate\Support\Facades\Validator;
 
 
 use Auth;
@@ -17,93 +17,52 @@ class FirstPageController extends Controller
     // first page
     public function index()
     {
-        $data = FirstPage::with(['images' => function($query){
-                                    $query->orderByRaw('priority IS NULL, priority');
-                                },
-                                'educations'=> function($query){
+        $data = FirstPage::with(['educations'=> function($query){
                                     $query->orderByRaw('priority IS NULL, priority');
                                 },
                                 'works' => function($query){
                                     $query->orderByRaw('priority IS NULL, priority');
                                 },])->first();
-        return view('back.firstPage', ['data' => $data, 'area' => null ]);
+        $citations = Citation::orderBy(DB::raw('RAND()'))
+                                ->get();
+        return view('back.firstPage', ['pageName' => 'firstPage',
+                                        'data' => $data,
+                                        'citations' => $citations,
+                                        'area' => null ]);
     }
-
-    // propfile Pic
-    public function storeProfilePic(Request $request)
+    // citations
+    public function storeCitation(Request $request)
     {
-        $picture = $request->file('picture');
-        $objectYposition = $request->input('objectYposition');
-        $isRight = $request->input('is_right');
 
-        $validator = Validator::make([
-            'picture' => $picture,
-            'objectYposition' => $objectYposition,
-            'is_right' => $isRight,
-        ], [
-            'picture' => 'required|image|mimes:jpg,bmp,png,webp',
-            'objectYposition' => 'required|decimal:0,2',
-            'is_right' => 'required|boolean'
+    }
+    public function updateCitation(Request $request)
+    {
+        $data = $request->data;
+        $id = (int) $request->id;
+        $validator = Validator::make($data, [
+            'citation' => 'required|min:4|max:150',
+            'author' => 'nullable|integer|min:1|max:30',
         ]);
         if($validator->fails()){
             return response()->json(['errors' => $validator->errors()->all()]);
         };
-
-        $ext = $picture->getClientOriginalExtension();
-        $name = pathinfo($picture->getClientOriginalName(), PATHINFO_FILENAME);
-        $fileName = $name. '-' . rand(100000, 999999). '.' . $ext;
-        $picture->move(public_path().'/images', $fileName);
-        $image = FirstPgImages::create([
-            'picture_path' => $fileName,
-            'object_y_pos_percent' => $objectYposition,
-            'is_right' => $isRight
+        $citation = Citation::find($id);
+        $citation->update([
+            'citation' => $data['citation'],
+            'author' => $data['author'],
         ]);
 
-        $url = asset('/images/'. $fileName);
-        $modalHTML = view('back.CRUDmodal.profilePic.newPicInModal', ['url' => $url, 
-                                                                      'objectYposition' => $objectYposition])->render();
-        $sectionHTML = view('back.CRUDmodal.profilePic.newPicInSec', ['url' => $url, 
-                                                                        'objectYposition' => $objectYposition,
-                                                                        'isRight' => $image->is_right])->render();                                               
-        return response()->json(['message' => 'Sukurta nauja profilio nuotrauka.', 
-                                 'modalHTML' => $modalHTML,
-                                 'sectionHTML' => $sectionHTML,
-                                 'imageId' => $image->id,
-                                ]);
+        return response()->json(['message' => 'Citata yra pakeista.']);
     }
-    public function updateProfilePic(Request $request){
-        $imgData = $request->all();
-        $imgData['priority'] = (int) $imgData['priority'];
-        $imgData['priority'] = $imgData['priority'] ? $imgData['priority'] : null;
-        $validator = Validator::make($imgData, [
-            'picId' => 'required|integer|exists:first_pg_images,id',
-            'objectYposition' => 'required|decimal:0,2|min:0|max:100',
-            'priority' => 'nullable|integer|max:255|min:1',
-        ]);
-        if($validator->fails()){
-            return response()->json(['errors' => $validator->errors()->all()]);
-        };
-        FirstPgImages::where('id', $imgData['picId'])
-                    ->update(['object_y_pos_percent' => $imgData['objectYposition'],
-                              'priority' => $imgData['priority']]);
 
-        return response()->json(['message' => 'Informacija apie nuotrauką yra pakeista.']);
-    }
-    public function deleteProfilePic(Request $request)
+    public function deleteCitation(Request $request)
     {
-        $image = FirstPgImages::find((int) $request->openLiId);
-        if($image){
-            $pic_path = public_path() . '/images/'. $image->picture_path;
-            if (file_exists($pic_path)) {
-                unlink($pic_path);
-            }
-        }
-        FirstPgImages::destroy((int) $request->openLiId);
-        return response()->json(['message' => 'Nuotrauka yra ištrinta.']);
+        Citation::destroy((int) $request->id);
+        return response()->json(['message' => 'Citata yra ištrinta.']);
     }
-
     // about
-    public function updateAbout(Request $request){
+    public function updateAbout(Request $request)
+    {
         // validacija, kad ne per daug raidziu butu
         $validator = Validator::make($request->all(), [
             'about' => 'required|max:5000|string',
@@ -134,7 +93,7 @@ class FirstPageController extends Controller
 
         $modalHTML = view('back.CRUDmodal.education.newEduInModal', ['edu' => $education])->render();
         $sectionHTML = view('back.CRUDmodal.education.newEduInSec', ['edu' => $education])->render();                                            
-        return response()->json(['message' => 'New education is created.', 
+        return response()->json(['message' => 'Pridėti nauji kursai/mokymai.', 
                                  'modalHTML' => $modalHTML,
                                  'sectionHTML' => $sectionHTML,
                                  'itemId' => $education->id,
@@ -161,7 +120,7 @@ class FirstPageController extends Controller
             'priority' => $data['priority'],
         ]);
 
-        return response()->json(['message' => 'Pridėti nauji kursai/mokymai.']);
+        return response()->json(['message' => 'Kursų/mokymų informacija yra pakeista.']);
     }
     public function deleteEducation(Request $request)
     {

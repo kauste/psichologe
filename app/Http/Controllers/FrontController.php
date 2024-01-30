@@ -1,25 +1,27 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use DB;
 use Illuminate\Http\Request;
 use App\Models\FirstPage;
 use App\Models\Article;
+use App\Models\Citation;
 
 class FrontController extends Controller
 {
     public function firstPage()
     {
-        $data = FirstPage::with(['images' => function($query){
-                                    $query->orderByRaw('priority IS NULL, priority');
-                                },
-                                'educations'=> function($query){
+        $data = FirstPage::with(['educations'=> function($query){
                                     $query->orderByRaw('priority IS NULL, priority');
                                 },
                                 'works' => function($query){
                                     $query->orderByRaw('priority IS NULL, priority');
                                 },])->first();
-        return view('front.firstPage', ['pageName' => 'firstPage', 'data' => $data]);
+        $citations = Citation::orderBy(DB::raw('RAND()'))
+                             ->get();
+        return view('front.firstPage', ['pageName' => 'firstPage', 
+                                        'data' => $data, 
+                                        'citations' => $citations]);
     }
     public function articlesPage(Request $request)
     {
@@ -35,4 +37,10 @@ class FrontController extends Controller
                                             'pages' => $pages,
                                             'currentPage' => $page]);
     }
+    public function articlePage(Request $request, Article $article){
+        // dd($article);
+        return view('front.articlePage', ['pageName' => 'articlesPage',
+                                            'article' => $article]);
+    }
+
 }

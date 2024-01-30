@@ -15,7 +15,7 @@
             <div class="message --message"></div>
         </div>
         <div class="modal-ul-box ul--box">
-            <ul class="work-ul --work">
+            <ul class="--work">
                 @forelse ($data->works as $work)
                 <li class="one-work" id="work-edit-{{$work->id}}" data-priority="{{$work->priority}}">
                     <div class="date --date">{{$work->date}}</div>
@@ -51,7 +51,7 @@
         <div class="modal-add-box add--box">
             <form>
                 <div>
-                    <div class="names">
+                    <div class="names one-work">
                         <div>Datos</div>
                         <div>Darbas</div>
                         <div>Eil. nr.</div>

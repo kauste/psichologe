@@ -14,7 +14,6 @@ class Positioner{
     }
 
     setBoxesSize(){
-        console.log('yo');
         this.imgsBoxesDOMS = document.querySelectorAll(this.selector);
         const imgDOM = this.imgsBoxesDOMS[0].querySelector('img')
         const imgsWidth = imgDOM.clientWidth;
@@ -35,7 +34,6 @@ class Positioner{
         this.imgDOM.style.height = 'auto'
         setTimeout(() => {
             this.imgHeight = this.imgDOM.offsetHeight;
-            console.log('offsetHeight2 ' + this.imgDOM.offsetHeight)
             this.additionalHeight = this.imgHeight - this.boxHeight;
             const objectPos = this.imgDOM.style.objectPosition.trim();
             this.objectYposition =  parseInt(objectPos.substr(objectPos.indexOf(' ') + 1).replace(['%', 'px'], ''))

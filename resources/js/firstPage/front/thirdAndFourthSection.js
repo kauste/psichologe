@@ -32,6 +32,7 @@ class ThirdAndFourthSecAppear{
     }
     listenToScroll(){
         window.addEventListener('scroll', this.onScrollHandler)
+        this.onScrollHandler();
 
     }
 }

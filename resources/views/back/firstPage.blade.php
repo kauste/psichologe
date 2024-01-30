@@ -1,32 +1,74 @@
 @extends('layouts.appBack')
 @section('content')
+@inject('contacts', 'App\Services\Contacts')
+
 <div class="about--me--page back--office back-ofice">
-    @include('back.CRUDmodal.profilePic.modal')
+    @include('back.CRUDmodal.citations.modal')
     @include('back.CRUDmodal.education.modal')
     @include('back.CRUDmodal.work.modal')
-    <section id="profilePic" class="section-1-box">
-        <div class="section-1 section--1">
-            <div class="ul--box ul-box">
-            <img src="./../images/psichologe_alytuje_3.webp">
-                {{-- <ul class="profile-pic-ul --profilePic">
-                    <div class="edit-svg-box --edit">
-                        <svg>
-                            <use xlink:href="#edit"></use>
+    <section id="hero" class="section-1">
+        <div class="img-box">
+            <img src="{{asset('images/psichologe_alytuje_11.webp')}}">
+        </div>
+        <div class="services">
+            <ul>
+                <li>Konsultavimas</li>
+                <li>Psichologinis įvertinimas</li>
+                <li>Mokymai</li>
+            </ul>
+        </div>
+        <div id="citation"  class="citations-box">
+            <div class="edit-svg-box --edit">
+                <svg>
+                    <use xlink:href="#edit"></use>
+                </svg>
+            </div>
+            <img src="{{asset('images/bg3.webp')}}">
+            <div class="citations">
+                <div class="swiper citations--swiper ul--box">
+                    <ul class="swiper-wrapper">
+                        @foreach ($citations ?? [] as $citation)
+                        <li class="swiper-slide" id="citation-{{$citation->id}}">
+                            <div class="--citation">{{$citation->citation}}</div>
+                            <small class="--author">{{$citation->author ?? ''}}</small>
+                        </li>
+                        @endforeach
+                    </ul>
+                </div>
+                <div class="swiper-button-next">
+                    <div class="round-button pink">
+                        <svg class="chevron chevron-right">
+                            <use xlink:href="#chevron"></use>
                         </svg>
                     </div>
-                    @forelse ($data->images as $key => $image)
-                    <li class="one-profile-pic" id="profilePic-{{$image->id}}" style="opacity:{{$key === 0 ? '1' : '0'}}" data-priority={{$image->priority ?? 0}}>
-                        <img class="{{$image->is_right ? 'right' : 'left'}}" src="{{asset('/images/' . $image->picture_path) }}" alt="psichologe Alytuje Romalda Stasioniene" style="object-position:0 {{$image->object_y_pos_percent}}%" />
-                    </li>
-                    @empty
-                    <li class="one-profile-pic" id="profilePic-1">
-                        <img class="right" src="./../images/psichologe_alytuje_1.webp" alt="psichologe Alytuje Romalda Stasioniene" style="object-position:{{$image->object_y_pos_percent}}; opacity:1" />
-                    </li>
-                    @endforelse
-                </ul> --}}
-                <div class="h1"><div>Psichologė Alytuje </div><div>Romalda Stasionienė</div>
                 </div>
             </div>
+        </div>
+        <h1>
+            <div class="duties">Psichologė Alytuje</div>
+            <div class="full-name">Romalda Stasionienė</div>
+        </h1>
+        <div class="contacts">
+            <div style="display:block" class="tel-num tel-desktop">&#43;370 {{substr($contacts->telephone_number, 0, 3)}} {{substr($contacts->telephone_number, 2, 5)}}</div>
+            <a style="display:none" class=" tel-num tel-mobile" href="tel:+370{{str_replace([' ', '-'], '', $contacts->telephone_number)}}" target="_blank">&#43;370 {{substr($contacts->telephone_number, 0, 3)}} {{substr($contacts->telephone_number, 2, 5)}}</a>
+            <a class="email" href="mailto:{{$contacts->email}}?subject=Mail from site">{{$contacts->email}}</a>
+            <div class="media">
+                @if($contacts->facebook)
+                <a class="round-button pink" href="{{$contacts->facebook}}" target="_blank">
+                    <svg>
+                        <use xlink:href="#fb"></use>
+                    </svg>
+                </a>
+                @endif
+                @if($contacts->linkedin)
+                <a class="round-button pink" href="{{$contacts->linkedin}}" target="_blank">
+                    <svg>
+                        <use xlink:href="#linkedin"></use>
+                    </svg>
+                </a>
+                @endif
+            </div>
+        </div>
     </section>
     <section id="about" class="section-2">
         <div class="in-sec-2">
@@ -74,12 +116,12 @@
                         @endforelse
                     </ul>
                 </div>
-                <div class="swiper-button-prev swiper--button--prev disabled">
+                <div class="swiper-button-prev round-button electric lardge swiper--button--prev disabled">
                     <svg class="chevron chevron-up">
                         <use xlink:href="#chevron"></use>
                     </svg>
                 </div>
-                <div class="swiper-button-next swiper--button--next">
+                <div class="swiper-button-next round-button electric lardge swiper--button--next">
                     <svg class="chevron chevron-down">
                         <use xlink:href="#chevron"></use>
                     </svg>
@@ -110,12 +152,12 @@
                         @endforelse
                     </ul>
                 </div>
-                <div class="swiper-button-prev swiper--button--prev disabled">
+                <div class="swiper-button-prev round-button pink lardge swiper--button--prev disabled">
                     <svg class="chevron chevron-up">
                         <use xlink:href="#chevron"></use>
                     </svg>
                 </div>
-                <div class="swiper-button-next swiper--button--next">
+                <div class="swiper-button-next round-button pink lardge swiper--button--next">
                     <svg class="chevron chevron-down">
                         <use xlink:href="#chevron"></use>
                     </svg>

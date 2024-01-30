@@ -11,9 +11,13 @@ class Article extends Model
 {
     use HasFactory;
     
-    protected $fillable = ['article', 'img_1_path', 'img_2_path', 'img_3_path'];
+    protected $fillable = ['article', 'link', 'img_1', 'img_2', 'img_3'];
 
-    protected $casts = ['article' => 'array'];
+    protected $casts = ['article' => 'array',
+                        'link' => 'array', 
+                        'img_1' => 'array', 
+                        'img_2' => 'array', 
+                        'img_3' => 'array'];
     public function tags()
     {
         return $this->belongsToMany(Role::class);

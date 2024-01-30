@@ -14,11 +14,12 @@ return new class extends Migration
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
             $table->string('title', 200);
-            $table->json('article');
-            $table->string('link', 500)->nullable();
-            $table->string('img_1_path')->nullable();
-            $table->string('img_2_path')->nullable();
-            $table->string('img_3_path')->nullable();
+            $table->string('youtube', 100)->nullable();
+            $table->json('article')->nullable();
+            $table->json('link')->nullable();
+            $table->json('img_1')->nullable();
+            $table->json('img_2')->nullable();
+            $table->json('img_3')->nullable();
             $table->json('extra_data')->nullable();
             $table->timestamps();
         });

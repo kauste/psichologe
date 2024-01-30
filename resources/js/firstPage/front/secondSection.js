@@ -6,12 +6,16 @@ class SecondSection{
         this.paragraphBoxDOM;
         this.paragraphDOM;
         this.bambooDOM;
+        this.headingAppearAnimation;
+        this.headingAppearOptions;
+        this.paragraphAppearAnimation;
+        this.paragraphAppearOptions;
         this.init()
     }
     init(){
         this.setVariables()
         this.setBambooHeight()
-        this.onAppear()
+        this.listenToScroll()
         this.resizeWindow()
         this.changeParagraph()
     }
@@ -21,41 +25,42 @@ class SecondSection{
         this.paragraphBoxDOM = this.sectionDOM.querySelector('.--paragraph');
         this.paragraphDOM = this.sectionDOM.querySelector('.--paragraph p');
         this.bambooDOM = this.sectionDOM.querySelector('.--bamboo');
-    }
-    setBambooHeight(){
-        const paragraphHeight = this.paragraphDOM.offsetHeight;
-        this.bambooDOM.style.height = paragraphHeight + 150 + 'px';
-    }
-    onAppear(){
-        const headingAppear = [
+        this.headingAppearAnimation = [
             {transform: 'translateY(0)', opacity: 0.7},
             {transform: 'translateY(-30px)', opacity: 1},
           ]
-        const headingAppearOptions =  {
+        this.headingAppearOptions =  {
                             duration: 1000,
                             easing: 'ease',
                             iterations:1,
                             fill: 'forwards'
                         }
-        const paragraphAppear = [
+        this.paragraphAppearAnimation = [
                     {transform: 'translateY(0)', opacity: 0.7},
                     {transform: 'translateY(-30px)', opacity: 1},
                     ]
-        const paragraphAppearOptions =  {
+        this.paragraphAppearOptions =  {
                             duration: 1000,
                             easing: 'ease',
                             iterations:1,
                             fill: 'forwards',
                             delay:1000
                             }
-        const scrolledToSeconSection = () => {
+    }
+    setBambooHeight(){
+        const paragraphHeight = this.paragraphDOM.offsetHeight;
+        this.bambooDOM.style.height = paragraphHeight + 150 + 'px';
+    }
+    onAppearHandler = () => {
             if(window.scrollY >= window.innerHeight / 3){
-              this.headingDOM.animate(headingAppear, headingAppearOptions)
-              this.paragraphDOM.animate(paragraphAppear, paragraphAppearOptions)
-              window.removeEventListener('scroll', scrolledToSeconSection);
+              this.headingDOM.animate(this.headingAppearAnimation, this.headingAppearOptions)
+              this.paragraphDOM.animate(this.paragraphAppearAnimation, this.paragraphAppearOptions)
+              window.removeEventListener('scroll', this.onAppearHandler);
             }
-        }
-        window.addEventListener('scroll', scrolledToSeconSection)
+    }
+    listenToScroll(){
+        window.addEventListener('scroll', this.onAppearHandler)
+        this.onAppearHandler();
     }
     resizeWindow(){
         window.addEventListener("resize", () => {

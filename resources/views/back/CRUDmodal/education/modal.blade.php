@@ -51,7 +51,7 @@
         <div class="modal-add-box add--box">
             <form>
                 <div>
-                    <div class="names">
+                    <div class="one-education names">
                         <div>Datos</div>
                         <div>Išsilavinimas</div>
                         <div>Eil. nr.</div>

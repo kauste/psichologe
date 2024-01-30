@@ -1,14 +1,6 @@
-.section-1-box {
-    height: var(--sec-1-height);
-}
 .section-1 {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
     height: var(--sec-1-height);
-    z-index: 0;
-    background-color: $bg;
+    position:relative;
     .img-box {
         width: 100%;
         height: 100%;
@@ -21,7 +13,7 @@
         display: flex;
         justify-content: center;
         align-items: end;
-        background: $warmGradient;
+        background: $electricGradient;
         img {
             object-fit: contain;
             width: 600px;
@@ -29,18 +21,17 @@
         }
     }
     .services {
-        position:absolute;
-        color:$bg;
-        height:calc(100vh - 250px);
-        padding:50px 50px 50px 100px;
+        position: absolute;
+        color: $bg;
+        height: calc(100vh - 250px);
+        padding: 50px 50px 50px 100px;
         display: flex;
         align-items: center;
-        ul{
+        ul {
             font-size: 24px;
             display: flex;
             flex-direction: column;
-            gap:20px;
-
+            gap: 20px;
         }
     }
     .citations-box {
@@ -71,12 +62,28 @@
             color: $bg;
             background: $electricTransp;
             z-index: 1;
-            display: flex;
-            align-items: center;
-            z-index: 1;
-            ul {
-                list-style: none;
-                padding: 0;
+            .swiper {
+                overflow: hidden;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                transform: translate3d(0px, 0, 0)!important; 
+                .swiper-wrapper {
+                    list-style: none;
+                    padding: 0;
+                    display: flex;
+                    .swiper-slide {
+                        min-width: 260x;
+                        display: block;
+                        small{
+                            font-style: italic;
+                        }
+                    }
+                    .swiper-slide:not(.swiper-slide-active){
+                        opacity: 0 !important;
+                      }
+                }
             }
             .swiper-button-next {
                 bottom: 20px;
