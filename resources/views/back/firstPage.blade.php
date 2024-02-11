@@ -3,7 +3,7 @@
 @inject('contacts', 'App\Services\Contacts')
 
 <div class="about--me--page back--office back-ofice">
-    @include('back.CRUDmodal.citations.modal')
+    @include('back.CRUDmodal.citation.modal')
     @include('back.CRUDmodal.education.modal')
     @include('back.CRUDmodal.work.modal')
     <section id="hero" class="section-1">
@@ -108,8 +108,8 @@
                     <ul class="swiper-wrapper swiper--wrapper">
                         @forelse ($data->educations as $edu)
                         <li class="one-education swiper-slide" id="education-{{$edu->id}}" data-priority={{$edu->priority ?? null}}>
-                            <div class="date">{{$edu->date}}</div>
-                            <div class="about-edu">{{$edu->about}}</div>
+                            <div class="date --date">{{$edu->date}}</div>
+                            <div class="about-edu --about">{{$edu->about}}</div>
                         </li>
                         @empty
                         <div>Šiuo metu duomenys neprieinami</div>
@@ -144,8 +144,8 @@
                     <ul class="swiper-wrapper swiper--wrapper">
                         @forelse ($data->works as $key => $work)
                         <li class="one-work swiper-slide" id="work-{{$work->id}}" data-priority={{$work->priority ?? null}}>
-                            <div class="date">{{$work->date}}</div>
-                            <div class="about-work">{{$work->about}}</div>
+                            <div class="date --date">{{$work->date}}</div>
+                            <div class="about-work --about">{{$work->about}}</div>
                         </li>
                         @empty
                         <div>Šiuo metu duomenys neprieinami</div>

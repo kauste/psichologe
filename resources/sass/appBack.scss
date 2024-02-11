@@ -1,18 +1,10 @@
-// // Variables
-// @import 'variables';
 
-// // Bootstrap
-// @import 'bootstrap/scss/bootstrap';
-
-// @import 'parts/nav';
-// @import 'parts/loader';
 @import './app';
 
 @import 'back/firstPage/section-1';
 @import 'back/firstPage/section-2';
 @import 'back/firstPage/section-3-and-4';
 @import 'parts/footer';
-// @import 'parts/login';
 @import 'parts/modal';
 
 .message {

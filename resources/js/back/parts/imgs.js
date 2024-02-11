@@ -1,6 +1,6 @@
-import { CRUDmodal } from "../CRUDmodal";
-import { FileInputActivator } from "../parts/FileInputsActivator";
-import Positioner from "../parts/positioner";
+import { CRUDmodal } from "./CRUDmodal";
+import { FileInputActivator } from "./FileInputsActivator";
+import Positioner from "./positioner";
 class FirstSection extends CRUDmodal{
     constructor(cssStyles, ){
         super(cssStyles, 'profilePic')

@@ -17,7 +17,7 @@
         @endif
         <div class="article">
             @foreach ($article->article ?? [] as $key => $paragraph)
-            @if($key === 0 && $article->img_1)
+            @if( $article->img_1 && $key === $article->img_1['paragraph_before'])
             <div class="img-box">
                 <img src="{{asset('images/articlesImgs') . '/' . $article->img_1['path']}}">
                 @if(isset($article->img_1['extra_data']) && $article->img_1['extra_data'])
@@ -28,7 +28,7 @@
                 @endif
             </div>
             @endif
-            @if($key === 3 && $article->img_2)
+            @if( $article->img_2 && $key === $article->img_2['paragraph_before'])
             <div class="img-box">
                 <img src="{{asset('images/articlesImgs') . '/' . $article->img_2['path']}}">
                 @if(isset($article->img_2['extra_data']) && $article->img_2['extra_data'])
@@ -39,7 +39,7 @@
                 @endif
             </div>
             @endif
-            @if($key === 6 && $article->img_3)
+            @if( $article->img_3 && $key === $article->img_3['paragraph_before'])
             <div class="img-box">
                 <img src="{{asset('images/articlesImgs') . '/' . $article->img_3['path']}}">
                 @if(isset($article->img_3['extra_data']) && $article->img_3['extra_data'])

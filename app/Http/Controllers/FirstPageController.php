@@ -33,7 +33,26 @@ class FirstPageController extends Controller
     // citations
     public function storeCitation(Request $request)
     {
+        $data = $request->data;
+        $validator = Validator::make($data, [
+            'citation' => 'required|min:4|max:150',
+            'author' => 'nullable|integer|min:1|max:30',
+        ]);
+        if($validator->fails()){
+            return response()->json(['errors' => $validator->errors()->all()]);
+        };
+        $citation = Citation::create([
+            'citation' => $data['citation'],
+            'author' => $data['author'],
+        ]);
 
+        $modalHTML = view('back.CRUDmodal.citation.newCitationInModal', ['citation' => $citation])->render();
+        $sectionHTML = view('back.CRUDmodal.citation.newCitationInSec', ['citation' => $citation])->render();                                            
+        return response()->json(['message' => 'Pridėta nauja citata', 
+                                 'modalHTML' => $modalHTML,
+                                 'sectionHTML' => $sectionHTML,
+                                 'itemId' => $citation->id,
+                                ]);
     }
     public function updateCitation(Request $request)
     {
