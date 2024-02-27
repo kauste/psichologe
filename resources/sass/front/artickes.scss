@@ -1,4 +1,4 @@
-body:has(.articles-page, .article-page) {
+body:has(.articles-list, .article-page, .article-create) {
     .in-body {
         padding-top: 110px;
         background: $northenGradient;
@@ -13,7 +13,7 @@ body:has(.articles-page, .article-page) {
         }
     }
 }
-.articles-page,
+.articles-list,
 .article-page {
     display: grid;
     grid-template-columns: max(calc((100vw - 1000px) / 2), 230px) 1fr;
@@ -129,3 +129,4 @@ body:has(.articles-page, .article-page) {
         }
     }
 }
+

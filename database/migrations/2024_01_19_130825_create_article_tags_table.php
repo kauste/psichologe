@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('article_tags', function (Blueprint $table) {
             $table->id();
-            $table->string('tag');
+            $table->string('tag', 100);
+            $table->unsignedTinyInteger('priority')->nullable();
             $table->json('extra_data')->nullable();
             $table->timestamps();
         });

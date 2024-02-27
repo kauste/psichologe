@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('article_article_tag_pivot', function (Blueprint $table) {
+        Schema::create('article_article_tag', function (Blueprint $table) {
             $table->foreignIdFor(ArticleTag::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Article::class)->constrained()->cascadeOnDelete();
             $table->primary(['article_tag_id', 'article_id']);
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('article_article_tag_pivot');
+        Schema::dropIfExists('article_article_tag');
     }
 };

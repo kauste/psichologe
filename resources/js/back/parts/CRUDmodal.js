@@ -3,6 +3,7 @@ class CRUDmodal {
         //css
         this.warningBorderCSS = cssStyles.warningBorderStyle,
         this.selector = selector;
+        this.editColumns;
         //section DOMS
         this.sectionDOM;
         this.sectionUlBoxDOM
@@ -164,15 +165,18 @@ class CRUDmodal {
 
     insertItemInList(ulDOM, itemToInsert){
         let afterItem = null;
-        const itemsList = Array.from( ulDOM.querySelectorAll(`li`))
-        for(let i = 0; i < itemsList.length; i++){
-            let listItemPriority = parseInt(itemsList[i].dataset.priority) ? parseInt(itemsList[i].dataset.priority) : null;
-            if (!listItemPriority || (listItemPriority && listItemPriority >= itemToInsert.dataset.priority)) {
-                afterItem = itemsList[i];
-                break;
+        const itemsList = Array.from( ulDOM.querySelectorAll(`:scope > li`))
+        const itemPriority = parseInt(itemToInsert.dataset.priority);
+        if(itemPriority > 0){
+            for(let i = 0; i < itemsList.length; i++){
+                let listItemPriority = parseInt(itemsList[i].dataset.priority) ? parseInt(itemsList[i].dataset.priority) : null;
+                if (!listItemPriority || (listItemPriority && listItemPriority >= itemToInsert.dataset.priority)) {
+                    afterItem = itemsList[i];
+                    break;
+                }
             }
         }
-        afterItem ? ulDOM.insertBefore(itemToInsert, afterItem) : ulDOM.appendChild(itemToInsert);
+        (afterItem || itemPriority === 0) ? ulDOM.insertBefore(itemToInsert, afterItem) : ulDOM.appendChild(itemToInsert);
     }
     changeToEditButtons(){
         const editActionsDOM = this.openItemDOM.querySelector('.edit--actions');
@@ -190,12 +194,11 @@ class CRUDmodal {
     }
     borderOpenCSS(){
         this.liChildernDOMS.forEach((element, i) => {
-            element.style.cssText = 'border-top: 1px solid #333; border-bottom:1px solid #333;'
+            element.style.borderTop = '1px solid #333';
+            element.style.borderBottom = '1px solid #333';
+            element.style.borderRight = '1px solid #333';
             if(i === 0){
                 element.style.borderLeft = '1px solid #333'
-            }
-            else if (i === 1){
-                element.style.borderRight = ' 1px solid #333'
             }
         })
     }

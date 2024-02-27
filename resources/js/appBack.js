@@ -15,6 +15,8 @@ import SecondSectionUpdate from './back/firstPage/secondSection';
 import { ThirdAndFourthSection } from './back/firstPage/thirdAndFourthSection';
 import TopMessage from './back/parts/topMessage';
 import Citations from './back/firstPage/citations';
+import TagsNav from './back/articlesPages/tagsNav';
+import { FileInputsActivator } from './back/parts/FileInputsActivator';
 
 
 // firt page
@@ -47,5 +49,12 @@ if(document.querySelector('.about--me--page')){
     new ThirdAndFourthSection(cssStyles, 'education', educationUpdateRoute, educationStoreRoute, educationDeleteRoute, new ListSwiper('#education'))
     //sec4
     new ThirdAndFourthSection(cssStyles, 'work', workUpdateRoute, workStoreRoute, workDeleteRoute, new ListSwiper('#work'))
+}
+else if(document.querySelector('.articles--page')){
+  new TagsNav(cssStyles, 'tagsNav', articlesTagUpdateRoute, articlesTagStoreRoute, articlesTagDeleteRoute);
+
+}
+else if(document.querySelector('.article--create')){
+  new FileInputsActivator();
 }
 

@@ -1,5 +1,5 @@
 class Positioner{
-    constructor(selector, imgBoxDOM, secImgDOM){
+    constructor(selector, imgBoxDOM,secImgDOM){
         this.selector = selector;
         this.imgBoxDOM = imgBoxDOM;
         this.secImgDOM = secImgDOM;
@@ -16,10 +16,15 @@ class Positioner{
     setBoxesSize(){
         this.imgsBoxesDOMS = document.querySelectorAll(this.selector);
         const imgDOM = this.imgsBoxesDOMS[0].querySelector('img')
-        const imgsWidth = imgDOM.clientWidth;
+        setTimeout(() => {
+            const imgsWidth = imgDOM.clientWidth;
+            this.boxHeight = 10 * imgsWidth / 21;
+
+            this.init();
+        }, 300)
+
         const secHeight = window.innerHeight;
         const screenWith = parseInt(window.screen.width);
-        this.boxHeight = secHeight * imgsWidth / screenWith;
     }
     doSetBoxesSize(){
         this.imgsBoxesDOMS.forEach(imgBoxDOM => {
@@ -37,8 +42,7 @@ class Positioner{
             this.additionalHeight = this.imgHeight - this.boxHeight;
             const objectPos = this.imgDOM.style.objectPosition.trim();
             this.objectYposition =  parseInt(objectPos.substr(objectPos.indexOf(' ') + 1).replace(['%', 'px'], ''))
-            this.marginHeight = ((100 - this.objectYposition) * this.additionalHeight ) / 100 ;
-
+            this.marginHeight = ((100 - this.objectYposition) * this.additionalHeight ) / 100;
             this.setStyles();
             this.letDrag();
         }, 250)
@@ -54,6 +58,7 @@ class Positioner{
         this.imgDOM.setAttribute('drabable', true);
 
         this.imgDOM.addEventListener('dragstart', (e) => {
+            console.log('dragstart')
             this.prevPicPos = e.clientY;
         })
         this.imgDOM.addEventListener('dragover', (e) => {

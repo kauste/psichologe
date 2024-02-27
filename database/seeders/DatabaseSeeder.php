@@ -61,7 +61,7 @@ class DatabaseSeeder extends Seeder
         $tags = ['Tevyste', 'Priklausomybes', 'Sąmoningumas', 'Vaikai', 'Karjera'];
         foreach($tags as $tag){
             DB::table('article_tags')->insert([
-                'tag' => $tag
+                'tag' => $tag,
             ]);
         }
         $art = ['dolor sit amet consectetur adipisicing elit. Nulla, nam. Obcaecati, cum laboriosam. Sunt, tempore at porro eligendi perspiciatis odit dolo. dolor sit amet consectetur adipisicing elit. Nulla, nam. Obcaecati, cum laboriosam. Sunt, tempore at porro eligendi perspiciatis odit dolo. dolor sit amet consectetur adipisicing elit. Nulla, nam. Obcaecati, cum laboriosam. Sunt, tempore at porro eligendi perspiciatis odit dolo.',
@@ -158,11 +158,10 @@ class DatabaseSeeder extends Seeder
             [
                 'title' => 'Trecias puslapis',
                 'article' => json_encode($art)
-            ],
-            
-
-            
+            ], 
         ];
+
+
         foreach($articles as $article){
             DB::table('articles')->insert([
                 'title' => $article['title'],
@@ -173,6 +172,14 @@ class DatabaseSeeder extends Seeder
                 'img_2' => $article['img_2'] ?? null,
                 'img_3' => $article['img_3'] ?? null,
             ]);
+        }
+        foreach(range(1, count($tags)) as $tagId){
+            foreach(range(1, rand(1, 4)) as $articleId){
+                DB::table('article_article_tag')->insert([
+                    'article_id' => $articleId,
+                    'article_tag_id' => $tagId,
+                ]);
+            }
         }
 
     }

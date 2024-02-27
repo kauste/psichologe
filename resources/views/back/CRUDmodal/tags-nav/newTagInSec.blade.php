@@ -1,0 +1,1 @@
+<a class="--tag" href="#">{{$tag->tag}}</a>

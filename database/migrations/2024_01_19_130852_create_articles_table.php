@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
             $table->string('title', 200);
-            $table->string('youtube', 100)->nullable();
             $table->json('article')->nullable();
+            $table->string('youtube', 100)->nullable();
             $table->json('link')->nullable();
             $table->json('img_1')->nullable();
             $table->json('img_2')->nullable();

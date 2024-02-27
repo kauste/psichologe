@@ -19,11 +19,11 @@ class FrontController extends Controller
                                 },])->first();
         $citations = Citation::orderBy(DB::raw('RAND()'))
                              ->get();
-        return view('front.firstPage', ['pageName' => 'firstPage', 
+        return view('back.firstPage', ['pageName' => 'firstPage', 
                                         'data' => $data, 
                                         'citations' => $citations]);
     }
-    public function articlesPage(Request $request)
+    public function articlesList(Request $request)
     {
         $perPage = 6;
         $page = $request->page ?? 1;
@@ -32,14 +32,13 @@ class FrontController extends Controller
                             ->get();
         $pages = ceil(Article::count() / $perPage);
 
-        return view('front.articlesPage', ['pageName' => 'articlesPage',
+        return view('front.articlesList', ['pageName' => 'articlesList',
                                            'articles' => $articles,
                                             'pages' => $pages,
                                             'currentPage' => $page]);
     }
-    public function articlePage(Request $request, Article $article){
-        // dd($article);
-        return view('front.articlePage', ['pageName' => 'articlesPage',
+    public function articlePage(Article $article){
+        return view('front.articlePage', ['pageName' => 'articlesList',
                                             'article' => $article]);
     }
 

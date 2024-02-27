@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.appBack')
 @section('content')
 @inject('tags', 'App\Services\ArticlesTags')
 <div class="article--page article-page">
@@ -9,7 +9,21 @@
         @endforeach
     </div>
     <section class="article-box article--box">
-        <h2>{{$article->title}}</h2>
+        <div class="title-box">
+            <h2>{{$article->title}}</h2>
+            <div class="edit--actions edit-actions" style="display:flex">
+                <div class="svg-box --edit">
+                    <svg class="edit-svg">
+                        <use xlink:href="#edit"></use>
+                    </svg>
+                </div>
+                <div class="svg-box --delete">
+                    <svg class="delete-svg">
+                        <use xlink:href="#delete"></use>
+                    </svg>
+                </div>
+            </div>
+        </div>
         @if($article->youtube)
         <div class="youtube-box">
             <iframe src={{"https://www.youtube.com/embed/" . $article->youtube}} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
@@ -17,7 +31,7 @@
         @endif
         <div class="article">
             @foreach ($article->article ?? [] as $key => $paragraph)
-            @if( $article->img_1 && $key === $article->img_1['paragraph_before'])
+            @if( $article->img_1 && $key + 1 === $article->img_1['paragraph_before'])
             <div class="img-box">
                 <img src="{{asset('images/articlesImgs') . '/' . $article->img_1['path']}}">
                 @if(isset($article->img_1['extra_data']) && $article->img_1['extra_data'])
@@ -28,7 +42,7 @@
                 @endif
             </div>
             @endif
-            @if( $article->img_2 && $key === $article->img_2['paragraph_before'])
+            @if( $article->img_2 && $key + 1 === $article->img_2['paragraph_before'])
             <div class="img-box">
                 <img src="{{asset('images/articlesImgs') . '/' . $article->img_2['path']}}">
                 @if(isset($article->img_2['extra_data']) && $article->img_2['extra_data'])
@@ -39,7 +53,7 @@
                 @endif
             </div>
             @endif
-            @if( $article->img_3 && $key === $article->img_3['paragraph_before'])
+            @if( $article->img_3 && $key + 1 === $article->img_3['paragraph_before'])
             <div class="img-box">
                 <img src="{{asset('images/articlesImgs') . '/' . $article->img_3['path']}}">
                 @if(isset($article->img_3['extra_data']) && $article->img_3['extra_data'])

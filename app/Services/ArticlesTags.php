@@ -6,6 +6,6 @@ use App\Models\ArticleTag;
 class ArticlesTags {
     public $tags;
     public function __construct() {
-        $this->tags = ArticleTag::all();
+        $this->tags = ArticleTag::orderByRaw('priority IS NULL, priority')->get();
     }
 }

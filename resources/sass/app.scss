@@ -11,7 +11,6 @@
 @import "front/firstPage/section-3-and-4";
 @import "parts/footer";
 @import "parts/login";
-@import "parts/modal";
 @import "front/artickes";
 
 
@@ -138,12 +137,16 @@ p {
         height: 60px;
     }
 }
-.tags-nav {
+
+.tags-nav, .tags-list {
     width: max(calc((100vw - 1000px) / 2), 230px);
-    padding: 20px 20px 20px 80px;
     display: flex;
     flex-direction: column;
     gap: 20px;
+    list-style: none;
+    li{
+        height:30px;
+    }
     a {
         height: 25px;
         text-decoration: none;
@@ -154,6 +157,14 @@ p {
             color: $pink;
         }
     }
+}
+
+.tags-nav{
+    padding: 20px 20px 20px 30%;
+
+}
+.tags-list{
+    padding:0;
 }
 .paginator-box {
     display: flex;

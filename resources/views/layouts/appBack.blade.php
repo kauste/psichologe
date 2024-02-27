@@ -31,35 +31,43 @@
         const workUpdateRoute = "{{route('back-update-work')}}";
         const workStoreRoute = "{{route('back-store-work')}}";
         const workDeleteRoute = "{{route('back-delete-work')}}";
+        //articleTag
+        const articlesTagUpdateRoute = "{{route('back-update-articles-tag')}}";
+        const articlesTagStoreRoute = "{{route('back-store-articles-tag')}}";
+        const articlesTagDeleteRoute = "{{route('back-delete-articles-tag')}}";
+
     </script>
-    {{-- <link rel="stylesheet" href="{{asset('/build/assets/appBack-d301e78e.css?v='. time())}}">
-    <script src="{{asset('/build/assets/appBack-d28c178a.js?v='. time())}}" defer> --}}
+    {{-- <link rel="stylesheet" href="{{asset('/build/assets/appBack-d301e78e.css?v='. time())}}"> --}}
+    {{-- <script src="{{asset('/build/assets/appBack-d28c178a.js?v='. time())}}" defer> --}}
     @vite(['resources/sass/appBack.scss', 'resources/js/appBack.js'])
 </head>
-<body>
+<body class="back-office">
     @inject('contacts', 'App\Services\Contacts')
     @include('parts.loader')
-    <div class="nav-box">
-        <nav class="--nav">
-            <a href="{{route('back-first-pg')}}" class="{{isset($pageName) && $pageName === 'firstPage' ? 'active' : ''}}">Apie mane</a>
-            <a href="#">Paslaugos</a>
-            <a href="#" class="{{isset($pageName) && $pageName === 'aboutPage' ? 'active' : ''}}">Straipsniai</a>
-            <a href="#">Kontaktai</a>
-            @if(Auth::user()?->role === 7)
-            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                {{ __('Logout') }}
-            </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                @csrf
-            </form>
-            @endif
-        </nav>
+    <div class="in-body">
+        <div class="nav-box">
+            <nav class="--nav">
+                <a href="{{route('back-first-pg')}}" class="{{isset($pageName) && $pageName === 'firstPage' ? 'active' : ''}}">Apie mane</a>
+                <a href="#">Paslaugos</a>
+                <a href="#">Kontaktai</a>
+                <a href="#">Registracija</a>
+                <a href="{{route('back-articles-list')}}" class="{{isset($pageName) && $pageName === 'articlesList' ? 'active' : ''}}">Straipsniai</a>
+                @if(Auth::user()?->role === 7)
+                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    {{ __('Logout') }}
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
+                @endif
+            </nav>
+        </div>
+        <main class="">
+            <div class="message top-message top--message"></div>
+            @yield('content')
+        </main>
+        @include('parts.footer')
     </div>
-    <main class="">
-        <div class="message top-message top--message"></div>
-        @yield('content')
-    </main>
-    @include('parts.footer')
 
     <svg version="1.0" xmlns="http://www.w3.org/2000/svg" style="display:none">
         <symbol id="leave" viewBox="0 0 1166.000000 1280.000000">
@@ -156,11 +164,6 @@
                 <path d="M9315 6070 c-9 -16 -13 -30 -11 -30 3 0 12 14 21 30 9 17 13 30 11 30 -3 0 -12 -13 -21 -30z" />
             </g>
         </symbol>
-                {{-- <symbol id="chevron" viewBox="0 0 263.7 473.1">
-            <g>
-                <path d="M244.5,473.1c-4.9,0-9.8-1.9-13.6-5.6L0,236.5L230.9,5.6c7.5-7.5,19.7-7.5,27.2,0c7.5,7.5,7.5,19.7,0,27.2L54.3,236.5 l203.7,203.7c7.5,7.5,7.5,19.7,0,27.2C254.3,471.2,249.4,473.1,244.5,473.1z" />
-            </g>
-        </symbol> --}}
     </svg>
 </body>
 </html>

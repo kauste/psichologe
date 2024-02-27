@@ -27,7 +27,8 @@ if(document.querySelector('.about--me--page')){
 
 // articles page
 if(document.querySelector('.articles--page') 
-|| document.querySelector('.article--page')){
+|| document.querySelector('.article--page')
+){
     const navAnimation = new NavStyles('.--nav', '#EFEFEF', '#E9C1C8',  '17px', '17.2px', '0');
     navAnimation.setNavStyles();
     navAnimation.animation();
@@ -40,4 +41,9 @@ if(document.querySelector('.article--page')){
     const articlesToMedia = new NavStyles('.article--box', '#17453F', '#17453F', '18px', '18px', '0')
     articlesToMedia.setNavStyles();
     articlesToMedia.animation();
+}
+if(document.querySelector('.article--create')){
+    const navAnimation = new NavStyles('.--nav', '#EFEFEF', '#E9C1C8',  '17px', '17.2px', '0');
+    navAnimation.setNavStyles();
+    navAnimation.animation();
 }

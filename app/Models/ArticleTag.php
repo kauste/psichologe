@@ -9,9 +9,9 @@ use App\Models\Article;
 class ArticleTag extends Model
 {
     use HasFactory;
-    protected $fillable = ['tag'];
+    protected $fillable = ['tag', 'priority'];
     public function articles()
     {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany(Article::class);
     }
 }

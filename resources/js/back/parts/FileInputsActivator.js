@@ -3,6 +3,7 @@ import Positioner from "./positioner";
 class FileInputsActivator{
     constructor(){
       this.inputsBoxesDOMS;
+      this.inputClearBoxDOMS
       this.init()
     }
     init(){
@@ -10,19 +11,28 @@ class FileInputsActivator{
       this.listenToInputs()
     }
     setDOMS(){
-      this.inputsBoxesDOMS = document.querySelectorAll('.file--input--box:not(.--chosen)');
+      this.inputClearBoxDOMS = document.querySelectorAll('.input--delete--box');
+      this.deleteDOMS = document.querySelectorAll('.input--delete--box > .--delete');
     }
     listenToInputs(){
-      this.inputsBoxesDOMS.forEach(inputBoxDOM => {
-          new FileInputActivator(inputBoxDOM)
+      this.inputClearBoxDOMS.forEach(inputClearBoxDOM => {
+          const activator = new FileInputActivator(inputClearBoxDOM)
+          const deteteDOM = inputClearBoxDOM.querySelector('.--delete')
+          deteteDOM.addEventListener('click', () => {
+            activator.clearInput()
+          })
       })
     } 
   }
   class FileInputActivator{
-    constructor(inputBoxDOM, ){
-          this.inputBoxDOM = inputBoxDOM;
+    constructor(inputClearBoxDOM, ){
+          this.inputClearBoxDOM = inputClearBoxDOM;
+          this.inputBoxDOM;
+          this.inputClearDOM;
           this.inputDOM;
+          this.imgDataDOM;
           this.imgBoxDOM;
+
           this.imgDOM;
           this.labelDOM;
           this.file;
@@ -31,30 +41,34 @@ class FileInputsActivator{
           this.activateInput()
     }
     setDOMS(){
-      this.imgBoxDOM = document.querySelector('.create--profilePic--img');
-      this.imgDOM = this.imgBoxDOM.querySelector('img');
+      this.inputBoxDOM = this.inputClearBoxDOM.querySelector('.file--input--box');
+      this.inputClearDOM = this.inputBoxDOM.querySelector('.--delete');
+      this.imgDataDOM = this.inputClearBoxDOM.querySelector('.img--data--box');
+      this.imgBoxDOM = this.inputClearBoxDOM.querySelector('.img--box');
+      this.imgDOM = this.imgDataDOM.querySelector('img');
       this.labelDOM = this.inputBoxDOM.querySelector('[data-js-label]')
     }
     activateInput(){
       this.inputDOM = this.inputBoxDOM.querySelector('[type="file"]')
       this.inputDOM.addEventListener('change', this.fileInputHandler);
+      // this.inputClearDOM.addEventListener('click')
     }
 
     fileInputHandler = (e) => {
         if (!this.inputDOM.value) return
         this.file = e.target.files[0];
         this.imgDOM.src = URL.createObjectURL(this.file);
-        this.imgBoxDOM.style.display = 'block';
-        this.labelDOM.innerText = '';
-        this.positioner = new Positioner('.create--profilePic--img', this.imgBoxDOM, null)
-        this.positioner.init()
+        this.imgDataDOM.style.display = 'block';
+        this.inputBoxDOM.style.display = 'none';
+        new Positioner('.img--box', this.imgBoxDOM)
     }
     clearInput(){
       this.file = '';
       this.inputDOM.value = null;
       this.imgDOM.src = '#';
-      this.imgBoxDOM.style.display = 'none';
-      this.labelDOM.innerText = 'Nuotrauka nepasirinkta';
+      this.imgDataDOM.style.display = 'none';
+      this.inputBoxDOM.style.display = 'flex';
+      this.labelDOM.innerText = 'Nuotrauka nepasirinkta.';
     }
     getObjectPosition(){
       return this.positioner.returnObjectPosition();

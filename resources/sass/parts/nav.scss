@@ -28,7 +28,7 @@
         }
     }
 }
-body:has(#hero, .articles-page) {
+body:has(#hero, .articles-list) {
     .nav-box {
         border-bottom: $bg 2px solid;
         border-left: $bg 2px solid;

@@ -1,0 +1,122 @@
+.back-office {
+    .tags-nav-box {
+        position: relative;
+        .edit-svg-box {
+            top: 0px;
+            right: 40px;
+        }
+    }
+    .one-tag {
+        display: grid;
+        grid-template-columns: 200px calc(100% - 440px) 120px 120px;
+    }
+    .modal {
+        .articles {
+            .svg-box {
+                margin: 0 2px;
+                border: $black solid 2px;
+                border-radius: 50%;
+                width: fit-content;
+                height: fit-content;
+                place-self: center;
+                cursor: pointer;
+                &:has(.delete-svg) {
+                    padding: 9px;
+                    background-color: #ccc;
+                    &:hover {
+                        background-color: #bbb;
+                    }
+                    .delete-svg {
+                        width: 22px;
+                        height: 22px;
+                    }
+                }
+                &:has(.edit-svg) {
+                    padding: 5px;
+                    background-color: $pink;
+                    &:hover {
+                        background-color: #d9adb4;
+                    }
+                    .edit-svg {
+                        width: 30px;
+                        height: 30px;
+                        transform: rotate(-30deg);
+                    }
+                }
+            }
+            li,
+            .add-article {
+                display: flex;
+                gap: 20px;
+                align-items: center;
+                padding: 0 5px;
+            }
+            .add-article {
+                padding-left: calc(2rem + 5px);
+            }
+        }
+    }
+    .articles-box {
+        .add-back-btns {
+            padding-bottom: 50px;
+            justify-content: end;
+            width: 90%;
+        }
+    }
+    .article-page {
+        .title-box {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+    .article-create {
+        display: flex;
+        justify-content: center;
+        .form-box {
+            width: min(1000px, 100vw - 230px);
+            color: #161616;
+            background-color: #e8e3d7;
+            box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, 0.3) inset,
+                -4px -4px 6px 0 rgba(0, 0, 0, 0.25) inset;
+            padding: 50px 70px 70px 70px;
+            border-radius: 20px;
+            form{
+                display:flex;
+                flex-direction: column;
+                gap:10px;
+                .link-box, .imgs-box{
+                    display:flex;
+                    flex-direction: column;
+                    gap:10px;
+                }
+                .youtube-box, .title-box, .link-box .title, .link-box .link{
+                    display:flex;
+                    gap:10px;
+                }
+                .article-text{
+                    height:300px;
+                }
+                input[type="number"]{
+                    width:80px;
+                }
+                textarea{
+                    overflow: auto;
+                }
+                .extra-data-textarea{  
+                    resize: vertical;
+                    max-height:300px;
+                }
+                textarea, input{
+                    padding:2px 8px;
+                    width:100%;
+                    background-color:$bg;
+                    border:1px solid $black;
+                }
+                .img-input-delete{
+                    display:grid;
+                    grid-template-columns: 60px auto;
+                }
+            }
+        }
+    }
+}

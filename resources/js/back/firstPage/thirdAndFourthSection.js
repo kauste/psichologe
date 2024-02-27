@@ -37,7 +37,6 @@ class ThirdAndFourthSection extends CRUDmodal{
     }
 
     borderWarningCSS(){
-        console.log(this.openItemDOM.offsetTop - this.openItemDOM.offsetHeight - 30);
         this.scrollToItem = this.openItemDOM.offsetTop - this.openItemDOM.offsetHeight - 30;
         super.borderWarningCSS();
     }

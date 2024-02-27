@@ -1,12 +1,20 @@
 
 @import './app';
 
+@import 'parts/modal';
+
 @import 'back/firstPage/section-1';
 @import 'back/firstPage/section-2';
 @import 'back/firstPage/section-3-and-4';
-@import 'parts/footer';
-@import 'parts/modal';
+@import 'back/articlePages/articles';
 
+select{
+    padding:4px 8px;
+    background-color: $bg;
+    border: 1px solid #333;
+    height: fit-content;
+
+}
 .message {
     padding: 4px;
     background-color: $hotPink;
@@ -39,6 +47,119 @@
         transform: rotate(-30deg);
     }
 }
+.img-position-box, .img-author-box, .extra-data-box{
+    color:$bg;
+}
+.img-input-detele, .img-position-box, .img-author-box, .extra-data-box{
+    display:grid;
+    grid-template-columns: 180px 1fr;
+    gap:20px;
+}
+.img-input-box {
+    background: $electric;
+    display: flex;
+    align-items: flex-start;
+    max-width: 500px;
+    .file-input-box {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        height: 40px;
+        text-align: left;
+        padding: 26px;
+        // max-width: calc(100% - 150px);
+        // width: calc(100% - 150px);
+        width: fit-content;
+        max-width: calc(100% - 150px);
+        position: relative;
+        border-radius: 3px;
+        > input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            z-index: 10;
+            cursor: pointer;
+        }
+
+        .button {
+            padding: 1px 12px;
+            // border: solid 2px $violet;
+            border-radius: 14px;
+            color: $black;
+            background-color: $bg;
+        }
+        &:hover > .button {
+            background: $pink;
+            color: white;
+        }
+
+        > .label {
+            color: $black;
+            white-space: nowrap;
+            opacity: 0.6;
+            display: inline-block;
+            max-width: 400px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            font-style: italic;
+            color:$bg;
+            span {
+                font-weight: 700;
+                text-transform: uppercase;
+            }
+        }
+    }
+    .img-data-box{
+
+    }
+    .img-box {
+        overflow: visible;
+        width: 100%;
+        box-sizing: border-box;
+        padding-left: 20px;
+        padding-right: 20px;
+        .line {
+            display: inline-block;
+        }
+        img {
+            width:100%;
+            height: auto;
+            margin-top: var(--marginHeight);
+            cursor: crosshair;
+        }
+        position: relative;
+        &:before {
+            content: "";
+            display: inline-block;
+            position: absolute;
+            width: min(500px, 60vw);
+            backdrop-filter: blur(5px);
+            background-color: #999999a5;
+            top: 0;
+            left: 0;
+            height: var(--borderHeight);
+            // height:calc(100% - $ratio);
+            // box-shadow:  0 calc(100% + $ratio) 0 #999999a5 ;
+            // box-shadow: 0 calc($ratio / 2 + 2em) 0 -30px red;
+        }
+        &:after {
+            height: var(--borderHeight);
+            content: "";
+            display: inline-block;
+            position: absolute;
+            width: 100%;
+            background-color: #999999a5;
+            backdrop-filter: blur(5px);
+            bottom: 0;
+            left: 0;
+            // height:calc(100% - $ratio);
+        }
+    }
+}
 .update-actions, .delete-actions{
     flex-direction: column;
     justify-content: center;
@@ -51,7 +172,9 @@
 }
 .update-actions, .delete-actions, .store-actions{
     gap:20px;
-    button{
+    button, a{
+        text-decoration: none;
+        color:$black;
         border:2px solid $black;
         padding: 8px 20px;
         height: fit-content;
@@ -63,6 +186,109 @@
     .cancel-btn{
         background: #CCC;
     }
+}
+.add-back-btns {
+    display: flex;
+    flex-wrap: wrap;
+    .add-btn,
+    .back-btn {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border: 4px solid $pink;
+        stroke: $black;
+        box-shadow: 0 0 0 3px $black;
+        cursor: pointer;
+        transition: 0.3s ease all;
+        fill: none;
+        &:hover {
+            background-color: $black;
+            stroke: $pink;
+        }
+    }
+}
+.modal{
+    .add-back-btns .back-btn {
+        display: none;
+    }
+}
+.modal, .article-create{
+    .heading-box {
+        margin-bottom: 20px;
+
+        .first-line {
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+    }
+}
+.modal-ul-box li, .article-box {
+    .edit-actions {
+        display: flex;
+        gap: 7px;
+        justify-content: space-around;
+
+    }
+}
+.edit-actions, .img-input-delete{
+    .svg-box {
+        margin: 0 2px;
+        border: $black solid 2px;
+        border-radius: 50%;
+        width: fit-content;
+        height: fit-content;
+        place-self: center;
+        cursor: pointer;
+        &:has(.delete-svg) {
+            padding: 9px;
+            background-color: #ccc;
+            &:hover {
+                background-color: #bbb;
+            }
+            .delete-svg {
+                width: 22px;
+                height: 22px;
+            }
+        }
+        &:has(.edit-svg) {
+            padding: 5px;
+            background-color: $pink;
+            &:hover {
+                background-color: #d9adb4;
+            }
+            .edit-svg {
+                width: 30px;
+                height: 30px;
+                transform: rotate(-30deg);
+            }
+        }
+    }
+}
+        //scrollbar
+.modal-ul-box,
+.modal-add-box,
+.article-text {
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+.modal-ul-box::-webkit-scrollbar,
+.modal-add-box::-webkit-scrollbar, 
+.article-text::-webkit-scrollbar {
+    width: 10px;
+    margin-right: 10px;
+}
+.modal-ul-box::-webkit-scrollbar-track,
+.modal-add-box::-webkit-scrollbar-track, 
+.article-text::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+.modal-ul-box::-webkit-scrollbar-thumb,
+.modal-add-box::-webkit-scrollbar-thumb,
+.article-text::-webkit-scrollbar-thumb {
+    background-color: $electric;
+    -webkit-border-radius: 0.375rem;
 }
 
 

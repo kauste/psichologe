@@ -2,7 +2,7 @@
 @section('content')
 @inject('contacts', 'App\Services\Contacts')
 
-<div class="about--me--page back--office back-ofice">
+<div class="about--me--page back--office">
     @include('back.CRUDmodal.citation.modal')
     @include('back.CRUDmodal.education.modal')
     @include('back.CRUDmodal.work.modal')

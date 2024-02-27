@@ -11,7 +11,7 @@ class Article extends Model
 {
     use HasFactory;
     
-    protected $fillable = ['article', 'link', 'img_1', 'img_2', 'img_3'];
+    protected $fillable = ['title', 'article', 'youtube', 'link', 'img_1', 'img_2', 'img_3', 'extra_data'];
 
     protected $casts = ['article' => 'array',
                         'link' => 'array', 
@@ -20,6 +20,6 @@ class Article extends Model
                         'img_3' => 'array'];
     public function tags()
     {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany(ArticleTag::class);
     }
 }
