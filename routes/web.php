@@ -27,7 +27,7 @@ Route::get('/article/{article}', [FrontController::class, 'articlePage'])->name(
 
 Auth::routes(['register' => false]);
 
-Route::prefix('admin')->name('back-')->middleware('auth')->group(function(){
+Route::prefix('admin')->name('back-')->middleware(['auth', 'delete.storage.images'])->group(function(){
     Route::get('first-pg', [FirstPageController::class, 'index'])->name('first-pg');
     //citations
     Route::put('update-citation/{id?}', [FirstPageController::class, 'updateCitation'])->name('update-citation');

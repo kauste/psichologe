@@ -44,7 +44,7 @@
                             </svg>
                         </div>
                         <div class="img-input-box --images">
-                            <div class="img-data-box img--data--box" style="{{session('img_'. $img .'_path') ? 'display:block' : 'display:none'}}">
+                            <div class="img-data-box img--data--box" style="{{session('img_'. $img .'_data') ? 'display:block' : 'display:none'}}">
                                 <div class="img-position-box">
                                     <label>Paragrafas prieš</label>
                                     <input type="number" name="img_position_{{$img}}" class="img-position">
@@ -58,13 +58,13 @@
                                     <textarea name="extra_data_{{$img}}" class="extra-data-textarea"></textarea>
                                 </div>
                                 <div class="img-box img--box">
-                                    <img src="{{ session('img_'. $img .'_path') ?? ''}}" atl="article image" style="object-position:0 0">
+                                    <img src="{{ session('img_'. $img .'_data') ? session('img_'. $img .'_data')['asset'] : ''}}" atl="article image" style="object-position:0 0">
                                 </div>
                             </div>
-                            <div class="file-input-box file--input--box" style="{{session('img_'. $img .'_path') ? 'display:none' : 'display:flex'}}">
+                            <div class="file-input-box file--input--box" style="{{session('img_'. $img .'_data') ? 'display:none' : 'display:flex'}}">
                                 <input type="file" name="img_{{$img}}" id="article_{{$img}}" accept="image/*" value="{{old('img_'. $img)}}" />
-                                @if (session()->has('img_'. $img .'_path'))
-                                <input type="hidden" name="img_{{$img}}" value="{{ session('img_'. $img .'_path') }}">
+                                @if (session()->has('img_'. $img .'_data'))
+                                <input type="hidden" name="old_img_{{$img}}" value="{{ session('img_'. $img .'_data')['path'] }}">
                                 @endif
                                 <span class='button grey-button'>Choose</span>
                                 <span class="label" for="article_img_{{$img}}" data-js-label>Nuotrauka nepasirinkta.</span>

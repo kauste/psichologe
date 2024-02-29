@@ -59,7 +59,7 @@ class FileInputsActivator{
       this.imgDOM = this.imgDataDOM.querySelector('img');
     }
     uploadedImagesPositioner(){
-      if(this.inputBoxDOM.style.display = 'none'){
+      if(this.inputBoxDOM.style.display === 'none'){
         this.positioner = new Positioner('.img--box', this.imgBoxDOM)
 
       }
@@ -88,9 +88,9 @@ class FileInputsActivator{
       this.imgDataDOM.style.display = 'none';
       this.inputBoxDOM.style.display = 'flex';
       this.labelDOM.innerText = 'Nuotrauka nepasirinkta.';
-      if(this.hiddenInputDOM){
-        this.inputBoxDOM.removeChild(this.hiddenInputDOM);
-      }
+      // if(this.hiddenInputDOM){
+      //   this.inputBoxDOM.removeChild(this.hiddenInputDOM);
+      // }
     }
     getObjectPosition(){
       return this.positioner.returnObjectPosition();

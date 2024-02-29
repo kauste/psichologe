@@ -46,6 +46,8 @@ class ArticleController extends Controller
     }
     public function articleStore(Request $request)
     {
+        dd(storage_path('/app/'));
+
         $article = explode("\r\n", trim($request->article));
         $article = collect($article)->map(function($paragraph){
             return trim($paragraph);
@@ -58,18 +60,21 @@ class ArticleController extends Controller
         })->toArray();
         $imgs = collect($data)->filter(function($item, $key){
             return str_starts_with($key, 'img_') && strlen($key) === 5;
-
+        });
+        $oldImgs = collect($data)->filter(function($item, $key){
+            return str_starts_with($key, 'old_img_') && strlen($key) === 5;
         });
         $imgsValidator = [];
         $imgsErrors = [];
-
-        $imgs->each(function($img, $key) use (&$imgsValidator, &$imgsErrors, $article){
+        $allImgs = $imgs->merge($oldImgs->toArray());
+        $allImgs->each(function($img, $key) use (&$imgsValidator, &$imgsErrors, $article){
             $index = substr($key, -1);
             $imgsValidator = [...$imgsValidator,             
                             'img_' . $index => 'nullable|file|mimes:jpg,png,webp,mbp',
                             'object_position'. $index => 'required|numeric',
                             'img_position_' . $index => 'nullable|integer|min:1|max:'.count($article),
                             'img_author_' . $index => 'nullable|string|max:100',
+                            'extra_data_' . $index => 'nullable|string|max:300',
                             'extra_data_' . $index => 'nullable|string|max:300',
                             'tags' => 'required|array',
                             'tags.*' => 'numeric',
@@ -111,14 +116,20 @@ class ArticleController extends Controller
                                                 'extra_data.string' => 'Papildoma informacija turi būti string tipo.',
                                                 'extra_data.max' => 'Papildoma informacija neturi viršyti 300 simbolių.',
                                             ]);
-        $imgs->each(function($img, $key) use ($request){
-            $imgPath = $request->file($key)->store('uploads');
-            $imgPath = asset('storage/app/' .$imgPath);
-            $imgPath = str_replace('/public', '', $imgPath);
-            session()->put( $key . '_path', $imgPath);
-        });
-        if ($validator->fails()) {
 
+        if ($validator->fails()) {
+            $imgs->each(function($img, $key) use ($request){
+                $imgPath = $request->file($key)->store('uploads');
+                $asset = asset('storage/app/' .$imgPath);
+                $asset = str_replace('/public', '', $imgPath);
+                session()->put( $key . '_data', ['path' => $imgPath, 'asset' => $asset]);
+            });
+            $oldImgs->each(function($img, $key) use ($request){
+                $imgPath = $request->$key->store('uploads');
+                $imgPath = asset('storage/app/' .$imgPath);
+                $imgPath = str_replace('/public', '', $imgPath);
+                session()->put( $key . '_path', $imgPath);
+            });
 
             
             return back()->withErrors($validator)->withInput();
@@ -135,7 +146,6 @@ class ArticleController extends Controller
             $name = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
             $imgName = $name. '-' . rand(100000, 999999). '.' . $extention;
             $image->move(public_path().'/images/articlesImgs', $imgName);
-            $isMain = $key === 0 ? true : false;
             $index = substr($key, -1);
 
             $article->update([ 'img_'. $index => ['path' => $imgName,
@@ -144,6 +154,27 @@ class ArticleController extends Controller
                                                   'author' => $data['img_author_'. $index], 
                                                   'extra_data' => $data['extra_data_'. $index]],
                             ]);
+        }
+        if($oldImgs->count() > 0){
+            $oldImgsDestinationDIR = public_path('images/articlesImgs');
+            if(file_exists($oldImgsDestinationDIR)){
+                foreach($oldImgs as $key => $image){
+                    $imgPath = storage_path($image);
+                    $destinationPatn = oldImgsDestinationDIR . '/' .$image;
+                    if(file_exists($imgPath)){
+                        rename($imgPath, $destinationPatn);
+                        $index = substr($key, -1);
+                        $article->update([ 'img_'. $index => ['path' => $image,
+                                                            'object_position' => $data['object_position_'. $index],
+                                                            'paragraph_before' => $data['img_position_'. $index], 
+                                                            'author' => $data['img_author_'. $index], 
+                                                            'extra_data' => $data['extra_data_'. $index]],
+                                         ]);
+                    }
+                }
+            }
+
+
         }
         if(isset($data['tags']) && is_array($data['tags'])){
             $article->tags()->attach($data['tags']);
