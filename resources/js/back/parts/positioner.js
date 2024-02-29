@@ -19,9 +19,8 @@ class Positioner{
         setTimeout(() => {
             const imgsWidth = imgDOM.clientWidth;
             this.boxHeight = 10 * imgsWidth / 21;
-
             this.init();
-        }, 300)
+        }, 50)
 
         const secHeight = window.innerHeight;
         const screenWith = parseInt(window.screen.width);
@@ -37,7 +36,6 @@ class Positioner{
     init(){
         this.imgDOM = this.imgBoxDOM.querySelector('img')
         this.imgDOM.style.height = 'auto'
-        setTimeout(() => {
             this.imgHeight = this.imgDOM.offsetHeight;
             this.additionalHeight = this.imgHeight - this.boxHeight;
             const objectPos = this.imgDOM.style.objectPosition.trim();
@@ -45,7 +43,6 @@ class Positioner{
             this.marginHeight = ((100 - this.objectYposition) * this.additionalHeight ) / 100;
             this.setStyles();
             this.letDrag();
-        }, 250)
     }
 
     setStyles(){
@@ -74,6 +71,7 @@ class Positioner{
             }
             this.imgBoxDOM.style.setProperty('--marginHeight', this.marginHeight + 'px');
             this.prevPicPos = e.clientY;
+            this.returnObjectPosition();
         })
         
         this.imgDOM.addEventListener('dragend', (e) => {

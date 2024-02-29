@@ -35,6 +35,9 @@
         const articlesTagUpdateRoute = "{{route('back-update-articles-tag')}}";
         const articlesTagStoreRoute = "{{route('back-store-articles-tag')}}";
         const articlesTagDeleteRoute = "{{route('back-delete-articles-tag')}}";
+        //articles
+        const articlesDeleteRoute = "{{route('back-article-delete')}}";
+
 
     </script>
     {{-- <link rel="stylesheet" href="{{asset('/build/assets/appBack-d301e78e.css?v='. time())}}"> --}}
@@ -63,7 +66,7 @@
             </nav>
         </div>
         <main class="">
-            <div class="message top-message top--message"></div>
+            @include('parts.top-message')
             @yield('content')
         </main>
         @include('parts.footer')

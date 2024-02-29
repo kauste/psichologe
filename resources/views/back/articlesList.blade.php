@@ -23,8 +23,7 @@
             </ul>
         </div>
     </div>
-
-    <section class="articles-box">
+    <section class="articles-box articles--box">
         <div class="add-back-btns">
             <a href="{{route('back-article-create')}}">
                 <svg class="add-btn add--btn">
@@ -33,15 +32,28 @@
             </a>
         </div>
         @foreach ($articles ?? [] as $article)
-        <a class="article-box" href="{{route('back-article-page', $article)}}">
-            <div class="title-box">
-                <span class="title">{{$article->title}}</span>
-                <svg>
-                    <use xlink:href="#arrow"></use>
-                </svg>
+        <div class="article-delete-box articles--delete--box" data-item-id="{{$article->id}}">
+            <a class="article-box" href="{{route('back-article-page', $article)}}">
+                <div class="title-box">
+                    <span class="title">{{$article->title}}</span>
+                    <svg>
+                        <use xlink:href="#arrow"></use>
+                    </svg>
+                </div>
+                <div class="article">{{$article->article[0]}}</div>
+            </a>
+            <div>
+                <div class="svg-box --delete" style="display:flex">
+                    <svg class="delete-svg">
+                        <use xlink:href="#delete"></use>
+                    </svg>
+                </div>
+                <div class="delete-actions delete--actions" style="display:none">
+                    <button class="cancel-btn --cancel" type="button">Atšaukti</button>
+                    <button class="delete-btn do--delete" type="button">Ištrinti</button>
+                </div>
             </div>
-            <div class="article">{{$article->article[0]}}</div>
-        </a>
+        </div>
         @endforeach
         @include('parts.paginator')
     </section>

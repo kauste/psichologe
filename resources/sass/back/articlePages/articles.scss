@@ -89,6 +89,16 @@
                     flex-direction: column;
                     gap:10px;
                 }
+                .added-tags{
+                    list-style: none;
+                    padding:0;
+                    li{
+                        display:flex;
+                        gap:8px;
+                        align-items: center;
+                        padding-bottom: 5px;
+                    }
+                }
                 .youtube-box, .title-box, .link-box .title, .link-box .link{
                     display:flex;
                     gap:10px;
@@ -116,6 +126,37 @@
                     display:grid;
                     grid-template-columns: 60px auto;
                 }
+                .add-article-tag {
+                    display: flex;
+                    gap: 20px;
+                    align-items: center;
+                    padding: 0 5px;
+                }
+                .tags-box {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 5px;
+                }
+            }
+        }
+        .update-actions{
+            display:flex;
+            flex-direction: row;
+            justify-content: end;
+            button, a{
+                width:fit-content;
+            }
+        }
+    }
+    .articles-list{
+        .article-delete-box{
+            display:grid;
+            width:90%;
+            grid-template-columns:1fr 120px;
+            gap:10px;
+            align-items: center;
+            .article-box{
+                width:100%;
             }
         }
     }

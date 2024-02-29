@@ -209,7 +209,7 @@ class TagsNav extends CRUDmodal{
         }
     }
     update = () => {
-        // this.loadeBoxDOM.style.display = 'block';
+        this.loadeBoxDOM.style.display = 'block';
         const tagInnerText = this.tagDOM.innerText;
         const priorityInnerText = this.priorityDOM.innerText;
 
@@ -236,7 +236,6 @@ class TagsNav extends CRUDmodal{
                 this.priorityDOM.style.fontStyle = parseInt(this.priorityDOM.innerText) ? 'normal' : 'italic';
                 this.priorityDOM.style.color = parseInt(this.priorityDOM.innerText) ? '#000' : '#999';
                 this.priorityDOM.style.fontSize = parseInt(this.priorityDOM.innerText) ? '16px' : '0.875rem';
-
                 this.priorityDOM.innerText = parseInt(this.priorityDOM.innerText) ? parseInt(this.priorityDOM.innerText) : 'nesvarbu';
 
             }
@@ -292,7 +291,6 @@ class TagsNav extends CRUDmodal{
         });
 
         this.addArticleDOM.querySelector('svg').removeEventListener('click', this.addArticleHandler)
-
     }
 
 

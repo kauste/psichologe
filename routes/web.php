@@ -50,6 +50,7 @@ Route::prefix('admin')->name('back-')->middleware('auth')->group(function(){
     // article
     Route::get('/article-create', [ArticleController::class, 'articleCreate'])->name('article-create');
     Route::post('/article-store', [ArticleController::class, 'articleStore'])->name('article-store');
+    Route::delete('/article-delete/{id?}', [ArticleController::class, 'articledelete'])->name('article-delete');
 
     // article tag
     Route::put('update-articles-tag/{id?}', [ArticleTagController::class, 'updateArticlesTag'])->name('update-articles-tag');

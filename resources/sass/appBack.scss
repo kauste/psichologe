@@ -29,6 +29,10 @@ select{
         z-index:2;
     }
 }
+.error{
+    color:$hotPink;
+    font-size:14px;
+}
 .edit-svg-box{
     width: fit-content;
     border: 2px solid #222;
@@ -177,15 +181,20 @@ select{
         color:$black;
         border:2px solid $black;
         padding: 8px 20px;
+        width:100%;
         height: fit-content;
     }
-    .update-btn{
+    .update-btn {
         background-color: $electric;
         color:$bg;
     }
     .cancel-btn{
         background: #CCC;
     }
+    .delete-btn{
+        background-color: $pink;
+    }
+
 }
 .add-back-btns {
     display: flex;
@@ -232,7 +241,7 @@ select{
 
     }
 }
-.edit-actions, .img-input-delete{
+.edit-actions, .img-input-delete, .tags-box, .article-delete-box{
     .svg-box {
         margin: 0 2px;
         border: $black solid 2px;

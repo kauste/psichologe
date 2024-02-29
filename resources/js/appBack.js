@@ -17,7 +17,8 @@ import TopMessage from './back/parts/topMessage';
 import Citations from './back/firstPage/citations';
 import TagsNav from './back/articlesPages/tagsNav';
 import { FileInputsActivator } from './back/parts/FileInputsActivator';
-
+import AddItem from './back/parts/addItem';
+import DeleteItems from './back/articlesPages/deleteItems';
 
 // firt page
 if(document.querySelector('.about--me--page')){
@@ -52,9 +53,16 @@ if(document.querySelector('.about--me--page')){
 }
 else if(document.querySelector('.articles--page')){
   new TagsNav(cssStyles, 'tagsNav', articlesTagUpdateRoute, articlesTagStoreRoute, articlesTagDeleteRoute);
-
+  new DeleteItems('.articles--box', '.articles--delete--box', articlesDeleteRoute)
 }
 else if(document.querySelector('.article--create')){
-  new FileInputsActivator();
+  const inputsActivator = new FileInputsActivator();
+  new AddItem('.tags--box', '.add--btn', 'select', 'added--tags')
+  const submitBTN = document.querySelector('button[type="submit"]')
+  submitBTN.addEventListener('click', (e) => {
+    e.preventDefault();
+    inputsActivator.insertItemsPositions();
+    e.target.closest('form').submit();
+  })
 }
 

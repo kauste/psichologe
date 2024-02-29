@@ -34,7 +34,6 @@
                             <li></li>
                             @endforelse
                         </ul>
-
                         <div class="add-article add--article" style="display:none">
                             <div>
                                 <svg class="add-btn-in">
