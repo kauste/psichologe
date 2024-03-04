@@ -1,4 +1,4 @@
-body:has(.articles-list, .article-page, .article-create) {
+body:has(.articles-list, .article-page, .article-create, .article-edit) {
     .in-body {
         padding-top: 110px;
         background: $northenGradient;

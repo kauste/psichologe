@@ -13,10 +13,6 @@ contactAnimation.animation();
 
 // firt page
 if(document.querySelector('.about--me--page')){
-    //nav
-    const navAnimation = new NavStyles('.--nav', '#17453F', '#17453F',  '17px', '17.2px', '0');
-    navAnimation.setNavStyles();
-    navAnimation.animation();
     //sec 2
     new SecondSection('#about')
     // sec 3
@@ -25,6 +21,13 @@ if(document.querySelector('.about--me--page')){
     new ThirdAndFourthSecAppear('#work')
 }
 
+// nav styles
+//first mage
+if(document.querySelector('.about--me--page')){
+    const navAnimation = new NavStyles('.--nav', '#17453F', '#17453F',  '17px', '17.2px', '0');
+    navAnimation.setNavStyles();
+    navAnimation.animation();
+}
 // articles page
 if(document.querySelector('.articles--page') 
 || document.querySelector('.article--page')
@@ -38,11 +41,11 @@ if(document.querySelector('.articles--page')
 
 }
 if(document.querySelector('.article--page')){
-    const articlesToMedia = new NavStyles('.article--box', '#17453F', '#17453F', '18px', '18px', '0')
+    const articlesToMedia = new NavStyles('.media--link--box', '#17453F', '#17453F', '18px', '18px', '0')
     articlesToMedia.setNavStyles();
     articlesToMedia.animation();
 }
-if(document.querySelector('.article--create')){
+if(document.querySelector('.article--create') || document.querySelector('.article--edit')){
     const navAnimation = new NavStyles('.--nav', '#EFEFEF', '#E9C1C8',  '17px', '17.2px', '0');
     navAnimation.setNavStyles();
     navAnimation.animation();

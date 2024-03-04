@@ -22,8 +22,6 @@ class Positioner{
             this.init();
         }, 50)
 
-        const secHeight = window.innerHeight;
-        const screenWith = parseInt(window.screen.width);
     }
     doSetBoxesSize(){
         this.imgsBoxesDOMS.forEach(imgBoxDOM => {

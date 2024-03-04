@@ -12,16 +12,24 @@
         <div class="title-box">
             <h2>{{$article->title}}</h2>
             <div class="edit--actions edit-actions" style="display:flex">
-                <div class="svg-box --edit">
+                <a href="{{route('back-article-edit', $article)}}" class="svg-box">
                     <svg class="edit-svg">
                         <use xlink:href="#edit"></use>
                     </svg>
-                </div>
-                <div class="svg-box --delete">
-                    <svg class="delete-svg">
-                        <use xlink:href="#delete"></use>
-                    </svg>
-                </div>
+                </a>
+                <form class="delete-form" action="{{route('back-article-delete', $article->id)}}" method="post">
+                    <div class="svg-box --delete" style="display:flex">
+                        <svg class="delete-svg">
+                            <use xlink:href="#delete"></use>
+                        </svg>
+                    </div>
+                    <div class="delete-actions delete--actions" style="display:none">
+                        <button class="cancel-btn --cancel" type="button">Atšaukti</button>
+                        @csrf
+                        @method('delete')
+                        <button class="delete-btn do--delete" type="submit">Ištrinti</button>
+                    </div>
+                </form>
             </div>
         </div>
         @if($article->youtube)
@@ -55,7 +63,7 @@
             @endif
             @if( $article->img_3 && $key + 1 === $article->img_3['paragraph_before'])
             <div class="img-box">
-                <img style="object-position:0px {{isset($article->img_3['object_position']) ? $article->img_3['object_position'] : '50'}}%"  src="{{asset('images/articlesImgs') . '/' . $article->img_3['path']}}">
+                <img style="object-position:0px {{isset($article->img_3['object_position']) ? $article->img_3['object_position'] : '50'}}%" src="{{asset('images/articlesImgs') . '/' . $article->img_3['path']}}">
                 @if(isset($article->img_3['extra_data']) && $article->img_3['extra_data'])
                 <div class="extra-data">{{$article->img_3['extra_data']}}</div>
                 @endif
@@ -68,7 +76,7 @@
             @endforeach
         </div>
         @if(isset($article->link) && $article->link && isset($article->link['link']) && $article->link['link'])
-        <div class="media-link-box">
+        <div class="media-link-box media--link--box">
             <a href="{{$article->link['link']}}" target="_blank">{{$article->link['title'] ?? $article->link['link']}}</a>
         </div>
         @endif

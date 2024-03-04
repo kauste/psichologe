@@ -17,8 +17,9 @@ class AddItem{
     setDOMS(){
         this.parentDOM = document.querySelector('.tags--box');
         this.listDOM = this.parentDOM.querySelector('.added--tags');
-        this.addBtnDOM = this.parentDOM.querySelector('.add--btn')
-        this.selectTagDOM = this.parentDOM.querySelector('select');
+        this.selectBoxDOM = this.parentDOM.querySelector('.add--article--tag')
+        this.addBtnDOM = this.selectBoxDOM.querySelector('.add--btn')
+        this.selectTagDOM = this.selectBoxDOM.querySelector('select');
         this.tagOptionsDOMS = this.selectTagDOM.querySelectorAll('option')
 
     }
@@ -38,27 +39,39 @@ class AddItem{
         //delete option from select
         this.selectTagDOM.removeChild(option);
         if(this.selectTagDOM.childElementCount === 0){
-            this.selectTagDOM.style.display = 'none';
-            this.addBtnDOM.style.display = 'none';
+            this.selectBoxDOM.style.display = 'none';
         }
         //listen to click
         const deleteDOM = li.querySelector('.--delete');
         deleteDOM.addEventListener('click', this.deleteItemHandler(option, li))
     }
+    letExistingTagsDelete(){
+        const liDOMS = this.listDOM.querySelectorAll('li')
+        liDOMS.forEach(li => {
+            let option = document.createElement('option');
+            option.value = li.querySelector('input').value;
+            option.innerText = li.querySelector('.--tag').innerText;
+            const deleteDOM = li.querySelector('.--delete');
+            deleteDOM.addEventListener('click', this.deleteItemHandler(option, li))
+            deleteDOM.addEventListener('click', this.refinfOptions)
+
+
+        })
+    }
     deleteItemHandler = (option, deleteItem) => () => {
         this.selectTagDOM.appendChild(option);
         this.listDOM.removeChild(deleteItem);
-        console.log(this.selectTagDOM.childElementCount)
-        if(this.selectTagDOM.style.display === 'none'){
-            console.log('yo')
-            this.selectTagDOM.style.display = 'flex';
-            this.addBtnDOM.style.display = 'flex';
-
+        if(this.selectBoxDOM.style.display === 'none'){
+            this.selectBoxDOM.style.display = 'flex';
         }
     }
 
     listenToClick(){
         this.addBtnDOM.addEventListener('click', this.addItemHandler)
+    }
+    refinfOptions = () => {
+        this.tagOptionsDOMS = this.selectTagDOM.querySelectorAll('option');
+
     }
 }
 export default AddItem;

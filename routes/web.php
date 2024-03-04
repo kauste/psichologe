@@ -27,7 +27,7 @@ Route::get('/article/{article}', [FrontController::class, 'articlePage'])->name(
 
 Auth::routes(['register' => false]);
 
-Route::prefix('admin')->name('back-')->middleware(['auth', 'delete.storage.images'])->group(function(){
+Route::prefix('admin')->name('back-')->middleware(['auth'])->group(function(){
     Route::get('first-pg', [FirstPageController::class, 'index'])->name('first-pg');
     //citations
     Route::put('update-citation/{id?}', [FirstPageController::class, 'updateCitation'])->name('update-citation');
@@ -46,10 +46,13 @@ Route::prefix('admin')->name('back-')->middleware(['auth', 'delete.storage.image
     Route::delete('delete-work/{id?}', [FirstPageController::class, 'deleteWork'])->name('delete-work');
     // articles page
     Route::get('/articles', [ArticleController::class, 'articlesList'])->name('articles-list');
-    Route::get('/article/{article}', [ArticleController::class, 'articlePage'])->name('article-page');
+    Route::get('/article', [ArticleController::class, 'articlePage'])->name('article-page');
     // article
     Route::get('/article-create', [ArticleController::class, 'articleCreate'])->name('article-create');
     Route::post('/article-store', [ArticleController::class, 'articleStore'])->name('article-store');
+    Route::get('/article-edit/{article?}', [ArticleController::class, 'articleEdit'])->name('article-edit');
+    Route::put('/article-update', [ArticleController::class, 'articleUpdate'])->name('article-update');
+
     Route::delete('/article-delete/{id?}', [ArticleController::class, 'articledelete'])->name('article-delete');
 
     // article tag

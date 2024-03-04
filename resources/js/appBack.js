@@ -17,8 +17,10 @@ import TopMessage from './back/parts/topMessage';
 import Citations from './back/firstPage/citations';
 import TagsNav from './back/articlesPages/tagsNav';
 import { FileInputsActivator } from './back/parts/FileInputsActivator';
-import AddItem from './back/parts/addItem';
+import AddItem from './back/articlesPages/addItem';
 import DeleteItems from './back/articlesPages/deleteItems';
+import CreateArticle from './back/articlesPages/CreateArticle';
+import EditArticle from './back/articlesPages/editArticle';
 
 // firt page
 if(document.querySelector('.about--me--page')){
@@ -53,16 +55,22 @@ if(document.querySelector('.about--me--page')){
 }
 else if(document.querySelector('.articles--page')){
   new TagsNav(cssStyles, 'tagsNav', articlesTagUpdateRoute, articlesTagStoreRoute, articlesTagDeleteRoute);
-  new DeleteItems('.articles--box', '.articles--delete--box', articlesDeleteRoute)
+  new DeleteItems('.articles--box');
+  const topMsg = new TopMessage;
+  topMsg.showLaraMsg();
+}
+else if (document.querySelector('.article--page')){
+  new DeleteItems('.edit--actions');
 }
 else if(document.querySelector('.article--create')){
-  const inputsActivator = new FileInputsActivator();
+  new FileInputsActivator();
   new AddItem('.tags--box', '.add--btn', 'select', 'added--tags')
-  const submitBTN = document.querySelector('button[type="submit"]')
-  submitBTN.addEventListener('click', (e) => {
-    e.preventDefault();
-    inputsActivator.insertItemsPositions();
-    e.target.closest('form').submit();
-  })
+  new CreateArticle;
+}
+else if(document.querySelector('.article--edit')){
+  new FileInputsActivator();
+  const addTags = new AddItem('.tags--box', '.add--btn', 'select', 'added--tags');
+  addTags.letExistingTagsDelete();
+  new EditArticle;
 }
 

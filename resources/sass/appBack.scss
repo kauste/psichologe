@@ -20,7 +20,7 @@ select{
     background-color: $hotPink;
     border-radius: 6px 0 12px 0px;
     color: $bg;
-    display: none;
+    display:none;
     &.top-message{
         position:fixed;
         left:0;
@@ -221,7 +221,7 @@ select{
         display: none;
     }
 }
-.modal, .article-create{
+.modal, .article-create, .article-edit{
     .heading-box {
         margin-bottom: 20px;
 
@@ -238,6 +238,7 @@ select{
         display: flex;
         gap: 7px;
         justify-content: space-around;
+        height:max-content;
 
     }
 }
@@ -249,6 +250,7 @@ select{
         width: fit-content;
         height: fit-content;
         place-self: center;
+        display:block;
         cursor: pointer;
         &:has(.delete-svg) {
             padding: 9px;

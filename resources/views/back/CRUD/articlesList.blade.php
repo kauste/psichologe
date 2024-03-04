@@ -32,8 +32,8 @@
             </a>
         </div>
         @foreach ($articles ?? [] as $article)
-        <div class="article-delete-box articles--delete--box" data-item-id="{{$article->id}}">
-            <a class="article-box" href="{{route('back-article-page', $article)}}">
+        <form action="{{route('back-article-delete', $article->id)}}" method="post" class="article-delete-box">
+            <a class="article-box" href="{{route('back-article-page') . '?id='. $article->id}}">
                 <div class="title-box">
                     <span class="title">{{$article->title}}</span>
                     <svg>
@@ -48,12 +48,15 @@
                         <use xlink:href="#delete"></use>
                     </svg>
                 </div>
+
                 <div class="delete-actions delete--actions" style="display:none">
                     <button class="cancel-btn --cancel" type="button">Atšaukti</button>
-                    <button class="delete-btn do--delete" type="button">Ištrinti</button>
+                    @csrf
+                    @method('delete')
+                    <button class="delete-btn do--delete" type="submit">Ištrinti</button>
                 </div>
             </div>
-        </div>
+        </form>
         @endforeach
         @include('parts.paginator')
     </section>

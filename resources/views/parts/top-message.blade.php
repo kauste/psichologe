@@ -1,1 +1,1 @@
-<div class="message top-message top--message"></div>
+<div class="message top-message top--message">{{session()->get('message', '')}}</div>

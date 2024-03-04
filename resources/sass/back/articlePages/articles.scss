@@ -67,9 +67,13 @@
         .title-box {
             display: flex;
             justify-content: space-between;
+            align-items: center;
+        }
+        .delete-form{
+            height:fit-content;
         }
     }
-    .article-create {
+    .article-create, .article-edit {
         display: flex;
         justify-content: center;
         .form-box {
@@ -80,7 +84,7 @@
                 -4px -4px 6px 0 rgba(0, 0, 0, 0.25) inset;
             padding: 50px 70px 70px 70px;
             border-radius: 20px;
-            form{
+            .form{
                 display:flex;
                 flex-direction: column;
                 gap:10px;

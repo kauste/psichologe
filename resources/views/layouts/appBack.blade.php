@@ -36,9 +36,9 @@
         const articlesTagStoreRoute = "{{route('back-store-articles-tag')}}";
         const articlesTagDeleteRoute = "{{route('back-delete-articles-tag')}}";
         //articles
-        const articlesDeleteRoute = "{{route('back-article-delete')}}";
-
-
+        const articleRoute = "{{route('back-article-page')}}";
+        const articleStoreRoute = "{{route('back-article-store')}}";
+        const articleUpdateRoute = "{{route('back-article-update')}}";
     </script>
     {{-- <link rel="stylesheet" href="{{asset('/build/assets/appBack-d301e78e.css?v='. time())}}"> --}}
     {{-- <script src="{{asset('/build/assets/appBack-d28c178a.js?v='. time())}}" defer> --}}
