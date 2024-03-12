@@ -39,7 +39,6 @@ class CreateArticle{
                 }
             }
         })
-        console.log(formData)
         axios.post(articleStoreRoute, formData, {headers:{ "Content-Type": "multipart/form-data"}})
         .then(res => {
             if(res.data.errors){
@@ -57,9 +56,8 @@ class CreateArticle{
         this.errorsDOMS.forEach(error => {
             error.innerText = '';
         })
-        console.log(errors)
         for(const [key, error] of Object.entries(errors)){
-            const formatedKey = key.match(/[A-Za-z_]*/)[0]
+            const formatedKey = key.match(/[A-Za-z_\d]*/)[0]
             const errorDOM = this.formDOM.querySelector(`.${formatedKey}--error`);
             errorDOM.innerText = `* ${error}`
         }

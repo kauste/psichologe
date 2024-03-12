@@ -23,7 +23,7 @@ if(document.querySelector('.about--me--page')){
 
 // nav styles
 //first mage
-if(document.querySelector('.about--me--page')){
+if(document.querySelector('.about--me--page') || document.querySelector('.services--list')){
     const navAnimation = new NavStyles('.--nav', '#17453F', '#17453F',  '17px', '17.2px', '0');
     navAnimation.setNavStyles();
     navAnimation.animation();
@@ -41,9 +41,11 @@ if(document.querySelector('.articles--page')
 
 }
 if(document.querySelector('.article--page')){
-    const articlesToMedia = new NavStyles('.media--link--box', '#17453F', '#17453F', '18px', '18px', '0')
-    articlesToMedia.setNavStyles();
-    articlesToMedia.animation();
+    if(document.querySelector('.media--link--box')){
+        const articlesToMedia = new NavStyles('.media--link--box', '#17453F', '#17453F', '18px', '18px', '0')
+        articlesToMedia.setNavStyles();
+        articlesToMedia.animation();
+    }
 }
 if(document.querySelector('.article--create') || document.querySelector('.article--edit')){
     const navAnimation = new NavStyles('.--nav', '#EFEFEF', '#E9C1C8',  '17px', '17.2px', '0');

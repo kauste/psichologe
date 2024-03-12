@@ -1,8 +1,8 @@
-<div class="modal-box tagsNav--modal--box">
+<div class="modal-box service--modal--box">
     <div class="modal --modal">
         <div class="heading-box">
             <div class="first-line">
-                <h2>Straipsnių tagai</h2>
+                <h2>Paslaugos</h2>
                 <div class="add-back-btns">
                     <svg class="add-btn add--btn">
                         <use xlink:href="#plus"></use>
@@ -15,39 +15,33 @@
             <div class="message --message"></div>
         </div>
         <div class="modal-ul-box ul--box">
-            <ul class="tags-nav-ul --tagsNav">
-                @forelse ($tags->tags as $tag)
-                <li class="one-tag" id="tagsNav-edit-{{$tag->id}}" data-priority="{{$tag->priority}}">
-                    <div class="tag --tag">{{$tag->tag}}</div>
-                    <div class="articles --articles" style="padding: 0px">
+            <ul class="service-ul --service">
+                @forelse ($services as $service)
+                <li class="one-service" id="service-edit-{{$service->id}}" data-priority="{{$service->priority}}">
+                    <div class="service the--service">{{$service->service_title}}</div>
+                    <div class="service-types service--types" style="padding: 0px">
                         <ul>
-                            @forelse ($tag->articles as $key => $article)
-                            <li data-article-id="{{$article->id}}" data-priority="{{$article->priority ?? null}}" style="padding-bottom:0px; {{$key === 0 ? 'padding-top:0px' : ''}}">
-                                <div class="svg-box delete-svg-box delete--article--svg" style="display:none">
+                            @forelse ($service->serviceTypes ?? [] as $key => $oneService)
+                            <li data-service-type-id="{{$oneService->id}}" style="padding:0px;">
+                                <div class="svg-box delete-svg-box delete--service--type--svg" style="display:none">
                                     <svg class="delete-svg">
                                         <use xlink:href="#delete"></use>
                                     </svg>
                                 </div>
-                                <div>{{$article->title}}</div>
+                                <div>{{$oneService->service_type}}</div>
                             </li>
                             @empty
                             <li></li>
                             @endforelse
                         </ul>
-                        <div class="add-article add--article" style="display:none">
-                            <div>
-                                <svg class="add-btn-in">
-                                    <use xlink:href="#plus"></use>
-                                </svg>
-                            </div>
-                            <select>
-                                @foreach($articles ?? [] as $article)
-                                <option value="{{$article->id}}">{{$article->title}}</option>
-                                @endforeach
-                            </select>
+                        <div class="add-service-type add--service--type" style="display:none">
+                            <svg class="add-btn-in">
+                                <use xlink:href="#plus"></use>
+                            </svg>
+                            <input type="text" class="new--service--type">
                         </div>
                     </div>
-                    <div class="position --priority {{$tag->priority && $tag->priority > 0 ? '' : 'small'}}">{{$tag->priority && $tag->priority > 0 ? $tag->priority : ' nesvarbu'}}</div>
+                    <div class="position --priority {{$service->priority && $service->priority > 0 ? '' : 'small'}}">{{$service->priority && $service->priority > 0 ? $service->priority : ' nesvarbu'}}</div>
                     <div class="edit--actions edit-actions" style="display:flex">
                         <div class="svg-box --edit">
                             <svg class="edit-svg">
@@ -78,30 +72,27 @@
         <div class="modal-add-box add--box">
             <form>
                 <div>
-                    <div class="one-tagsNav names">
-                        <div>Tagas</div>
-                        <div>Straipsniai</div>
-                        <div>Prioritetas</div>
+                    <div class="names one-service">
+                        <div>Paslauga</div>
+                        <div>Paslaugos tipai</div>
+                        <div>Pozicija</div>
                         <div></div>
                     </div>
-                    <div class="form --form one-tagsNav">
-                        <div class="tag --var" data-name="tag" contenteditable="true"></div>
-                        <div class="add-articles-box list--box">
-                            <ul class="var--list" data-name="articles"></ul>
-                            <div class="add-article select--box">
-                                <div>
-                                    <svg class="add-btn-in --button">
+                    <div class="form --form one-service">
+                        <div class="service --var" data-name="service_title" contenteditable="true"></div>
+                        <div class="add-service-type-box">
+                            <div class="service-types">
+                                <ul class="added-types var--list" data-name="service_types">
+                                </ul>
+                                <div class="add-service-type add--service--type">
+                                    <svg class="add-btn-in">
                                         <use xlink:href="#plus"></use>
                                     </svg>
+                                    <input type="text" class="new--service--type">
                                 </div>
-                                <select>
-                                    @foreach($articles ?? [] as $article)
-                                    <option value="{{$article->id}}">{{$article->title}}</option>
-                                    @endforeach
-                                </select>
                             </div>
                         </div>
-                        <div class="position --priority" contenteditable="true"></div>
+                        <div class="--priority" contenteditable="true"></div>
                         <div class="update-actions store--actions">
                             <button class="cancel-btn --cancel" type="button">Atšaukti</button>
                             <button class="update-btn --store" type="button">Sukurti</button>

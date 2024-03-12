@@ -1,10 +1,8 @@
 class CRUDmodal {
-    constructor(cssStyles, selector, storeRoute){
+    constructor(cssStyles, selector){
         //css
-        this.cssStyles = cssStyles;
         this.warningBorderCSS = cssStyles.warningBorderStyle,
         this.selector = selector;
-        this.storeRoute = storeRoute;
         this.editColumns;
         //section DOMS
         this.sectionDOM;
@@ -23,10 +21,6 @@ class CRUDmodal {
         this.addBoxDOM;
         this.addBoxForm;
         this.createInputsDOMS;
-        // create DOMS
-        this.createVarsDOMS;
-        this.createListVarsDOMS;
-        this.priorityCreateDOM;
         // edit delete btns DOMS
         this.ulDOM
         this.liDOMS;
@@ -71,76 +65,6 @@ class CRUDmodal {
         this.backBtnDOM= this.modalDOM.querySelector('.back--btn');
         this.ulBoxDOM= this.modalDOM.querySelector('.ul--box');
         this.addBoxDOM= this.modalDOM.querySelector('.add--box');
-    }
-
-    setCreateItemVariables (){
-        this.createVarsDOMS = this.addBoxDOM.querySelectorAll('.--var');
-        this.createListVarsDOMS = this.addBoxDOM.querySelectorAll('.var--list');
-        this.priorityCreateDOM = this.addBoxDOM.querySelector('.--priority');
-        this.storeBtnDOM = this.addBoxDOM.querySelector('.store--actions .--store');
-        this.cancelStoreBtnDOM = this.addBoxDOM.querySelector('.store--actions .--cancel');
-        this.letCreateItem();
-    }
-    letCreateItem(){
-        this.storeBtnDOM.addEventListener('click', () => { this.store() });
-        this.cancelBtnDOM.addEventListener('click', () => { this.clearCreate() });
-    }
-    store (){
-        this.loadeBoxDOM.style.display = 'block';
-        let data = {};
-        this.createVarsDOMS.forEach(varDOM => {
-                data[varDOM.dataset.name] = varDOM.innerText;
-        })
-        let priority = null;
-        if(this.priorityCreateDOM){
-            priority = parseInt(this.priorityCreateDOM.innerText) ? parseInt(this.priorityCreateDOM.innerText) : null;
-            data['priority'] = priority;
-        }
-        if(this.createListVarsDOMS && this.createListVarsDOMS.length > 0){
-            this.createListVarsDOMS.forEach(createListVarsDOM => {
-                const name = createListVarsDOM.dataset.name;
-                const listItems = createListVarsDOM.querySelectorAll('li')
-                const items = [];
-                listItems.forEach(item => {
-                    items.push(item.dataset.item);
-                })
-                data[name] = items;
-            })
-        }
-        console.log(data)
-        axios.post(this.storeRoute, {data:data})
-        .then(res => {
-            if(res.data.errors){  
-                let errorsHTML = '';
-                res.data.errors.forEach(error => {
-                    errorsHTML += `<div>${error}</div>`
-                })
-                this.showMsg(errorsHTML)
-            }
-            else if(res.data.message){
-                this.appendEditDeleteModal(res.data.modalHTML, res.data.itemId, priority)
-                this.appendSection(res.data.sectionHTML, res.data.itemId, priority)
-                this.clearCreate();
-                this.showMsg(res.data.message);
-            }
-            this.loadeBoxDOM.style.display = 'none';
-        })
-    }
-    clearCreate(){
-        if(this.createVarsDOMS && this.createVarsDOMS.length > 0){
-            this.createVarsDOMS.forEach(varDOM => {
-                varDOM.innerText = '';
-            })
-        }
-        if(this.priorityCreateDOM){
-            this.priorityCreateDOM.innerText = '';
-        }
-        if(this.createListVarsDOMS && this.createListVarsDOMS.length > 0){
-            this.createListVarsDOMS.forEach(createListVarsDOM => {
-                createListVarsDOM.innerText = '';
-            })
-        }
-        this.addBoxForm.style.border = 'none';
     }
 
     setEditDeleteVariables(){

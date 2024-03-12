@@ -1,0 +1,104 @@
+body:has(.services-list) {
+    background-color: #E9C1C8;
+    padding:$servicesPgPadding;
+    &:before{
+        content:'';
+        background-image: url('../../../public/images/bg3.webp');
+        // background-image: url('../../images/bg3.webp');
+        width:100%;
+        height:100%;
+        display:inline-block;
+        position:absolute;
+        z-index:-1;
+        background-size: cover;
+        top:0;
+        left:0;
+        filter: blur(8px);
+    }
+    &:after{
+        content:'';
+        width:100%;
+        height:100%;
+        display:inline-block;
+        position:absolute;
+        z-index:-1;
+        top:0;
+        left:0;
+        background-color: #e9c1c8af;
+    }
+    .in-body {
+        background: $bg;
+        border-radius: $radius;
+        height: 100%;
+        .psychology-svg{
+            width:120px;
+            height:100px;
+            position:absolute;
+            bottom:90px;
+            right: max(95px, calc((100vw - $footerWidth) / 2));
+            fill:url(#gradient) $pink;
+        }
+
+    }
+    .services-list {
+        padding-top: 110px;
+        .ul-box{
+            display: flex;
+            justify-content: center;
+        }
+        .services-box {
+            width: min(1200px, 100%);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
+            justify-content: center;
+            list-style: none;
+            padding:0;
+            .one-service {
+                width: max(290px, calc(50% - 40px));
+                height: fit-content;
+                padding: 40px;
+                position: relative;
+                border-radius: 30px;
+                z-index: 0;
+                top: 0;
+                left: 0;
+                z-index: 1;
+                box-shadow: 5px 5px 30px #bf9fa4, -5px -5px 30px #fff;
+                background-color: $bg;
+                h3{
+                    font-size: 34px;
+                    color:$electric;
+                }
+                ul{
+                    padding-top: 10px;
+                    list-style: none;
+                    padding-left: 20px;
+                    li{
+                        position: relative;
+                        &::before{
+                            content: '';
+                            display: inline-block;
+                            position: absolute;
+                            left:-20px;
+                            top:50%;
+                            transform: translateY(-50%);
+                            width: 10px;
+                            height:10px;
+                            border-radius: 50%;
+                            background-color: $electric;
+                            box-shadow: inset 0px -3px 0  0px $electric, inset 0px -5px 0  0px $pink;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    footer {
+        .content-box {
+            bottom: -$servicesPgPadding;
+            left: -$servicesPgPadding;
+        }
+    }
+}

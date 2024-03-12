@@ -7,6 +7,7 @@
 @import 'back/firstPage/section-2';
 @import 'back/firstPage/section-3-and-4';
 @import 'back/articlePages/articles';
+@import 'back/servicePage/services';
 
 select{
     padding:4px 8px;
@@ -242,7 +243,7 @@ select{
 
     }
 }
-.edit-actions, .img-input-delete, .tags-box, .article-delete-box{
+.edit-actions, .img-input-delete, .tags-box, .article-delete-box, .service-types{
     .svg-box {
         margin: 0 2px;
         border: $black solid 2px;

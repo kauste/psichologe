@@ -11,7 +11,7 @@
         grid-template-columns: 200px calc(100% - 440px) 120px 120px;
     }
     .modal {
-        .articles {
+        .articles, .add-articles-box {
             .svg-box {
                 margin: 0 2px;
                 border: $black solid 2px;
@@ -44,16 +44,20 @@
                     }
                 }
             }
+            ul{
+                padding:0;
+            }
             li,
             .add-article {
                 display: flex;
                 gap: 20px;
                 align-items: center;
                 padding: 0 5px;
+                select{
+                    max-width: 80%;
+                }
             }
-            .add-article {
-                padding-left: calc(2rem + 5px);
-            }
+
         }
     }
     .articles-box {

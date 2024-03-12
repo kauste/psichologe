@@ -55,15 +55,15 @@
                                     <textarea name="extra_data_{{$img}}" class="extra-data-textarea">{{$article->{'img_'. $img} && isset($article->{'img_'. $img}['extra_data']) ? $article->{'img_'. $img}['extra_data'] : ''}}</textarea>
                                 </div>
                                 <div class="img-box img--box">
-                                    <img src="{{  $article->{'img_'. $img} ? asset('/images/articlesImgs/' . $article->{'img_'. $img}['path']) : null }}" atl="article image" style="object-position:0px {{$article->{'img_'. $img} && isset($article->{'img_'. $img}['object_position']) ? $article->{'img_'. $img}['object_position'] : 50}}%">
+                                    <img src="{{  $article->{'img_'. $img} ? asset('/images/articlesImgs/' . $article->{'img_'. $img}['path']) : null }}" atl="article image" style="object-position:0px {{$article->{'img_'. $img} && isset($article->{'img_'. $img}['object_position']) ? $article->{'img_'. $img}['object_position'] : 0}}%">
                                 </div>
                             </div>
                             <div class="file-input-box file--input--box" style="{{$article->{'img_'. $img} ? 'display:none' : 'display:flex'}}">
                                 <input type="file" name="img_{{$img}}" id="article_{{$img}}" accept="image/*" value="{{old('img_'. $img)}}" />
                                 <span class='button grey-button'>Choose</span>
                                 <span class="label" for="article_img_{{$img}}" data-js-label>Nuotrauka nepasirinkta.</span>
-                                <input type="hidden" name="object_position_{{$img}}" value="{{$article->{'img_'. $img} && isset($article->{'img_'. $img}['object_position']) ? $article->{'img_'. $img}['object_position'] : ''}}">
-                                <input class="--old" type="hidden" name="old_img_{{$img}}" value="{{$article->{ 'img_'. $img} ? true : false}}">
+                                <input class="object--position" type="hidden" name="object_position_{{$img}}" value="{{$article->{'img_'. $img} && isset($article->{'img_'. $img}['object_position']) ? $article->{'img_'. $img}['object_position'] : ''}}">
+                                <input class="--old" type="hidden" name="img_old_{{$img}}" value="{{$article->{ 'img_'. $img} ? true : false}}">
                             </div>
                         </div>
                     </div>

@@ -3,9 +3,9 @@
 @inject('tags', 'App\Services\ArticlesTags')
 <div class="article--page article-page">
     <div class="tags-nav tags--nav">
-        <a href="{{route('back-articles-list')}}" class="active">All</a>
+        <a href="{{route('articles-list')}}" class="active">All</a>
         @foreach ($tags->tags as $tag)
-        <a href="{{route('back-articles-list') . '?filter='. $tag->id}}">{{$tag->tag}}</a>
+        <a href="{{route('articles-list') . '?filter='. $tag->id}}">{{$tag->tag}}</a>
         @endforeach
     </div>
     <section class="article-box article--box">
@@ -19,7 +19,7 @@
             @foreach ($article->article ?? [] as $key => $paragraph)
             @if( $article->img_1 && $key === $article->img_1['paragraph_before'])
             <div class="img-box">
-                <img style="object-position:0px {{isset($article->img_1['object_position']) ? $article->img_1['object_position'] : '50'}}%" src="{{asset('images/articlesImgs') . '/' . $article->img_1['path']}}">
+                <img style="object-position:0px {{isset($article->img_1['object_position']) ? $article->img_1['object_position'] : '0'}}%" src="{{asset('images/articlesImgs') . '/' . $article->img_1['path']}}">
                 @if(isset($article->img_1['extra_data']) && $article->img_1['extra_data'])
                 <div class="extra-data">{{$article->img_1['extra_data']}}</div>
                 @endif
@@ -30,7 +30,7 @@
             @endif
             @if( $article->img_2 && $key === $article->img_2['paragraph_before'])
             <div class="img-box">
-                <img style="object-position:0px {{isset($article->img_2['object_position']) ? $article->img_2['object_position'] : '50'}}%" src="{{asset('images/articlesImgs') . '/' . $article->img_2['path']}}">
+                <img style="object-position:0px {{isset($article->img_2['object_position']) ? $article->img_2['object_position'] : '0'}}%" src="{{asset('images/articlesImgs') . '/' . $article->img_2['path']}}">
                 @if(isset($article->img_2['extra_data']) && $article->img_2['extra_data'])
                 <div class="extra-data">{{$article->img_2['extra_data']}}</div>
                 @endif
@@ -41,7 +41,7 @@
             @endif
             @if( $article->img_3 && $key === $article->img_3['paragraph_before'])
             <div class="img-box">
-                <img style="object-position:0px {{isset($article->img_3['object_position']) ? $article->img_3['object_position'] : '50'}}%" src="{{asset('images/articlesImgs') . '/' . $article->img_3['path']}}">
+                <img style="object-position:0px {{isset($article->img_3['object_position']) ? $article->img_3['object_position'] : '0'}}%" src="{{asset('images/articlesImgs') . '/' . $article->img_3['path']}}">
                 @if(isset($article->img_3['extra_data']) && $article->img_3['extra_data'])
                 <div class="extra-data">{{$article->img_3['extra_data']}}</div>
                 @endif

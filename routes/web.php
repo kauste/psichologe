@@ -6,7 +6,7 @@ use App\Http\Controllers\FirstPageController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ArticleTagController;
 use App\Http\Controllers\FrontController;
-
+use App\Http\Controllers\ServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +22,7 @@ use App\Http\Controllers\FrontController;
 Route::get('/', [FrontController::class, 'firstPage'])->name('first-page');
 Route::get('/articles', [FrontController::class, 'articlesList'])->name('articles-list');
 Route::get('/article/{article}', [FrontController::class, 'articlePage'])->name('article-page');
+Route::get('/services', [FrontController::class, 'services'])->name('services');
 
 
 
@@ -52,13 +53,16 @@ Route::prefix('admin')->name('back-')->middleware(['auth'])->group(function(){
     Route::post('/article-store', [ArticleController::class, 'articleStore'])->name('article-store');
     Route::get('/article-edit/{article?}', [ArticleController::class, 'articleEdit'])->name('article-edit');
     Route::put('/article-update', [ArticleController::class, 'articleUpdate'])->name('article-update');
-
     Route::delete('/article-delete/{id?}', [ArticleController::class, 'articledelete'])->name('article-delete');
-
     // article tag
     Route::put('update-articles-tag/{id?}', [ArticleTagController::class, 'updateArticlesTag'])->name('update-articles-tag');
     Route::post('store-articles-tag', [ArticleTagController::class, 'storeArticlesTag'])->name('store-articles-tag');
     Route::delete('delete-articles-tag/{id?}', [ArticleTagController::class, 'deleteArticlesTag'])->name('delete-articles-tag');
+    // services
+    Route::get('/services', [ServiceController::class, 'servicesList'])->name('services-list');
+    Route::post('store-service', [ServiceController::class, 'storeService'])->name('store-service');
+    Route::put('update-service/{id?}', [ServiceController::class, 'updateService'])->name('update-service');
+    Route::delete('delete-service/{id?}', [ServiceController::class, 'deleteService'])->name('delete-service');
 
 
 });

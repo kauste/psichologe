@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('citations', function (Blueprint $table) {
+        Schema::create('services', function (Blueprint $table) {
             $table->id();
-            $table->string('citation', 150);
-            $table->string('author', 50)->nullable();
+            $table->string('service_title', 100);
+            $table->unsignedTinyInteger('priority')->nullable();
+            $table->json('extra_data')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('citations');
+        Schema::dropIfExists('services');
     }
 };

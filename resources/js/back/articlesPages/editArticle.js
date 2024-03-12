@@ -35,9 +35,6 @@ class EditArticle{
             if(input.value.trim() !== ''){
                 if(input.type !== 'file'){
                     formData.append(input.name, input.value.trim())
-                    // console.log(formData)
-                    // console.log(input.name, input.value)
-
                 }
                 else{
                     formData.append(input.name, input.files[0])
@@ -45,7 +42,6 @@ class EditArticle{
                 }
             }
         })
-        console.log(formData)
         axios.post(articleUpdateRoute + '?id=' + this.articleId, formData, {headers:{ "Content-Type": "multipart/form-data"}})
         .then(res => {
             if(res.data.errors){
@@ -63,9 +59,8 @@ class EditArticle{
         this.errorsDOMS.forEach(error => {
             error.innerText = '';
         })
-        console.log(errors)
         for(const [key, error] of Object.entries(errors)){
-            const keyLetters = key.match(/[A-Za-z_]*/)
+            const keyLetters = key.match(/[A-Za-z\d_]*/)
             const errorDOM = this.formDOM.querySelector(`.${keyLetters}--error`);
             errorDOM.innerText = `* ${error}`
         }

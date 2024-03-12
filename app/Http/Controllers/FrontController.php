@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\FirstPage;
 use App\Models\Article;
 use App\Models\Citation;
+use App\Models\Service;
 
 class FrontController extends Controller
 {
@@ -19,27 +20,53 @@ class FrontController extends Controller
                                 },])->first();
         $citations = Citation::orderBy(DB::raw('RAND()'))
                              ->get();
-        return view('back.firstPage', ['pageName' => 'firstPage', 
+        $services = Service::where('id', '>', '0')
+                            ->select('service_title')
+                            ->orderBy('priority')
+                            ->get();
+        return view('front.firstPage', ['pageName' => 'firstPage', 
                                         'data' => $data, 
-                                        'citations' => $citations]);
+                                        'citations' => $citations,
+                                        'services' => $services]);
     }
     public function articlesList(Request $request)
     {
         $perPage = 6;
+        $filter = $request->filter ?? null;
         $page = $request->page ?? 1;
-        $articles = Article::offset($perPage * ($page - 1))
+        $articles = Article::when($filter, function($query, $filter){
+                                $query->whereHas('tags', function($query) use ($filter){
+                                    $query->where('id', $filter);
+                                });
+                            })
+                            ->orderByDesc('created_at')
+                            ->offset($perPage * ($page - 1))
                             ->limit($perPage)
                             ->get();
-        $pages = ceil(Article::count() / $perPage);
+        $articlesCount = Article::when($filter, function($query, $filter){
+                                        $query->whereHas('tags', function($query) use ($filter){
+                                            $query->where('id', $filter);
+                                        });
+                                    })
+                                    ->count();
+        $pages = ceil($articlesCount / $perPage);
 
-        return view('front.articlesList', ['pageName' => 'articlesList',
+        return view('front.articlesList', ['pageName' => 'articles',
                                            'articles' => $articles,
                                             'pages' => $pages,
                                             'currentPage' => $page]);
     }
     public function articlePage(Article $article){
-        return view('front.articlePage', ['pageName' => 'articlesList',
+        return view('front.articlePage', ['pageName' => 'articles',
                                             'article' => $article]);
+    }
+    public function services()
+    {
+        $services = Service::where('id', '>', '0')
+                            ->orderByRaw('priority IS NULL, priority')
+                            ->get();
+        return view('front.servicesPage', ['pageName' => 'services', 
+                                           'services' => $services]);
     }
 
 }

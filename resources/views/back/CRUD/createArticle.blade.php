@@ -61,7 +61,7 @@
                                 <input type="file" name="img_{{$img}}" id="article_{{$img}}" accept="image/*" value="{{old('img_'. $img)}}" />
                                 <span class='button grey-button'>Choose</span>
                                 <span class="label" for="article_img_{{$img}}" data-js-label>Nuotrauka nepasirinkta.</span>
-                                <input type="hidden" name="object_position_{{$img}}" value="">
+                                <input class="object--position" type="hidden" name="object_position_{{$img}}" value="">
                             </div>
                         </div>
                     </div>

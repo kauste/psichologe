@@ -29,14 +29,11 @@ class DeleteItems{
     }
     showDeleteActions = (deleteBtnDOM) => () =>{
         const deleteActionsDOM = deleteBtnDOM.nextElementSibling;
-        console.log(deleteActionsDOM);
-
         deleteActionsDOM.style.display = 'flex'
         deleteBtnDOM.style.display = 'none';
     }
     dontShowDeleteActions = (cancelBtnDOM) => () => {
         const deleteActionsDOM = cancelBtnDOM.closest('.delete--actions');
-        console.log(deleteActionsDOM);
         const deleteBtnDOM = deleteActionsDOM.previousElementSibling;
         deleteActionsDOM.style.display = 'none';
         deleteBtnDOM.style.display = 'flex'

@@ -48,31 +48,18 @@
 
             }
             &.one-tagsNav{
-                grid-template-columns: 1fr 80px 120px;
+                grid-template-columns: 200px calc(100% - 440px) 120px 120px;
                 display: grid;
                 align-items: center;
                 justify-content: center;
             }
-            // &.one-profile-pic {
-            //     margin-bottom: 50px;
-            //     list-style: none;
-            //     display: grid;
-            //     align-items: center;
-            //     width: 100%;
-            //     grid-template-columns: min(500px, 60vw) 1fr 1fr 30px;
-            //     .priority-box {
-            //         justify-content: center;
-            //         .priority {
-            //             height: fit-content;
-            //         }
-            //     }
-            // }
             &.one-citation{
                 grid-template-columns: calc(100% - 320px) 200px 120px;
                 display: grid;
                 align-items: center;
                 justify-content: center;
             }
+
             .img-box {
                 width: min(500px, 60vw);
                 overflow: hidden;
@@ -152,7 +139,7 @@
                 font-style: italic;
                 color: #999;
             }
-            div:not(.img-box, .add-article, .svg-box) {
+            div:not(.img-box, .add-article, .svg-box, .add-service-type) {
                 height: 100%;
             }
             div:not(
@@ -160,7 +147,7 @@
                     .--delete,
                     .edit--actions,
                     .update--actions
-                )[contenteditable="true"] {
+                )[contenteditable="true"], .add-articles-box {
                 padding: 10px 10px 20px;
                 &.priority {
                     padding: 10px;
@@ -211,12 +198,14 @@
                 width: 100%;
                 height: 100%;
             }
+
         }
     }
 }
 .add-btn-in{
     width: 40px;
     height: 40px;
+    min-width: 40px;
     border-radius: 50%;
     border: 4px solid $pink;
     stroke: $black;

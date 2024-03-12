@@ -18,7 +18,7 @@
             <ul class="education-ul --education">
                 @forelse ($data->educations as $edu)
                 <li class="one-education" id="education-edit-{{$edu->id}}" data-priority="{{$edu->priority}}">
-                    <div class="date --date">{{$edu->date}}</div>
+                    <div class="date --date" >{{$edu->date}}</div>
                     <div class="about --about">{{$edu->about}}</div>
                     <div class="position --priority {{$edu->priority && $edu->priority > 0 ? '' : 'small'}}">{{$edu->priority && $edu->priority > 0 ? $edu->priority : ' nesvarbu'}}</div>
                     <div class="edit--actions edit-actions" style="display:flex">
@@ -57,8 +57,8 @@
                         <div>Eil. nr.</div>
                     </div>
                     <div class="form --form one-education">
-                        <div class="date --date" contenteditable="true"></div>
-                        <div class="about --about" contenteditable="true"></div>
+                        <div class="date --var" data-name="date" contenteditable="true"></div>
+                        <div class="about --var" data-name="about" contenteditable="true"></div>
                         <div class="position --priority" contenteditable="true"></div>
                         <div class="update-actions store--actions">
                             <button class="cancel-btn --cancel" type="button">Atšaukti</button>

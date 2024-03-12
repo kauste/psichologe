@@ -13,6 +13,7 @@ body:has(.articles-list, .article-page, .article-create, .article-edit) {
         }
     }
 }
+
 .articles-list,
 .article-page {
     display: grid;
@@ -25,6 +26,7 @@ body:has(.articles-list, .article-page, .article-create, .article-edit) {
     gap:35px;
     .article-box {
         width: 90%;
+        height:150px;
         text-decoration: none;
         color: $black;
         background-color: $bg;

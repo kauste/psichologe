@@ -70,7 +70,7 @@ class FileInputsActivator{
         this.setPositioner();
     }
     setPositioner(){
-      this.positioner = new Positioner('.img--box', this.imgBoxDOM)
+      this.positioner = new Positioner(this.imgBoxDOM, this.inputBoxDOM)
 
     }
 
@@ -85,9 +85,6 @@ class FileInputsActivator{
         this.inputBoxDOM.querySelector('.--old').value = 0;
       }
 
-    }
-    getObjectPosition(){
-      return this.positioner.returnObjectPosition();
     }
 
   }

@@ -43,7 +43,7 @@
                         <a href="#">Registracija</a>
                     </li>
                     <li>
-                        <a href="{{route('articles-list')}}" class="{{isset($pageName) && $pageName === 'articlesList' ? 'active' : ''}}">Straipsniai</a>
+                        <a href="{{route('articles-list')}}" class="{{isset($pageName) && $pageName === 'articles' ? 'active' : ''}}">Straipsniai</a>
                     </li>
                 </ul>
             </div>

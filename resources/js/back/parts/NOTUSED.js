@@ -1,5 +1,5 @@
 import { CRUDmodal } from "./CRUDmodal";
-import { FileInputActivator } from "./FileInputsActivator";
+import { FileInputActivator } from "./fileInputsActivator";
 import Positioner from "./positioner";
 class FirstSection extends CRUDmodal{
     constructor(cssStyles, ){

@@ -8,7 +8,7 @@ use App\Models\FirstPage;
 use App\Models\Citation;
 use App\Models\Education;
 use App\Models\Work;
-
+use App\Models\Service;
 
 use Auth;
 
@@ -25,9 +25,14 @@ class FirstPageController extends Controller
                                 },])->first();
         $citations = Citation::orderBy(DB::raw('RAND()'))
                                 ->get();
+        $services = Service::where('id', '>', '0')
+                                ->select('service_title')
+                                ->orderBy('priority')
+                                ->get();
         return view('back.firstPage', ['pageName' => 'firstPage',
                                         'data' => $data,
                                         'citations' => $citations,
+                                        'services' => $services,
                                         'area' => null ]);
     }
     // citations
@@ -36,7 +41,7 @@ class FirstPageController extends Controller
         $data = $request->data;
         $validator = Validator::make($data, [
             'citation' => 'required|min:4|max:150',
-            'author' => 'nullable|integer|min:1|max:30',
+            'author' => 'nullable|string|min:1|max:50',
         ]);
         if($validator->fails()){
             return response()->json(['errors' => $validator->errors()->all()]);

@@ -2,7 +2,7 @@ import { CRUDmodal } from "../parts/CRUDmodal";
 
 class Citations extends CRUDmodal{
     constructor(cssStyles, selector, updateRoute, storeRoute, deleteRoute, swiper){
-        super(cssStyles, selector)
+        super(cssStyles, selector, storeRoute)
         this.updateRoute = updateRoute;
         this.storeRoute = storeRoute;
         this.deleteRoute = deleteRoute;
@@ -23,41 +23,41 @@ class Citations extends CRUDmodal{
         super.borderWarningCSS();
     }
     // create
-    setCreateItemVariables (){
-        this.citationCreateDOM = this.addBoxDOM.querySelector('.--citation');
-        this.authortCreateDOM = this.addBoxDOM.querySelector('.--author');
-        this.storeBtnDOM = this.addBoxDOM.querySelector('.store--actions .--store');
-        this.cancelStoreBtnDOM = this.addBoxDOM.querySelector('.store--actions .--cancel');
-        this.letCreateItem();
-    }
-    letCreateItem(){
-        this.storeBtnDOM.addEventListener('click', () => { this.store() });
-        this.cancelBtnDOM.addEventListener('click', () => { this.clearCreate() });
-    }
-    store (){
-        this.loadeBoxDOM.style.display = 'block';
-        const citationInnerText = this.citationCreateDOM.innerText;
-        const authorInnerText = this.authortCreateDOM.innerText;
-        const data = {citation:citationInnerText,
-                      author:authorInnerText};
-        axios.post(this.storeRoute, {data:data})
-        .then(res => {
-            if(res.data.errors){  
-                let errorsHTML = '';
-                res.data.errors.forEach(error => {
-                    errorsHTML += `<div>${error}</div>`
-                })
-                this.showMsg(errorsHTML)
-            }
-            else if(res.data.message){
-                this.appendEditDeleteModal(res.data.modalHTML, res.data.itemId)
-                this.appendSection(res.data.sectionHTML, res.data.itemId)
-                this.clearCreate();
-                this.showMsg(res.data.message);
-            }
-            this.loadeBoxDOM.style.display = 'none';
-        })
-    }
+    // setCreateItemVariables (){
+    //     this.citationCreateDOM = this.addBoxDOM.querySelector('.--citation');
+    //     this.authortCreateDOM = this.addBoxDOM.querySelector('.--author');
+    //     this.storeBtnDOM = this.addBoxDOM.querySelector('.store--actions .--store');
+    //     this.cancelStoreBtnDOM = this.addBoxDOM.querySelector('.store--actions .--cancel');
+    //     this.letCreateItem();
+    // }
+    // letCreateItem(){
+    //     this.storeBtnDOM.addEventListener('click', () => { this.store() });
+    //     this.cancelBtnDOM.addEventListener('click', () => { this.clearCreate() });
+    // }
+    // store (){
+    //     this.loadeBoxDOM.style.display = 'block';
+    //     const citationInnerText = this.citationCreateDOM.innerText;
+    //     const authorInnerText = this.authortCreateDOM.innerText;
+    //     const data = {citation:citationInnerText,
+    //                   author:authorInnerText};
+    //     axios.post(this.storeRoute, {data:data})
+    //     .then(res => {
+    //         if(res.data.errors){  
+    //             let errorsHTML = '';
+    //             res.data.errors.forEach(error => {
+    //                 errorsHTML += `<div>${error}</div>`
+    //             })
+    //             this.showMsg(errorsHTML)
+    //         }
+    //         else if(res.data.message){
+    //             this.appendEditDeleteModal(res.data.modalHTML, res.data.itemId)
+    //             this.appendSection(res.data.sectionHTML, res.data.itemId)
+    //             this.clearCreate();
+    //             this.showMsg(res.data.message);
+    //         }
+    //         this.loadeBoxDOM.style.display = 'none';
+    //     })
+    // }
 
     appendEditDeleteModal(modalHTML, itemId){
         let li = document.createElement('li')
@@ -77,11 +77,11 @@ class Citations extends CRUDmodal{
         this.swiper.update();
     }
 
-    clearCreate(){
-        this.citationCreateDOM.innerText = '';
-        this.authortCreateDOM.innerText = '';
-        this.addBoxForm.style.border = 'none';
-    }
+    // clearCreate(){
+    //     this.citationCreateDOM.innerText = '';
+    //     this.authortCreateDOM.innerText = '';
+    //     this.addBoxForm.style.border = 'none';
+    // }
     //edit
     letEditItemHandler(editItemBtn, e){
         e.preventDefault();

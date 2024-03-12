@@ -3,7 +3,7 @@ import { CRUDmodal } from "../parts/CRUDmodal";
 
 class ThirdAndFourthSection extends CRUDmodal{
     constructor(cssStyles, selector, updateRoute, storeRoute, deleteRoute, swiper){
-        super(cssStyles, selector)
+        super(cssStyles, selector, storeRoute)
         this.selector = selector;
         this.updateRoute = updateRoute;
         this.storeRoute = storeRoute;
@@ -41,44 +41,44 @@ class ThirdAndFourthSection extends CRUDmodal{
         super.borderWarningCSS();
     }
     // create
-    setCreateItemVariables (){
-        this.dateCreateDOM = this.addBoxDOM.querySelector('.--date');
-        this.aboutCreateDOM = this.addBoxDOM.querySelector('.--about');
-        this.priorityCreateDOM = this.addBoxDOM.querySelector('.--priority');
-        this.storeBtnDOM = this.addBoxDOM.querySelector('.store--actions .--store');
-        this.cancelStoreBtnDOM = this.addBoxDOM.querySelector('.store--actions .--cancel');
-        this.letCreateItem();
-    }
-    letCreateItem(){
-        this.storeBtnDOM.addEventListener('click', () => { this.store() });
-        this.cancelBtnDOM.addEventListener('click', () => { this.clearCreate() });
-    }
-    store (){
-        this.loadeBoxDOM.style.display = 'block';
-        const dateInnerText = this.dateCreateDOM.innerText;
-        const aboutInnerText = this.aboutCreateDOM.innerText;
-        const priorityInnerText = parseInt(this.priorityCreateDOM.innerText) ? parseInt(this.priorityCreateDOM.innerText) : null;
-        const data = {date:dateInnerText,
-                      about:aboutInnerText,
-                      priority:priorityInnerText};
-        axios.post(this.storeRoute, {data:data})
-        .then(res => {
-            if(res.data.errors){  
-                let errorsHTML = '';
-                res.data.errors.forEach(error => {
-                    errorsHTML += `<div>${error}</div>`
-                })
-                this.showMsg(errorsHTML)
-            }
-            else if(res.data.message){
-                this.appendEditDeleteModal(res.data.modalHTML, res.data.itemId, priorityInnerText)
-                this.appendSection(res.data.sectionHTML, res.data.itemId, priorityInnerText)
-                this.clearCreate();
-                this.showMsg(res.data.message);
-            }
-            this.loadeBoxDOM.style.display = 'none';
-        })
-    }
+    // setCreateItemVariables (){
+    //     this.dateCreateDOM = this.addBoxDOM.querySelector('.--date');
+    //     this.aboutCreateDOM = this.addBoxDOM.querySelector('.--about');
+    //     this.priorityCreateDOM = this.addBoxDOM.querySelector('.--priority');
+    //     this.storeBtnDOM = this.addBoxDOM.querySelector('.store--actions .--store');
+    //     this.cancelStoreBtnDOM = this.addBoxDOM.querySelector('.store--actions .--cancel');
+    //     this.letCreateItem();
+    // }
+    // letCreateItem(){
+    //     this.storeBtnDOM.addEventListener('click', () => { this.store() });
+    //     this.cancelBtnDOM.addEventListener('click', () => { this.clearCreate() });
+    // }
+    // store (){
+    //     this.loadeBoxDOM.style.display = 'block';
+    //     const dateInnerText = this.dateCreateDOM.innerText;
+    //     const aboutInnerText = this.aboutCreateDOM.innerText;
+    //     const priorityInnerText = parseInt(this.priorityCreateDOM.innerText) ? parseInt(this.priorityCreateDOM.innerText) : null;
+    //     const data = {date:dateInnerText,
+    //                   about:aboutInnerText,
+    //                   priority:priorityInnerText};
+    //     axios.post(this.storeRoute, {data:data})
+    //     .then(res => {
+    //         if(res.data.errors){  
+    //             let errorsHTML = '';
+    //             res.data.errors.forEach(error => {
+    //                 errorsHTML += `<div>${error}</div>`
+    //             })
+    //             this.showMsg(errorsHTML)
+    //         }
+    //         else if(res.data.message){
+    //             this.appendEditDeleteModal(res.data.modalHTML, res.data.itemId, priorityInnerText)
+    //             this.appendSection(res.data.sectionHTML, res.data.itemId, priorityInnerText)
+    //             this.clearCreate();
+    //             this.showMsg(res.data.message);
+    //         }
+    //         this.loadeBoxDOM.style.display = 'none';
+    //     })
+    // }
 
     appendEditDeleteModal(modalHTML, itemId, priority){
         let li = document.createElement('li')
@@ -100,12 +100,12 @@ class ThirdAndFourthSection extends CRUDmodal{
         this.swiper.update();
     }
 
-    clearCreate(){
-        this.dateCreateDOM.innerText = '';
-        this.aboutCreateDOM.innerText = '';
-        this.priorityCreateDOM.innerText = '';
-        this.addBoxForm.style.border = 'none';
-    }
+    // clearCreate(){
+    //     this.dateCreateDOM.innerText = '';
+    //     this.aboutCreateDOM.innerText = '';
+    //     this.priorityCreateDOM.innerText = '';
+    //     this.addBoxForm.style.border = 'none';
+    // }
     // edit
     letEditItemHandler(editItemBtn, e){
         e.preventDefault();

@@ -4,11 +4,11 @@
 <div class="articles--page articles-list">
     <ul class="tags-nav tags--nav">
         <li>
-            <a href="#" class="active">All</a>
+            <a href="{{route('articles-list')}}" class="active">All</a>
         </li>
         @foreach ($tags->tags as $tag)
         <li>
-            <a href="#">{{$tag->tag}}</a>
+            <a href="{{url()->current() . '?filter=' .$tag->id}}">{{$tag->tag}}</a>
         </li>
         @endforeach
     </ul>

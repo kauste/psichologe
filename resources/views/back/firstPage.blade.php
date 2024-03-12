@@ -12,9 +12,9 @@
         </div>
         <div class="services">
             <ul>
-                <li>Konsultavimas</li>
-                <li>Psichologinis įvertinimas</li>
-                <li>Mokymai</li>
+                @foreach ($services as $service)
+                <li>{{$service->service_title}}</li>
+                @endforeach
             </ul>
         </div>
         <div id="citation"  class="citations-box">

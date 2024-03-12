@@ -41,7 +41,7 @@
             @foreach ($article->article ?? [] as $key => $paragraph)
             @if( $article->img_1 && $key + 1 === $article->img_1['paragraph_before'])
             <div class="img-box">
-                <img style="object-position:0px {{isset($article->img_1['object_position']) ? $article->img_1['object_position'] : '50'}}%" src="{{asset('images/articlesImgs') . '/' . $article->img_1['path']}}">
+                <img style="object-position:0px {{isset($article->img_1['object_position']) ? $article->img_1['object_position'] : '0'}}%" src="{{asset('images/articlesImgs') . '/' . $article->img_1['path']}}">
                 @if(isset($article->img_1['extra_data']) && $article->img_1['extra_data'])
                 <div class="extra-data">{{$article->img_1['extra_data']}}</div>
                 @endif

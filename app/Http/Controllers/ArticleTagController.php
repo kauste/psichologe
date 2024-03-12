@@ -21,7 +21,19 @@ class ArticleTagController extends Controller
             'tag' => 'required|min:2|max:100',
             'priority' => 'nullable|integer|min:1|max:255',
             'articles' => 'nullable|array',
-            'articles.*' => 'integer|exists:articles,id'
+            'articles.*' => 'required|integer|exists:articles,id'
+        ], [
+            'tag.required' => 'Tago pavadinimas yra privalomas.',
+            'tag.min' => 'Tago pavadinimas turi būti bent 2 simboliai.',
+            'tag.max' => 'Tago pavadinimas neturi vyršyti 100 simbolių.',
+            'priority.integer' => 'Prioritetas turi būti sveikasis skaičius.',
+            'priority.min' => 'Prioritetas turi būti bent 1.',
+            'priority.max' => 'Prioritetas turi neviršyti 255.',
+            'articles.array' => 'Pridėti straipsniai turi būti masyve.',
+            'articles.*.required' => 'Pridėtas straipsnis yra privalomas.',
+            'articles.*.integer' => 'Pridėtas straipsnis turi būti sveikasis skaičius.',
+            'articles.*.exists' => 'Pridėtas straipsnis turi egzistuoti straipsnių sąraše'
+
         ]);
         if($validator->fails()){
             return response()->json(['errors' => $validator->errors()->all()]);
@@ -35,11 +47,26 @@ class ArticleTagController extends Controller
     }
     public function storeArticlesTag(Request $request)
     {
+        dump($request->all());
         $data = $request->data;
         $data['priority'] = (int) $data['priority'] ? (int) $data['priority'] : null;
         $validator = Validator::make($data, [
             'tag' => 'required|min:2|max:100',
             'priority' => 'nullable|integer|min:1|max:255',
+            'articles' => 'nullable|array',
+            'articles.*' => 'required|integer|exists:articles,id'
+        ], [
+            'tag.required' => 'Tago pavadinimas yra privalomas.',
+            'tag.min' => 'Tago pavadinimas turi būti bent 2 simboliai.',
+            'tag.max' => 'Tago pavadinimas neturi vyršyti 100 simbolių.',
+            'priority.integer' => 'Prioritetas turi būti sveikasis skaičius.',
+            'priority.min' => 'Prioritetas turi būti bent 1.',
+            'priority.max' => 'Prioritetas turi neviršyti 255.',
+            'articles.array' => 'Pridėti straipsniai turi būti masyve.',
+            'articles.*.required' => 'Pridėtas straipsnis yra privalomas.',
+            'articles.*.integer' => 'Pridėtas straipsnis turi būti sveikasis skaičius.',
+            'articles.*.exists' => 'Pridėtas straipsnis turi egzistuoti straipsnių sąraše'
+
         ]);
         if($validator->fails()){
             return response()->json(['errors' => $validator->errors()->all()]);
@@ -48,7 +75,11 @@ class ArticleTagController extends Controller
             'tag' => $data['tag'],
             'priority' => $data['priority']
         ]);
-        $articles = Article::all();
+        $selectedArticles = Article::findMany($data['articles']);
+
+        $tag->articles()->saveMany($selectedArticles);
+
+        $articles = Article::whereNotIn('id', $data['articles']);
         $modalHTML = view('back.CRUDmodal.tags-nav.newTagModal', ['tag' => $tag,
                                                                   'articles' => $articles]
                                                                   )->render();

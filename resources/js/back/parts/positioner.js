@@ -1,32 +1,27 @@
 class Positioner{
-    constructor(selector, imgBoxDOM,secImgDOM){
-        this.selector = selector;
+    constructor(imgBoxDOM, inputBoxDOM, secImgDOM){
         this.imgBoxDOM = imgBoxDOM;
+        this.inputBoxDOM = inputBoxDOM;
         this.secImgDOM = secImgDOM;
+        this.positionInputDOM;
         this.boxHeight;
-        this.imgsBoxesDOMS;
         this.imgDOM;
         this.prevPicPos;
-        this.imgHeigh;
+        this.imgHeight;
         this.marginHeight;
         this.additionalHeight;
         this.setBoxesSize();
     }
 
     setBoxesSize(){
-        this.imgsBoxesDOMS = document.querySelectorAll(this.selector);
-        const imgDOM = this.imgsBoxesDOMS[0].querySelector('img')
+        this.positionInputDOM = this.inputBoxDOM.querySelector('input.object--position')
+        const imgDOM = this.imgBoxDOM.querySelector('img')
         setTimeout(() => {
             const imgsWidth = imgDOM.clientWidth;
             this.boxHeight = 10 * imgsWidth / 21;
             this.init();
         }, 50)
 
-    }
-    doSetBoxesSize(){
-        this.imgsBoxesDOMS.forEach(imgBoxDOM => {
-            this.doSetBoxSize(imgBoxDOM)
-        });
     }
     doSetBoxSize(imgBoxDOM){
         imgBoxDOM.style.height = this.boxHeight + 'px';
@@ -53,7 +48,6 @@ class Positioner{
         this.imgDOM.setAttribute('drabable', true);
 
         this.imgDOM.addEventListener('dragstart', (e) => {
-            console.log('dragstart')
             this.prevPicPos = e.clientY;
         })
         this.imgDOM.addEventListener('dragover', (e) => {
@@ -69,7 +63,7 @@ class Positioner{
             }
             this.imgBoxDOM.style.setProperty('--marginHeight', this.marginHeight + 'px');
             this.prevPicPos = e.clientY;
-            this.returnObjectPosition();
+            this.insertObjectPosition();
         })
         
         this.imgDOM.addEventListener('dragend', (e) => {
@@ -77,9 +71,9 @@ class Positioner{
         })
 
     }
-    returnObjectPosition(){
+    insertObjectPosition(){
         this.objectYposition = parseFloat(100 - (100  / this.additionalHeight * this.marginHeight)).toFixed(2);
-        return this.objectYposition;
+        this.positionInputDOM.value = this.objectYposition;
     }
     closeStyles(){
         this.imgDOM.style.height = '100%';

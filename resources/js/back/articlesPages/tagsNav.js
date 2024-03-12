@@ -1,12 +1,15 @@
 import { CRUDmodal } from "../parts/CRUDmodal";
+import AddSelectedItem from "../parts/addSelectedItem";
 
 class TagsNav extends CRUDmodal{
     constructor(cssStyles, selector, updateRoute, storeRoute, deleteRoute){
-        super(cssStyles, selector)
+        super(cssStyles, selector, storeRoute)
         this.cssStyles = cssStyles;
         this.updateRoute = updateRoute;
         this.storeRoute = storeRoute;
         this.deleteRoute = deleteRoute;
+        //object
+        this.createAddArticle;
         // create
         this.priorityCreateDOM;
         this.tagCreateDOM;
@@ -20,9 +23,8 @@ class TagsNav extends CRUDmodal{
         this.articlesDOM;
         this.articlesDOMS;
         this.articlesUlDOM;
-        this.deleteSvgDOMS;
-        this.initialTaggedArticles = [];
         this.taggedArticles = [];
+        this.deleteSvgDOMS;
         this.addArticleDOM;
         this.addArticleSvgDOM;
         this.addArticleSelectDOM;
@@ -38,43 +40,87 @@ class TagsNav extends CRUDmodal{
         this.scrollToItem = this.openItemDOM.offsetTop - this.openItemDOM.offsetHeight - 30;
         super.borderWarningCSS();
     }
-
-    // create
-    setCreateItemVariables (){
-        this.tagCreateDOM = this.addBoxDOM.querySelector('.--tag');
-        this.priorityCreateDOM = this.addBoxDOM.querySelector('.--priority');
-        this.storeBtnDOM = this.addBoxDOM.querySelector('.store--actions .--store');
-        this.cancelStoreBtnDOM = this.addBoxDOM.querySelector('.store--actions .--cancel');
-        this.letCreateItem();
-    }
     letCreateItem(){
-        this.storeBtnDOM.addEventListener('click', () => { this.store() });
-        this.cancelBtnDOM.addEventListener('click', () => { this.clearCreate() });
+        super.letCreateItem();
+        this.createAddArticle = new AddSelectedItem(this.cssStyles, this.createListVarsDOMS[0]);
+        this.createAddArticle.saveOptionsHTML()
     }
-    store (){
-        this.loadeBoxDOM.style.display = 'block';
-        const tagInnerText = this.tagCreateDOM.innerText;
-        const priority = parseInt(this.priorityCreateDOM.innerText);
-        const data = {tag:tagInnerText,
-                      priority:priority};
-        axios.post(this.storeRoute, {data:data})
-        .then(res => {
-            if(res.data.errors){  
-                let errorsHTML = '';
-                res.data.errors.forEach(error => {
-                    errorsHTML += `<div>${error}</div>`
-                })
-                this.showMsg(errorsHTML)
-            }
-            else if(res.data.message){
-                this.appendEditDeleteModal(res.data.modalHTML, res.data.itemId, priority)
-                this.appendSection(res.data.sectionHTML, res.data.itemId, priority)
-                this.clearCreate();
-                this.showMsg(res.data.message);
-            }
-            this.loadeBoxDOM.style.display = 'none';
-        })
+    clearCreate(){
+        super.clearCreate();
+        this.createAddArticle.fullOptions();
     }
+    addArticleHandler = () => {
+        if(this.taggedArticles.includes(this.addArticleSelectDOM.value)){
+            this.articlesDOMS.forEach(art => {
+                if(art.dataset.articleId === this.addArticleSelectDOM.value){
+                    art.animate(this.cssStyles.scaleKeyframes, this.cssStyles.scaleOptions)
+                }
+            })
+        }
+        else {
+            this.taggedArticles.push(this.addArticleSelectDOM.value)
+            //add element
+            const optionDOM = Array.from(this.addArticleOptionstDOMS).find(option => option.value === this.addArticleSelectDOM.value);
+            let li = document.createElement('li');
+            li.dataset.articleId = this.addArticleSelectDOM.value;
+            li.style.paddingBottom = '5px';
+            const articleHTML = `<div class="svg-box delete-svg-box delete--article--svg" style="display:flex">
+                                    <svg class="delete-svg">
+                                        <use xlink:href="#delete"></use>
+                                    </svg>
+                                </div>
+                                <div>${optionDOM.innerText}</div>`;
+            li.innerHTML = articleHTML;
+            this.articlesUlDOM.appendChild(li);
+            const newDeleteSvgDOM = li.querySelector('svg');
+            //add listeners
+            newDeleteSvgDOM.addEventListener('click', this.deleteArticleTagHandler(newDeleteSvgDOM))          
+            //change DOM
+            this.articlesDOMS = this.articlesDOM.querySelectorAll('li[data-article-id]');
+            this.deleteSvgDOMS = this.articlesDOM.querySelectorAll('.delete--article--svg')          
+            
+        }
+    }
+    deleteArticleTagHandler =  (deleteSvgDOM) => () => {
+        this.taggedArticles = this.taggedArticles.filter((articleId) => articleId != deleteSvgDOM.closest('li').dataset.articleId)
+        deleteSvgDOM.closest('li').style.display = 'none';
+    }
+    // create
+    // setCreateItemVariables (){
+    //     this.tagCreateDOM = this.addBoxDOM.querySelector('.--tag');
+    //     this.priorityCreateDOM = this.addBoxDOM.querySelector('.--priority');
+    //     this.storeBtnDOM = this.addBoxDOM.querySelector('.store--actions .--store');
+    //     this.cancelStoreBtnDOM = this.addBoxDOM.querySelector('.store--actions .--cancel');
+    //     this.letCreateItem();
+    // }
+    // letCreateItem(){
+    //     this.storeBtnDOM.addEventListener('click', () => { this.store() });
+    //     this.cancelBtnDOM.addEventListener('click', () => { this.clearCreate() });
+    // }
+    // store (){
+    //     this.loadeBoxDOM.style.display = 'block';
+    //     const tagInnerText = this.tagCreateDOM.innerText;
+    //     const priority = parseInt(this.priorityCreateDOM.innerText);
+    //     const data = {tag:tagInnerText,
+    //                   priority:priority};
+    //     axios.post(this.storeRoute, {data:data})
+    //     .then(res => {
+    //         if(res.data.errors){  
+    //             let errorsHTML = '';
+    //             res.data.errors.forEach(error => {
+    //                 errorsHTML += `<div>${error}</div>`
+    //             })
+    //             this.showMsg(errorsHTML)
+    //         }
+    //         else if(res.data.message){
+    //             this.appendEditDeleteModal(res.data.modalHTML, res.data.itemId, priority)
+    //             this.appendSection(res.data.sectionHTML, res.data.itemId, priority)
+    //             this.clearCreate();
+    //             this.showMsg(res.data.message);
+    //         }
+    //         this.loadeBoxDOM.style.display = 'none';
+    //     })
+    // }
 
     appendEditDeleteModal(modalHTML, itemId, priority){
         let li = document.createElement('li')
@@ -94,11 +140,11 @@ class TagsNav extends CRUDmodal{
         this.insertItemInList(this.sectionUlDOM, li)
     }
 
-    clearCreate(){
-        this.tagCreateDOM.innerText = '';
-        this.priorityCreateDOM.innerText = '';
-        this.addBoxForm.style.border = 'none';
-    }
+    // clearCreate(){
+    //     this.tagCreateDOM.innerText = '';
+    //     this.priorityCreateDOM.innerText = '';
+    //     this.addBoxForm.style.border = 'none';
+    // }
     //edit
     letEditItemHandler(editItemBtn, e){
         e.preventDefault();
@@ -106,7 +152,6 @@ class TagsNav extends CRUDmodal{
             this.borderWarningCSS()
         }
         else{
-            console.log(this.ulDOM)
             this.openItemDOM = editItemBtn.closest('li');
             this.setEditItemVariables();
             this.changeToEditButtons();
@@ -128,7 +173,6 @@ class TagsNav extends CRUDmodal{
         this.articlesDOMS = this.articlesDOM.querySelectorAll('li[data-article-id]');
         this.articlesDOMS.forEach(article => {
             this.taggedArticles.push(article.dataset.articleId);
-            this.initialTaggedArticles.push(article.dataset.articleId);
             })
         this.deleteSvgDOMS = this.articlesDOM.querySelectorAll('.delete--article--svg')
         this.addArticleDOM = this.articlesDOM.querySelector('.add--article');
@@ -172,42 +216,8 @@ class TagsNav extends CRUDmodal{
         this.addArticleDOM.querySelector('svg').addEventListener('click', this.addArticleHandler)
 
     }
-    deleteArticleTagHandler =  (deleteSvgDOM) => () => {
-        this.taggedArticles = this.taggedArticles.filter((articleId) => articleId != deleteSvgDOM.closest('li').dataset.articleId)
-        deleteSvgDOM.closest('li').style.display = 'none';
-    }
-    addArticleHandler = () => {
-        if(this.taggedArticles.includes(this.addArticleSelectDOM.value)){
-            this.articlesDOMS.forEach(art => {
-                if(art.dataset.articleId === this.addArticleSelectDOM.value){
-                    art.animate(this.cssStyles.scaleKeyframes, this.cssStyles.scaleOptions)
-                }
-            })
-        }
-        else {
-            this.taggedArticles.push(this.addArticleSelectDOM.value)
-            //add element
-            const optionDOM = Array.from(this.addArticleOptionstDOMS).find(option => option.value === this.addArticleSelectDOM.value);
-            let li = document.createElement('li');
-            li.dataset.articleId = this.addArticleSelectDOM.value;
-            li.style.paddingBottom = '5px';
-            const articleHTML = `<div class="svg-box delete-svg-box delete--article--svg" style="display:flex">
-                                    <svg class="delete-svg">
-                                        <use xlink:href="#delete"></use>
-                                    </svg>
-                                </div>
-                                <div>${optionDOM.innerText}</div>`;
-            li.innerHTML = articleHTML;
-            this.articlesUlDOM.appendChild(li);
-            const newDeleteSvgDOM = li.querySelector('svg');
-            //add listeners
-            newDeleteSvgDOM.addEventListener('click', this.deleteArticleTagHandler(newDeleteSvgDOM))          
-            //change DOM
-            this.articlesDOMS = this.articlesDOM.querySelectorAll('li[data-article-id]');
-            this.deleteSvgDOMS = this.articlesDOM.querySelectorAll('.delete--article--svg')          
-            
-        }
-    }
+
+
     update = () => {
         this.loadeBoxDOM.style.display = 'block';
         const tagInnerText = this.tagDOM.innerText;
@@ -260,7 +270,6 @@ class TagsNav extends CRUDmodal{
         this.tagDOM.innerText = this.tagInnerText;
         this.priorityDOM.innerText = this.priorityInnerText;
         this.articlesUlDOM.innerHTML = this.articlesInnerHTML;
-        this.taggedArticles = this.initialTaggedArticles;
         this.deleteSvgDOMS.forEach(deleteSvgDOM => {
             deleteSvgDOM.closest('li').style.display = 'flex';
         })
@@ -277,6 +286,7 @@ class TagsNav extends CRUDmodal{
         this.priorityInnerText = '';
         this.liChildernDOMS = null;
         this.citationDOM = null;
+        this.taggedArticles = [];
         // // should be last
         this.openItemId = null;
         this.openItemDOM = null;
@@ -325,13 +335,13 @@ class TagsNav extends CRUDmodal{
                 this.openItemDOM = null;
                 this.openItemId = null;
                 this.showMsg(res.data.message);
+                this.cancelDeleteBtnDOM.removeEventListener('click', this.cancelDelete);
             }
             else {
                 this.deleteBtnDOM.addEventListener('click', this.delete, {once:true})
             }
             this.loadeBoxDOM.style.display = 'none';
         })
-        this.cancelDeleteBtnDOM.removeEventListener('click', this.cancelDelete);
     }
     cancelDelete = () => {
         this.changeToDeleteButtons();

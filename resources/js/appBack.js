@@ -16,11 +16,12 @@ import { ThirdAndFourthSection } from './back/firstPage/thirdAndFourthSection';
 import TopMessage from './back/parts/topMessage';
 import Citations from './back/firstPage/citations';
 import TagsNav from './back/articlesPages/tagsNav';
-import { FileInputsActivator } from './back/parts/FileInputsActivator';
+import { FileInputsActivator } from './back/parts/fileInputsActivator';
 import AddItem from './back/articlesPages/addItem';
 import DeleteItems from './back/articlesPages/deleteItems';
-import CreateArticle from './back/articlesPages/CreateArticle';
+import CreateArticle from './back/articlesPages/createArticle';
 import EditArticle from './back/articlesPages/editArticle';
+import Services from './back/servicesPage/services';
 
 // firt page
 if(document.querySelector('.about--me--page')){
@@ -72,5 +73,8 @@ else if(document.querySelector('.article--edit')){
   const addTags = new AddItem('.tags--box', '.add--btn', 'select', 'added--tags');
   addTags.letExistingTagsDelete();
   new EditArticle;
+}
+else if(document.querySelector('.services--list')){
+  new Services(cssStyles, 'service', serviceUpdateRoute, serviceStoreRoute, serviceDeleteRoute)
 }
 

@@ -57,8 +57,8 @@
                         <div>Eil. nr.</div>
                     </div>
                     <div class="form --form one-work">
-                        <div class="date --date" contenteditable="true"></div>
-                        <div class="about --about" contenteditable="true"></div>
+                        <div class="date --var" data-name="date" contenteditable="true"></div>
+                        <div class="about --var" data-name="about" contenteditable="true"></div>
                         <div class="position --priority" contenteditable="true"></div>
                         <div class="update-actions store--actions">
                             <button class="cancel-btn --cancel" type="button">Atšaukti</button>
