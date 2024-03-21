@@ -18,8 +18,8 @@
             <ul class="--work">
                 @forelse ($data->works as $work)
                 <li class="one-work" id="work-edit-{{$work->id}}" data-priority="{{$work->priority}}">
-                    <div class="date --date">{{$work->date}}</div>
-                    <div class="about --about">{{$work->about}}</div>
+                    <div class="date --var" data-name="date">{{$work->date}}</div>
+                    <div class="about --var" data-name="about">{{$work->about}}</div>
                     <div class="position --priority {{$work->priority && $work->priority > 0 ? '' : 'small'}}">{{$work->priority && $work->priority > 0 ? $work->priority : ' nesvarbu'}}</div>
                     <div class="edit--actions edit-actions" style="display:flex">
                         <div class="svg-box --edit">

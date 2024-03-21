@@ -43,7 +43,7 @@ class ArticleTagController extends Controller
             'priority' => $data['priority']
         ]);
         $tag->articles()->sync($data['articles']);
-        return response()->json(['message' => 'Article tag is edited.']);
+        return response()->json(['message' => 'Straipsnio tagas yra pakeistas.']);
     }
     public function storeArticlesTag(Request $request)
     {
@@ -79,13 +79,14 @@ class ArticleTagController extends Controller
 
         $tag->articles()->saveMany($selectedArticles);
 
-        $articles = Article::whereNotIn('id', $data['articles']);
+        $articles = Article::whereNotIn('id', $data['articles'])->get();
         $modalHTML = view('back.CRUDmodal.tags-nav.newTagModal', ['tag' => $tag,
                                                                   'articles' => $articles]
                                                                   )->render();
         $sectionHTML = view('back.CRUDmodal.tags-nav.newTagInSec', ['tag' => $tag])->render();
 
-        return response()->json(['message' => 'Article tag is edited.',
+        return response()->json(['message' => 'Straipsni tagas yra sukurtas.',
+                                'itemId' => $tag->id,
                                 'modalHTML' => $modalHTML,
                                 'sectionHTML' => $sectionHTML]);
     }

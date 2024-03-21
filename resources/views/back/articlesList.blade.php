@@ -16,7 +16,7 @@
             </li>
             <ul class="tags-list tags--list">
                 @foreach ($tags->tags as $tag)
-                <li id="tagsNav-{{$tag->id}}" data-priority="{{$tag->priority}}">
+                <li id="tagsNav-{{$tag->id}}" class="one-tagsNav" data-priority="{{$tag->priority}}">
                     <a class="--tag" href="{{url()->current() . '?filter=' .$tag->id}}">{{$tag->tag}}</a>
                 </li>
                 @endforeach

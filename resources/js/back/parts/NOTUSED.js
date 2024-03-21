@@ -43,7 +43,7 @@ class FirstSection extends CRUDmodal{
         }
         else{
             this.openItemDOM = editItemBtn.closest('li');
-            this.setEditItemVariables();
+            this.setEditItem();
             this.changeToEditButtons();
             // this.borderOpenCSS()
             this.positioner.imgBoxDOM = this.openItemDOM.querySelector('.profilePic--img');
@@ -53,7 +53,7 @@ class FirstSection extends CRUDmodal{
             this.updateBtnDOM.addEventListener('click', this.update, {once:true})
         }
     }
-    setEditItemVariables(){
+    setEditItem(){
         //modal
         this.openItemId = this.openItemDOM.id.replace(this.selector + '-edit-', '')
         this.liChildernDOMS = this.openItemDOM.querySelectorAll(':scope > div:not(.edit--actions, .update--actions, .delete--actions > .--priority, img');

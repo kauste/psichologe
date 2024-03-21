@@ -31,9 +31,10 @@ class ArticleController extends Controller
                                     })
                                     ->count();
         $pages = ceil($articlesCount / $perPage);
-
+        $allArticles = Article::all();
         return view('back.articlesList', ['pageName' => 'articles',
                                            'articles' => $articles,
+                                           'allArticles' => $allArticles,
                                             'pages' => $pages,
                                             'currentPage' => $page]);
     }

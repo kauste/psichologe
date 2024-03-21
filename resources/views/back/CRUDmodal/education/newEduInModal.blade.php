@@ -1,5 +1,5 @@
-<div class="date --date">{{$edu->date}}</div>
-<div class="about --about">{{$edu->about}}</div>
+<div class="date --var" data-name="date">{{$edu->date}}</div>
+<div class="about --var" data-name="about">{{$edu->about}}</div>
 <div class="position --priority {{$edu->priority && $edu->priority > 0 ? '' : 'small'}}">{{$edu->priority && $edu->priority > 0 ? $edu->priority : ' nesvarbu'}}</div>
 <div class="edit--actions edit-actions" style="display:flex">
     <div class="svg-box --edit">

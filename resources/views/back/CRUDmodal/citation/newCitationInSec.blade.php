@@ -1,2 +1,2 @@
-<div class="--citation">{{$citation->citation}}</div>
-<small class="--author">{{$citation->author ?? ''}}</small>
+<div class="--var" data-name="citation">{{$citation->citation}}</div>
+<small class="--var"  data-name="author">{{$citation->author ?? ''}}</small>

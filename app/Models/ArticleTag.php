@@ -14,4 +14,11 @@ class ArticleTag extends Model
     {
         return $this->belongsToMany(Article::class);
     }
+    public function notUsedArticles()
+    {
+        $articles = Article::whereDoesntHave('tags', function ($query) {
+            $query->where('id', $this->id);
+        })->get();
+        return $articles;
+    }
 }

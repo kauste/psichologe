@@ -22,4 +22,6 @@ class Article extends Model
     {
         return $this->belongsToMany(ArticleTag::class);
     }
+
+
 }

@@ -65,7 +65,7 @@ class FirstPageController extends Controller
         $id = (int) $request->id;
         $validator = Validator::make($data, [
             'citation' => 'required|min:4|max:150',
-            'author' => 'nullable|integer|min:1|max:30',
+            'author' => 'nullable|string|min:1|max:30',
         ]);
         if($validator->fails()){
             return response()->json(['errors' => $validator->errors()->all()]);

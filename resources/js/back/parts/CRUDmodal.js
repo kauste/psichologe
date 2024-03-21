@@ -1,10 +1,13 @@
+import AddSelectedItem from "./addSelectedItem";
+
 class CRUDmodal {
-    constructor(cssStyles, selector, storeRoute){
+    constructor(cssStyles, selector, storeRoute, updateRoute){
         //css
         this.cssStyles = cssStyles;
         this.warningBorderCSS = cssStyles.warningBorderStyle,
         this.selector = selector;
         this.storeRoute = storeRoute;
+        this.updateRoute = updateRoute;
         this.editColumns;
         //section DOMS
         this.sectionDOM;
@@ -26,19 +29,27 @@ class CRUDmodal {
         // create DOMS
         this.createVarsDOMS;
         this.createListVarsDOMS;
-        this.priorityCreateDOM;
-        // edit delete btns DOMS
+        this.createPriorityDOM;
+        this.cancelBtnDOM;
+        this.storeBtnDOM;
+        // edit delete DOMS
         this.ulDOM
         this.liDOMS;
         this.editDeleleBtnsDOMS;
-        //store actions DOMS
-        this.storeActionsDOM;
-        this.cancelBtnDOM;
-        this.storeBtnDOM;
         // open item
         this.openItemDOM = null;
         this.openItemId = null;
         this.liChildernDOMS;
+        this.secItemDOM;
+        this.itemInnerHTML;
+        //edit
+        this.editVarsDOMS;
+        this.editListVarsDOMS;
+        this.editPriorityDOM;
+        this.initialPriority;
+        this.cancelEditBtnDOM;
+        this.updateBtnDOM;
+        this.editAddArticlesOBJS = [];
         // dara collectors
         this.createdData = {};
         this.editableData = {};
@@ -50,6 +61,7 @@ class CRUDmodal {
         this.setSectionVariables();
         this.setModalVariables();
         this.setCreateVariables();
+        this.letCreateItem();
         this.setEditDeleteVariables();
         this.setCRUDListeners();
         this.setSectionListeners();
@@ -69,108 +81,23 @@ class CRUDmodal {
         this.messageDOM = this.modalDOM.querySelector('.--message');
         this.addBtnDOM= this.modalDOM.querySelector('.add--btn');
         this.backBtnDOM= this.modalDOM.querySelector('.back--btn');
-        this.ulBoxDOM= this.modalDOM.querySelector('.ul--box');
-        this.addBoxDOM= this.modalDOM.querySelector('.add--box');
+        this.ulBoxDOM = this.modalDOM.querySelector('.ul--box');
+        this.addBoxDOM = this.modalDOM.querySelector('.add--box');
     }
-
-    setCreateItemVariables (){
-        this.createVarsDOMS = this.addBoxDOM.querySelectorAll('.--var');
-        this.createListVarsDOMS = this.addBoxDOM.querySelectorAll('.var--list');
-        this.priorityCreateDOM = this.addBoxDOM.querySelector('.--priority');
-        this.storeBtnDOM = this.addBoxDOM.querySelector('.store--actions .--store');
-        this.cancelStoreBtnDOM = this.addBoxDOM.querySelector('.store--actions .--cancel');
-        this.letCreateItem();
+    toggleNexBackStyles(){
+        this.ulBoxDOM.style.display = this.ulBoxDOM.style.display === 'none' ? 'block' : 'none';
+        this.addBoxDOM.style.display = this.addBoxDOM.style.display === 'grid' ? 'none' : 'grid';
+        this.addBtnDOM.style.display = this.addBtnDOM.style.display === 'none' ? 'block' :'none';
+        this.backBtnDOM.style.display = this.backBtnDOM.style.display === 'block' ? 'none' : 'block';
+        this.modalDOM.style.paddingBottom = this.modalDOM.style.paddingBottom === '100px' ? '50px' : '100px';
+        const createModalHeight = (window.innerHeight  / 2 - this.modalDOM.offsetHeight / 2) + 'px';
+        this.modalDOM.style.marginTop = this.modalDOM.style.marginTop = createModalHeight ? '10vh' : createModalHeight;
     }
-    letCreateItem(){
-        this.storeBtnDOM.addEventListener('click', () => { this.store() });
-        this.cancelBtnDOM.addEventListener('click', () => { this.clearCreate() });
-    }
-    store (){
-        this.loadeBoxDOM.style.display = 'block';
-        let data = {};
-        this.createVarsDOMS.forEach(varDOM => {
-                data[varDOM.dataset.name] = varDOM.innerText;
-        })
-        let priority = null;
-        if(this.priorityCreateDOM){
-            priority = parseInt(this.priorityCreateDOM.innerText) ? parseInt(this.priorityCreateDOM.innerText) : null;
-            data['priority'] = priority;
-        }
-        if(this.createListVarsDOMS && this.createListVarsDOMS.length > 0){
-            this.createListVarsDOMS.forEach(createListVarsDOM => {
-                const name = createListVarsDOM.dataset.name;
-                const listItems = createListVarsDOM.querySelectorAll('li')
-                const items = [];
-                listItems.forEach(item => {
-                    items.push(item.dataset.item);
-                })
-                data[name] = items;
-            })
-        }
-        console.log(data)
-        axios.post(this.storeRoute, {data:data})
-        .then(res => {
-            if(res.data.errors){  
-                let errorsHTML = '';
-                res.data.errors.forEach(error => {
-                    errorsHTML += `<div>${error}</div>`
-                })
-                this.showMsg(errorsHTML)
-            }
-            else if(res.data.message){
-                this.appendEditDeleteModal(res.data.modalHTML, res.data.itemId, priority)
-                this.appendSection(res.data.sectionHTML, res.data.itemId, priority)
-                this.clearCreate();
-                this.showMsg(res.data.message);
-            }
-            this.loadeBoxDOM.style.display = 'none';
-        })
-    }
-    clearCreate(){
-        if(this.createVarsDOMS && this.createVarsDOMS.length > 0){
-            this.createVarsDOMS.forEach(varDOM => {
-                varDOM.innerText = '';
-            })
-        }
-        if(this.priorityCreateDOM){
-            this.priorityCreateDOM.innerText = '';
-        }
-        if(this.createListVarsDOMS && this.createListVarsDOMS.length > 0){
-            this.createListVarsDOMS.forEach(createListVarsDOM => {
-                createListVarsDOM.innerText = '';
-            })
-        }
-        this.addBoxForm.style.border = 'none';
-    }
-
-    setEditDeleteVariables(){
-        this.ulDOM = this.modalBoxDOM.querySelector('ul');
-        this.liDOMS = this.ulDOM.querySelectorAll('li');
-        this.editDeleleBtnsDOMS = this.modalBoxDOM.querySelectorAll('ul li .edit--actions')
-    }
-    setCreateVariables(){
-            this.addBoxForm = this.addBoxDOM.querySelector('.--form');
-            this.createInputsDOMS = this.addBoxDOM.querySelectorAll(".--form input[type='file'], .--form div[contenteditable='true']"); // coud not be input[type='radio']
-            this.storeActionsDOM = this.addBoxDOM.querySelector('.store--actions');
-            this.cancelBtnDOM = this.storeActionsDOM.querySelector('.--cancel');
-            this.storeBtnDOM = this.storeActionsDOM.querySelector('.--store');
-    }
+    
     setCRUDListeners(){
         this.editSectionBtnDOM.addEventListener('click', this.showModalHandler)
         this.addBtnDOM.addEventListener('click', this.nextModalHandler)
         this.backBtnDOM.addEventListener('click', this.backModalHandler)
-    }
-    setSectionListeners(){
-        this.editDeleleBtnsDOMS.forEach(buttons => {
-          this.activateItemEditDeleteBtns(buttons)
-        });
-        if(typeof this.setCreateItemVariables === 'function') this.setCreateItemVariables();
-    }
-    activateItemEditDeleteBtns(parent){
-        const editItemBtnDOM = parent.querySelector('.--edit');
-        editItemBtnDOM.addEventListener('click', (e) => { this.letEditItemHandler(editItemBtnDOM, e) })
-        const deleteItemBtnDOM = parent.querySelector('.--delete');
-        deleteItemBtnDOM.addEventListener('click', (e) => { this.letDeleteItemHandler(e) } )
     }
     showModalHandler = () => {
         this.modalBoxDOM.classList.add('show');
@@ -226,17 +153,268 @@ class CRUDmodal {
             }
         }
     }
-    toggleNexBackStyles(){
-        this.ulBoxDOM.style.display = this.ulBoxDOM.style.display === 'none' ? 'block' : 'none';
-        this.addBoxDOM.style.display = this.addBoxDOM.style.display === 'grid' ? 'none' : 'grid';
-        this.addBtnDOM.style.display = this.addBtnDOM.style.display === 'none' ? 'block' :'none';
-        this.backBtnDOM.style.display = this.backBtnDOM.style.display === 'block' ? 'none' : 'block';
-        this.modalDOM.style.paddingBottom = this.modalDOM.style.paddingBottom === '100px' ? '50px' : '100px';
-        const createModalHeight = (window.innerHeight  / 2 - this.modalDOM.offsetHeight / 2) + 'px';
-        this.modalDOM.style.marginTop = this.modalDOM.style.marginTop = createModalHeight ? '10vh' : createModalHeight;
+    // create
+    setCreateVariables(){
+        this.addBoxForm = this.addBoxDOM.querySelector('.--form');
+        this.createInputsDOMS = this.addBoxDOM.querySelectorAll(".--form input[type='file'], .--form div[contenteditable='true']"); // coud not be input[type='radio']
+        this.createVarsDOMS = this.addBoxDOM.querySelectorAll('.--var');
+        this.createListVarsDOMS = this.addBoxDOM.querySelectorAll('.var--list');
+        this.createPriorityDOM = this.addBoxDOM.querySelector('.--priority');
+        this.cancelBtnDOM = this.addBoxDOM.querySelector('.store--actions .--cancel');
+        this.storeBtnDOM = this.addBoxDOM.querySelector('.store--actions .--store');
+}
+    letCreateItem(){
+        this.storeBtnDOM.addEventListener('click', () => { this.store() });
+        this.cancelBtnDOM.addEventListener('click', () => { this.clearCreate() });
+    }
+    store (){
+        this.loadeBoxDOM.style.display = 'block';
+        let data = {};
+        this.createVarsDOMS.forEach(varDOM => {
+                data[varDOM.dataset.name] = varDOM.innerText;
+        })
+        let priority = null;
+        if(this.createPriorityDOM){
+            priority = parseInt(this.createPriorityDOM.innerText) ? parseInt(this.createPriorityDOM.innerText) : null;
+            data['priority'] = priority;
+        }
+        if(this.createListVarsDOMS && this.createListVarsDOMS.length > 0){
+            this.createListVarsDOMS.forEach(createListVarsDOM => {
+                const name = createListVarsDOM.dataset.name;
+                const listItems = createListVarsDOM.querySelectorAll('li')
+                const items = [];
+                listItems.forEach(item => {
+                    items.push(item.querySelector('.--value').innerText);
+                })
+                data[name] = items;
+            })
+        }
+        axios.post(this.storeRoute, {data:data})
+        .then(res => {
+            if(res.data.errors){  
+                let errorsHTML = '';
+                res.data.errors.forEach(error => {
+                    errorsHTML += `<div>${error}</div>`
+                })
+                this.showMsg(errorsHTML)
+            }
+            else if(res.data.message){
+                this.appendEditDeleteModal(res.data.modalHTML, res.data.itemId, priority)
+                this.appendSection(res.data.sectionHTML, res.data.itemId, priority)
+                this.clearCreate();
+                this.showMsg(res.data.message);
+            }
+            this.loadeBoxDOM.style.display = 'none';
+        })
+    }
+    clearCreate(){
+        if(this.createVarsDOMS && this.createVarsDOMS.length > 0){
+            this.createVarsDOMS.forEach(varDOM => {
+                varDOM.innerText = '';
+            })
+        }
+        if(this.createPriorityDOM){
+            this.createPriorityDOM.innerText = '';
+        }
+        if(this.createListVarsDOMS && this.createListVarsDOMS.length > 0){
+            this.createListVarsDOMS.forEach(createListVarsDOM => {
+                createListVarsDOM.innerText = '';
+            })
+        }
+        this.addBoxForm.style.border = 'none';
+    }
+    appendEditDeleteModal(modalHTML, itemId, priority){
+        let li = document.createElement('li')
+        li.classList.add(`one-${this.selector}`);
+        li.id = `${this.selector}-edit-${itemId}`;
+        if(priority) li.dataset.priority = priority;
+        li.innerHTML = modalHTML;
+        this.insertItemInList(this.ulDOM, li)
+        this.activateItemEditDeleteBtns(li)
+    }
+    appendSection(sectionHTML, itemId, priority){
+        let li = document.createElement('li')
+        li.classList.add(`one-${this.selector}`);
+        li.id = `${this.selector}-${itemId}`;
+        if(priority) li.dataset.priority = priority;
+        li.innerHTML = sectionHTML;
+        this.insertItemInList(this.sectionUlDOM, li)
+        return li;
+    }
+    // edit
+    setEditDeleteVariables(){
+        this.ulDOM = this.modalBoxDOM.querySelector('ul');
+        this.liDOMS = this.ulDOM.querySelectorAll('li');
+        this.editDeleleBtnsDOMS = this.modalBoxDOM.querySelectorAll('ul li .edit--actions')
+    }
+    letEditItemHandler(editItemBtn, e){
+        e.preventDefault();
+        if(this.openItemDOM){
+            this.borderWarningCSS()
+        }
+        else{
+            this.setEditItem(editItemBtn);
+            this.changeToEditButtons();
+            this.borderOpenCSS()
+            this.cancelEditBtnDOM.addEventListener('click', this.cancelEdit, {once:true})
+            this.updateBtnDOM.addEventListener('click', this.update, {once:true})
+        }
+    }
+    setEditItem(editItemBtn){
+        this.setEditVariables(editItemBtn);
+        this.makeEditable();
+    }
+    setEditVariables(editItemBtn){
+        this.openItemDOM = editItemBtn.closest('li');
+
+        this.openItemId = this.openItemDOM.id.replace(this.selector + '-edit-', '')
+        this.liChildernDOMS = this.openItemDOM.querySelectorAll(':scope > div:not(.edit--actions, .update--actions, .delete--actions');
+        this.editVarsDOMS = this.openItemDOM.querySelectorAll('.--var');
+        this.editListVarsDOMS = this.openItemDOM.querySelectorAll('.var--list');
+        this.editPriorityDOM = this.openItemDOM.querySelector('.--priority');
+        this.initialPriority = parseInt(this.editPriorityDOM.innerText) ? parseInt(this.editPriorityDOM.innerText) : null;
+
+        this.cancelEditBtnDOM = this.openItemDOM.querySelector('.update--actions > .--cancel');
+        this.updateBtnDOM = this.openItemDOM.querySelector('.update--actions > .--update');
+        this.secItemDOM = document.querySelector(`#${this.selector}-${this.openItemId}`);
+        this.itemInnerHTML = this.openItemDOM.innerHTML;
+
+    }
+    makeEditable(){
+        this.editVarsDOMS.forEach(editVar => {
+            editVar.setAttribute('contenteditable', true);
+        });
+        if(this.editPriorityDOM) this.editPriorityDOM.setAttribute('contenteditable', true);
+        if(this.editListVarsDOMS && this.editListVarsDOMS.length > 0){
+            Array.from(this.editListVarsDOMS).forEach(editListVarDOM => {
+                const editAddArticle = new AddSelectedItem(editListVarDOM);
+                editAddArticle.toggleEditStyle();
+                editAddArticle.letDeleteItems();
+                this.editAddArticlesOBJS.push(editAddArticle);
+
+            })
+        }
+        this.openItemDOM.classList.add('editable');
+
+    }
+    update = () => {
+        this.loadeBoxDOM.style.display = 'block';
+        const data = {};
+        this.editVarsDOMS.forEach(varDOM => {
+                data[varDOM.dataset.name] = varDOM.innerText;
+        })
+        let priority = null;
+        if(this.editPriorityDOM){
+            priority = parseInt(this.editPriorityDOM.innerText) ? parseInt(this.editPriorityDOM.innerText) : null;
+            data['priority'] = priority;
+        }
+        if(this.editListVarsDOMS && this.editListVarsDOMS.length > 0){
+            this.editListVarsDOMS.forEach(editListVarsDOM => {
+                const name = editListVarsDOM.dataset.name;
+                const listItems = editListVarsDOM.querySelectorAll('li')
+                const items = [];
+                listItems.forEach(item => {
+                    items.push(item.querySelector('.--value').innerText);
+                })
+                data[name] = items;
+            })
+        }
+        axios.put(`${this.updateRoute}/${this.openItemId}`, {data:data})
+        .then(res => {
+            if(res.data.errors){
+                let errorsHTML = '';
+                res.data.errors.forEach(error => {
+                    errorsHTML += `<div>${error}</div>`
+                })
+                this.showMsg(errorsHTML)
+                this.updateBtnDOM.addEventListener('click', this.update, {once:true})
+            }
+            else if(res.data.message){
+                this.cancelEditBtnDOM.removeEventListener('click', this.cancel)
+                this.updateSection(data);
+                if(this.editPriorityDOM && this.initialPriority !== data.priority){
+                    this.changePositionInSec(data.priority)
+                    this.changePositionInModal(data.priority)
+                }
+                this.changeToEditButtons();
+                this.closeItemEdit()
+                this.showMsg(res.data.message)
+            }
+            this.loadeBoxDOM.style.display = 'none';
+        })
+    }
+    updateSection(data){
+        const variablesDOMS = this.secItemDOM.querySelectorAll('.--var');
+        variablesDOMS.forEach(variableDOM => {
+            variableDOM.innerText = data[variableDOM.dataset.name];
+        })
+
+    }
+    changePositionInSec(priority){
+        this.sectionUlDOM.removeChild(this.secItemDOM);
+        this.secItemDOM.dataset.priority = priority;
+        this.insertItemInList(this.sectionUlDOM, this.secItemDOM)
+
+    }
+    changePositionInModal(priority){
+        this.ulDOM.removeChild(this.openItemDOM)
+        this.openItemDOM.dataset.priority = priority;
+        this.insertItemInList(this.ulDOM, this.openItemDOM)
+        this.editPriorityDOM.innerText = parseInt(this.editPriorityDOM.innerText) ? parseInt(this.editPriorityDOM.innerText) : 'nesvarbu';
+        this.editPriorityDOM.style.cssText = parseInt(this.editPriorityDOM.innerText) ? 'color:#000; font-style:normal;': 'color:#999; font-style:italic;';
+    }
+    cancelEdit = () => {
+        this.updateBtnDOM.removeEventListener('click', this.update)
+        this.openItemDOM.innerHTML = this.itemInnerHTML;
+        this.activateItemEditDeleteBtns(this.openItemDOM)
+        this.closeItemEdit()
+    }
+    closeItemEdit(){
+        this.removeBorderCSS();
+        //remove editable
+        this.openItemDOM.classList.remove('editable');
+        this.editVarsDOMS.forEach(editVar => {
+            editVar.setAttribute('contenteditable', false);
+        });
+        this.editVarsDOMS = null;
+        if(this.editPriorityDOM) {
+            this.editPriorityDOM.setAttribute('contenteditable', false);
+            this.editPriorityDOM = null;
+            this.initialPriority = null;
+        }
+        if(this.editListVarsDOMS && this.editListVarsDOMS.length > 0){
+            this.editAddArticlesOBJS.forEach(editAddArticlesOBJ => {
+                editAddArticlesOBJ.toggleEditStyle();
+            })
+            this.editAddArticlesOBJS = [];
+            this.editListVarsDOMS = null;
+
+        }
+        //reset variables
+        this.itemInnerHTML - null;
+        this.liChildernDOMS = null;
+        // should be last
+        this.openItemId = null;
+        this.openItemDOM = null;
     }
 
-    letEditItemHandler(editItemBtn, e){ console.log('default')}
+
+    setSectionListeners(){
+        this.editDeleleBtnsDOMS.forEach(buttons => {
+          this.activateItemEditDeleteBtns(buttons)
+        });
+        if(typeof this.setCreateItemVariables === 'function') this.setCreateItemVariables();
+    }
+    activateItemEditDeleteBtns(parent){
+        const editItemBtnDOM = parent.querySelector('.--edit');
+        editItemBtnDOM.addEventListener('click', (e) => { this.letEditItemHandler(editItemBtnDOM, e) })
+        const deleteItemBtnDOM = parent.querySelector('.--delete');
+        deleteItemBtnDOM.addEventListener('click', (e) => { this.letDeleteItemHandler(e) } )
+    }
+
+
+
+    // letEditItemHandler(editItemBtn, e){ console.log('default')}
     letDeleteItemHandler(e) {console.log('default')}
 
     insertItemInList(ulDOM, itemToInsert){
@@ -258,7 +436,7 @@ class CRUDmodal {
     changeToEditButtons(){
         const editActionsDOM = this.openItemDOM.querySelector('.edit--actions');
         editActionsDOM.style.display = (editActionsDOM.style.display === 'none') ? 'flex' : 'none';
-       
+
         const updateActionsDOM = this.openItemDOM.querySelector('.update--actions');
         updateActionsDOM.style.display = (updateActionsDOM.style.display === 'none') ? 'flex' : 'none';
     }

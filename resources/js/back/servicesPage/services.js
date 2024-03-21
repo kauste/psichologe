@@ -6,10 +6,8 @@ class Services extends CRUDmodal{
         super(cssStyles, selector, storeRoute)
         this.selector = selector;
         this.updateRoute = updateRoute;
-        this.storeRoute = storeRoute;
         this.deleteRoute = deleteRoute;
         //create
-        this.serviceTitleCreateDOM;
         this.addCreareServiceTypesSvgDOM;
         this.addCreateServiceTypesInputDOM;
         this.addedServiceTypeBoxDOM;
@@ -46,16 +44,10 @@ class Services extends CRUDmodal{
     }
     // create
     setCreateItemVariables (){
-
-        // this.serviceTitleCreateDOM = this.addBoxDOM.querySelector('.service--title');
         this.addCreareServiceTypesSvgDOM = this.addBoxDOM.querySelector('svg');
         this.addCreateServiceTypesInputDOM = this.addBoxDOM.querySelector('input');
         this.addedServiceTypeBoxDOM = this.addBoxDOM.querySelector('.var--list');
-        // this.storeBtnDOM = this.addBoxDOM.querySelector('.store--actions .--store');
-        // this.cancelStoreBtnDOM = this.addBoxDOM.querySelector('.store--actions .--cancel');
         super.setCreateItemVariables();
-
-        // this.letCreateItem();
     }
     letCreateItem(){
         super.letCreateItem();
@@ -75,7 +67,7 @@ class Services extends CRUDmodal{
                                             <use xlink:href="#delete"></use>
                                         </svg>
                                     </div>
-                                    <div class="list--item">${addServiceTypeInputtDOM.value}</div>`
+                                    <div class="--value">${addServiceTypeInputtDOM.value}</div>`
         li.innerHTML = serviceTypeHTML;
         listDOM.appendChild(li);
         const newDeleteSvgDOM = li.querySelector('svg');
@@ -88,50 +80,10 @@ class Services extends CRUDmodal{
         addServiceTypeInputtDOM.value= '';     
             
     }
-    // store (){
 
-    // }
-
-    appendEditDeleteModal(modalHTML, itemId, priority){
-        let li = document.createElement('li')
-        li.classList.add('one-service');
-        li.id = `service-edit-${itemId}`;
-        li.innerHTML = modalHTML;
-        li.dataset.priority = priority;
-        this.insertItemInList(this.ulDOM, li)
-        this.activateItemEditDeleteBtns(li)
-    }
-    appendSection(sectionHTML, itemId, priority){
-        let li = document.createElement('li')
-        li.classList.add('one-service');
-        li.id = `service-${itemId}`;
-        li.dataset.priority = priority;
-        li.innerHTML = sectionHTML;
-        this.insertItemInList(this.sectionUlDOM, li)
-    }
-
-    // clearCreate(){
-    //     this.serviceTitleCreateDOM.innerText = '';
-    //     this.addCreateServiceTypesInputDOM.innerText = '';
-    //     this.addedServiceTypeBoxDOM.innerHTML = '';
-    //     // this.addBoxForm.style.border = 'none';
-    // }
     //edit
-    letEditItemHandler(editItemBtn, e){
-        e.preventDefault();
-        if(this.openItemDOM){
-            this.borderWarningCSS()
-        }
-        else{
-            this.openItemDOM = editItemBtn.closest('li');
-            this.setEditItemVariables();
-            this.changeToEditButtons();
-            this.borderOpenCSS()
-            this.cancelEditBtnDOM.addEventListener('click', this.cancelEdit, {once:true})
-            this.updateBtnDOM.addEventListener('click', this.update, {once:true})
-        }
-    }
-    setEditItemVariables(){
+
+    setEditItem(){
         //modal
         this.openItemId = this.openItemDOM.id.replace(this.selector + '-edit-', '')
         this.liChildernDOMS = this.openItemDOM.querySelectorAll(':scope > div:not(.edit--actions, .update--actions, .delete--actions');

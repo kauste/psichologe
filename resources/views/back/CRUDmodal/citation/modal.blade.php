@@ -18,8 +18,8 @@
             <ul class="citation-ul --citation">
                 @forelse ($citations as $citation)
                 <li class="one-citation" id="citation-edit-{{$citation->id}}">
-                    <div class="citation --citation" data-name="citation">{{$citation->citation}}</div>
-                    <div class="author --author {{$citation->author ? '' : 'small'}}" data-name="author">{{$citation->author ?? ''}}</div>
+                    <div class="citation --var" data-name="citation">{{$citation->citation}}</div>
+                    <div class="author --var {{$citation->author ? '' : 'small'}}" data-name="author">{{$citation->author ?? ''}}</div>
                     <div class="edit--actions edit-actions" style="display:flex">
                         <div class="svg-box --edit">
                             <svg class="edit-svg">

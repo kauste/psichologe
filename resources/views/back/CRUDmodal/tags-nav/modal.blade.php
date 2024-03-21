@@ -17,31 +17,31 @@
         <div class="modal-ul-box ul--box">
             <ul class="tags-nav-ul --tagsNav">
                 @forelse ($tags->tags as $tag)
-                <li class="one-tag" id="tagsNav-edit-{{$tag->id}}" data-priority="{{$tag->priority}}">
-                    <div class="tag --tag">{{$tag->tag}}</div>
-                    <div class="articles --articles" style="padding: 0px">
-                        <ul>
-                            @forelse ($tag->articles as $key => $article)
+                <li class="one-tagsNav" id="tagsNav-edit-{{$tag->id}}" data-priority="{{$tag->priority}}">
+                    <div class="tag --var" data-name="tag">{{$tag->tag}}</div>
+                    <div class="articles list--box" style="padding: 0px">
+                        <ul class="var--list" data-name="articles">
+                            @foreach ($tag->articles ?? [] as $key => $article)
                             <li data-article-id="{{$article->id}}" data-priority="{{$article->priority ?? null}}" style="padding-bottom:0px; {{$key === 0 ? 'padding-top:0px' : ''}}">
-                                <div class="svg-box delete-svg-box delete--article--svg" style="display:none">
-                                    <svg class="delete-svg">
+                                <div class="svg-box delete-svg-box delete--item" style="display:none">
+                                    <svg class="delete-svg ">
                                         <use xlink:href="#delete"></use>
                                     </svg>
                                 </div>
-                                <div>{{$article->title}}</div>
+                                <div class="--value" style="display:none">{{$article->id}}</div>
+
+                                <div class="inner--text">{{$article->title}}</div>
                             </li>
-                            @empty
-                            <li></li>
-                            @endforelse
+                            @endforeach
                         </ul>
-                        <div class="add-article add--article" style="display:none">
+                        <div class="add-article select--box" style="display:none">
                             <div>
-                                <svg class="add-btn-in">
+                                <svg class="add-btn-in --button">
                                     <use xlink:href="#plus"></use>
                                 </svg>
                             </div>
                             <select>
-                                @foreach($articles ?? [] as $article)
+                                @foreach($tag->notUsedArticles() ?? [] as $article)
                                 <option value="{{$article->id}}">{{$article->title}}</option>
                                 @endforeach
                             </select>
@@ -95,7 +95,7 @@
                                     </svg>
                                 </div>
                                 <select>
-                                    @foreach($articles ?? [] as $article)
+                                    @foreach($allArticles ?? [] as $article)
                                     <option value="{{$article->id}}">{{$article->title}}</option>
                                     @endforeach
                                 </select>

@@ -1,1 +1,1 @@
-<a class="--tag" href="#">{{$tag->tag}}</a>
+<a class="--tag" href="{{route('back-articles-list') . '?filter=' .$tag->id}}">{{$tag->tag}}</a>

@@ -1,6 +1,5 @@
 class AddSelectedItem {
-    constructor(cssStyles, listDOM){
-        this.cssStyles = cssStyles;
+    constructor(listDOM){
         this.listDOM = listDOM;
         this.parentDOM;
         this.selectBoxDOM
@@ -9,8 +8,10 @@ class AddSelectedItem {
         this.optionsDOMS;
         this.buttonDOM;
         this.selectedItemsDOMS;
-        this.deleteSvgDOMS;
         this.selectedItems = [];
+        //edit
+        this.deleteItemDOMS;
+        this.itemsDOMS;
         this.init()
     }
 
@@ -22,9 +23,24 @@ class AddSelectedItem {
         this.buttonDOM = this.parentDOM.querySelector('.--button');
         this.buttonDOM.addEventListener('click', this.addItemHandler);
     }
+    letDeleteItems(){
+        this.deleteItemDOMS.forEach(deleteDOM => {
+            this.letDeleteItem(deleteDOM.closest('li'));
+        })
 
+    }
+    toggleEditStyle(){
+        this.deleteItemDOMS = this.listDOM.querySelectorAll('.delete--item');
+        console.log()
+        this.selectBoxDOM.style.display = this.selectBoxDOM.style.display === 'none' ? 'flex' : 'none';
+        this.deleteItemDOMS.forEach(deleteDOM => {
+            deleteDOM.style.display = deleteDOM.style.display === 'flex' ? 'none' : 'flex';
+            const item = deleteDOM.closest('li');
+            item.style.paddingBottom = item.style.paddingBottom === '0px' ? '5px' : '0px';
+        });
+        this.listDOM.style.padding = this.listDOM.style.padding === '0px' ? '5px' : '0px';
+    }
     addItemHandler= () => {
-
             this.selectedItems.push(this.selectDOM.value)
             const optionDOM = Array.from(this.optionsDOMS).find(option => option.value === this.selectDOM.value);
             this.apendElementToList(optionDOM)
@@ -39,23 +55,24 @@ class AddSelectedItem {
     }
     apendElementToList(optionDOM){
         let li = document.createElement('li');
-        li.dataset.item = this.selectDOM.value;
         li.style.paddingBottom = '5px';
-        const itemHTML = `<div class="svg-box delete-svg-box delete--item--svg" style="display:flex">
+        const itemHTML = `<div class="svg-box delete-svg-box delete--item" style="display:flex">
                                 <svg class="delete-svg">
                                     <use xlink:href="#delete"></use>
                                 </svg>
                             </div>
+                            <div class="--value" style="display:none">${this.selectDOM.value}</div>
                             <div class="inner--text">${optionDOM.innerText}</div>`;
         li.innerHTML = itemHTML;
+        console.log( this.listDOM)
         this.listDOM.appendChild(li);
-        this.letDeleteNewItem(li)
+        this.letDeleteItem(li)
         //change DOM
 
     }
-    letDeleteNewItem(li){
+    letDeleteItem(li){
         const newDeleteSvgDOM = li.querySelector('svg');
-        newDeleteSvgDOM.addEventListener('click', this.deleteItem(newDeleteSvgDOM))      
+        newDeleteSvgDOM.addEventListener('click', this.deleteItem(newDeleteSvgDOM), {once:true})      
     }
     setNewVariables(){
         this.selectedItemsDOMS = this.parentDOM.querySelectorAll('li[data-item]');

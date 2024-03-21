@@ -29,8 +29,8 @@
                     <ul class="swiper-wrapper">
                         @foreach ($citations ?? [] as $citation)
                         <li class="swiper-slide" id="citation-{{$citation->id}}">
-                            <div class="--citation">{{$citation->citation}}</div>
-                            <small class="--author">{{$citation->author ?? ''}}</small>
+                            <div class="--var" data-name="citation">{{$citation->citation}}</div>
+                            <small class="--var"  data-name="author">{{$citation->author ?? ''}}</small>
                         </li>
                         @endforeach
                     </ul>
@@ -108,8 +108,8 @@
                     <ul class="swiper-wrapper swiper--wrapper">
                         @forelse ($data->educations as $edu)
                         <li class="one-education swiper-slide" id="education-{{$edu->id}}" data-priority={{$edu->priority ?? null}}>
-                            <div class="date --date">{{$edu->date}}</div>
-                            <div class="about-edu --about">{{$edu->about}}</div>
+                            <div class="date --var" data-name="date">{{$edu->date}}</div>
+                            <div class="about-edu --var" data-name="about">{{$edu->about}}</div>
                         </li>
                         @empty
                         <div>Šiuo metu duomenys neprieinami</div>
@@ -144,8 +144,8 @@
                     <ul class="swiper-wrapper swiper--wrapper">
                         @forelse ($data->works as $key => $work)
                         <li class="one-work swiper-slide" id="work-{{$work->id}}" data-priority={{$work->priority ?? null}}>
-                            <div class="date --date">{{$work->date}}</div>
-                            <div class="about-work --about">{{$work->about}}</div>
+                            <div class="date --var" data-name="date">{{$work->date}}</div>
+                            <div class="about-work --var" data-name="about">{{$work->about}}</div>
                         </li>
                         @empty
                         <div>Šiuo metu duomenys neprieinami</div>
