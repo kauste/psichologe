@@ -20,9 +20,9 @@ use App\Http\Controllers\ServiceController;
 */
 
 Route::get('/', [FrontController::class, 'firstPage'])->name('first-page');
-Route::get('/articles', [FrontController::class, 'articlesList'])->name('articles-list');
-Route::get('/article/{article}', [FrontController::class, 'articlePage'])->name('article-page');
-Route::get('/services', [FrontController::class, 'services'])->name('services');
+Route::get('/straipsniai', [FrontController::class, 'articlesList'])->name('articles-list');
+Route::get('/straipsnis/{article}', [FrontController::class, 'articlePage'])->name('article-page');
+Route::get('/psichologes-paslaugos', [FrontController::class, 'services'])->name('services');
 
 
 
@@ -47,7 +47,7 @@ Route::prefix('admin')->name('back-')->middleware(['auth'])->group(function(){
     Route::delete('delete-work/{id?}', [FirstPageController::class, 'deleteWork'])->name('delete-work');
     // articles page
     Route::get('/articles', [ArticleController::class, 'articlesList'])->name('articles-list');
-    Route::get('/article', [ArticleController::class, 'articlePage'])->name('article-page');
+    Route::get('/article/{url?}', [ArticleController::class, 'articlePage'])->name('article-page');
     // article
     Route::get('/article-create', [ArticleController::class, 'articleCreate'])->name('article-create');
     Route::post('/article-store', [ArticleController::class, 'articleStore'])->name('article-store');

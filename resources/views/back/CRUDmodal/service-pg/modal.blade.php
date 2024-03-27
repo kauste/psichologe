@@ -18,27 +18,27 @@
             <ul class="service-ul --service">
                 @forelse ($services as $service)
                 <li class="one-service" id="service-edit-{{$service->id}}" data-priority="{{$service->priority}}">
-                    <div class="service the--service">{{$service->service_title}}</div>
-                    <div class="service-types service--types" style="padding: 0px">
-                        <ul>
+                    <div class="service --var" data-name="service_title">{{$service->service_title}}</div>
+                    <div class="service-types list--box" style="padding: 0px">
+                        <ul class="added--list" data-name="service_type">
                             @forelse ($service->serviceTypes ?? [] as $key => $oneService)
-                            <li data-service-type-id="{{$oneService->id}}" style="padding:0px;">
-                                <div class="svg-box delete-svg-box delete--service--type--svg" style="display:none">
+                            <li data-item-id="{{$oneService->id}}" style="padding:0px;">
+                                <div class="svg-box delete-svg-box delete--item" style="display:none">
                                     <svg class="delete-svg">
                                         <use xlink:href="#delete"></use>
                                     </svg>
                                 </div>
-                                <div>{{$oneService->service_type}}</div>
+                                <div class="--value">{{$oneService->service_type}}</div>
                             </li>
                             @empty
                             <li></li>
                             @endforelse
                         </ul>
-                        <div class="add-service-type add--service--type" style="display:none">
-                            <svg class="add-btn-in">
+                        <div class="add-service-type input--box" style="display:none">
+                            <svg class="add-btn-in --button">
                                 <use xlink:href="#plus"></use>
                             </svg>
-                            <input type="text" class="new--service--type">
+                            <input type="text"/>
                         </div>
                     </div>
                     <div class="position --priority {{$service->priority && $service->priority > 0 ? '' : 'small'}}">{{$service->priority && $service->priority > 0 ? $service->priority : ' nesvarbu'}}</div>
@@ -81,14 +81,14 @@
                     <div class="form --form one-service">
                         <div class="service --var" data-name="service_title" contenteditable="true"></div>
                         <div class="add-service-type-box">
-                            <div class="service-types">
-                                <ul class="added-types var--list" data-name="service_types">
+                            <div class="service-types list--box">
+                                <ul class="added-types added--list" data-name="service_types">
                                 </ul>
-                                <div class="add-service-type add--service--type">
-                                    <svg class="add-btn-in">
+                                <div class="add-service-type input--box">
+                                    <svg class="add-btn-in --button">
                                         <use xlink:href="#plus"></use>
                                     </svg>
-                                    <input type="text" class="new--service--type">
+                                    <input type="text">
                                 </div>
                             </div>
                         </div>

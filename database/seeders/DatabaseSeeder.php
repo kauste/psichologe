@@ -197,9 +197,17 @@ class DatabaseSeeder extends Seeder
                 'article' => json_encode($art)
             ], 
         ];
-
+        $urls = [];
         foreach($articles as $article){
+            $url = strtolower(str_replace(' ', '-', $article['title']));
+            $i = 1;
+            while(in_array($url, $urls)){
+                $url = strtolower(str_replace(' ', '-', $article['title'])) . '-' . $i++;
+            }
+            $urls[] = $url;
+
             DB::table('articles')->insert([
+                'url' => $url,
                 'title' => $article['title'],
                 'youtube' => $article['youtube'] ?? null,
                 'article' => $article['article'],

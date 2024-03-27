@@ -14,7 +14,7 @@
     </ul>
     <section class="articles-box">
         @foreach ($articles ?? [] as $article)
-        <a class="article-box" href="{{route('article-page', $article)}}">
+        <a class="article-box" href="{{route('article-page', $article->url)}}">
             <div class="title-box">
                 <span class="title">{{$article->title}}</span>
                 <svg>

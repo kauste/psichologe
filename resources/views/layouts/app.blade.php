@@ -25,7 +25,7 @@
     <div class="in-body">
         <div class="nav-box">
             <nav class="--nav">
-                <a href="{{route('first-page')}}" class="{{isset($pageName) && $pageName === 'firstPage' ? 'active' : ''}}">Apie mane</a>
+                <a href="{{route('first-page')}}" class="{{isset($pageName) && $pageName === 'firstPage' ? 'active' : ''}}">Apie&nbsp;mane</a>
                 <a href="{{route('services')}}" class="{{isset($pageName) && $pageName === 'services' ? 'active' : ''}}">Paslaugos</a>
                 <a href="#">Kontaktai</a>
                 <a href="#">Registracija</a>

@@ -56,7 +56,8 @@ class FrontController extends Controller
                                             'pages' => $pages,
                                             'currentPage' => $page]);
     }
-    public function articlePage(Article $article){
+    public function articlePage($url){
+        $article = Article::where('url', $url)->first();
         return view('front.articlePage', ['pageName' => 'articles',
                                             'article' => $article]);
     }

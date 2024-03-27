@@ -60,6 +60,9 @@ body {
                 .right {
                     ul {
                         list-style: none;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 4px;
                         li {
                             height: 25px;
                             a{

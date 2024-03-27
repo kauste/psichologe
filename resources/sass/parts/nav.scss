@@ -13,18 +13,21 @@
     backdrop-filter: blur(10px);
     border-bottom: $electric 2px solid;
     border-left: $electric 2px solid;
+    height:110px;
     nav {
         a {
             width: fit-content;
             text-decoration: none;
-            padding: 10px 15px;
-            line-height: 20px;
+            padding: 10px 30px;
+            line-height: 25px;
+            height:25px;
             font-size:400;
-            transition: all 0.2s ease;
+            transition: all 0.2s 0.2s cubic-bezier(0.96, 0.83, 0.74, 0.88);
             display: inline-block;
             font-variation-settings: "wght" 600;
             text-align: center;
             color:$electric;
+            font-size: 22px;
         }
     }
 }

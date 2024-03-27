@@ -21,7 +21,6 @@ class ServiceController extends Controller
     public function storeService(Request $request)
     {
         $data = $request->data;
-        dump($data);
         $validator = Validator::make($data,
         [
             'service_title' => 'required|string|min:3|max:100',
@@ -67,7 +66,7 @@ class ServiceController extends Controller
     }
     public function updateService(Request $request, $id)
     {
-        $data = $request->all();
+        $data = $request->data;
         dump($data);
         $data['id'] = (int) $id;
         $validator = Validator::make($data,
@@ -109,27 +108,16 @@ class ServiceController extends Controller
             'service_title' => $data['service_title'],
             'priority' => $data['priority'],
         ]);
-        $service->serviceTypes()->each(function($serviceType) use ($service, $data){
-            if($data['service_types'] && in_array($serviceType->id, $data['service_types'])){
-                $serviceType->update(['service_id' => $service->id]);
-            }
-            else{
-                $serviceType->delete();
-
-            }
-        });
-        $newServicesTypes = [];
-        if($data['new_service_types']){
-            collect($data['new_service_types'])->each(function($newServiceType) use ($id, &$newServicesTypes){
+        $service->serviceTypes()->delete();
+        if($data['service_type']){
+            collect($data['service_type'])->each(function($serviceType) use ($id, &$serviceTypes){
                 $serviceType = ServiceType::create([
-                    'service_type' => $newServiceType,
+                    'service_type' => $serviceType,
                     'service_id'=> $id,
                 ]);
-                $newServicesTypes[] = $serviceType;
             });
         }
-        return response()->json(['message' => 'Paslauga yra pakeista',
-                                'newServicesTypes' => count($newServicesTypes) > 0 ? $newServicesTypes : null]);
+        return response()->json(['message' => 'Paslauga yra pakeista.']);
 
     }
     public function deleteService($id)

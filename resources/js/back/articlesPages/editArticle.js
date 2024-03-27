@@ -50,7 +50,7 @@ class EditArticle{
             else if(res.data.message){
                 
                 new TopMessage(res.data.message)
-                window.location.href = articleRoute + '?id=' + res.data.id;
+                window.location.href = articleRoute + '/' + res.data.url;
 
             }
         })

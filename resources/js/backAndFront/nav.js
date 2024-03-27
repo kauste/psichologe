@@ -41,7 +41,7 @@ class NavStyles{
     setNavStyles(){
         this.navLinksDOMS.forEach(navLink => {
             if(navLink.classList.contains('active')){
-                navLink.style.cssText =  `font-variation-settings: 'wght' 600; letter-spacing: 0.05px; font-size: ${this.activeFontSize}; color: ${this.activeColor}; `
+                navLink.style.cssText =  `font-variation-settings: 'wght' 600; letter-spacing: 0.05px; font-size: ${this.fontSize}; color: ${this.activeColor}; `
         
             }else{
                 navLink.style.cssText = `font-variation-settings: 'wght' 400; letter-spacing: 0; font-size: ${this.fontSize}; color: ${this.color}; border-bottom: none`;

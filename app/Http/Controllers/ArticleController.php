@@ -38,8 +38,8 @@ class ArticleController extends Controller
                                             'pages' => $pages,
                                             'currentPage' => $page]);
     }
-    public function articlePage(Request $request){
-        $article = Article::where('id', $request->id)->first();
+    public function articlePage($url){
+        $article = Article::where('url', $url)->first();
         return view('back.articlePage', ['pageName' => 'articles',
                                             'article' => $article]);
     }
@@ -139,8 +139,13 @@ class ArticleController extends Controller
             })->toArray();
             return response()->json(['errors' => $formatedErrors]);
         }
-
+        $url = strtolower(str_replace(' ', '-', $data['title']));
+        $i = 1;
+        while(Article::where('url', $url)->exists()){
+            $url = strtolower(str_replace(' ', '-', $article['title'])) . '-' . $i++;
+        }
         $article = Article::create([
+            'url' => $url,
             'title' => $data['title'],
             'article' => $articleText,
             'youtube' => isset($data['youtube']) ? Str::after($data['youtube'], 'watch?v=') : null,
@@ -169,7 +174,7 @@ class ArticleController extends Controller
         }
 
         return response()->json(['message' => 'Naujas straipsnis sukurtas',
-                                'id' => $article->id]);
+                                'url' => $article->url]);
     }
     public function articleUpdate(Request $request)
     {
@@ -280,7 +285,13 @@ class ArticleController extends Controller
         }
         $article = Article::find($request->id);
 
+        $url = strtolower(str_replace(' ', '-', $data['title']));
+        $i = 1;
+        while(Article::where('url', $url)->where('id', '!=', $article->id)->exists()){
+            $url = strtolower(str_replace(' ', '-', $article['title'])) . '-' . $i++;
+        }
         $article->update([
+            'url' => $url,
             'title' => $data['title'],
             'article' => $articleText,
             'youtube' => isset($data['youtube']) ? Str::after($data['youtube'], 'watch?v=') : null,
@@ -335,7 +346,7 @@ class ArticleController extends Controller
         }
 
         return response()->json(['message' => 'Straipsnio informacija pakeista',
-                                'id' => $article->id]);
+                                'url' => $article->url]);
     }
     public function articledelete($id)
     {

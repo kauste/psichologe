@@ -5,7 +5,7 @@
 <div class="about--me--page">
     <section id="hero" class="section-1">
         <div class="img-box">
-            <img src="{{asset('images/psichologe_alytuje_11.webp')}}">
+            <img src="{{asset('images/psichologe-alytuje.webp')}}">
         </div>
         <div class="services">
             <ul>

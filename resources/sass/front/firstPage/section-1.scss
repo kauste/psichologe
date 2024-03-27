@@ -16,7 +16,7 @@
         background: $electricGradient;
         img {
             object-fit: contain;
-            width: 600px;
+            width: 520px;
             height: auto;
         }
     }
@@ -32,11 +32,14 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
+            li{
+                letter-spacing: 2px;
+            }
         }
     }
     .citations-box {
         position: absolute;
-        border-radius: 20px;
+        border-radius: 10px 45px 45px 45px;
         width: 370px;
         height: 180px;
         top: 35%;
@@ -47,7 +50,7 @@
             height: 100%;
             top: 0;
             left: 0;
-            border-radius: 20px;
+            border-radius: 10px 45px 45px 45px;
             object-fit: cover;
         }
         .citations {
@@ -56,7 +59,7 @@
             height: 100%;
             top: 0;
             left: 0;
-            border-radius: 20px;
+            border-radius: 10px 45px 45px 45px;
             padding: 20px 80px 20px 30px;
             font-size: 20px;
             color: $bg;
@@ -80,9 +83,12 @@
                             font-style: italic;
                         }
                     }
-                    .swiper-slide:not(.swiper-slide-active){
+                    .swiper-slide{
+                        transition-timing-function: cubic-bezier(0.25, 0.25, 0.5, 1);
+                    &:not(.swiper-slide-active){
                         opacity: 0 !important;
                       }
+                    }
                 }
             }
             .swiper-button-next {

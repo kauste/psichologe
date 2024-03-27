@@ -12,16 +12,14 @@ import './backAndFront/appBackAndFront';
 import ListSwiper from './backAndFront/firstPage/listSwiper';
 // from back
 import SecondSectionUpdate from './back/firstPage/secondSection';
-import { ThirdAndFourthSection } from './back/firstPage/thirdAndFourthSection';
 import TopMessage from './back/parts/topMessage';
-import Citations from './back/firstPage/citations';
-import TagsNav from './back/articlesPages/tagsNav';
 import { FileInputsActivator } from './back/parts/fileInputsActivator';
 import AddItem from './back/articlesPages/addItem';
 import DeleteItems from './back/articlesPages/deleteItems';
 import CreateArticle from './back/articlesPages/createArticle';
 import EditArticle from './back/articlesPages/editArticle';
 import Services from './back/servicesPage/services';
+import { CRUDmodal } from './back/parts/CRUDmodal';
 
 // firt page
 if(document.querySelector('.about--me--page')){
@@ -46,16 +44,16 @@ if(document.querySelector('.about--me--page')){
           centeredSlides:true,
 
       });
-    new Citations(cssStyles, 'citation', citationUpdateRoute, citationStoreRoute, citationDeleteRoute, citationSwiper);
+    new CRUDmodal(cssStyles, 'citation', citationStoreRoute, citationUpdateRoute, citationDeleteRoute, citationSwiper);
     // sec 2
     new SecondSectionUpdate('#about', new TopMessage);
     // sec 3
-    new ThirdAndFourthSection(cssStyles, 'education', educationUpdateRoute, educationStoreRoute, educationDeleteRoute, new ListSwiper('#education'))
+    new CRUDmodal(cssStyles, 'education', educationStoreRout, educationUpdateRoutee, educationDeleteRoute, new ListSwiper('#education'))
     //sec4
-    new ThirdAndFourthSection(cssStyles, 'work', workUpdateRoute, workStoreRoute, workDeleteRoute, new ListSwiper('#work'))
+    new CRUDmodal(cssStyles, 'work', workStoreRoute, workUpdateRoute, workDeleteRoute, new ListSwiper('#work'))
 }
 else if(document.querySelector('.articles--page')){
-  new TagsNav(cssStyles, 'tagsNav', articlesTagUpdateRoute, articlesTagStoreRoute, articlesTagDeleteRoute);
+  new CRUDmodal(cssStyles, 'tagsNav', articlesTagStoreRoute, articlesTagUpdateRoute, articlesTagDeleteRoute, null);
   new DeleteItems('.articles--box');
   const topMsg = new TopMessage;
   topMsg.showLaraMsg();
@@ -75,6 +73,6 @@ else if(document.querySelector('.article--edit')){
   new EditArticle;
 }
 else if(document.querySelector('.services--list')){
-  new Services(cssStyles, 'service', serviceUpdateRoute, serviceStoreRoute, serviceDeleteRoute)
+  new CRUDmodal(cssStyles, 'service', serviceStoreRoute, serviceUpdateRoute, serviceDeleteRoute, null)
 }
 

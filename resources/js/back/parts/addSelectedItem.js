@@ -12,6 +12,7 @@ class AddSelectedItem {
         //edit
         this.deleteItemDOMS;
         this.itemsDOMS;
+
         this.init()
     }
 
@@ -23,15 +24,9 @@ class AddSelectedItem {
         this.buttonDOM = this.parentDOM.querySelector('.--button');
         this.buttonDOM.addEventListener('click', this.addItemHandler);
     }
-    letDeleteItems(){
-        this.deleteItemDOMS.forEach(deleteDOM => {
-            this.letDeleteItem(deleteDOM.closest('li'));
-        })
 
-    }
     toggleEditStyle(){
         this.deleteItemDOMS = this.listDOM.querySelectorAll('.delete--item');
-        console.log()
         this.selectBoxDOM.style.display = this.selectBoxDOM.style.display === 'none' ? 'flex' : 'none';
         this.deleteItemDOMS.forEach(deleteDOM => {
             deleteDOM.style.display = deleteDOM.style.display === 'flex' ? 'none' : 'flex';
@@ -39,6 +34,12 @@ class AddSelectedItem {
             item.style.paddingBottom = item.style.paddingBottom === '0px' ? '5px' : '0px';
         });
         this.listDOM.style.padding = this.listDOM.style.padding === '0px' ? '5px' : '0px';
+    }
+    letDeleteItems(){
+        this.deleteItemDOMS.forEach(deleteDOM => {
+            this.letDeleteItem(deleteDOM.closest('li'));
+        })
+
     }
     addItemHandler= () => {
             this.selectedItems.push(this.selectDOM.value)

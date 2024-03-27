@@ -33,7 +33,7 @@
         </div>
         @foreach ($articles ?? [] as $article)
         <form action="{{route('back-article-delete', $article->id)}}" method="post" class="article-delete-box">
-            <a class="article-box" href="{{route('back-article-page') . '?id='. $article->id}}">
+            <a class="article-box" href="{{route('back-article-page', $article->url)}}">
                 <div class="title-box">
                     <span class="title">{{$article->title}}</span>
                     <svg>

@@ -46,7 +46,7 @@ class Services extends CRUDmodal{
     setCreateItemVariables (){
         this.addCreareServiceTypesSvgDOM = this.addBoxDOM.querySelector('svg');
         this.addCreateServiceTypesInputDOM = this.addBoxDOM.querySelector('input');
-        this.addedServiceTypeBoxDOM = this.addBoxDOM.querySelector('.var--list');
+        this.addedServiceTypeBoxDOM = this.addBoxDOM.querySelector('.selected--list');
         super.setCreateItemVariables();
     }
     letCreateItem(){

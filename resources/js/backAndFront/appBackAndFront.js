@@ -4,7 +4,7 @@ import ThirdAndFourthSecAppear from './firstPage/thirdAndFourthSecAppear';
 import SecondSection from './firstPage/secondSection';
 
 // footer animations
-const footerNavAnimation = new NavStyles('.footer--nav', '#161616', '#17453F', '17px', '17.2px', '0');
+const footerNavAnimation = new NavStyles('.footer--nav', '#161616', '#17453F', '22px', '18.2px', '0');
 footerNavAnimation.setNavStyles();
 footerNavAnimation.animation();
 // contact animation
@@ -24,7 +24,7 @@ if(document.querySelector('.about--me--page')){
 // nav styles
 //first mage
 if(document.querySelector('.about--me--page') || document.querySelector('.services--list')){
-    const navAnimation = new NavStyles('.--nav', '#17453F', '#17453F',  '17px', '17.2px', '0');
+    const navAnimation = new NavStyles('.--nav', '#17453F', '#17453F',  '22px', '18.2px', '0');
     navAnimation.setNavStyles();
     navAnimation.animation();
 }
@@ -32,7 +32,7 @@ if(document.querySelector('.about--me--page') || document.querySelector('.servic
 if(document.querySelector('.articles--page') 
 || document.querySelector('.article--page')
 ){
-    const navAnimation = new NavStyles('.--nav', '#EFEFEF', '#E9C1C8',  '17px', '17.2px', '0');
+    const navAnimation = new NavStyles('.--nav', '#EFEFEF', '#E9C1C8',  '22px', '18.2px', '0');
     navAnimation.setNavStyles();
     navAnimation.animation();
 
@@ -48,7 +48,7 @@ if(document.querySelector('.article--page')){
     }
 }
 if(document.querySelector('.article--create') || document.querySelector('.article--edit')){
-    const navAnimation = new NavStyles('.--nav', '#EFEFEF', '#E9C1C8',  '17px', '17.2px', '0');
+    const navAnimation = new NavStyles('.--nav', '#EFEFEF', '#E9C1C8',  '22px', '18.2px', '0');
     navAnimation.setNavStyles();
     navAnimation.animation();
 }

@@ -20,7 +20,7 @@
                 <li class="one-tagsNav" id="tagsNav-edit-{{$tag->id}}" data-priority="{{$tag->priority}}">
                     <div class="tag --var" data-name="tag">{{$tag->tag}}</div>
                     <div class="articles list--box" style="padding: 0px">
-                        <ul class="var--list" data-name="articles">
+                        <ul class="selected--list" data-name="articles">
                             @foreach ($tag->articles ?? [] as $key => $article)
                             <li data-article-id="{{$article->id}}" data-priority="{{$article->priority ?? null}}" style="padding-bottom:0px; {{$key === 0 ? 'padding-top:0px' : ''}}">
                                 <div class="svg-box delete-svg-box delete--item" style="display:none">
@@ -87,7 +87,7 @@
                     <div class="form --form one-tagsNav">
                         <div class="tag --var" data-name="tag" contenteditable="true"></div>
                         <div class="add-articles-box list--box">
-                            <ul class="var--list" data-name="articles"></ul>
+                            <ul class="selected--list" data-name="articles"></ul>
                             <div class="add-article select--box">
                                 <div>
                                     <svg class="add-btn-in --button">
