@@ -27,7 +27,7 @@
             <nav class="--nav">
                 <a href="{{route('first-page')}}" class="{{isset($pageName) && $pageName === 'firstPage' ? 'active' : ''}}">Apie&nbsp;mane</a>
                 <a href="{{route('services')}}" class="{{isset($pageName) && $pageName === 'services' ? 'active' : ''}}">Paslaugos</a>
-                <a href="#">Kontaktai</a>
+                <a href="{{route('contacts')}}">Kontaktai</a>
                 <a href="#">Registracija</a>
                 <a href="{{route('articles-list')}}" class="{{isset($pageName) && $pageName === 'articles' ? 'active' : ''}}">Straipsniai</a>
                 @if(Auth::user()?->role === 7)

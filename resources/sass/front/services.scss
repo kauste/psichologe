@@ -1,6 +1,7 @@
 body:has(.services-list) {
     background-color: #e9c1c8;
-    padding: $servicesPgPadding;
+    padding: $biggerPgPadding;
+    position:relative;
     &:before {
         content: "";
         background-image: url("../../../public/images/bg3.webp");
@@ -39,6 +40,7 @@ body:has(.services-list) {
             fill: url(#gradient) $pink;
         }
     }
+
     .services-list {
         padding-top: 145px;
         .ul-box {
@@ -107,8 +109,8 @@ body:has(.services-list) {
     }
     footer {
         .content-box {
-            bottom: -$servicesPgPadding;
-            left: -$servicesPgPadding;
+            bottom: -$biggerPgPadding;
+            left: -$biggerPgPadding;
         }
     }
 }

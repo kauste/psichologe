@@ -1,18 +1,19 @@
 // Variables
-@import "variables";
+@import 'variables';
 
 // Bootstrap
-@import "bootstrap/scss/bootstrap";
+@import 'bootstrap/scss/bootstrap';
 
-@import "parts/nav";
-@import "parts/loader";
-@import "front/firstPage/section-1";
-@import "front/firstPage/section-2";
-@import "front/firstPage/section-3-and-4";
-@import "parts/footer";
-@import "parts/login";
-@import "front/artickes";
-@import "front/services";
+@import 'parts/nav';
+@import 'parts/loader';
+@import 'front/firstPage/section-1';
+@import 'front/firstPage/section-2';
+@import 'front/firstPage/section-3-and-4';
+@import 'parts/footer';
+@import 'parts/login';
+@import 'front/artickes';
+@import 'front/services';
+@import 'front/contacts';
 
 
 body,

@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('telephone_number', 8);
             $table->string('facebook', 100)->nullable();
             $table->string('linkedin', 100)->nullable();
+            $table->string('adress', 40)->default('Jotvingių g. 10-1, 7kab.');
+            $table->string('city', 20)->default('Alytus');
+            $table->string('map', 50)->default('map.png');
             $table->timestamps();
         });
     }

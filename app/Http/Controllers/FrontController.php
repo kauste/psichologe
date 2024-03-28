@@ -7,6 +7,7 @@ use App\Models\FirstPage;
 use App\Models\Article;
 use App\Models\Citation;
 use App\Models\Service;
+use App\Models\Contact;
 
 class FrontController extends Controller
 {
@@ -68,6 +69,12 @@ class FrontController extends Controller
                             ->get();
         return view('front.servicesPage', ['pageName' => 'services', 
                                            'services' => $services]);
+    }
+    public function contacts()
+    {
+        $contacts = Contact::first();
+        return view('front.contactsPage', ['pageName' => 'contacts', 
+                                            'contacts' => $contacts]);
     }
 
 }

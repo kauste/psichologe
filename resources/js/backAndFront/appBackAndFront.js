@@ -23,12 +23,13 @@ if(document.querySelector('.about--me--page')){
 
 // nav styles
 //first mage
-if(document.querySelector('.about--me--page') || document.querySelector('.services--list')){
+if(document.querySelector('.about--me--page') || document.querySelector('.services--list') || document.querySelector('.contacts--page')){
     const navAnimation = new NavStyles('.--nav', '#17453F', '#17453F',  '22px', '18.2px', '0');
     navAnimation.setNavStyles();
     navAnimation.animation();
 }
 // articles page
+
 if(document.querySelector('.articles--page') 
 || document.querySelector('.article--page')
 ){
@@ -52,3 +53,4 @@ if(document.querySelector('.article--create') || document.querySelector('.articl
     navAnimation.setNavStyles();
     navAnimation.animation();
 }
+

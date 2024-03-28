@@ -7,21 +7,15 @@ $bg:#E8E3D7;
 $darkerBg:#d5d0c5;
 $bgTransp:#e8e3d720;
 $violet: #7E3F54;
-$lighterElectric: #2B5650 ;
-$lightGreenGray:#CFD2BF;
-$electricGradient:linear-gradient(315deg, $lightGreenGray 0%, $lighterElectric 100%);
 $northenGradient: radial-gradient(18% 28% at 18% 71%, #FFFFFF4D 4%, #073AFF00 100%),radial-gradient(31% 43% at 7% 98%, #17453fe7 96%, #073AFF00 100%),radial-gradient(35% 56% at 91% 74%, #17453F 66%, #073AFF00 100%),radial-gradient(74% 86% at 67% 38%, #E9C1C826 1%, #073AFF00 100%),linear-gradient(125deg, #427A6DFF 1%, #17453FFF 100%);
-$northenPinkGradient: radial-gradient(18% 28% at 24% 50%, #ebc7cddd 7%, #073AFF00 100%),radial-gradient(18% 28% at 18% 71%, #FFFFFF59 6%, #073AFF00 100%),radial-gradient(70% 53% at 36% 76%, #17453FFF 0%, #073AFF00 100%),radial-gradient(42% 53% at 15% 94%, #FFFFFFFF 7%, #073AFF00 100%),radial-gradient(42% 53% at 34% 72%, #FFFFFFFF 7%, #073AFF00 100%),radial-gradient(18% 28% at 35% 87%, #FFFFFFFF 7%, #073AFF00 100%),radial-gradient(31% 43% at 7% 98%, #FFFFFFFF 24%, #073AFF00 100%),radial-gradient(21% 37% at 72% 23%, #E8E3D7 24%, #073AFF00 100%),radial-gradient(35% 56% at 91% 74%, #E9C1C8 9%, #073AFF00 100%),linear-gradient(125deg, #E8E3D7 1%, #17453F 100%);
-
 $electricGradient:radial-gradient(circle, rgb(249 237 207) 0%, rgba(43,86,80,0.8556696360184699) 100%);
+
 $grey:#6E717B;
 $greyTransp:#6e717b6b;
 $lightGrey:#b5b3b1eb;
 $black: #161616;
 
-
 $hotPink:#f26d85;
-
 
 //sizes
 $ratio: min(calc(500px * 9 / 16), calc(60vw * 9 / 16));
@@ -30,7 +24,7 @@ $footerMargin:50px;
 $footerWidth:min(800px, 90%);
 $mainMinHeight: calc(100vh - $footerHeight - $footerMargin);
 $radius:30px;
-$servicesPgPadding:18px;
+$biggerPgPadding:18px;
 :root{
     --sec-1-height:100vh;
 }

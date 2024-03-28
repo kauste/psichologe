@@ -23,6 +23,8 @@ Route::get('/', [FrontController::class, 'firstPage'])->name('first-page');
 Route::get('/straipsniai', [FrontController::class, 'articlesList'])->name('articles-list');
 Route::get('/straipsnis/{article}', [FrontController::class, 'articlePage'])->name('article-page');
 Route::get('/psichologes-paslaugos', [FrontController::class, 'services'])->name('services');
+Route::get('/kontaktai', [FrontController::class, 'contacts'])->name('contacts');
+
 
 
 
