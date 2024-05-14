@@ -43,10 +43,12 @@
         const serviceStoreRoute = "{{route('back-store-service')}}";
         const serviceUpdateRoute = "{{route('back-update-service')}}";
         const serviceDeleteRoute = "{{route('back-delete-service')}}";
+        // contacts
+        const contactsUpdateRoute = "{{route('back-update-contacts')}}";
 
     </script>
-    {{-- <link rel="stylesheet" href="{{asset('/build/assets/appBack-46927b4c.css?v='. time())}}">
-    <script src="{{asset('/build/assets/appBack-cc27689d.js?v='). time()}}" type="module" defer></script> --}}
+    {{-- <link rel="stylesheet" href="{{asset('/build/assets/appBack-1863782e.css?v='. time())}}">
+    <script src="{{asset('/build/assets/appBack-904c81f8.js?v='). time()}}" type="module" defer></script> --}}
     @vite(['resources/sass/appBack.scss', 'resources/js/appBack.js'])
 </head>
 <body class="back-office">
@@ -57,7 +59,7 @@
             <nav class="--nav">
                 <a href="{{route('back-first-pg')}}" class="{{isset($pageName) && $pageName === 'firstPage' ? 'active' : ''}}">Apie&nbsp;mane</a>
                 <a href="{{route('back-services-list')}}" class="{{isset($pageName) && $pageName === 'services' ? 'active' : ''}}">Paslaugos</a>
-                <a href="#">Kontaktai</a>
+                <a href="{{route('back-contacts')}}" class="{{isset($pageName) && $pageName === 'contacts' ? 'active' : ''}}">Kontaktai</a>
                 <a href="#">Registracija</a>
                 <a href="{{route('back-articles-list')}}" class="{{isset($pageName) && $pageName === 'articles' ? 'active' : ''}}">Straipsniai</a>
                 @if(Auth::user()?->role === 7)

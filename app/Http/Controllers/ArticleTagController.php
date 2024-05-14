@@ -47,7 +47,6 @@ class ArticleTagController extends Controller
     }
     public function storeArticlesTag(Request $request)
     {
-        dump($request->all());
         $data = $request->data;
         $data['priority'] = (int) $data['priority'] ? (int) $data['priority'] : null;
         $validator = Validator::make($data, [

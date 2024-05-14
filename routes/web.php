@@ -7,6 +7,7 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ArticleTagController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\ContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +66,11 @@ Route::prefix('admin')->name('back-')->middleware(['auth'])->group(function(){
     Route::post('store-service', [ServiceController::class, 'storeService'])->name('store-service');
     Route::put('update-service/{id?}', [ServiceController::class, 'updateService'])->name('update-service');
     Route::delete('delete-service/{id?}', [ServiceController::class, 'deleteService'])->name('delete-service');
+    // contacts
+    Route::get('/contacts', [ContactController::class, 'contactsPage'])->name('contacts');
+    Route::get('/update-contacts', [ContactController::class, 'updateContacts'])->name('update-contacts');
+
+
 
 
 });

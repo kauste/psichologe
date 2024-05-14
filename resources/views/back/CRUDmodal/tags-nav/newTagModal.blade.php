@@ -1,9 +1,9 @@
 <div class="tag --var" data-name="tag">{{$tag->tag}}</div>
-<div class="articles list--box" style="padding: 0px">
+<div class="articles list--box">
     <ul class="selected--list" data-name="articles">
         @forelse ($tag->articles as $key => $article)
-        <li data-article-id="{{$article->id}}" data-priority="{{$article->priority ?? null}}" style="padding-bottom:0px; {{$key === 0 ? 'padding-top:0px' : ''}}">
-            <div class="svg-box delete-svg-box delete--item" style="display:none">
+        <li data-id="{{$article->id}}" data-priority="{{$article->priority ?? null}}">
+            <div class="svg-box  delete--item" style="display:none">
                 <svg class="delete-svg">
                     <use xlink:href="#delete"></use>
                 </svg>

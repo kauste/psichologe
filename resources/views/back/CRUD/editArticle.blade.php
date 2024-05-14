@@ -99,27 +99,26 @@
                 </div>
             </div>
             <div class="with-error-box">
-                <div class="tags-box tags--box">
+                <div class="list-input-box list--box">
                     <label for="article-tags">Tagai</label>
-                    <ul class="added-tags added--tags">
+                    <ul class="added--tags">
                         @foreach ($article->tags ?? [] as $tag)
                         <li>
-                            <div class="svg-box --delete">
+                            <div class="svg-box delete--item">
                                 <svg class="delete-svg">
                                     <use xlink:href="#delete"></use>
                                 </svg>
                             </div>
-                            <div class="--tag">{{$tag->tag}}</div>
-                            <input type="hidden" name="tags[]" value="{{$tag->id}}">
+                            <div class="--value" style="display:none">{{$tag->id}}</div>
+                            {{-- <input type="hidden" name="tags[]" value="{{$tag->id}}"> --}}
+                            <div class="--tag inner--text">{{$tag->tag}}</div>
                         </li>
                         @endforeach
                     </ul>
-                    <div class="add-article-tag add--article--tag" style="{{count($tagsForSelect) === 0 ? 'display:none' : 'display:flex'}}">
-                        <div class=" add--btn">
-                            <svg class=" add-btn-in">
-                                <use xlink:href="#plus"></use>
-                            </svg>
-                        </div>
+                    <div class="input-box select--box" style="{{count($tagsForSelect) === 0 ? 'display:none' : 'display:flex'}}">
+                        <svg class=" add-btn-in --button">
+                            <use xlink:href="#plus"></use>
+                        </svg>
                         <select id="article-tags">
                             @foreach($tagsForSelect ?? [] as $tag)
                             <option value="{{$tag->id}}">{{$tag->tag}}</option>

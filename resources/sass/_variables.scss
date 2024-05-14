@@ -25,6 +25,7 @@ $footerWidth:min(800px, 90%);
 $mainMinHeight: calc(100vh - $footerHeight - $footerMargin);
 $radius:30px;
 $biggerPgPadding:18px;
+$navAppearDelay:0.3;
 :root{
     --sec-1-height:100vh;
 }

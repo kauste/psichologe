@@ -97,26 +97,28 @@
                 </div>
             </div>
             <div class="with-error-box">
-                <div class="tags-box tags--box">
+                <div class="list-input-box list--box">
                     <label for="article-tags">Tagai</label>
-                    <ul class="added-tags added--tags">
-                    </ul>
-                    <div class="add-article-tag add--article--tag"">
-                    <div class=" add--btn">
-                        <svg class=" add-btn-in">
-                            <use xlink:href="#plus"></use>
-                        </svg>
+                    <div class="list-input-box list--box">
+                        <ul data-name="added_tags"></ul>
+                        <div class="input-box select--box">
+                            <div class=" add--btn">
+                                <svg class=" add-btn-in --button">
+                                    <use xlink:href="#plus"></use>
+                                </svg>
+                            </div>
+                            <select id="article-tags">
+                                @foreach($tags ?? [] as $tag)
+                                <option value="{{$tag->id}}">{{$tag->tag}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
-                    <select id="article-tags">
-                        @foreach($tags ?? [] as $tag)
-                        <option value="{{$tag->id}}">{{$tag->tag}}</option>
-                        @endforeach
-                    </select>
                 </div>
                 <div class="error --error tags--error"></div>
             </div>
             <div class="update-actions store--actions">
-                <button class="cancel-btn --cancel" href="{{url()->current()}}">Atšaukti</button>
+                <a class="cancel-btn --cancel" href="{{url()->current()}}">Atšaukti</a>
                 <button class="update-btn --store" type="button">Sukurti</button>
             </div>
         </div>

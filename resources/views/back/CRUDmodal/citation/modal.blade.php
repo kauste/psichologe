@@ -2,7 +2,7 @@
     <div class="modal --modal">
         <div class="heading-box">
             <div class="first-line">
-                <h2>Darbo patirtis</h2>
+                <h2>Citatos</h2>
                 <div class="add-back-btns">
                     <svg class="add-btn add--btn">
                         <use xlink:href="#plus"></use>
@@ -15,30 +15,34 @@
             <div class="message --message"></div>
         </div>
         <div class="modal-ul-box ul--box">
-            <ul class="citation-ul --citation">
+            <ul class="--citation">
                 @forelse ($citations as $citation)
-                <li class="one-citation" id="citation-edit-{{$citation->id}}">
-                    <div class="citation --var" data-name="citation">{{$citation->citation}}</div>
-                    <div class="author --var {{$citation->author ? '' : 'small'}}" data-name="author">{{$citation->author ?? ''}}</div>
-                    <div class="edit--actions edit-actions" style="display:flex">
-                        <div class="svg-box --edit">
-                            <svg class="edit-svg">
-                                <use xlink:href="#edit"></use>
-                            </svg>
-                        </div>
-                        <div class="svg-box --delete">
-                            <svg class="delete-svg">
-                                <use xlink:href="#delete"></use>
-                            </svg>
-                        </div>
+                <li class="one-item one-citation one--item" id="citation-edit-{{$citation->id}}">
+                    <div class="data --data">
+                        <div class="var --var" data-name="citation" contenteditable="false">{{$citation->citation}}</div>
+                        <div class="var last --var {{$citation->author ? '' : 'small'}}" data-name="author" contenteditable="false">{{$citation->author ?? ''}}</div>
                     </div>
-                    <div class="update-actions update--actions" style="display:none">
-                        <button class="cancel-btn --cancel" type="button">Atšaukti</button>
-                        <button class="update-btn --update" type="button">Redaguoti</button>
-                    </div>
-                    <div class="delete-actions delete--actions" style="display:none">
-                        <button class="cancel-btn --cancel" type="button">Atšaukti</button>
-                        <button class="delete-btn --delete" type="button">Ištrinti</button>
+                    <div class="--actions">
+                        <div class="edit--actions edit-actions">
+                            <div class="svg-box --edit">
+                                <svg class="edit-svg">
+                                    <use xlink:href="#edit"></use>
+                                </svg>
+                            </div>
+                            <div class="svg-box --delete">
+                                <svg class="delete-svg">
+                                    <use xlink:href="#delete"></use>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="update-actions update--actions">
+                            <button class="cancel-btn --cancel" type="button">Atšaukti</button>
+                            <button class="update-btn --update" type="button">Redaguoti</button>
+                        </div>
+                        <div class="delete-actions delete--actions">
+                            <button class="cancel-btn --cancel" type="button">Atšaukti</button>
+                            <button class="delete-btn --delete" type="button">Ištrinti</button>
+                        </div>
                     </div>
                 </li>
                 @empty
@@ -47,19 +51,23 @@
             </ul>
 
         </div>
-        <div class="modal-add-box add--box">
+        <div class="modal-add-box">
             <form>
                 <div>
                     <div class="names one-citation">
-                        <div>Citata</div>
-                        <div>Autorius</div>
+                        <div class="data">
+                            <div>Citata</div>
+                            <div>Autorius</div>
+                        </div>
                     </div>
-                    <div class="form --form one-citation">
-                        <div class="citation --var" data-name="citation" contenteditable="true"></div>
-                        <div class="author --var" data-name="author" contenteditable="true"></div>
-                        <div class="update-actions store--actions">
+                    <div class="form --form one-citation one-item create">
+                        <div class="data --data">
+                            <div class="var --var" data-name="citation" contenteditable="true"></div>
+                            <div class="var last --last --var" data-name="author" contenteditable="true"></div>
+                        </div>
+                        <div class="store-actions store--actions">
                             <button class="cancel-btn --cancel" type="button">Atšaukti</button>
-                            <button class="update-btn --store" type="button">Sukurti</button>
+                            <button class="store-btn --store" type="button">Sukurti</button>
                         </div>
                     </div>
                 </div>

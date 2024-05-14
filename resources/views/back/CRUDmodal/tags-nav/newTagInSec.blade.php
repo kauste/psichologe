@@ -1,1 +1,1 @@
-<a class="--tag" href="{{route('back-articles-list') . '?filter=' .$tag->id}}">{{$tag->tag}}</a>
+<a class="--var" data-name="tag" href="{{route('back-articles-list') . '?filter=' .$tag->id}}">{{$tag->tag}}</a>

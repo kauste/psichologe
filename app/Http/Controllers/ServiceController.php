@@ -67,7 +67,6 @@ class ServiceController extends Controller
     public function updateService(Request $request, $id)
     {
         $data = $request->data;
-        dump($data);
         $data['id'] = (int) $id;
         $validator = Validator::make($data,
         [

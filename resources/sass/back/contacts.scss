@@ -1,0 +1,41 @@
+body:has(.contacts-page) {
+    &.back-office {
+        .contacts-page {
+            .edit-svg-box {
+                top: 115px;
+                right: 100px;
+            }
+        }
+        .modal .modal-ul-box {
+            display: flex;
+            flex-direction: column;
+            gap:20px;
+    
+            .contact-ul {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                padding-left: 0;
+                li {
+                    border: 1px solid $black;
+                    padding: 10px 15px;
+                    &.link {
+                        grid-column: span 2;
+                    }
+                    &:nth-child(n + 3) {
+                        border-top: none;
+                    }
+                    &:not(.link):nth-child(2n) {
+                        border-left: none;
+                    }
+                }
+            }
+            .update-actions{
+                flex-direction: row;
+                width: 400px;
+                justify-self: flex-end;
+                align-self: end;
+            }
+        }
+    }
+}
+

@@ -34,9 +34,6 @@ body:has(.contacts-page) {
             position:relative;
         }
     }
-    footer{
-        margin-top: 10px;
-    }
     .contacts-page {
         display: flex;
         justify-content: center;
@@ -64,18 +61,21 @@ body:has(.contacts-page) {
             }
             .map-box {
                 position:absolute;
-                bottom:-100px;
+                top:200px;
                 left:55%;
-
+                opacity:0;
+                animation:animate-pop 0.2s 0.3s cubic-bezier(.26,.53,.74,0.48) forwards;
                 img {
                     width: 100%;
                     min-width: 300px;
                     max-width: 500px;
                     object-fit: cover;
                     border-radius: 20px;
-                    box-shadow: 0 0 5px $electric;
                 }
             }
         }
+    }
+    footer{
+        margin-top:0;
     }
 }

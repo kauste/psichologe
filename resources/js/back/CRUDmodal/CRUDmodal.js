@@ -1,12 +1,14 @@
-import AddItem from "./addItem";
-import AddSelectedItem from "./addSelectedItem";
+import AddItem from "./parts/addItem";
+import AddSelectedItem from "./parts/addSelectedItem";
+import ModalMsg from "./parts/modalMsg";
+import ToggleModal from "./toggleModal";
 
-class CRUDmodal {
+class CRUDmodal extends ToggleModal{
     constructor(cssStyles, selector, storeRoute, updateRoute, deleteRoute, swiper){
+        super(selector)
         //css
         this.cssStyles = cssStyles;
         this.warningBorderCSS = cssStyles.warningBorderStyle,
-        this.selector = selector;
         this.storeRoute = storeRoute;
         this.updateRoute = updateRoute;
         this.deleteRoute = deleteRoute;
@@ -19,10 +21,6 @@ class CRUDmodal {
         this.sectionliDOMS;
         this.editSectionBtnDOM;
         //modal DOMS
-        this.modalBoxDOM;
-        this.modalDOM;
-        this.messageDOM;
-        this.h2DOM;
         this.addBtnDOM;
         this.backBtnDOM;
         this.ulBoxDOM;
@@ -64,16 +62,18 @@ class CRUDmodal {
         this.createdData = {};
         this.editableData = {};
         this.loadeBoxDOM;
+        this.msgObj;
         this.init();
     }
 
     init(){
+        super.init();
         this.setSectionVariables();
         this.setModalVariables();
         this.setCreateVariables();
         this.letCreateItem();
         this.setEditDeleteVariables();
-        this.setCRUDListeners();
+        this.setModalListeners();
         this.setSectionListeners();
     }
     setSectionVariables(){
@@ -84,157 +84,132 @@ class CRUDmodal {
         this.sectionliDOMS = this.sectionUlDOM.querySelectorAll('li');
         this.editSectionBtnDOM = this.sectionDOM.querySelector('.--edit');
     }
-    setModalVariables(){
-        this.modalBoxDOM= document.querySelector(`.${this.selector}--modal--box`);
-        this.modalDOM = this.modalBoxDOM.querySelector('.--modal');
-        this.h2DOM = this.modalDOM.querySelector('h2');
-        this.messageDOM = this.modalDOM.querySelector('.--message');
-        this.addBtnDOM= this.modalDOM.querySelector('.add--btn');
-        this.backBtnDOM= this.modalDOM.querySelector('.back--btn');
-        this.ulBoxDOM = this.modalDOM.querySelector('.ul--box');
-        this.addBoxDOM = this.modalDOM.querySelector('.add--box');
-    }
-    toggleNexBackStyles(){
-        this.ulBoxDOM.style.display = this.ulBoxDOM.style.display === 'none' ? 'block' : 'none';
-        this.addBoxDOM.style.display = this.addBoxDOM.style.display === 'grid' ? 'none' : 'grid';
-        this.addBtnDOM.style.display = this.addBtnDOM.style.display === 'none' ? 'block' :'none';
-        this.backBtnDOM.style.display = this.backBtnDOM.style.display === 'block' ? 'none' : 'block';
-        this.modalDOM.style.paddingBottom = this.modalDOM.style.paddingBottom === '100px' ? '50px' : '100px';
-        const createModalHeight = (window.innerHeight  / 2 - this.modalDOM.offsetHeight / 2) + 'px';
-        this.modalDOM.style.marginTop = this.modalDOM.style.marginTop = createModalHeight ? '10vh' : createModalHeight;
-    }
+    // setModalVariables(){
+    //     this.msgObj = new ModalMsg(this.modalDOM)
+    //     this.addBtnDOM= this.modalDOM.querySelector('.add--btn');
+    //     this.backBtnDOM= this.modalDOM.querySelector('.back--btn');
+    //     this.ulBoxDOM = this.modalDOM.querySelector('.ul--box');
+    //     this.addBoxDOM = this.modalDOM.querySelector('.add--box');
+    // }
+    // toggleNexBackStyles(){
+    //     this.ulBoxDOM.style.display = this.ulBoxDOM.style.display === 'none' ? 'block' : 'none';
+    //     this.addBoxDOM.style.display = this.addBoxDOM.style.display === 'grid' ? 'none' : 'grid';
+    //     this.addBtnDOM.style.display = this.addBtnDOM.style.display === 'none' ? 'block' :'none';
+    //     this.backBtnDOM.style.display = this.backBtnDOM.style.display === 'block' ? 'none' : 'block';
+    //     this.modalDOM.style.paddingBottom = this.modalDOM.style.paddingBottom === '100px' ? '50px' : '100px';
+    //     const createModalHeight = (window.innerHeight  / 2 - this.modalDOM.offsetHeight / 2) + 'px';
+    //     this.modalDOM.style.marginTop = this.modalDOM.style.marginTop = createModalHeight ? '10vh' : createModalHeight;
+    // }
     
-    setCRUDListeners(){
-        this.editSectionBtnDOM.addEventListener('click', this.showModalHandler)
-        this.addBtnDOM.addEventListener('click', this.nextModalHandler)
-        this.backBtnDOM.addEventListener('click', this.backModalHandler)
-    }
-    showModalHandler = () => {
-        this.modalBoxDOM.classList.add('show');
-        this.modalBoxDOM.style.animation = 'open-modal-box 0.5s ease forwards';
-        this.modalDOM.style.animation = 'open-modal 0.5s ease forwards';
-        if(typeof this.setSpecific === 'function' && !this.positioner) {
-            this.setSpecific();
-        }
-        this.modalBoxDOM.addEventListener('click', this.closeModalHandler)
+    // setModalListeners(){
+    //     this.editSectionBtnDOM.addEventListener('click', this.showModalHandler)
+    //     if(this.addBtnDOM) this.addBtnDOM.addEventListener('click', this.nextModalHandler)
+    //     if(this.backBtnDOM) this.backBtnDOM.addEventListener('click', this.backModalHandler)
+    // }
+    // nextModalHandler = () => {
+    //     if(this.openItemDOM){
+    //         this.ulBoxDOM.scrollTop = this.openItemDOM.offsetTop - this.openItemDOM.oo - 10;
+    //         this.borderWarningCSS()
+    //     }
+    //     else{
+    //         this.toggleNexBackStyles();
+    //     }
+    // }
+    // backModalHandler = () => {
+    //     if(this.createInputsDOMS 
+    //     && (Array.from(this.createInputsDOMS).some(contentDOM => (contentDOM && contentDOM.value !== undefined && contentDOM.value?.trim() !== ''))
+    //         || Array.from(this.createInputsDOMS).some(contentDOM => (contentDOM && contentDOM.innerText.trim() !== '')))
+    //     ){
+    //         this.addBoxForm.style.border = this.warningBorderCSS;
+    //     }
+    //     else{    
+    //         this.addBoxForm.style.border = 'none';
+    //         this.toggleNexBackStyles();        
+    //     }
+    // }
+    // IN ONE CHILD CLASS I NEED TO CHECK FEW THINGS BEFORE OPENING
+    // closeModalHandler = (e) => {
+    //     if(e.target === this.modalBoxDOM){
+    //         if(this.openItemDOM){
+    //             this.borderWarningCSS();
+    //         }
+    //         else  if(this.createInputsDOMS 
+    //             && (Array.from(this.createInputsDOMS).some(contentDOM => (contentDOM && contentDOM.value !== undefined && contentDOM.value?.trim() !== ''))
+    //             || Array.from(this.createInputsDOMS).some(contentDOM => (contentDOM && contentDOM.innerText.trim() !== '')))
+    //         ){
+    //             this.addBoxForm.style.border = this.warningBorderCSS;
+    //         }
+    //         else{
+    //             this.addBoxForm.style.border = 'none';
+    //             this.parentCloseModalHandler(e);
+    //         }
+    //     }
+    // }
+    // setSectionListeners(){
+    //     this.editDeleleBtnsDOMS.forEach(buttons => { 
+    //       this.activateItemEditDeleteBtns(buttons)
+    //     });
+    //     if(typeof this.setCreateItemVariables === 'function') this.setCreateItemVariables();
+    // }
+    // activateItemEditDeleteBtns(parent){
+    //     const editItemBtnDOM = parent.querySelector('.--edit');
+    //     editItemBtnDOM.addEventListener('click', (e) => { this.letEditItemHandler(editItemBtnDOM, e) })
+    //     const deleteItemBtnDOM = parent.querySelector('.--delete');
+    //     deleteItemBtnDOM.addEventListener('click', (e) => { this.letDeleteItemHandler(e) } )
+    // }
 
+    // insertItemInList(ulDOM, itemToInsert){
+    //     const itemPriority = itemToInsert.dataset.priority && !isNaN(itemToInsert.dataset.priority)? parseInt(itemToInsert.dataset.priority) : null;
+    //     let afterItem = null;
+    //     const itemsList = Array.from( ulDOM.querySelectorAll(`:scope > li`))
 
-    }
-    nextModalHandler = () => {
-        if(this.openItemDOM){
-            this.ulBoxDOM.scrollTop = this.openItemDOM.offsetTop - this.openItemDOM.oo - 10;
-            this.borderWarningCSS()
-        }
-        else{
-            this.toggleNexBackStyles();
-        }
-    }
-    backModalHandler = () => {
-        if(this.createInputsDOMS 
-        && (Array.from(this.createInputsDOMS).some(contentDOM => (contentDOM && contentDOM.value !== undefined && contentDOM.value?.trim() !== ''))
-            || Array.from(this.createInputsDOMS).some(contentDOM => (contentDOM && contentDOM.innerText.trim() !== '')))
-        ){
-            this.addBoxForm.style.border = this.warningBorderCSS;
-        }
-        else{    
-            this.addBoxForm.style.border = 'none';
-            this.toggleNexBackStyles();        
-        }
-    }
-    closeModalHandler = (e) => {
-        if(e.target === this.modalBoxDOM){
-            if(this.openItemDOM){
-                this.borderWarningCSS();
-            }
-            else  if(this.createInputsDOMS 
-                && (Array.from(this.createInputsDOMS).some(contentDOM => (contentDOM && contentDOM.value !== undefined && contentDOM.value?.trim() !== ''))
-                || Array.from(this.createInputsDOMS).some(contentDOM => (contentDOM && contentDOM.innerText.trim() !== '')))
-            ){
-                this.addBoxForm.style.border = this.warningBorderCSS;
-            }
-            else{
-                this.addBoxForm.style.border = 'none';
-                this.modalDOM.style.animation = 'close-modal 0.5s ease forwards';
-                this.modalBoxDOM.style.animation = 'close-modal-box 0.5s ease forwards';
-                setTimeout(() => {
-                    this.modalBoxDOM.classList.remove('show');
-                }, 100)
-                this.modalBoxDOM.removeEventListener('click', this.closeModalHandler)
-            }
-        }
-    }
-    setSectionListeners(){
-        this.editDeleleBtnsDOMS.forEach(buttons => {
-          this.activateItemEditDeleteBtns(buttons)
-        });
-        if(typeof this.setCreateItemVariables === 'function') this.setCreateItemVariables();
-    }
-    activateItemEditDeleteBtns(parent){
-        const editItemBtnDOM = parent.querySelector('.--edit');
-        editItemBtnDOM.addEventListener('click', (e) => { this.letEditItemHandler(editItemBtnDOM, e) })
-        const deleteItemBtnDOM = parent.querySelector('.--delete');
-        deleteItemBtnDOM.addEventListener('click', (e) => { this.letDeleteItemHandler(e) } )
-    }
-    insertItemInList(ulDOM, itemToInsert){
-        const itemPriority = itemToInsert.dataset.priority && !isNaN(itemToInsert.dataset.priority)? parseInt(itemToInsert.dataset.priority) : null;
-        let afterItem = null;
-        const itemsList = Array.from( ulDOM.querySelectorAll(`:scope > li`))
+    //     if(itemPriority && itemPriority > 0){
+    //         for(let i = 0; i < itemsList.length; i++){
+    //             let listItemPriority = parseInt(itemsList[i].dataset.priority) ? parseInt(itemsList[i].dataset.priority) : null;
+    //             if (!listItemPriority || (listItemPriority && listItemPriority >= itemToInsert.dataset.priority)) {
+    //                 afterItem = itemsList[i];
+    //                 break;
+    //             }
+    //         }
+    //     }
+    //     (afterItem || itemPriority === 0) ? ulDOM.insertBefore(itemToInsert, afterItem) : ulDOM.appendChild(itemToInsert);
+    // }
+    // changeToEditButtons(){
+    //     const editActionsDOM = this.openItemDOM.querySelector('.edit--actions');
+    //     editActionsDOM.style.display = (editActionsDOM.style.display === 'none') ? 'flex' : 'none';
 
-        if(itemPriority && itemPriority > 0){
-            for(let i = 0; i < itemsList.length; i++){
-                let listItemPriority = parseInt(itemsList[i].dataset.priority) ? parseInt(itemsList[i].dataset.priority) : null;
-                if (!listItemPriority || (listItemPriority && listItemPriority >= itemToInsert.dataset.priority)) {
-                    afterItem = itemsList[i];
-                    break;
-                }
-            }
-        }
-        (afterItem || itemPriority === 0) ? ulDOM.insertBefore(itemToInsert, afterItem) : ulDOM.appendChild(itemToInsert);
-    }
-    changeToEditButtons(){
-        const editActionsDOM = this.openItemDOM.querySelector('.edit--actions');
-        editActionsDOM.style.display = (editActionsDOM.style.display === 'none') ? 'flex' : 'none';
-
-        const updateActionsDOM = this.openItemDOM.querySelector('.update--actions');
-        updateActionsDOM.style.display = (updateActionsDOM.style.display === 'none') ? 'flex' : 'none';
-    }
-    changeToDeleteButtons(){
-        const editActionsDOM = this.openItemDOM.querySelector('.edit--actions');
-        editActionsDOM.style.display = editActionsDOM.style.display ==='none' ? 'flex' : 'none';
+    //     const updateActionsDOM = this.openItemDOM.querySelector('.update--actions');
+    //     updateActionsDOM.style.display = (updateActionsDOM.style.display === 'none') ? 'flex' : 'none';
+    // }
+    // changeToDeleteButtons(){
+    //     const editActionsDOM = this.openItemDOM.querySelector('.edit--actions');
+    //     editActionsDOM.style.display = editActionsDOM.style.display ==='none' ? 'flex' : 'none';
         
-        const deleteActionsDOM = this.openItemDOM.querySelector('.delete--actions');
-        deleteActionsDOM.style.display = deleteActionsDOM.style.display === 'flex'? 'none' : 'flex';
-    }
-    borderOpenCSS(){
-        this.liChildernDOMS.forEach((element, i) => {
-            element.style.borderTop = '1px solid #333';
-            element.style.borderBottom = '1px solid #333';
-            element.style.borderRight = '1px solid #333';
-            if(i === 0){
-                element.style.borderLeft = '1px solid #333'
-            }
-        })
-    }
-    borderWarningCSS(){
-        this.ulBoxDOM.scrollTop = this.openItemDOM.offsetTop - this.openItemDOM.offsetHeight - 30;
-        this.liChildernDOMS.forEach((child, i) => {
-            child.style.border = this.warningBorderCSS;
-            if ( i !== this.liChildernDOMS.length -1) child.style.borderRight = 'none';            
-        })
-    }
-    removeBorderCSS(){
-        this.liChildernDOMS.forEach((element) => {
-            element.style.border = 'none';
-        })
-    }
-    showMsg(msgHTML){
-        this.messageDOM.innerHTML = msgHTML;;
-        this.messageDOM.style.display = 'block';
-        setTimeout(() => {
-            this.messageDOM.innerHTML = '';
-            this.messageDOM.style.display = 'none';
-        }, 20000)
-    }
+    //     const deleteActionsDOM = this.openItemDOM.querySelector('.delete--actions');
+    //     deleteActionsDOM.style.display = deleteActionsDOM.style.display === 'flex'? 'none' : 'flex';
+    // }
+    // borderOpenCSS(){
+    //     this.liChildernDOMS.forEach((element, i) => {
+    //         element.style.borderTop = '1px solid #333';
+    //         element.style.borderBottom = '1px solid #333';
+    //         element.style.borderRight = '1px solid #333';
+    //         if(i === 0){
+    //             element.style.borderLeft = '1px solid #333'
+    //         }
+    //     })
+    // }
+    // borderWarningCSS(){
+    //     this.ulBoxDOM.scrollTop = this.openItemDOM.offsetTop - this.openItemDOM.offsetHeight - 30;
+    //     this.liChildernDOMS.forEach((child, i) => {
+    //         child.style.border = this.warningBorderCSS;
+    //         if ( i !== this.liChildernDOMS.length -1) child.style.borderRight = 'none';            
+    //     })
+    // }
+    // removeBorderCSS(){
+    //     this.liChildernDOMS.forEach((element) => {
+    //         element.style.border = 'none';
+    //     })
+    // }
     // create
     setCreateVariables(){
         this.addBoxForm = this.addBoxDOM.querySelector('.--form');
@@ -247,22 +222,22 @@ class CRUDmodal {
         this.cancelBtnDOM = this.addBoxDOM.querySelector('.store--actions .--cancel');
         this.storeBtnDOM = this.addBoxDOM.querySelector('.store--actions .--store');
 }
-    letCreateItem(){
-        this.storeBtnDOM.addEventListener('click', () => { this.store() });
-        this.cancelBtnDOM.addEventListener('click', () => { this.clearCreate() });
-        if(this.createSelectedListDOMS && this.createSelectedListDOMS.length > 0){
-            Array.from(this.createSelectedListDOMS).forEach(createListVarDOM => {
-                const createAddItem = new AddSelectedItem(createListVarDOM);
-               createAddItem.saveOptionsHTML();
-               this.createSelectItemOBJS.push(createAddItem);
-            })
-        }
-        if(this.createAddedListDOMS && this.createAddedListDOMS.length > 0){
-            Array.from(this.createAddedListDOMS).forEach(createListVarDOM => {
-                new AddItem(createListVarDOM);
-            })
-        }
-    }
+    // letCreateItem(){
+    //     this.storeBtnDOM.addEventListener('click', () => { this.store() });
+    //     this.cancelBtnDOM.addEventListener('click', () => { this.clearCreate() });
+    //     if(this.createSelectedListDOMS && this.createSelectedListDOMS.length > 0){
+    //         Array.from(this.createSelectedListDOMS).forEach(createListVarDOM => {
+    //             const createAddItem = new AddSelectedItem(createListVarDOM);
+    //            createAddItem.saveOptionsHTML();
+    //            this.createSelectItemOBJS.push(createAddItem);
+    //         })
+    //     }
+    //     if(this.createAddedListDOMS && this.createAddedListDOMS.length > 0){
+    //         Array.from(this.createAddedListDOMS).forEach(createListVarDOM => {
+    //             new AddItem(createListVarDOM);
+    //         })
+    //     }
+    // }
     store (){
         this.loadeBoxDOM.style.display = 'block';
         let data = {};
@@ -303,13 +278,13 @@ class CRUDmodal {
                 res.data.errors.forEach(error => {
                     errorsHTML += `<div>${error}</div>`
                 })
-                this.showMsg(errorsHTML)
+                this.msgObj.showMsg(errorsHTML)
             }
             else if(res.data.message){
                 this.appendEditDeleteModal(res.data.modalHTML, res.data.itemId, priority)
                 this.appendSection(res.data.sectionHTML, res.data.itemId, priority)
                 this.clearCreate();
-                this.showMsg(res.data.message);
+                this.msgObj.showMsg(res.data.message);
             }
             this.loadeBoxDOM.style.display = 'none';
         })
@@ -373,20 +348,19 @@ class CRUDmodal {
             this.borderWarningCSS()
         }
         else{
-            this.setEditItem(editItemBtn);
+            this.openItemDOM = editItemBtn.closest('li');
+            this.setEditItem();
             this.changeToEditButtons();
             this.borderOpenCSS()
             this.cancelEditBtnDOM.addEventListener('click', this.cancelEdit, {once:true})
             this.updateBtnDOM.addEventListener('click', this.update, {once:true})
         }
     }
-    setEditItem(editItemBtn){
-        this.setEditVariables(editItemBtn);
+    setEditItem(){
+        this.setEditVariables();
         this.makeEditable();
     }
-    setEditVariables(editItemBtn){
-        this.openItemDOM = editItemBtn.closest('li');
-
+    setEditVariables(){
         this.openItemId = this.openItemDOM.id.replace(this.selector + '-edit-', '')
         this.liChildernDOMS = this.openItemDOM.querySelectorAll(':scope > div:not(.edit--actions, .update--actions, .delete--actions');
         this.editVarsDOMS = this.openItemDOM.querySelectorAll('.--var');
@@ -467,7 +441,7 @@ class CRUDmodal {
                 res.data.errors.forEach(error => {
                     errorsHTML += `<div>${error}</div>`
                 })
-                this.showMsg(errorsHTML)
+                this.msgObj.showMsg(errorsHTML)
                 this.updateBtnDOM.addEventListener('click', this.update, {once:true})
             }
             else if(res.data.message){
@@ -479,7 +453,7 @@ class CRUDmodal {
                 }
                 this.changeToEditButtons();
                 this.closeItemEdit()
-                this.showMsg(res.data.message)
+                this.msgObj.showMsg(res.data.message)
             }
             this.loadeBoxDOM.style.display = 'none';
         })
@@ -524,12 +498,19 @@ class CRUDmodal {
             this.initialPriority = null;
         }
         if(this.editSelectedListDOMS && this.editSelectedListDOMS.length > 0){
-            this.editSelectItemOBJS.forEach(editAddItemsOBJ => {
-                editAddItemsOBJ.toggleEditStyle();
+            this.editSelectItemOBJS.forEach(editSelectItemsOBJ => {
+                editSelectItemsOBJ.toggleEditStyle();
             })
             this.editSelectItemOBJS = [];
             this.editSelectedListDOMS = null;
 
+        }
+        if(this.editAddedListDOMS && this.editAddedListDOMS.length > 0){
+            this.editAddedItemOBJS.forEach(editAddItemsOBJ => {
+                editAddItemsOBJ.toggleEditStyle();
+            })
+            this.editAddedItemOBJS = [];
+            this.editAddedListDOMS = null;
         }
         //reset variables
         this.itemInnerHTML - null;
@@ -570,10 +551,9 @@ class CRUDmodal {
                 this.openItemDOM = null;
                 this.openItemId = null;
                 if(this.swiper){
-                    console.log(this.swiper);
                     this.swiper.update();
                 }
-                this.showMsg(res.data.message);
+                this.msgObj.showMsg(res.data.message);
             }
             else {
                 this.deleteBtnDOM.addEventListener('click', this.delete, {once:true})

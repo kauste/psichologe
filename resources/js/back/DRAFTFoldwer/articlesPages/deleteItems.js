@@ -1,4 +1,4 @@
-import TopMessage from "../parts/topMessage";
+import TopMessage from "./topMessage";
 
 class DeleteItems{
     constructor(parentSelector){

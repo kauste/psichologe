@@ -14,52 +14,72 @@
     }
     .modal {
         padding: 50px 40px;
+        padding-bottom:50px;
         border-radius: 2px;
         max-height: 80vh;
         height: fit-content;
         margin-left: max(calc(50% - 500px), 2vw);
         margin-top: 10vh;
-        justify-self: center;
-        // transform: scale(0);
-        opacity: 0.5;
         background-color: $bg;
         width: min(1000px, 96vw);
         flex-direction: column;
         backdrop-filter: blur(20px);
         display: flex;
-        //endscrollbar
-        .form {
-            height: fit-content;
-        }
-        .modal-ul-box ul{
+        opacity: 0.5;
+        .modal-ul-box ul {
             list-style: none;
         }
-        .modal-ul-box li,
+        .modal-add-box {
+            display: none;
+            > .names {
+                letter-spacing: 0.3vw;
+            }
+            .form {
+                height: fit-content;
+                div[contenteditable="true"] {
+                    width: 100%;
+                    height: 100%;
+                }
+
+            }
+        }
+        .modal-ul-box .one-item,
         .modal-add-box .names,
         .modal-add-box .form {
             width: 100%;
             padding: 7px 0;
+            display: grid;
+            align-items: center;
+            justify-content: center;
+            .data{
+                display:grid
+            }
             &.one-work,
             &.one-education {
-                grid-template-columns: 150px calc(100% - 380px) 80px 120px;
-                display: grid;
-                align-items: center;
-                justify-content: center;
+                grid-template-columns: 1fr 120px;
+                .data{
+                    grid-template-columns: 150px 1fr 80px
+                }
+            }
+            &.one-tagsNav {
+                grid-template-columns: 1fr 120px;
+                .data{
+                    grid-template-columns: 200px 1fr 120px;
+                }
+            }
+            &.one-citation {
+                grid-template-columns: 1fr 120px;
+                .data{
+                    grid-template-columns: 1fr 200px;
 
+                }
             }
-            &.one-tagsNav{
-                grid-template-columns: 200px calc(100% - 440px) 120px 120px;
-                display: grid;
-                align-items: center;
-                justify-content: center;
+            &.one-service {
+                grid-template-columns: 1fr 120px;
+                .data{
+                    grid-template-columns: 200px 1fr 80px;
+                }
             }
-            &.one-citation{
-                grid-template-columns: calc(100% - 320px) 200px 120px;
-                display: grid;
-                align-items: center;
-                justify-content: center;
-            }
-
             .img-box {
                 width: min(500px, 60vw);
                 overflow: hidden;
@@ -80,144 +100,65 @@
                     display: none;
                 }
             }
-
-            &.editable {
-                .img-box {
-                    overflow: visible;
-                    .line {
-                        display: inline-block;
-                    }
-                    img {
-                        margin-top: var(--marginHeight);
-                        cursor: crosshair;
-                    }
-                    position: relative;
-                    &:before {
-                        content: "";
-                        display: inline-block;
-                        position: absolute;
-                        width: 100%;
-                        backdrop-filter: blur(5px);
-                        background-color: #999999a5;
-                        top: 0;
-                        left: 0;
-                        height: var(--borderHeight);
-                        // height:calc(100% - $ratio);
-                        // box-shadow:  0 calc(100% + $ratio) 0 #999999a5 ;
-                        // box-shadow: 0 calc($ratio / 2 + 2em) 0 -30px red;
-                    }
-                    &:after {
-                        height: var(--borderHeight);
-                        content: "";
-                        display: inline-block;
-                        position: absolute;
-                        width: 100%;
-                        background-color: #999999a5;
-                        backdrop-filter: blur(5px);
-                        bottom: 0;
-                        left: 0;
-                        // height:calc(100% - $ratio);
-                    }
-                }
-            }
             img {
                 width: 100%;
             }
-
-            .date,
-            .about,
-            .position,
-            .tag,
-            .priority-box,
-            .citation,
-            .author {
-                padding: 0 7px;
-                display: flex;
-                align-items: center;
+            div:not(.img-box, .add-article, .svg-box, .input-box) {
+                height: 100%;
             }
-            .position.small {
+
+            .var.small {
                 font-style: italic;
                 color: #999;
             }
-            div:not(.img-box, .add-article, .svg-box, .add-service-type) {
-                height: 100%;
-            }
-            div:not(
-                    .--edit,
-                    .--delete,
-                    .edit--actions,
-                    .update--actions
-                )[contenteditable="true"], .add-articles-box {
-                padding: 10px 10px 20px;
-                &.priority {
-                    padding: 10px;
-                }
-                border: 1px solid $black;
-                border-left: none;
-                display: inline-block;
-            }
-            div:not(
-                    .--edit,
-                    .--delete,
-                    .edit--actions,
-                    .update--actions
-                )[contenteditable="false"] {
-                border: none;
-            }
-            div:not(
-                    .--edit,
-                    .--delete,
-                    .edit--actions,
-                    .update--actions
-                ):first-of-type[contenteditable="true"] {
-                border-left: 1px solid $black;
-            }
-            .update-actions,
-            .delete-actions {
-                button {
-                    height: fit-content;
-                    width: max(90%, 120px);
-                }
-            }
-        }
 
-        .modal-add-box > .names {
-            letter-spacing: 0.3vw;
-        }
-        .modal-add-box {
-            display: none;
-            .store-actions {
-                display: flex;
-            }
-            div:not(
-                    .--edit,
-                    .--delete,
-                    .edit--actions,
-                    .update--actions
-                )[contenteditable="true"] {
-                width: 100%;
-                height: 100%;
-            }
 
         }
     }
 }
-.add-btn-in{
-    width: 40px;
-    height: 40px;
-    min-width: 40px;
-    border-radius: 50%;
-    border: 4px solid $pink;
-    stroke: $black;
-    box-shadow: 0 0 0 2px $black;
-    cursor: pointer;
-    transition: 0.3s ease all;
-    fill: none;
-    &:hover {
-        background-color: $black;
-        stroke: $pink;
+// next back styles
+.modal-box .modal.--add{
+    padding-bottom:100px;
+    .modal-add-box{
+        display:grid;
+    }
+    .modal-ul-box{
+        display:none;
+    }
+    .add-btn{
+        display:none;
+    }
+    .back-btn{
+        display:block;
     }
 }
+// services
+
+// .modal-add-box .form, modal-add-box .names, .modal-ul-box li{
+// .add-service-type-box {
+//     .added-types {
+//         list-style: none;
+//         padding: 0;
+//     }
+//     .add-service-type {
+//         display: flex;
+//         gap: 20px;
+//         align-items: center;
+//         padding: 0 5px;
+//         ul {
+//             padding: 0;
+//         }
+//         input {
+//             padding: 4px;
+//             width: 80%;
+//         }
+//     }
+// }
+// }
+// .modal-ul-box li {
+
+// }
+
 @keyframes open-modal {
     0% {
         opacity: 0.5;

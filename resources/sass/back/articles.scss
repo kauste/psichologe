@@ -12,38 +12,7 @@
     }
     .modal {
         .articles, .add-articles-box {
-            .svg-box {
-                margin: 0 2px;
-                border: $black solid 2px;
-                border-radius: 50%;
-                width: fit-content;
-                height: fit-content;
-                place-self: center;
-                cursor: pointer;
-                &:has(.delete-svg) {
-                    padding: 9px;
-                    background-color: #ccc;
-                    &:hover {
-                        background-color: #bbb;
-                    }
-                    .delete-svg {
-                        width: 22px;
-                        height: 22px;
-                    }
-                }
-                &:has(.edit-svg) {
-                    padding: 5px;
-                    background-color: $pink;
-                    &:hover {
-                        background-color: #d9adb4;
-                    }
-                    .edit-svg {
-                        width: 30px;
-                        height: 30px;
-                        transform: rotate(-30deg);
-                    }
-                }
-            }
+
             ul{
                 padding:0;
             }
@@ -97,16 +66,6 @@
                     flex-direction: column;
                     gap:10px;
                 }
-                .added-tags{
-                    list-style: none;
-                    padding:0;
-                    li{
-                        display:flex;
-                        gap:8px;
-                        align-items: center;
-                        padding-bottom: 5px;
-                    }
-                }
                 .youtube-box, .title-box, .link-box .title, .link-box .link{
                     display:flex;
                     gap:10px;
@@ -134,17 +93,6 @@
                     display:grid;
                     grid-template-columns: 60px auto;
                 }
-                .add-article-tag {
-                    display: flex;
-                    gap: 20px;
-                    align-items: center;
-                    padding: 0 5px;
-                }
-                .tags-box {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 5px;
-                }
             }
         }
         .update-actions{
@@ -157,7 +105,7 @@
         }
     }
     .articles-list{
-        .article-delete-box{
+        .article-delete-box.one-item{
             display:grid;
             width:90%;
             grid-template-columns:1fr 120px;

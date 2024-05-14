@@ -1,40 +1,59 @@
 .nav-box {
-    font-family: $nav-family;
-    display: flex;
-    align-items: center;
-    justify-content: right;
     position: absolute;
-    top: 0px;
-    right: 0px;
-    padding: 20px;
-    border-bottom-left-radius: $radius;
-    z-index: 1;
-    background-color: $bgTransp;
-    backdrop-filter: blur(10px);
-    border-bottom: $electric 2px solid;
-    border-left: $electric 2px solid;
+    top:0;
+    right:0;
     height:110px;
+    width:100vw;
+    overflow: hidden;
+
     nav {
+        font-family: $nav-family;
+        display: flex;
+        align-items: center;
+        justify-content: right;
+        position: absolute;
+        top: 0px;
+        right: -5%;
+        padding: 20px;
+        border-bottom-left-radius: $radius;
+        z-index: 1;
+        background-color: $bgTransp;
+        backdrop-filter: blur(10px);
+        border-bottom: $electric 2px solid;
+        border-left: $electric 2px solid;
+        height: 110px;
+        animation: nav-appear calc($navAppearDelay * 1s) 0.3s ease forwards;
+        overflow: hidden;
+
         a {
             width: fit-content;
             text-decoration: none;
             padding: 10px 30px;
             line-height: 25px;
-            height:25px;
-            font-size:400;
+            height: 25px;
+            font-size: 400;
             transition: all 0.2s 0.2s cubic-bezier(0.96, 0.83, 0.74, 0.88);
             display: inline-block;
             font-variation-settings: "wght" 600;
             text-align: center;
-            color:$electric;
+            color: $electric;
             font-size: 22px;
         }
     }
 }
 body:has(#hero, .articles-list) {
     .nav-box {
-        border-bottom: $bg 2px solid;
-        border-left: $bg 2px solid;
-
+        nav {
+            border-bottom: $bg 2px solid;
+            border-left: $bg 2px solid;
+        }
+    }
+}
+@keyframes nav-appear {
+    0% {
+        right: -5%;
+    }
+    100% {
+        right: 0;
     }
 }

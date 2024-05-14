@@ -17,29 +17,33 @@
         <div class="modal-ul-box ul--box">
             <ul class="education-ul --education">
                 @forelse ($data->educations as $edu)
-                <li class="one-education" id="education-edit-{{$edu->id}}" data-priority="{{$edu->priority}}">
-                    <div class="date --var" data-name="date">{{$edu->date}}</div>
-                    <div class="about --var" data-name="about">{{$edu->about}}</div>
-                    <div class="position --priority {{$edu->priority && $edu->priority > 0 ? '' : 'small'}}">{{$edu->priority && $edu->priority > 0 ? $edu->priority : ' nesvarbu'}}</div>
-                    <div class="edit--actions edit-actions" style="display:flex">
-                        <div class="svg-box --edit">
-                            <svg class="edit-svg">
-                                <use xlink:href="#edit"></use>
-                            </svg>
-                        </div>
-                        <div class="svg-box --delete">
-                            <svg class="delete-svg">
-                                <use xlink:href="#delete"></use>
-                            </svg>
-                        </div>
+                <li class="one-item one-education one--item" id="education-edit-{{$edu->id}}" data-priority="{{$edu->priority}}">
+                    <div class="data --data">
+                        <div class="var --var" data-name="date" contenteditable="false">{{$edu->date}}</div>
+                        <div class="var --var" data-name="about" contenteditable="false">{{$edu->about}}</div>
+                        <div class="var last --priority {{$edu->priority && $edu->priority > 0 ? '' : 'small'}}" contenteditable="false">{{$edu->priority && $edu->priority > 0 ? $edu->priority : ' nesvarbu'}}</div>
                     </div>
-                    <div class="update-actions update--actions" style="display:none">
-                        <button class="cancel-btn --cancel" type="button">Atšaukti</button>
-                        <button class="update-btn --update" type="button">Redaguoti</button>
-                    </div>
-                    <div class="delete-actions delete--actions" style="display:none">
-                        <button class="cancel-btn --cancel" type="button">Atšaukti</button>
-                        <button class="delete-btn --delete" type="button">Ištrinti</button>
+                    <div class="--actions">
+                        <div class="edit--actions edit-actions">
+                            <div class="svg-box --edit">
+                                <svg class="edit-svg">
+                                    <use xlink:href="#edit"></use>
+                                </svg>
+                            </div>
+                            <div class="svg-box --delete">
+                                <svg class="delete-svg">
+                                    <use xlink:href="#delete"></use>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="update-actions update--actions">
+                            <button class="cancel-btn --cancel" type="button">Atšaukti</button>
+                            <button class="update-btn --update" type="button">Redaguoti</button>
+                        </div>
+                        <div class="delete-actions delete--actions">
+                            <button class="cancel-btn --cancel" type="button">Atšaukti</button>
+                            <button class="delete-btn --delete" type="button">Ištrinti</button>
+                        </div>
                     </div>
                 </li>
                 @empty
@@ -48,21 +52,25 @@
             </ul>
 
         </div>
-        <div class="modal-add-box add--box">
+        <div class="modal-add-box">
             <form>
                 <div>
                     <div class="one-education names">
-                        <div>Datos</div>
-                        <div>Išsilavinimas</div>
-                        <div>Eil. nr.</div>
+                        <div class="data">
+                            <div>Datos</div>
+                            <div>Išsilavinimas</div>
+                            <div>Eil. nr.</div>
+                        </div>
                     </div>
-                    <div class="form --form one-education">
-                        <div class="date --var" data-name="date" contenteditable="true"></div>
-                        <div class="about --var" data-name="about" contenteditable="true"></div>
-                        <div class="position --priority" contenteditable="true"></div>
-                        <div class="update-actions store--actions">
+                    <div class="form --form one-education one-item create">
+                        <div class="data --data">
+                            <div class="var --var" data-name="date" contenteditable="true"></div>
+                            <div class="var --var" data-name="about" contenteditable="true"></div>
+                            <div class="var last --priority" contenteditable="true"></div>
+                        </div>
+                        <div class="store-actions store--actions">
                             <button class="cancel-btn --cancel" type="button">Atšaukti</button>
-                            <button class="update-btn --store" type="button">Sukurti</button>
+                            <button class="store-btn --store" type="button">Sukurti</button>
                         </div>
                     </div>
                 </div>

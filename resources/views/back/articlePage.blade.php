@@ -8,27 +8,27 @@
         <a href="{{route('back-articles-list') . '?filter='. $tag->id}}">{{$tag->tag}}</a>
         @endforeach
     </div>
-    <section class="article-box article--box">
-        <div class="title-box">
+    <section class="article-box one-item one--item">
+        <div class="title-box ">
             <h2>{{$article->title}}</h2>
-            <div class="edit--actions edit-actions" style="display:flex">
-                <a href="{{route('back-article-edit', $article)}}" class="svg-box">
-                    <svg class="edit-svg">
-                        <use xlink:href="#edit"></use>
-                    </svg>
-                </a>
-                <form class="delete-form" action="{{route('back-article-delete', $article->id)}}" method="post">
+            <div class="--actions">
+                <div class="edit--actions edit-actions">
+                    <a href="{{route('back-article-edit', $article)}}" class="svg-box">
+                        <svg class="edit-svg">
+                            <use xlink:href="#edit"></use>
+                        </svg>
+                    </a>
                     <div class="svg-box --delete" style="display:flex">
                         <svg class="delete-svg">
                             <use xlink:href="#delete"></use>
                         </svg>
                     </div>
-                    <div class="delete-actions delete--actions" style="display:none">
-                        <button class="cancel-btn --cancel" type="button">Atšaukti</button>
-                        @csrf
-                        @method('delete')
-                        <button class="delete-btn do--delete" type="submit">Ištrinti</button>
-                    </div>
+                </div>
+                <form class="delete-form delete-actions delete--actions" action="{{route('back-article-delete', $article->id)}}" method="post">
+                    <button class="cancel-btn --cancel" type="button">Atšaukti</button>
+                    @csrf
+                    @method('delete')
+                    <button class="delete-btn do--delete" type="submit">Ištrinti</button>
                 </form>
             </div>
         </div>

@@ -13,8 +13,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poiret+One&family=Quicksand:wght@300;400;600;700&display=swap" rel="stylesheet">
-    {{-- <link rel="stylesheet" href="{{asset('/build/assets/app-cecbd32c.css?v='. time())}}">
-    <script src="{{asset('/build/assets/app-c5f3449a.js?v='). time() }}" type="module" defer></script> --}}
+    {{-- <link rel="stylesheet" href="{{asset('/build/assets/app-ef36beef.css?v='. time())}}">
+    <script src="{{asset('/build/assets/app-375155f2.js?v='). time() }}" type="module" defer></script> --}}
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -27,7 +27,7 @@
             <nav class="--nav">
                 <a href="{{route('first-page')}}" class="{{isset($pageName) && $pageName === 'firstPage' ? 'active' : ''}}">Apie&nbsp;mane</a>
                 <a href="{{route('services')}}" class="{{isset($pageName) && $pageName === 'services' ? 'active' : ''}}">Paslaugos</a>
-                <a href="{{route('contacts')}}">Kontaktai</a>
+                <a href="{{route('contacts')}}" class="{{isset($pageName) && $pageName === 'contacts' ? 'active' : ''}}">Kontaktai</a>
                 <a href="#">Registracija</a>
                 <a href="{{route('articles-list')}}" class="{{isset($pageName) && $pageName === 'articles' ? 'active' : ''}}">Straipsniai</a>
                 @if(Auth::user()?->role === 7)

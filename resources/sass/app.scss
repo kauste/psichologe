@@ -19,9 +19,10 @@
 body,
 body * {
     margin: 0;
+    box-sizing: border-box;
+
 }
 body {
-    box-sizing: border-box;
     width: 100%;
     background-color: $bg;
 }
@@ -142,6 +143,12 @@ p {
     list-style: none;
     li{
         height:30px;
+        opacity:0;
+        @for $i from 1 through 20 {
+            &:nth-child(#{$i}){
+                animation: animate-pop 0.6s #{0.3 + $i * 0.1}s cubic-bezier(.26,.53,.74,0.48) forwards;
+            }
+        }
     }
     a {
         height: 25px;

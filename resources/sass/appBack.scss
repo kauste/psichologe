@@ -1,202 +1,146 @@
+@import "./app";
 
-@import './app';
+@import "parts/modal";
 
-@import 'parts/modal';
+@import "back/firstPage/section-1";
+@import "back/firstPage/section-2";
+@import "back/firstPage/section-3-and-4";
+@import "back/articles";
+@import "back/services";
+@import "back/contacts";
 
-@import 'back/firstPage/section-1';
-@import 'back/firstPage/section-2';
-@import 'back/firstPage/section-3-and-4';
-@import 'back/articlePages/articles';
-@import 'back/servicePage/services';
-
-select{
-    padding:4px 8px;
+select {
+    padding: 4px 8px;
     background-color: $bg;
     border: 1px solid #333;
     height: fit-content;
-
 }
 .message {
     padding: 4px;
     background-color: $hotPink;
     border-radius: 6px 0 12px 0px;
     color: $bg;
-    display:none;
-    &.top-message{
-        position:fixed;
-        left:0;
-        top:0;
-        right:0;
-        z-index:2;
+    display: none;
+    &.top-message {
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        z-index: 2;
     }
 }
-.error{
-    color:$hotPink;
-    font-size:14px;
+.error {
+    color: $hotPink;
+    font-size: 14px;
 }
-.edit-svg-box{
+.edit-svg-box {
     width: fit-content;
     border: 2px solid #222;
     padding: 5px;
     border-radius: 50%;
     background-color: $pink;
-    z-index:3;
+    z-index: 3;
     cursor: pointer;
-    &:hover{
-        background-color: #d9adb4
+    &:hover {
+        background-color: #d9adb4;
     }
-    svg{
-        fill:#222;
-        width:30px;
-        height:30px;
+    svg {
+        fill: #222;
+        width: 30px;
+        height: 30px;
         transform: rotate(-30deg);
     }
 }
-.img-position-box, .img-author-box, .extra-data-box{
-    color:$bg;
+.img-position-box,
+.img-author-box,
+.extra-data-box {
+    color: $bg;
 }
-.img-input-detele, .img-position-box, .img-author-box, .extra-data-box{
-    display:grid;
+.img-input-detele,
+.img-position-box,
+.img-author-box,
+.extra-data-box {
+    display: grid;
     grid-template-columns: 180px 1fr;
-    gap:20px;
+    gap: 20px;
 }
-.img-input-box {
-    background: $electric;
-    display: flex;
-    align-items: flex-start;
-    max-width: 500px;
-    .file-input-box {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        height: 40px;
-        text-align: left;
-        padding: 26px;
-        // max-width: calc(100% - 150px);
-        // width: calc(100% - 150px);
-        width: fit-content;
-        max-width: calc(100% - 150px);
-        position: relative;
-        border-radius: 3px;
-        > input[type="file"] {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            z-index: 10;
-            cursor: pointer;
-        }
-
-        .button {
-            padding: 1px 12px;
-            // border: solid 2px $violet;
-            border-radius: 14px;
-            color: $black;
-            background-color: $bg;
-        }
-        &:hover > .button {
-            background: $pink;
-            color: white;
-        }
-
-        > .label {
-            color: $black;
-            white-space: nowrap;
-            opacity: 0.6;
-            display: inline-block;
-            max-width: 400px;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-            font-style: italic;
-            color:$bg;
-            span {
-                font-weight: 700;
-                text-transform: uppercase;
-            }
-        }
-    }
-    .img-data-box{
-
-    }
-    .img-box {
-        overflow: visible;
-        width: 100%;
-        box-sizing: border-box;
-        padding-left: 20px;
-        padding-right: 20px;
-        .line {
-            display: inline-block;
-        }
-        img {
-            width:100%;
-            height: auto;
-            margin-top: var(--marginHeight);
-            cursor: crosshair;
-        }
-        position: relative;
-        &:before {
-            content: "";
-            display: inline-block;
-            position: absolute;
-            width: min(500px, 60vw);
-            backdrop-filter: blur(5px);
-            background-color: #999999a5;
-            top: 0;
-            left: 0;
-            height: var(--borderHeight);
-            // height:calc(100% - $ratio);
-            // box-shadow:  0 calc(100% + $ratio) 0 #999999a5 ;
-            // box-shadow: 0 calc($ratio / 2 + 2em) 0 -30px red;
-        }
-        &:after {
-            height: var(--borderHeight);
-            content: "";
-            display: inline-block;
-            position: absolute;
-            width: 100%;
-            background-color: #999999a5;
-            backdrop-filter: blur(5px);
-            bottom: 0;
-            left: 0;
-            // height:calc(100% - $ratio);
-        }
-    }
-}
-.update-actions, .delete-actions{
+// buttons
+// .store-actions {
+//     position: absolute;
+//     right: 20px;
+//     bottom: 30px;
+// }
+.update-actions,
+.delete-actions,
+.store-actions {
+    gap: 20px;
     flex-direction: column;
     justify-content: center;
     align-items: end;
-}
-.store-actions{
-    position: absolute;
-    right: 20px;
-    bottom:30px;
-}
-.update-actions, .delete-actions, .store-actions{
-    gap:20px;
-    button, a{
+    button,
+    a {
         text-decoration: none;
-        color:$black;
-        border:2px solid $black;
+        color: $black;
+        border: 2px solid $black;
         padding: 8px 20px;
-        width:100%;
+        width: max(90%, 120px);
         height: fit-content;
     }
-    .update-btn {
+    .update-btn, .store-btn {
         background-color: $electric;
-        color:$bg;
+        color: $bg;
     }
-    .cancel-btn{
-        background: #CCC;
+    .cancel-btn {
+        background: #ccc;
     }
-    .delete-btn{
+    .delete-btn {
         background-color: $pink;
     }
-
 }
+
+.modal-ul-box li,
+.article-box {
+    .edit-actions {
+        display: flex;
+        gap: 7px;
+        justify-content: space-around;
+        height: max-content;
+    }
+}
+
+.svg-box {
+    margin: 0 2px;
+    border: $black solid 2px;
+    border-radius: 50%;
+    width: fit-content;
+    height: fit-content;
+    place-self: center;
+    cursor: pointer;
+    &:has(.delete-svg) {
+        padding: 9px;
+        background-color: #ccc;
+        &:hover {
+            background-color: #bbb;
+        }
+        .delete-svg {
+            width: 22px;
+            height: 22px;
+        }
+    }
+    &:has(.edit-svg) {
+        padding: 5px;
+        background-color: $pink;
+        &:hover {
+            background-color: #d9adb4;
+        }
+        .edit-svg {
+            width: 30px;
+            height: 30px;
+            transform: rotate(-30deg);
+        }
+    }
+}
+
 .add-back-btns {
     display: flex;
     flex-wrap: wrap;
@@ -211,18 +155,19 @@ select{
         cursor: pointer;
         transition: 0.3s ease all;
         fill: none;
+
         &:hover {
             background-color: $black;
             stroke: $pink;
         }
     }
-}
-.modal{
-    .add-back-btns .back-btn {
+    .back-btn {
         display: none;
     }
 }
-.modal, .article-create, .article-edit{
+.modal,
+.article-create,
+.article-edit {
     .heading-box {
         margin-bottom: 20px;
 
@@ -234,51 +179,8 @@ select{
         }
     }
 }
-.modal-ul-box li, .article-box {
-    .edit-actions {
-        display: flex;
-        gap: 7px;
-        justify-content: space-around;
-        height:max-content;
 
-    }
-}
-.edit-actions, .img-input-delete, .tags-box, .article-delete-box, .service-types{
-    .svg-box {
-        margin: 0 2px;
-        border: $black solid 2px;
-        border-radius: 50%;
-        width: fit-content;
-        height: fit-content;
-        place-self: center;
-        display:block;
-        cursor: pointer;
-        &:has(.delete-svg) {
-            padding: 9px;
-            background-color: #ccc;
-            &:hover {
-                background-color: #bbb;
-            }
-            .delete-svg {
-                width: 22px;
-                height: 22px;
-            }
-        }
-        &:has(.edit-svg) {
-            padding: 5px;
-            background-color: $pink;
-            &:hover {
-                background-color: #d9adb4;
-            }
-            .edit-svg {
-                width: 30px;
-                height: 30px;
-                transform: rotate(-30deg);
-            }
-        }
-    }
-}
-        //scrollbar
+//scrollbar
 .modal-ul-box,
 .modal-add-box,
 .article-text {
@@ -286,13 +188,13 @@ select{
     scroll-behavior: smooth;
 }
 .modal-ul-box::-webkit-scrollbar,
-.modal-add-box::-webkit-scrollbar, 
+.modal-add-box::-webkit-scrollbar,
 .article-text::-webkit-scrollbar {
     width: 10px;
     margin-right: 10px;
 }
 .modal-ul-box::-webkit-scrollbar-track,
-.modal-add-box::-webkit-scrollbar-track, 
+.modal-add-box::-webkit-scrollbar-track,
 .article-text::-webkit-scrollbar-track {
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
@@ -302,5 +204,159 @@ select{
     background-color: $electric;
     -webkit-border-radius: 0.375rem;
 }
+.list-input-box {
+    ul {
+        padding: 0 0 5px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
 
-
+        li {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+    }
+    .input-box {
+        width: 100%;
+        align-items: center;
+        padding-left: 5px;
+        gap: 20px;
+        display: flex;
+        input {
+            width: 80%;
+            padding: 4px 8px;
+        }
+    }
+}
+.add-btn-in {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    border-radius: 50%;
+    border: 4px solid $pink;
+    stroke: $black;
+    box-shadow: 0 0 0 2px $black;
+    cursor: pointer;
+    transition: 0.3s ease all;
+    fill: none;
+    &:hover {
+        background-color: $black;
+        stroke: $pink;
+    }
+}
+.one-item {
+    .edit-actions {
+        display: flex;
+    }
+    .update-actions {
+        display: none;
+    }
+    .delete-actions {
+        display: none;
+    }
+    .var {
+        border: none;
+        padding: 0 8px 0 0;
+    }
+    .list-input-box {
+        ul {
+            li {
+                padding-bottom: 0px;
+                .svg-box.delete-svg {
+                    display: none;
+                }
+            }
+        }
+    }
+    .input-box {
+        display: none;
+    }
+}
+.one-item.let--edit {
+    .update-actions {
+        display: flex;
+    }
+    .edit-actions {
+        display: none;
+    }
+    .delete-actions {
+        display: none;
+    }
+    .var {
+        padding: 4px 8px 4px 4px;
+        border: 1px $black solid;
+        &:not(.last) {
+            border-right: none;
+        }
+    }
+    .list-input-box {
+        ul {
+            li {
+                padding-bottom: 5px;
+                .svg-box.delete-svg {
+                    display: flex;
+                }
+            }
+        }
+    }
+    .input-box {
+        display: flex;
+    }
+}
+.one-item.let--delete {
+    .delete-actions {
+        display: flex;
+    }
+    .update-actions {
+        display: none;
+    }
+    .edit-actions {
+        display: none;
+    }
+    .var {
+        padding: 4px 8px 4px 4px;
+        border: 1px $black solid;
+        &:not(.last) {
+            border-right: none;
+        }
+    }
+    .list-input-box {
+        ul {
+            li {
+                padding-bottom: 0px;
+                .svg-box.delete-svg {
+                    display: none;
+                }
+            }
+        }
+    }
+    .input-box {
+        display: none;
+    }
+}
+.one-item.create {
+    .store-actions {
+        display: flex;
+    }
+    .var {
+        padding: 8px;
+        border: 1px $black solid;
+        &:not(.last) {
+            border-right: none;
+        }
+    }
+    .list-input-box {
+        ul {
+            li {
+                padding-bottom: 5px;
+                .svg-box.delete-svg {
+                    display: flex;
+                }
+            }
+        }
+    }
+    .input-box {
+        display: flex;
+    }
+}

@@ -1,1 +1,1 @@
-<div class="message top-message top--message">{{session()->get('message', '')}}</div>
+<div class="message top-message --message" style="display:{{session()->get('message', null) ? 'flex' : 'none'}}">{{session()->get('message', '')}}</div>

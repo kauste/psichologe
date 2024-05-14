@@ -3,7 +3,7 @@
     <ul>
         @forelse ($service->serviceTypes ?? [] as $key => $oneService)
         <li data-service-type-id="{{$oneService->id}}" style="padding:0px;">
-            <div class="svg-box delete-svg-box delete--service--type--svg" style="display:none">
+            <div class="svg-box  delete--service--type--svg" style="display:none">
                 <svg class="delete-svg">
                     <use xlink:href="#delete"></use>
                 </svg>

@@ -17,24 +17,26 @@ class AddSelectedItem {
     }
 
     init(){
-        this.parentDOM = this.listDOM.closest('.list--box');
-        this.selectBoxDOM = this.parentDOM.querySelector('.select--box');
-        this.selectDOM = this.parentDOM.querySelector('select');
-        this.optionsDOMS = this.parentDOM.querySelectorAll('option');
-        this.buttonDOM = this.parentDOM.querySelector('.--button');
-        this.buttonDOM.addEventListener('click', this.addItemHandler);
+        // this.parentDOM = this.listDOM.closest('.list--box');
+        // this.selectBoxDOM = this.parentDOM.querySelector('.select--box');
+
+        // this.selectDOM = this.parentDOM.querySelector('select');
+        // this.optionsDOMS = this.parentDOM.querySelectorAll('option');
+        // this.buttonDOM = this.parentDOM.querySelector('.--button');
+
+        // this.buttonDOM.addEventListener('click', this.addItemHandler);
     }
 
-    toggleEditStyle(){
-        this.deleteItemDOMS = this.listDOM.querySelectorAll('.delete--item');
-        this.selectBoxDOM.style.display = this.selectBoxDOM.style.display === 'none' ? 'flex' : 'none';
-        this.deleteItemDOMS.forEach(deleteDOM => {
-            deleteDOM.style.display = deleteDOM.style.display === 'flex' ? 'none' : 'flex';
-            const item = deleteDOM.closest('li');
-            item.style.paddingBottom = item.style.paddingBottom === '0px' ? '5px' : '0px';
-        });
-        this.listDOM.style.padding = this.listDOM.style.padding === '0px' ? '5px' : '0px';
-    }
+    // toggleEditStyle(){
+    //     this.deleteItemDOMS = this.listDOM.querySelectorAll('.delete--item');
+    //     this.selectBoxDOM.style.display = this.selectBoxDOM.style.display === 'none' ? 'flex' : 'none';
+    //     this.deleteItemDOMS.forEach(deleteDOM => {
+    //         deleteDOM.style.display = deleteDOM.style.display === 'flex' ? 'none' : 'flex';
+    //         const item = deleteDOM.closest('li');
+    //         item.style.paddingBottom = item.style.paddingBottom === '0px' ? '5px' : '0px';
+    //     });
+    //     this.listDOM.style.padding = this.listDOM.style.padding === '0px' ? '5px' : '0px';
+    // }
     letDeleteItems(){
         this.deleteItemDOMS.forEach(deleteDOM => {
             this.letDeleteItem(deleteDOM.closest('li'));
@@ -56,8 +58,7 @@ class AddSelectedItem {
     }
     apendElementToList(optionDOM){
         let li = document.createElement('li');
-        li.style.paddingBottom = '5px';
-        const itemHTML = `<div class="svg-box delete-svg-box delete--item" style="display:flex">
+        const itemHTML = `<div class="svg-box  delete--item" style="display:flex">
                                 <svg class="delete-svg">
                                     <use xlink:href="#delete"></use>
                                 </svg>
@@ -65,7 +66,6 @@ class AddSelectedItem {
                             <div class="--value" style="display:none">${this.selectDOM.value}</div>
                             <div class="inner--text">${optionDOM.innerText}</div>`;
         li.innerHTML = itemHTML;
-        console.log( this.listDOM)
         this.listDOM.appendChild(li);
         this.letDeleteItem(li)
         //change DOM

@@ -1,7 +1,6 @@
 class AddItem{
     constructor(listDOM){
         this.listDOM = listDOM;
-        this.inputBoxDOM;
         this.inputDOM;
         this.parentDOM;
         this.buttonDOM;
@@ -14,7 +13,6 @@ class AddItem{
     }
     init(){
         this.parentDOM = this.listDOM.closest('.list--box');
-        this.inputBoxDOM = this.parentDOM.querySelector('.input--box');
         this.inputDOM = this.parentDOM.querySelector('input');
         this.buttonDOM = this.parentDOM.querySelector('.--button');
         this.buttonDOM.addEventListener('click', this.addItemHandler);
@@ -23,8 +21,7 @@ class AddItem{
     addItemHandler = () => {
         let li = document.createElement('li');
         li.dataset.itemId = `new-${++this.newId}`;
-        li.style.paddingBottom = '5px';
-        li.innerHTML = `<div class="svg-box delete-svg-box delete--item" style="display:flex">
+        li.innerHTML = `<div class="svg-box" style="display:flex">
                             <svg class="delete-svg">
                                 <use xlink:href="#delete"></use>
                             </svg>
@@ -37,16 +34,16 @@ class AddItem{
         newDeleteBtnDOM.addEventListener('click', this.deleteItemHandler(newDeleteBtnDOM))
     }
 
-    toggleEditStyle(){
-        this.deleteItemDOMS = this.listDOM.querySelectorAll('.delete--item');
-        this.inputBoxDOM.style.display = this.inputBoxDOM.style.display === 'none' ? 'flex' : 'none';
-        this.deleteItemDOMS.forEach(deleteDOM => {
-            deleteDOM.style.display = deleteDOM.style.display === 'flex' ? 'none' : 'flex';
-            const item = deleteDOM.closest('li');
-            item.style.paddingBottom = item.style.paddingBottom === '0px' ? '5px' : '0px';
-        });
-        this.listDOM.style.padding = this.listDOM.style.padding === '0px' ? '5px' : '0px';
-    }
+    // toggleEditStyle(){
+    //     this.deleteItemDOMS = this.listDOM.querySelectorAll('.delete--item');
+    //     this.inputBoxDOM.style.display = this.inputBoxDOM.style.display === 'none' ? 'flex' : 'none';
+    //     this.deleteItemDOMS.forEach(deleteDOM => {
+    //         deleteDOM.style.display = deleteDOM.style.display === 'flex' ? 'none' : 'flex';
+    //         const item = deleteDOM.closest('li');
+    //         item.style.paddingBottom = item.style.paddingBottom === '0px' ? '5px' : '0px';
+    //     });
+    //     this.listDOM.style.padding = this.listDOM.style.padding === '0px' ? '5px' : '0px';
+    // }
     letDeleteItems(){
         this.deleteItemDOMS.forEach(deleteDOM => {
             this.letDeleteItem(deleteDOM.closest('li'));
