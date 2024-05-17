@@ -1,12 +1,11 @@
 class Msg{
-    constructor(parentSelector){
-        this.parentSelector = parentSelector;
-        this.parentDOM;
+    constructor(parentDOM){
+        this.parentDOM = parentDOM;
         this.messageDOM;
         this.setDOMS();
     }
     setDOMS(){
-        this.parentDOM = document.querySelector(this.parentSelector);
+        console.log(this.parentDOM)
         this.messageDOM = this.parentDOM.querySelector('.--message');
 
     }

@@ -1,9 +1,12 @@
+import ItemInUse from "../itemInUse";
+
 class NavigateModal{
     constructor(selector) {
         this.selector = selector;
         this.modalDOM;
         this.addBtnDOM;
         this.backBtnDOM;
+        this.itemInUse = ItemInUse;
         this.setModalVariables();
         this.setModalListeners();
     }
@@ -17,23 +20,25 @@ class NavigateModal{
         this.modalDOM.classList.contains('--add') ? this.modalDOM.classList.remove('--add') : this.modalDOM.classList.add('--add');
     }
     nextModalHandler = () => {
-        // if(this.openItemDOM){
-        //     this.ulBoxDOM.scrollTop = this.openItemDOM.offsetTop - this.openItemDOM.oo - 10;
-        //     this.borderWarningCSS()
-        // }
-        // else{
+        const itemInUseDOM = this.itemInUse.getItem()
+        if(itemInUseDOM){
+            itemInUseDOM.classList.add('border--warning');
+        }
+        else{
             this.toggleNexBackStyles();
-        // }
+        }
     }
     backModalHandler = () => {
-        // if(this.createInputsDOMS 
-        // && (Array.from(this.createInputsDOMS).some(contentDOM => (contentDOM && contentDOM.value !== undefined && contentDOM.value?.trim() !== ''))
-        //     || Array.from(this.createInputsDOMS).some(contentDOM => (contentDOM && contentDOM.innerText.trim() !== '')))
-        // ){
-        //     this.addBoxForm.style.border = this.warningBorderCSS;
-        // }
+        // const itemInUse = this.itemInUse.getItem();
+
+        // if(this.modalDOM.classList.contains('--add') && this.itemInUse.checkFilled(this.modalDOM)
+        //     ){
+        //         const itemInUseDOM = this.itemInUse.getItem()
+        //         itemInUseDOM.classList.add('border--warning');
+        //     }
+
         // else{    
-        //     this.addBoxForm.style.border = 'none';
+        //     if(itemInUse) itemInUse.classList.remove('border--warning');
             this.toggleNexBackStyles();        
         // }
     }

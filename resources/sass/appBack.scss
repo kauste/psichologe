@@ -360,3 +360,12 @@ select {
         display: flex;
     }
 }
+.one-item.border--warning .data, .form.border--warning .data{
+    .var {
+        border:2px solid #ba2f47;
+        &:not(.last) {
+            border-right: none;
+        }
+    }
+
+}

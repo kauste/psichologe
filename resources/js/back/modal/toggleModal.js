@@ -1,9 +1,12 @@
+import ItemInUse from "../itemInUse";
+
 class ToggleModal{
     constructor(selector){
         this.selector = selector;
         this.modalBoxDOM;
         this.modalDOM;
         this.editSectionBtnDOM;
+        this.itemInUse = ItemInUse;
         this.init();
     }
 
@@ -28,16 +31,14 @@ class ToggleModal{
 
     closeModalHandler = (e) => {
         if(e.target === this.modalBoxDOM){
-            // if(this.openItemDOM){
-            //     this.borderWarningCSS();
-            // }
-            // else  if(this.createInputsDOMS 
-            //     && (Array.from(this.createInputsDOMS).some(contentDOM => (contentDOM && contentDOM.value !== undefined && contentDOM.value?.trim() !== ''))
-            //     || Array.from(this.createInputsDOMS).some(contentDOM => (contentDOM && contentDOM.innerText.trim() !== '')))
+            // const itemInUse = this.itemInUse.getItem();
+            // if((this.modalDOM.classList.contains('--add') && this.itemInUse.checkFilled(this.modalDOM)
+            // || this.itemInUse.getItem())
             // ){
-            //     this.addBoxForm.style.border = this.warningBorderCSS;
+            //     this.itemInUse.getItem().classList.add('border--warning');
             // }
-            // else{
+            // else {
+            //     if(itemInUse) itemInUse.classList.remove('border--warning');
                 this.modalDOM.style.animation = 'close-modal 0.5s ease forwards';
                 this.modalBoxDOM.style.animation = 'close-modal-box 0.5s ease forwards';
                 setTimeout(() => {

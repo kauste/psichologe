@@ -1,5 +1,5 @@
 const cssStyles = {
-    warningBorderStyle: '2px solid #ba2f47',
+    warningBorderStyle: '',
     scaleKeyframes:[
         {transform: 'scale(1) translate(0)'},
         {transform: 'scale(1.1) translate(10px, -5px)'},

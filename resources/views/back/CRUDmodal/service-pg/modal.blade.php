@@ -89,7 +89,7 @@
                             <div class="var list-input-box list--box">
                                 <ul data-name="service_types">
                                 </ul>
-                                <div class="input-box">
+                                <div class="input-box input--box">
                                     <svg class="add-btn-in --button">
                                         <use xlink:href="#plus"></use>
                                     </svg>

@@ -1,9 +1,9 @@
 import Swiper from 'swiper';
 import { Navigation, Autoplay, EffectFade } from 'swiper/modules';
-import { ToggleItems } from './toggltem';
+import { ItemsActivator } from './itemsActivator';
 import Msg from './msg';
 import ListSwiper from '../backAndFront/firstPage/listSwiper';
-import { InputItemManager, SelectItemManager } from './listItemManager ';
+import { InputListManager, SelectListManager } from './listItemManager ';
 import ModalActivaror from './modal/modalActivator';
 
 
@@ -28,7 +28,7 @@ class Router{
             case(this.currentPage('.article--edit')):
                 this.articleEditPage();
                 break;
-                case(this.currentPage('.article--create')):
+            case(this.currentPage('.article--create')):
                 this.articleCreatePage();
                 break;
             case(this.currentPage('.services--list')):
@@ -60,79 +60,110 @@ class Router{
               centeredSlides:true,
     
         });
-        const citationsModalActivator = new ModalActivaror('citation',
-                                                            '.citation--modal--box .ul--box',
-                                                            citationStoreRoute, 
-                                                            citationUpdateRoute, 
-                                                            citationDeleteRoute, 
-                                                            citationSwiper);
-        citationsModalActivator.activateModalNavigation();
-        citationsModalActivator.activateItemsToggler();
+        new ModalActivaror('citation',
+                           {
+                               activateModalNavigation:true,
+                               activateEdit:citationUpdateRoute,
+                               activateDelete:citationDeleteRoute,
+                               activateCreate:citationStoreRoute,
+                           },
+                           citationSwiper);
 
         // new SecondSectionUpdate('#about', new TopMessage);
-        const educationsModalActivator = new ModalActivaror('education', 
-                                                            '.education--modal--box .ul--box',
-                                                            educationStoreRoute, 
-                                                            educationUpdateRoute, 
-                                                            educationDeleteRoute, 
-                                                            new ListSwiper('#education'))
-        educationsModalActivator.activateModalNavigation();
-        educationsModalActivator.activateItemsToggler();
+        new ModalActivaror('education', 
+                            {
+                                activateModalNavigation:true,
+                                activateEdit:educationUpdateRoute,
+                                activateDelete:educationDeleteRoute,
+                                activateCreate:educationStoreRoute,
+                            },
+                            new ListSwiper('#education'))
 
-        const workModalActivator = new ModalActivaror('work',
-                                                      '.work--modal--box .ul--box',
-                                                      workStoreRoute, 
-                                                      workUpdateRoute, 
-                                                      workDeleteRoute, 
-                                                      new ListSwiper('#work'))
-        workModalActivator.activateItemsToggler();
-        workModalActivator.activateModalNavigation();
+        new ModalActivaror('work',
+                           {
+                               activateModalNavigation:true,
+                               activateEdit:workUpdateRoute,
+                               activateDelete:workDeleteRoute,
+                               activateCreate:workStoreRoute,
+                           },
+                             new ListSwiper('#work'))
+
     }
     articlesPage(){
-        const tagsNavModalActivator = new ModalActivaror('tagsNav',
-                                                          '.tagsNav--modal--box .ul--box',
-                                                          articlesTagStoreRoute, 
-                                                          articlesTagUpdateRoute, 
-                                                          articlesTagDeleteRoute, 
-                                                          null);
-        tagsNavModalActivator.activateModalNavigation();
-        tagsNavModalActivator.activateItemsToggler();
-        const boxDOM = document.querySelector('.tagsNav--modal--box .--form .list--box')
-        new SelectItemManager(boxDOM)
-        new Msg('body');
-        new ToggleItems('.articles--box', 
-                        '.edit--actions .--delete', 
-                        '.delete--actions',
-                        'let--delete'
-                        );
+        new Msg(document);
+        new ModalActivaror('tagsNav',
+                           {
+                               activateModalNavigation:true,
+                               activateEdit:articlesTagUpdateRoute,
+                               activateDelete:articlesTagDeleteRoute,
+                               activateCreate:articlesTagStoreRoute,
+                               activateLists:{ select:true },
+                           });
+        // const boxDOM = document.querySelector('.tagsNav--modal--box .--form .list--box')
+        // new SelectListManager(boxDOM)
+        new ItemsActivator('delete',
+                           document,
+                           {
+                                actionsParentSelector:'.articles--box .--actions',
+                                openBtnSelector:'.edit--actions .--delete', 
+                                cancelBtnSelector:'.delete--actions .--cancel',
+                                actionBtnSelector:'.delete--actions .--delete'
+                           },
+                          );
 
     }
     articlePage(){
-        new ToggleItems('.one--item',
-                        '.edit--actions .--delete', 
-                        '.delete--actions',
-                        'let--delete'
-                        );
+        new ItemsActivator('delete',
+                            document,
+                            {
+                                actionsParentSelector:'.one--item .--actions',
+                                openBtnSelector:'.edit--actions .--delete', 
+                                cancelBtnSelector:'.delete--actions .--cancel',
+                                actionBtnSelector:'.delete--actions .--delete'
+                            },
+                          );
     }
     articleCreatePage(){
         const listDOM = document.querySelector('.list--box');
-        new SelectItemManager(listDOM)
+        new SelectListManager(listDOM).letRemoveItems()
+        new ItemsActivator('edit',
+                            document,
+                            {
+                                actionsParentSelector:'.--form',
+                                openBtnSelector:null, 
+                                cancelBtnSelector:'.store--actions .--cancel',
+                                actionBtnSelector:'.store--actions .--store'
+                            },
+                            articleUpdateRoute,
+                            { select:true  },
+                          )
     }
     articleEditPage(){
         const listDOM = document.querySelector('.list--box');
-        new SelectItemManager(listDOM).letRemoveItems()
+        new SelectListManager(listDOM).letRemoveItems()
+        new ItemsActivator('edit',
+                            document,
+                            {
+                                actionsParentSelector:'.--form',
+                                openBtnSelector:null, 
+                                cancelBtnSelector:'.update--actions .--cancel',
+                                actionBtnSelector:'.update--actions .--update'
+                            },
+                            articleUpdateRoute,
+                            { select:true  },
+                            
+                        );
     }
     servicesPage(){
-        const modalActivaror = new ModalActivaror('service', 
-                                                   '.service--modal--box .ul--box',
-                                                   serviceStoreRoute, 
-                                                   serviceUpdateRoute, 
-                                                   serviceDeleteRoute, 
-                                                   null);
-        modalActivaror.activateModalNavigation();
-        modalActivaror.activateItemsToggler();
-        const boxDOM = document.querySelector('.service--modal--box .--form .list--box')
-        new InputItemManager(boxDOM)
+        new ModalActivaror('service',
+                           {
+                               activateModalNavigation:true,
+                               activateEdit:serviceUpdateRoute,
+                               activateDelete:serviceDeleteRoute,
+                               activateCreate:serviceStoreRoute,
+                               activateLists: { input:true },
+                           });
+
     }
     contactsPage(){
 

@@ -1,17 +1,39 @@
 import DOMmodifier from "./DOMmodifier";
-class ListItemsManager{
-    constructor(itemDOM, selector){
-        this.itemDOM = itemDOM;
-        this.selector = selector;
-        this.activate();
+import ItemInUse from "./itemInUse";
+
+class ListsIManager{
+    constructor(parentDOM, listTypes){
+        this.parentDOM = parentDOM;
+        this.listTypes = listTypes;
+        this.itemInUse = ItemInUse;
+        // this.activate();
     }
     activate() {
-        const boxDOMS = this.itemDOM.querySelectorAll(`.list--box:has(${this.selector})`);
-        if(this.selector === '.input--box')  boxDOMS.forEach(boxDOM => new InputItemManager(boxDOM).letRemoveItems());
-        if(this.selector === '.select--box')  boxDOMS.forEach(boxDOM => new SelectItemManager(boxDOM).letRemoveItems());
+        if(this.listTypes.input) this.activateInputLists()        
+        if(this.listTypes.select) this.activateSelectLists()
+    }
+    activateInputLists(){
+        const listsDOMS = this.parentDOM.querySelectorAll(`.list--box:has(.input--box)`);
+        listsDOMS.forEach(boxDOM => new InputListManager(boxDOM).letRemoveItems());
+    }
+    activateSelectLists(){
+        const listsDOMS = this.parentDOM.querySelectorAll(`.list--box:has(.select--box)`);
+        listsDOMS.forEach(boxDOM => new SelectListManager(boxDOM).letRemoveItems());
+
+    }
+    isFilled(){
+        const listsDOMS = this.parentDOM.querySelector('.list--box')
+        let filled = false;
+        listsDOMS.forEach(listDOM => {
+            if(listDOM !== '') {
+                filled = true;
+                return;
+            } 
+        })
+        return filled;
     }
 }
-class ListItemManager {
+class ListIManager {
     constructor(boxDOM){
         this.boxDOM = boxDOM;
         this.listDOM;
@@ -39,11 +61,9 @@ class ListItemManager {
         const itemDOM = removeBtnDOM.closest('li')
         removeBtnDOM.addEventListener('click', () => this.removeItemHandler(itemDOM))
     }
-    removeItemHandler (itemDOM) {
-        this.listDOM.removeChild(itemDOM)
-    }
+
 }
-class InputItemManager extends ListItemManager{
+class InputListManager extends ListIManager{
     constructor(boxDOM){
         super(boxDOM)
     }
@@ -62,16 +82,19 @@ class InputItemManager extends ListItemManager{
         this.removeBtnListener(element.querySelector('.delete--item'))
 
         this.inputDOM.value = '';
+
+    }
+    removeItemHandler (itemDOM) {
+        this.listDOM.removeChild(itemDOM)
     }
 
+
 }
-class SelectItemManager extends ListItemManager{
+class SelectListManager extends ListIManager{
     constructor(boxDOM){
         super(boxDOM)
         this.selectBoxDOM;
         this.selectDOM
-        this.init();
-
     }
     init(){
         super.init()
@@ -102,7 +125,7 @@ class SelectItemManager extends ListItemManager{
         this.findOptions()
     }
     removeItemHandler (itemDOM) {
-        super.removeItemHandler(itemDOM)
+        this.listDOM.removeChild(itemDOM)
         this.domModifierClass.prependElement(this.selectDOM, 
                                              'option', 
                                               itemDOM.querySelector('.inner--text').innerText, 
@@ -113,4 +136,4 @@ class SelectItemManager extends ListItemManager{
     }
 
 }
-export { InputItemManager, SelectItemManager, ListItemsManager};
+export { InputListManager, SelectListManager, ListsIManager};

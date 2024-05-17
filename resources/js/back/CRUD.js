@@ -1,16 +1,22 @@
+import Msg from "./msg";
+
 class CRUD {
-    constructor(parentDOM){
+    constructor(parentDOM, itemDOM, route){
         this.parentDOM = parentDOM;
+        this.itemDOM = itemDOM;
+        this.route = route;
         this.loadeBoxDOM;
         this.msgObj;
+        this.setDOMS();
     }
     setDOMS(){
         this.loadeBoxDOM = document.querySelector('.loader--box');
-        this.msgObj = new ModalMsg(this.parentDOM)
+        this.msgObj = new Msg(this.parentDOM)
     }
+
     store = (data) => () => {
         this.loadeBoxDOM.style.display = 'block';
-        axios.post(this.storeRoute, {data:data})
+        axios.post(this.route, {data:data})
         .then(res => {
             if(res.data.errors){  
                 this.msgObj.showMsg(res.data.errors)
@@ -26,7 +32,7 @@ class CRUD {
     }
     update = (data)  => () => {
         this.loadeBoxDOM.style.display = 'block';
-        axios.put(`${this.updateRoute}/${this.openItemId}`, {data:data})
+        axios.put(`${this.route}/${this.openItemId}`, {data:data})
         .then(res => {
             if(res.data.errors){
                 this.msgObj.showMsg(res.data.errors)
@@ -46,16 +52,14 @@ class CRUD {
     }
     delete = (openItemId)  => () => {
         this.loadeBoxDOM.style.display = 'block';
-        axios.delete(`${this.deleteRoute}/${openItemId}`)
+        axios.delete(`${this.route}/${openItemId}`)
         .then(res => {
             if(res.data.message){
                 this.sectionUlDOM.removeChild(this.secItemDOM);
                 this.ulDOM.removeChild(this.openItemDOM);
                 this.openItemDOM = null;
                 openItemId = null;
-                if(this.swiper){
-                    this.swiper.update();
-                }
+                if(this.swiper) this.swiper.update();
                 this.msgObj.showMsg(res.data.message);
             }
             else {

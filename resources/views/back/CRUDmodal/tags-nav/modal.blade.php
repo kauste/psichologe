@@ -91,7 +91,7 @@
                             <div class="var --var" data-name="tag" contenteditable="true"></div>
                             <div class="var list-input-box list--box">
                                 <ul data-name="articles"></ul>
-                                <div class="input-box">
+                                <div class="input-box select--box">
                                     <svg class="add-btn-in --button">
                                         <use xlink:href="#plus"></use>
                                     </svg>
