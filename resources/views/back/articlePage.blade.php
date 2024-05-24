@@ -11,7 +11,7 @@
     <section class="article-box one-item one--item">
         <div class="title-box ">
             <h2>{{$article->title}}</h2>
-            <div class="--actions">
+            <div >
                 <div class="edit--actions edit-actions">
                     <a href="{{route('back-article-edit', $article)}}" class="svg-box">
                         <svg class="edit-svg">
@@ -28,7 +28,7 @@
                     <button class="cancel-btn --cancel" type="button">Atšaukti</button>
                     @csrf
                     @method('delete')
-                    <button class="delete-btn do--delete" type="submit">Ištrinti</button>
+                    <button class="delete-btn" type="submit">Ištrinti</button>
                 </form>
             </div>
         </div>

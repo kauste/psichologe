@@ -11,7 +11,7 @@ use App\Models\Article;
 
 class ArticleTagController extends Controller
 {
-    public function updateArticlesTag(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $data = $request->data;
         $tag = ArticleTag::find($id);
@@ -43,9 +43,9 @@ class ArticleTagController extends Controller
             'priority' => $data['priority']
         ]);
         $tag->articles()->sync($data['articles']);
-        return response()->json(['message' => 'Straipsnio tagas yra pakeistas.']);
+        return response()->json(['message' => ['Straipsnio tagas yra pakeistas.']]);
     }
-    public function storeArticlesTag(Request $request)
+    public function store(Request $request)
     {
         $data = $request->data;
         $data['priority'] = (int) $data['priority'] ? (int) $data['priority'] : null;
@@ -84,14 +84,14 @@ class ArticleTagController extends Controller
                                                                   )->render();
         $sectionHTML = view('back.CRUDmodal.tags-nav.newTagInSec', ['tag' => $tag])->render();
 
-        return response()->json(['message' => 'Straipsni tagas yra sukurtas.',
+        return response()->json(['message' => ['Straipsni tagas yra sukurtas.'],
                                 'itemId' => $tag->id,
                                 'modalHTML' => $modalHTML,
                                 'sectionHTML' => $sectionHTML]);
     }
-    public function deleteArticlesTag($id)
+    public function delete($id)
     {
         ArticleTag::destroy((int) $id);
-        return response()->json(['message' => 'Kursai/mokymai yra ištrinti.']);
+        return response()->json(['message' => ['Kursai/mokymai yra ištrinti.']]);
     }
 }

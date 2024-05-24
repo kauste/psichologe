@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <section class="services-list services--list">
-    <div class="ul-box ul--box">
+    <div class="ul-box">
         <ul class="services-box">
             @foreach ($services ?? [] as $service)
             <li class="one-service">

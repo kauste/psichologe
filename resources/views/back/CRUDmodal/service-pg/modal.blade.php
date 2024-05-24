@@ -14,10 +14,10 @@
             </div>
             <div class="message --message"></div>
         </div>
-        <div class="modal-ul-box ul--box">
-            <ul class="--service">
+        <div class="modal-ul-box">
+            <ul class="items--parent">
                 @forelse ($services as $service)
-                <li class="one-item one-service one--item" id="service-edit-{{$service->id}}" data-priority="{{$service->priority}}">
+                <li class="one-item one-service one--item" data-id="{{$service->id}}" data-priority="{{$service->priority}}">
                     <div class="data --data">
                         <div class="var --var" data-name="service_title" contenteditable="false">{{$service->service_title}}</div>
                         <div class="var list-input-box list--box">
@@ -42,9 +42,9 @@
                                 <input type="text" />
                             </div>
                         </div>
-                        <div class="var last --last --priority {{$service->priority && $service->priority > 0 ? '' : 'small'}}" contenteditable="false">{{$service->priority && $service->priority > 0 ? $service->priority : ' nesvarbu'}}</div>
+                        <div class="var last --last --var {{$service->priority && $service->priority > 0 ? '' : 'small'}}" data-name="priority" contenteditable="false">{{$service->priority && $service->priority > 0 ? $service->priority : ' nesvarbu'}}</div>
                     </div>
-                    <div class="--actions">
+                    <div >
                         <div class="edit--actions edit-actions">
                             <div class="svg-box --edit">
                                 <svg class="edit-svg">
@@ -96,7 +96,7 @@
                                     <input type="text">
                                 </div>
                             </div>
-                            <div class="var last --priority" contenteditable="true"></div>
+                            <div class="var last --var" data-name="priority" contenteditable="true"></div>
                         </div>
                         <div class="store-actions store--actions">
                             <button class="cancel-btn --cancel" type="button">Atšaukti</button>

@@ -1,10 +1,9 @@
 import Swiper from 'swiper';
 import { Navigation, Autoplay, EffectFade } from 'swiper/modules';
-import { ItemsActivator } from './itemsActivator';
 import Msg from './msg';
 import ListSwiper from '../backAndFront/firstPage/listSwiper';
-import { InputListManager, SelectListManager } from './listItemManager ';
 import ModalActivaror from './modal/modalActivator';
+import CRUDactivator from './CRUD/activators/CRUDactivator';
 
 
 class Router{
@@ -34,7 +33,7 @@ class Router{
             case(this.currentPage('.services--list')):
                 this.servicesPage();
                 break;
-            case(this.currentPage('.contact--modal--box')):
+            case(this.currentPage('.contacts--page')):
                 this.contactsPage();
                 break;
         }
@@ -63,9 +62,11 @@ class Router{
         new ModalActivaror('citation',
                            {
                                activateModalNavigation:true,
-                               activateEdit:citationUpdateRoute,
-                               activateDelete:citationDeleteRoute,
-                               activateCreate:citationStoreRoute,
+                               activateCRUD:{
+                                    activateEdits:true,
+                                    activateDeletes:true,
+                                    activateCreate:true,
+                               }
                            },
                            citationSwiper);
 
@@ -73,18 +74,22 @@ class Router{
         new ModalActivaror('education', 
                             {
                                 activateModalNavigation:true,
-                                activateEdit:educationUpdateRoute,
-                                activateDelete:educationDeleteRoute,
-                                activateCreate:educationStoreRoute,
+                                activateCRUD:{
+                                    activateEdits:true,
+                                    activateDeletes:true,
+                                    activateCreate:true,
+                               }
                             },
                             new ListSwiper('#education'))
 
         new ModalActivaror('work',
                            {
                                activateModalNavigation:true,
-                               activateEdit:workUpdateRoute,
-                               activateDelete:workDeleteRoute,
-                               activateCreate:workStoreRoute,
+                               activateCRUD:{
+                                    activateEdits:true,
+                                    activateDeletes:true,
+                                    activateCreate:true,
+                                }
                            },
                              new ListSwiper('#work'))
 
@@ -94,79 +99,64 @@ class Router{
         new ModalActivaror('tagsNav',
                            {
                                activateModalNavigation:true,
-                               activateEdit:articlesTagUpdateRoute,
-                               activateDelete:articlesTagDeleteRoute,
-                               activateCreate:articlesTagStoreRoute,
-                               activateLists:{ select:true },
+                               activateCRUD:{
+                                    activateEdits:true,
+                                    activateDeletes:true,
+                                    activateCreate:true,
+                                    activateSelectLists:true,
+                                },
                            });
-        // const boxDOM = document.querySelector('.tagsNav--modal--box .--form .list--box')
-        // new SelectListManager(boxDOM)
-        new ItemsActivator('delete',
-                           document,
-                           {
-                                actionsParentSelector:'.articles--box .--actions',
-                                openBtnSelector:'.edit--actions .--delete', 
-                                cancelBtnSelector:'.delete--actions .--cancel',
-                                actionBtnSelector:'.delete--actions .--delete'
-                           },
-                          );
+
+        new CRUDactivator(  null,
+                            { activateDeletes:true },
+                            document.querySelector('#articles'),
+                         );
 
     }
     articlePage(){
-        new ItemsActivator('delete',
+        new CRUDactivator(  null,
+                            { activateDeletes:true },
                             document,
-                            {
-                                actionsParentSelector:'.one--item .--actions',
-                                openBtnSelector:'.edit--actions .--delete', 
-                                cancelBtnSelector:'.delete--actions .--cancel',
-                                actionBtnSelector:'.delete--actions .--delete'
-                            },
-                          );
+                         );
     }
     articleCreatePage(){
-        const listDOM = document.querySelector('.list--box');
-        new SelectListManager(listDOM).letRemoveItems()
-        new ItemsActivator('edit',
-                            document,
-                            {
-                                actionsParentSelector:'.--form',
-                                openBtnSelector:null, 
-                                cancelBtnSelector:'.store--actions .--cancel',
-                                actionBtnSelector:'.store--actions .--store'
+        new CRUDactivator(null,
+                            { activateCreate:true,
+                              activateSelectList:true,
                             },
-                            articleUpdateRoute,
-                            { select:true  },
-                          )
+                            document,
+                          );
+        
     }
     articleEditPage(){
-        const listDOM = document.querySelector('.list--box');
-        new SelectListManager(listDOM).letRemoveItems()
-        new ItemsActivator('edit',
-                            document,
-                            {
-                                actionsParentSelector:'.--form',
-                                openBtnSelector:null, 
-                                cancelBtnSelector:'.update--actions .--cancel',
-                                actionBtnSelector:'.update--actions .--update'
+        new CRUDactivator(  null,
+                            {   
+                                activateEdits:true,
+                                activateSelectList:true,
                             },
-                            articleUpdateRoute,
-                            { select:true  },
-                            
-                        );
+                           document,
+                         );
     }
     servicesPage(){
         new ModalActivaror('service',
                            {
                                activateModalNavigation:true,
-                               activateEdit:serviceUpdateRoute,
-                               activateDelete:serviceDeleteRoute,
-                               activateCreate:serviceStoreRoute,
-                               activateLists: { input:true },
+                                activateCRUD:{
+                                    activateEdits:true,
+                                    activateDeletes:true,
+                                    activateCreate:true,
+                                    activateInputLists: true,
+                                },
                            });
 
     }
     contactsPage(){
-
+        new ModalActivaror('contact',
+                           {
+                                activateCRUD:{
+                                    activateEdit:[document.querySelector('.contact--modal--box .one--item')],
+                                },
+                           });
     }
 }
 export default Router;

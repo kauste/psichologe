@@ -1,4 +1,4 @@
-import ItemInUse from "../itemInUse";
+import ItemInUse from "../CRUD/parts/itemInUse";
 
 class ToggleModal{
     constructor(selector){
@@ -31,20 +31,13 @@ class ToggleModal{
 
     closeModalHandler = (e) => {
         if(e.target === this.modalBoxDOM){
-            // const itemInUse = this.itemInUse.getItem();
-            // if((this.modalDOM.classList.contains('--add') && this.itemInUse.checkFilled(this.modalDOM)
-            // || this.itemInUse.getItem())
-            // ){
-            //     this.itemInUse.getItem().classList.add('border--warning');
-            // }
-            // else {
-            //     if(itemInUse) itemInUse.classList.remove('border--warning');
-                this.modalDOM.style.animation = 'close-modal 0.5s ease forwards';
-                this.modalBoxDOM.style.animation = 'close-modal-box 0.5s ease forwards';
-                setTimeout(() => {
-                    this.modalBoxDOM.classList.remove('show');
-                }, 100)
-            // }
+            const itemInUse = this.itemInUse.getItem();
+            if(itemInUse) return itemInUse.classList.add('border--warning');
+            this.modalDOM.style.animation = 'close-modal 0.5s ease forwards';
+            this.modalBoxDOM.style.animation = 'close-modal-box 0.5s ease forwards';
+            setTimeout(() => {
+                this.modalBoxDOM.classList.remove('show');
+            }, 100)
         }
     }
     

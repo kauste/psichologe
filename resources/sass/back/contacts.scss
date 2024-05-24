@@ -1,21 +1,20 @@
 body:has(.contacts-page) {
     &.back-office {
-        .contacts-page {
+        .contacts-page  {
             .edit-svg-box {
                 top: 115px;
                 right: 100px;
             }
         }
-        .modal .modal-ul-box {
+        .modal .one-contact {
             display: flex;
             flex-direction: column;
             gap:20px;
     
-            .contact-ul {
+            .data {
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
-                padding-left: 0;
-                li {
+                .var {
                     border: 1px solid $black;
                     padding: 10px 15px;
                     &.link {

@@ -79,8 +79,8 @@ class CRUDmodal extends ToggleModal{
     setSectionVariables(){
         this.loadeBoxDOM = document.querySelector('.loader--box');
         this.sectionDOM = document.querySelector(`#${this.selector}`);
-        this.sectionUlBoxDOM = this.sectionDOM.querySelector('.ul--box');
-        this.sectionUlDOM = this.sectionDOM.querySelector('.ul--box ul');
+        this.sectionUlBoxDOM = this.sectionDOM.querySelector('.items--parent');
+        this.sectionUlDOM = this.sectionDOM.querySelector('.items--parent ul');
         this.sectionliDOMS = this.sectionUlDOM.querySelectorAll('li');
         this.editSectionBtnDOM = this.sectionDOM.querySelector('.--edit');
     }
@@ -88,7 +88,7 @@ class CRUDmodal extends ToggleModal{
     //     this.msgObj = new ModalMsg(this.modalDOM)
     //     this.addBtnDOM= this.modalDOM.querySelector('.add--btn');
     //     this.backBtnDOM= this.modalDOM.querySelector('.back--btn');
-    //     this.ulBoxDOM = this.modalDOM.querySelector('.ul--box');
+    //     this.ulBoxDOM = this.modalDOM.querySelector('.items--parent');
     //     this.addBoxDOM = this.modalDOM.querySelector('.add--box');
     // }
     // toggleNexBackStyles(){

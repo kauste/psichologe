@@ -1,16 +1,12 @@
 import DOMmodifier from "./DOMmodifier";
-import ItemInUse from "./itemInUse";
 
 class ListsIManager{
-    constructor(parentDOM, listTypes){
+    constructor(parentDOM){
         this.parentDOM = parentDOM;
-        this.listTypes = listTypes;
-        this.itemInUse = ItemInUse;
-        // this.activate();
     }
     activate() {
-        if(this.listTypes.input) this.activateInputLists()        
-        if(this.listTypes.select) this.activateSelectLists()
+        if(this.parentDOM.querySelector(`.list--box:has(.input--box)`)) this.activateInputLists()        
+        if(this.parentDOM.querySelector(`.list--box:has(.select--box)`)) this.activateSelectLists()
     }
     activateInputLists(){
         const listsDOMS = this.parentDOM.querySelectorAll(`.list--box:has(.input--box)`);
@@ -20,17 +16,6 @@ class ListsIManager{
         const listsDOMS = this.parentDOM.querySelectorAll(`.list--box:has(.select--box)`);
         listsDOMS.forEach(boxDOM => new SelectListManager(boxDOM).letRemoveItems());
 
-    }
-    isFilled(){
-        const listsDOMS = this.parentDOM.querySelector('.list--box')
-        let filled = false;
-        listsDOMS.forEach(listDOM => {
-            if(listDOM !== '') {
-                filled = true;
-                return;
-            } 
-        })
-        return filled;
     }
 }
 class ListIManager {
@@ -68,6 +53,8 @@ class InputListManager extends ListIManager{
         super(boxDOM)
     }
     init(){
+        console.log('ce')
+
         super.init()
         this.inputDOM = this.boxDOM.querySelector('input')
     }
@@ -136,4 +123,4 @@ class SelectListManager extends ListIManager{
     }
 
 }
-export { InputListManager, SelectListManager, ListsIManager};
+export { SelectListManager, InputListManager, ListsIManager};

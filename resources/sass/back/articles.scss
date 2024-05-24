@@ -95,19 +95,16 @@
                 }
             }
         }
-        .update-actions{
+        .update-actions, .store-actions{
             display:flex;
             flex-direction: row;
             justify-content: end;
-            button, a{
-                width:fit-content;
-            }
         }
     }
     .articles-list{
         .article-delete-box.one-item{
             display:grid;
-            width:90%;
+            width:calc(100% - min(100px, 5%));
             grid-template-columns:1fr 120px;
             gap:10px;
             align-items: center;

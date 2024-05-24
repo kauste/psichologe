@@ -1,31 +1,39 @@
 @extends('layouts.appBack')
 @section('content')
 @include('back.CRUDmodal.contacts.modal')
-<section id="contact" class="contacts-page contacts--page">
-    <div class="in-section">
-        <div class="edit-svg-box --edit">
-            <svg>
-                <use xlink:href="#edit"></use>
-            </svg>
-        </div>
-        <div class="contacts-box">
-            <div class="contacts-item">
-                <div class="heading">Adresas:</div>
-                <div>{{$contacts->adress}}, {{$contacts->city}}</div>
+<div class="contacts-page contacts--page">
+    <section id="contact">
+        <div class="in-section items--parent">
+            <div class="edit-svg-box --edit">
+                <svg>
+                    <use xlink:href="#edit"></use>
+                </svg>
             </div>
-            <div class="contacts-item">
-                <div class="heading">Telefono numeris:</div>
-                <div style="display:block" class="tel-num tel-desktop">&#43;370 {{substr($contacts->telephone_number, 0, 3)}} {{substr($contacts->telephone_number, 2, 5)}}</div>
-                <a style="display:none" class=" tel-num tel-mobile" href="tel:+370{{str_replace([' ', '-'], '', $contacts->telephone_number)}}" target="_blank">&#43;370 {{substr($contacts->telephone_number, 0, 3)}} {{substr($contacts->telephone_number, 2, 5)}}</a>
+            <div class="one-contact one--item" data-id="{{$contacts->id}}">
+                <div class="var-box">
+                    <div class="heading">Adresas:</div>
+                    <div>
+                        <span class="--var" data-name="adress">{{$contacts->adress}}</span>
+                        <span>, </span>
+                        <span class="--var" data-name="city">{{$contacts->city}}</span>
+                    </div>
+                </div>
+                <div class="var-box">
+                    <div class="heading">Telefono numeris:</div>
+                    <div style="display:block" class="tel-num tel-desktop">
+                        <span>&#43;370 </span>
+                        <span class="--var" data-name="telephone_number">{{substr($contacts->telephone_number, 0, 3)}} {{substr($contacts->telephone_number, 2, 5)}}</span>
+                    </div>
+                </div>
+                <div class="var-box">
+                    <div class="heading">Elektroninis paštas:</div>
+                    <div class="email --var" data-name="telephone_number">{{$contacts->email}}</div>
+                </div>
             </div>
-            <div class="contacts-item">
-                <div class="heading">Elektroninis paštas:</div>
-                <a class="email" href="mailto:{{$contacts->email}}?subject=Mail from site">{{$contacts->email}}</a>
+            <div class="map-box">
+                <img src="{{asset('images/map.png')}}" alt="psichologes kabinetas zemelapyje">
             </div>
         </div>
-        <div class="map-box">
-            <img src="{{asset('images/map.png')}}" alt="psichologes kabinetas zemelapyje">
-        </div>
-    </div>
-</section>
+    </section>
+</div>
 @endsection

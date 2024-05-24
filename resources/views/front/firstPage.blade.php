@@ -84,7 +84,7 @@
             </div>
             <div class="education-swiper-box">
                 <div class="swiper --swiper">
-                    <ul class="swiper-wrapper swiper--wrapper">
+                    <ul class="swiper-wrapper">
                         @forelse ($data->educations as $edu)
                         <li class="one-education swiper-slide" id="education-{{$edu->id}}">
                             <div class="date --date">{{$edu->date}}</div>
@@ -115,7 +115,7 @@
             </div>
             <div class="work-swiper-box">
                 <div class="swiper --swiper">
-                    <ul class="swiper-wrapper swiper--wrapper">
+                    <ul class="swiper-wrapper swiper--wr">
                         @forelse ($data->works as $key => $work)
                         <li class="one-work swiper-slide">
                             <div class="date">{{$work->date}}</div>

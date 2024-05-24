@@ -14,16 +14,16 @@
             </div>
             <div class="message --message"></div>
         </div>
-        <div class="modal-ul-box ul--box">
-            <ul class="education-ul --education">
+        <div class="modal-ul-box">
+            <ul class="items--parent">
                 @forelse ($data->educations as $edu)
-                <li class="one-item one-education one--item" id="education-edit-{{$edu->id}}" data-priority="{{$edu->priority}}">
+                <li class="one-item one-education one--item" data-id="{{$edu->id}}" data-priority="{{$edu->priority}}">
                     <div class="data --data">
                         <div class="var --var" data-name="date" contenteditable="false">{{$edu->date}}</div>
                         <div class="var --var" data-name="about" contenteditable="false">{{$edu->about}}</div>
-                        <div class="var last --priority {{$edu->priority && $edu->priority > 0 ? '' : 'small'}}" contenteditable="false">{{$edu->priority && $edu->priority > 0 ? $edu->priority : ' nesvarbu'}}</div>
+                        <div class="var last --var {{$edu->priority && $edu->priority > 0 ? '' : 'small'}}" data-name="priority" contenteditable="false">{{$edu->priority && $edu->priority > 0 ? $edu->priority : ' nesvarbu'}}</div>
                     </div>
-                    <div class="--actions">
+                    <div >
                         <div class="edit--actions edit-actions">
                             <div class="svg-box --edit">
                                 <svg class="edit-svg">
@@ -66,7 +66,7 @@
                         <div class="data --data">
                             <div class="var --var" data-name="date" contenteditable="true"></div>
                             <div class="var --var" data-name="about" contenteditable="true"></div>
-                            <div class="var last --priority" contenteditable="true"></div>
+                            <div class="var last --var" data-name="priority" contenteditable="true"></div>
                         </div>
                         <div class="store-actions store--actions">
                             <button class="cancel-btn --cancel" type="button">Atšaukti</button>

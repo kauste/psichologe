@@ -14,10 +14,10 @@
             </div>
             <div class="message --message"></div>
         </div>
-        <div class="modal-ul-box ul--box">
-            <ul class="tags-nav-ul --tagsNav">
+        <div class="modal-ul-box">
+            <ul class="items--parent">
                 @forelse ($tags->tags as $tag)
-                <li class="one-item one-tagsNav one--item" id="tagsNav-edit-{{$tag->id}}" data-priority="{{$tag->priority}}">
+                <li class="one-item one-tagsNav one--item" data-id="{{$tag->id}}" data-priority="{{$tag->priority}}">
                     <div class="data --data">
                         <div class="var --var" data-name="tag" contenteditable="false">{{$tag->tag}}</div>
                         <div class="var list-input-box list--box">
@@ -45,9 +45,9 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="var last position --priority {{$tag->priority && $tag->priority > 0 ? '' : 'small'}}">{{$tag->priority && $tag->priority > 0 ? $tag->priority : ' nesvarbu'}}</div>
+                        <div class="var last position --var {{$tag->priority && $tag->priority > 0 ? '' : 'small'}}" data-name="priority">{{$tag->priority && $tag->priority > 0 ? $tag->priority : ' nesvarbu'}}</div>
                     </div>
-                    <div class="--actions">
+                    <div >
                         <div class="edit--actions edit-actions">
                             <div class="svg-box --edit">
                                 <svg class="edit-svg">
@@ -102,7 +102,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="var last --priority" contenteditable="true"></div>
+                            <div class="var last --var" data-name="priority" contenteditable="true"></div>
                         </div>
                         <div class="store-actions store--actions">
                             <button class="cancel-btn --cancel" type="button">Atšaukti</button>

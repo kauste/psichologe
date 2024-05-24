@@ -1,4 +1,4 @@
-import ItemInUse from "../itemInUse";
+import ItemInUse from "../CRUD/parts/itemInUse";
 
 class NavigateModal{
     constructor(selector) {
@@ -29,18 +29,7 @@ class NavigateModal{
         }
     }
     backModalHandler = () => {
-        // const itemInUse = this.itemInUse.getItem();
-
-        // if(this.modalDOM.classList.contains('--add') && this.itemInUse.checkFilled(this.modalDOM)
-        //     ){
-        //         const itemInUseDOM = this.itemInUse.getItem()
-        //         itemInUseDOM.classList.add('border--warning');
-        //     }
-
-        // else{    
-        //     if(itemInUse) itemInUse.classList.remove('border--warning');
-            this.toggleNexBackStyles();        
-        // }
+        this.toggleNexBackStyles();        
     }
     setModalListeners(){
         this.addBtnDOM.addEventListener('click', this.nextModalHandler)

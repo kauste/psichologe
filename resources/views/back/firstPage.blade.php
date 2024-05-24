@@ -24,11 +24,11 @@
                 </svg>
             </div>
             <img src="{{asset('images/bg3.webp')}}">
-            <div class="citations">
-                <div class="swiper citations--swiper ul--box">
-                    <ul class="swiper-wrapper">
+            <div class="citations" id="citation">
+                <div class="swiper citations--swiper">
+                    <ul class="swiper-wrapper items--parent">
                         @foreach ($citations ?? [] as $citation)
-                        <li class="swiper-slide" id="citation-{{$citation->id}}">
+                        <li class="swiper-slide one--item" data-id="{{$citation->id}}">
                             <div class="--var" data-name="citation">{{$citation->citation}}</div>
                             <small class="--var"  data-name="author">{{$citation->author ?? ''}}</small>
                         </li>
@@ -104,10 +104,10 @@
                 <h2>Išsilavinimas/Kursai</h2>
             </div>
             <div class="education-swiper-box">
-                <div class="swiper --swiper ul--box">
-                    <ul class="swiper-wrapper swiper--wrapper">
+                <div class="swiper --swiper">
+                    <ul class="swiper-wrapper items--parent">
                         @forelse ($data->educations as $edu)
-                        <li class="one-education swiper-slide" id="education-{{$edu->id}}" data-priority={{$edu->priority ?? null}}>
+                        <li class="swiper-slide one--item" data-id="{{$edu->id}}" data-priority={{$edu->priority ?? null}}>
                             <div class="date --var" data-name="date">{{$edu->date}}</div>
                             <div class="about-edu --var" data-name="about">{{$edu->about}}</div>
                         </li>
@@ -140,10 +140,10 @@
                 <h2>Darbo patirtis</h2>
             </div>
             <div class="work-swiper-box">
-                <div class="swiper --swiper ul--box">
-                    <ul class="swiper-wrapper swiper--wrapper">
+                <div class="swiper --swiper">
+                    <ul class="swiper-wrapper items--parent">
                         @forelse ($data->works as $key => $work)
-                        <li class="one-work swiper-slide" id="work-{{$work->id}}" data-priority={{$work->priority ?? null}}>
+                        <li class="swiper-slide one--item" data-id="{{$work->id}}" data-priority={{$work->priority ?? null}}>
                             <div class="date --var" data-name="date">{{$work->date}}</div>
                             <div class="about-work --var" data-name="about">{{$work->about}}</div>
                         </li>

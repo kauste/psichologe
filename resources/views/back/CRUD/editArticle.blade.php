@@ -15,7 +15,7 @@
             </div>
             <div class="message --message"></div>
         </div>
-        <div class="form --form">
+        <div class="form one--item">
             <div class="data --data">
                 <div class="with-error-box">
                     <div class="title-box">

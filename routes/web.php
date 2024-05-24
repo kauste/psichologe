@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\FirstPageController;
+use App\Http\Controllers\CitationController;
+use App\Http\Controllers\EducationController;
+use App\Http\Controllers\WorkController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ArticleTagController;
 use App\Http\Controllers\FrontController;
@@ -34,20 +37,19 @@ Auth::routes(['register' => false]);
 Route::prefix('admin')->name('back-')->middleware(['auth'])->group(function(){
     Route::get('first-pg', [FirstPageController::class, 'index'])->name('first-pg');
     //citations
-    Route::put('update-citation/{id?}', [FirstPageController::class, 'updateCitation'])->name('update-citation');
-    Route::post('store-citation', [FirstPageController::class, 'storeCitation'])->name('store-citation');
-    Route::delete('delete-citation/{id?}', [FirstPageController::class, 'deleteCitation'])->name('delete-citation');
-    // work
+    Route::put('update-citation/{id?}', [CitationController::class, 'update'])->name('update-citation');
+    Route::post('store-citation', [CitationController::class, 'store'])->name('store-citation');
+    Route::delete('delete-citation/{id?}', [CitationController::class, 'delete'])->name('delete-citation');
     //about
     Route::put('update-about', [FirstPageController::class, 'updateAbout'])->name('update-about');
     // education
-    Route::put('update-education/{id?}', [FirstPageController::class, 'updateEducation'])->name('update-education');
-    Route::post('store-education', [FirstPageController::class, 'storeEducation'])->name('store-education');
-    Route::delete('delete-education/{id?}', [FirstPageController::class, 'deleteEducation'])->name('delete-education');
+    Route::put('update-education/{id?}', [EducationController::class, 'update'])->name('update-education');
+    Route::post('store-education', [EducationController::class, 'store'])->name('store-education');
+    Route::delete('delete-education/{id?}', [EducationController::class, 'delete'])->name('delete-education');
     // work
-    Route::put('update-work/{id?}', [FirstPageController::class, 'updateWork'])->name('update-work');
-    Route::post('store-work', [FirstPageController::class, 'storeWork'])->name('store-work');
-    Route::delete('delete-work/{id?}', [FirstPageController::class, 'deleteWork'])->name('delete-work');
+    Route::put('update-work/{id?}', [WorkController::class, 'update'])->name('update-work');
+    Route::post('store-work', [WorkController::class, 'store'])->name('store-work');
+    Route::delete('delete-work/{id?}', [WorkController::class, 'delete'])->name('delete-work');
     // articles page
     Route::get('/articles', [ArticleController::class, 'articlesList'])->name('articles-list');
     Route::get('/article/{url?}', [ArticleController::class, 'articlePage'])->name('article-page');
@@ -58,14 +60,14 @@ Route::prefix('admin')->name('back-')->middleware(['auth'])->group(function(){
     Route::put('/article-update', [ArticleController::class, 'articleUpdate'])->name('article-update');
     Route::delete('/article-delete/{id?}', [ArticleController::class, 'articledelete'])->name('article-delete');
     // article tag
-    Route::put('update-articles-tag/{id?}', [ArticleTagController::class, 'updateArticlesTag'])->name('update-articles-tag');
-    Route::post('store-articles-tag', [ArticleTagController::class, 'storeArticlesTag'])->name('store-articles-tag');
-    Route::delete('delete-articles-tag/{id?}', [ArticleTagController::class, 'deleteArticlesTag'])->name('delete-articles-tag');
+    Route::put('update-articles-tag/{id?}', [ArticleTagController::class, 'update'])->name('update-articles-tag');
+    Route::post('store-articles-tag', [ArticleTagController::class, 'store'])->name('store-articles-tag');
+    Route::delete('delete-articles-tag/{id?}', [ArticleTagController::class, 'delete'])->name('delete-articles-tag');
     // services
-    Route::get('/services', [ServiceController::class, 'servicesList'])->name('services-list');
-    Route::post('store-service', [ServiceController::class, 'storeService'])->name('store-service');
-    Route::put('update-service/{id?}', [ServiceController::class, 'updateService'])->name('update-service');
-    Route::delete('delete-service/{id?}', [ServiceController::class, 'deleteService'])->name('delete-service');
+    Route::get('/services', [ServiceController::class, 'list'])->name('services-list');
+    Route::post('store-service', [ServiceController::class, 'store'])->name('store-service');
+    Route::put('update-service/{id?}', [ServiceController::class, 'update'])->name('update-service');
+    Route::delete('delete-service/{id?}', [ServiceController::class, 'delete'])->name('delete-service');
     // contacts
     Route::get('/contacts', [ContactController::class, 'contactsPage'])->name('contacts');
     Route::get('/update-contacts', [ContactController::class, 'updateContacts'])->name('update-contacts');

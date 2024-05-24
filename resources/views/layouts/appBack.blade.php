@@ -18,33 +18,35 @@
     <!-- Scripts -->
     <script>
         //about
-        const editAboutRoute = "{{route('back-update-about')}}";
+    const routes = {
+        editAboutRoute: "{{route('back-update-about')}}",
         //citation
-        const citationStoreRoute = "{{route('back-store-citation')}}";
-        const citationUpdateRoute = "{{route('back-update-citation')}}";
-        const citationDeleteRoute = "{{route('back-delete-citation')}}";
+        citationStoreRoute: "{{route('back-store-citation')}}",
+        citationUpdateRoute: "{{route('back-update-citation')}}",
+        citationDeleteRoute: "{{route('back-delete-citation')}}",
         // education
-        const educationUpdateRoute = "{{route('back-update-education')}}";
-        const educationStoreRoute = "{{route('back-store-education')}}";
-        const educationDeleteRoute = "{{route('back-delete-education')}}";
+        educationStoreRoute: "{{route('back-store-education')}}",
+        educationUpdateRoute: "{{route('back-update-education')}}",
+        educationDeleteRoute: "{{route('back-delete-education')}}",
         //work
-        const workUpdateRoute = "{{route('back-update-work')}}";
-        const workStoreRoute = "{{route('back-store-work')}}";
-        const workDeleteRoute = "{{route('back-delete-work')}}";
+        workStoreRoute: "{{route('back-store-work')}}",
+        workUpdateRoute: "{{route('back-update-work')}}",
+        workDeleteRoute: "{{route('back-delete-work')}}",
         //articleTag
-        const articlesTagUpdateRoute = "{{route('back-update-articles-tag')}}";
-        const articlesTagStoreRoute = "{{route('back-store-articles-tag')}}";
-        const articlesTagDeleteRoute = "{{route('back-delete-articles-tag')}}";
+        tagsNavStoreRoute: "{{route('back-store-articles-tag')}}",
+        tagsNavUpdateRoute: "{{route('back-update-articles-tag')}}",
+        tagsNavDeleteRoute: "{{route('back-delete-articles-tag')}}",
         //articles
-        const articleRoute = "{{route('back-article-page')}}";
-        const articleStoreRoute = "{{route('back-article-store')}}";
-        const articleUpdateRoute = "{{route('back-article-update')}}";
+        articleStoreRoute: "{{route('back-article-store')}}",
+        articleRoute: "{{route('back-article-page')}}",
+        articleUpdateRoute: "{{route('back-article-update')}}",
         //service
-        const serviceStoreRoute = "{{route('back-store-service')}}";
-        const serviceUpdateRoute = "{{route('back-update-service')}}";
-        const serviceDeleteRoute = "{{route('back-delete-service')}}";
+        serviceStoreRoute: "{{route('back-store-service')}}",
+        serviceUpdateRoute: "{{route('back-update-service')}}",
+        serviceDeleteRoute: "{{route('back-delete-service')}}",
         // contacts
-        const contactsUpdateRoute = "{{route('back-update-contacts')}}";
+        contactsUpdateRoute: "{{route('back-update-contacts')}}",
+    };
 
     </script>
     {{-- <link rel="stylesheet" href="{{asset('/build/assets/appBack-1863782e.css?v='. time())}}">

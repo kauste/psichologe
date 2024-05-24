@@ -21,9 +21,10 @@ body:has(.articles-list, .article-page, .article-create, .article-edit) {
     height: 100%;
 }
 .articles-box {
-    width: min(1000px, calc(100vw - 230px));
-    display:grid;
-    gap:35px;
+    width: min(1100px, 100vw - 260px);
+    display: grid;
+    gap: 35px;
+    padding-left: min(100px, 5%);
     .article-box {
         width: 90%;
         height:150px;

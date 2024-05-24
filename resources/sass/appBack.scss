@@ -79,22 +79,33 @@ select {
     align-items: end;
     button,
     a {
+        display:inline-block;
         text-decoration: none;
         color: $black;
         border: 2px solid $black;
         padding: 8px 20px;
-        width: max(90%, 120px);
+        width: 120px;
         height: fit-content;
+        text-align: center;
     }
     .update-btn, .store-btn {
         background-color: $electric;
         color: $bg;
+        &:hover{
+            background: $electricDark;
+        }
     }
     .cancel-btn {
         background: #ccc;
+        &:hover{
+            background: #aaa;
+        }
     }
     .delete-btn {
         background-color: $pink;
+        &:hover{
+            background: $pinkDark;
+        }
     }
 }
 
@@ -273,7 +284,7 @@ select {
         display: none;
     }
 }
-.one-item.let--edit {
+.one-item.let--update {
     .update-actions {
         display: flex;
     }

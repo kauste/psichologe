@@ -14,15 +14,15 @@
             </div>
             <div class="message --message"></div>
         </div>
-        <div class="modal-ul-box ul--box">
-            <ul class="--citation">
+        <div class="modal-ul-box">
+            <ul class="items--parent">
                 @forelse ($citations as $citation)
-                <li class="one-item one-citation one--item" id="citation-edit-{{$citation->id}}">
+                <li class="one-item one-citation one--item" data-id="{{$citation->id}}">
                     <div class="data --data">
                         <div class="var --var" data-name="citation" contenteditable="false">{{$citation->citation}}</div>
                         <div class="var last --var {{$citation->author ? '' : 'small'}}" data-name="author" contenteditable="false">{{$citation->author ?? ''}}</div>
                     </div>
-                    <div class="--actions">
+                    <div >
                         <div class="edit--actions edit-actions">
                             <div class="svg-box --edit">
                                 <svg class="edit-svg">

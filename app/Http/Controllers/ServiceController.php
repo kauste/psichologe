@@ -10,7 +10,7 @@ use App\Models\ServiceType;
 
 class ServiceController extends Controller
 {
-    public function servicesList()
+    public function list()
     {
         $services = Service::where('id', '>', '0')
                             ->orderByRaw('priority IS NULL, priority')
@@ -18,9 +18,11 @@ class ServiceController extends Controller
         return view('back.servicesPage', ['pageName' => 'services', 
                                            'services' => $services]);
     }
-    public function storeService(Request $request)
+    public function store(Request $request)
     {
         $data = $request->data;
+        $data['priority'] = (int) $data['priority'] ? (int) $data['priority'] : null;
+
         $validator = Validator::make($data,
         [
             'service_title' => 'required|string|min:3|max:100',
@@ -58,16 +60,21 @@ class ServiceController extends Controller
         }
         $modalHTML = view('back.CRUDmodal.service-pg.newServiceInModal', ['service' => $service])->render();
         $sectionHTML = view('back.CRUDmodal.service-pg.newServiceInSec', ['service' => $service])->render();  
-        return response()->json(['message' => 'Pridėta nauja paslauga.', 
+        return response()->json(['message' => ['Pridėta nauja paslauga.'], 
                                  'modalHTML' => $modalHTML,
                                  'sectionHTML' => $sectionHTML,
                                  'itemId' => $service->id,
                                 ]);
     }
-    public function updateService(Request $request, $id)
+    public function update(Request $request, $id)
     {
+
         $data = $request->data;
         $data['id'] = (int) $id;
+        dump($data['priority'] );
+        $data['priority'] = (int) $data['priority'] ? (int) $data['priority'] : null;
+        dump($data['priority'] );
+
         $validator = Validator::make($data,
         [
             'service_title' => 'required|string|min:3|max:100',
@@ -116,14 +123,14 @@ class ServiceController extends Controller
                 ]);
             });
         }
-        return response()->json(['message' => 'Paslauga yra pakeista.']);
+        return response()->json(['message' => ['Paslauga yra pakeista.']]);
 
     }
-    public function deleteService($id)
+    public function delete($id)
     {
         $service = Service::find((int) $id);
         $service->serviceTypes()->delete();
         $service->delete();
-        return response()->json(['message' => 'Paslauga yra ištrinta.']);
+        return response()->json(['message' => ['Paslauga yra ištrinta.']]);
     }
 }

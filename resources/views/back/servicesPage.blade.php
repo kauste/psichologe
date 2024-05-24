@@ -8,18 +8,18 @@
             <use xlink:href="#edit"></use>
         </svg>
     </div>
-    <div class="ul-box ul--box">
-        <ul class="services-box">
+    <div class="ul-box">
+        <ul class="services-box items--parent">
             @foreach ($services ?? [] as $service)
-            <li id="service-{{$service->id}}" data-priority="{{$service->priority}}" class="one-service">
+            <li data-id="{{$service->id}}" data-priority="{{$service->priority}}" class="one-service one--item">
                 <div>
-                    <h3>{{$service->service_title}}</h3>
+                    <h3 class="--var" data-name="service_title">{{$service->service_title}}</h3>
                 </div>
                 @if($service->serviceTypes)
-                <div class="service--types--ul--box">
-                    <ul>
+                <div class="list--box">
+                    <ul data-name="service_type">
                         @foreach ($service->serviceTypes ?? [] as $oneService)
-                        <li data-service-type-id="{{$oneService->id}}">{{$oneService->service_type}}</li>
+                        <li>{{$oneService->service_type}}</li>
                         @endforeach
                     </ul>
                 </div>

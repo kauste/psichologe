@@ -34,19 +34,19 @@ body:has(.contacts-page) {
             position:relative;
         }
     }
-    .contacts-page {
+    .contacts-page section{
         display: flex;
         justify-content: center;
         .in-section {
             width: min(1200px, 90%);
 
-            .contacts-box {
+            .one-contact {
                 width: 50%;
                 padding-top: 200px;
                 display:flex;
                 flex-direction: column;
                 gap:10px;
-                .contacts-item{
+                .var-box{
                     display:flex;
                     gap:5px;
                     div, a{

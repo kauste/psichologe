@@ -5,15 +5,16 @@ class Msg{
         this.setDOMS();
     }
     setDOMS(){
-        console.log(this.parentDOM)
         this.messageDOM = this.parentDOM.querySelector('.--message');
 
     }
-    showMsg(errors){
+    showMsg(msg){
+        console.log('ce')
         let msgHTML = '';
-        errors.forEach(error => {
+        msg.forEach(error => {
             msgHTML += `<div>${error}</div>`
         })
+        console.log(msgHTML);
         this.messageDOM.innerHTML = msgHTML;;
         this.messageDOM.style.display = 'block';
         this.removeMsg();
