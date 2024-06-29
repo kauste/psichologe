@@ -2,13 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Front\FrontController;
+use App\Http\Controllers\Front\RegistrationController;
+use App\Http\Controllers\Front\GoogleCalendarController;
+
 use App\Http\Controllers\FirstPageController;
 use App\Http\Controllers\CitationController;
 use App\Http\Controllers\EducationController;
 use App\Http\Controllers\WorkController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ArticleTagController;
-use App\Http\Controllers\FrontController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ContactController;
 
@@ -23,16 +26,17 @@ use App\Http\Controllers\ContactController;
 |
 */
 
+
+Auth::routes(['register' => false]);
 Route::get('/', [FrontController::class, 'firstPage'])->name('first-page');
 Route::get('/straipsniai', [FrontController::class, 'articlesList'])->name('articles-list');
 Route::get('/straipsnis/{article}', [FrontController::class, 'articlePage'])->name('article-page');
 Route::get('/psichologes-paslaugos', [FrontController::class, 'services'])->name('services');
 Route::get('/kontaktai', [FrontController::class, 'contacts'])->name('contacts');
+Route::get('/registracija/', [RegistrationController::class, 'registration'])->name('registration');
+Route::post('/registruoti', [RegistrationController::class, 'storeRegistration'])->name('registration-store');
+Route::get('/uzregistruota', [RegistrationController::class, 'registered'])->name('registered');
 
-
-
-
-Auth::routes(['register' => false]);
 
 Route::prefix('admin')->name('back-')->middleware(['auth'])->group(function(){
     Route::get('first-pg', [FirstPageController::class, 'index'])->name('first-pg');
@@ -41,7 +45,7 @@ Route::prefix('admin')->name('back-')->middleware(['auth'])->group(function(){
     Route::post('store-citation', [CitationController::class, 'store'])->name('store-citation');
     Route::delete('delete-citation/{id?}', [CitationController::class, 'delete'])->name('delete-citation');
     //about
-    Route::put('update-about', [FirstPageController::class, 'updateAbout'])->name('update-about');
+    Route::put('update-about/{id?}', [FirstPageController::class, 'updateAbout'])->name('update-about');
     // education
     Route::put('update-education/{id?}', [EducationController::class, 'update'])->name('update-education');
     Route::post('store-education', [EducationController::class, 'store'])->name('store-education');
@@ -57,7 +61,7 @@ Route::prefix('admin')->name('back-')->middleware(['auth'])->group(function(){
     Route::get('/article-create', [ArticleController::class, 'articleCreate'])->name('article-create');
     Route::post('/article-store', [ArticleController::class, 'articleStore'])->name('article-store');
     Route::get('/article-edit/{article?}', [ArticleController::class, 'articleEdit'])->name('article-edit');
-    Route::put('/article-update', [ArticleController::class, 'articleUpdate'])->name('article-update');
+    Route::put('/article-update/{id?}', [ArticleController::class, 'articleUpdate'])->name('article-update');
     Route::delete('/article-delete/{id?}', [ArticleController::class, 'articledelete'])->name('article-delete');
     // article tag
     Route::put('update-articles-tag/{id?}', [ArticleTagController::class, 'update'])->name('update-articles-tag');
@@ -70,10 +74,9 @@ Route::prefix('admin')->name('back-')->middleware(['auth'])->group(function(){
     Route::delete('delete-service/{id?}', [ServiceController::class, 'delete'])->name('delete-service');
     // contacts
     Route::get('/contacts', [ContactController::class, 'contactsPage'])->name('contacts');
-    Route::get('/update-contacts', [ContactController::class, 'updateContacts'])->name('update-contacts');
-
-
-
-
+    Route::put('/update-contacts/{id?}', [ContactController::class, 'update'])->name('update-contacts');
 });
+
+
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

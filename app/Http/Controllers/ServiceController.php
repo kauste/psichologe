@@ -20,7 +20,9 @@ class ServiceController extends Controller
     }
     public function store(Request $request)
     {
-        $data = $request->data;
+
+        $data = $request->all();
+        $data['service_types'] = explode(',', $data['service_types']);
         $data['priority'] = (int) $data['priority'] ? (int) $data['priority'] : null;
 
         $validator = Validator::make($data,
@@ -68,21 +70,17 @@ class ServiceController extends Controller
     }
     public function update(Request $request, $id)
     {
+        $data = $request->all();
+        $data['service_types'] = explode(',', $data['service_types']);
 
-        $data = $request->data;
         $data['id'] = (int) $id;
-        dump($data['priority'] );
         $data['priority'] = (int) $data['priority'] ? (int) $data['priority'] : null;
-        dump($data['priority'] );
-
         $validator = Validator::make($data,
         [
             'service_title' => 'required|string|min:3|max:100',
             'priority' => 'nullable|integer|min:1',
             'service_types' => 'nullable|array',
-            'service_types.*'=> 'required|integer|exists:service_types,id',
-            'new_service_types' => 'nullable|array',
-            'new_service_types.*' => 'required|string|min:3|max:120',
+            'service_types.*'=> 'required|string',
             'id' => 'required|integer|exists:services,id'
         ],
         [
@@ -94,13 +92,6 @@ class ServiceController extends Controller
             'priority.min' => 'Prioritetas turi būti teigiamas skaičius.',
             'service_types.array' => 'Paslaugos tipai turi būti masyve.',
             'service_types.*.required' => 'Paslaugos tipas negali būti tuščias.',
-            'service_types.*.integer' => 'Paslaugos tipai turi būti sveikieji skaičiai.',
-            'service_types.*.exists' => 'Norimas ištrinti paslaugos tipas turi egsiztuoti duomenų bazėje.',
-            'new_service_types.array' => 'Nauji paslaugos tipai turi būti masyve.',
-            'new_service_types.*.required' => 'Naujas paslaugos tipas negali būti tuščias.',
-            'new_service_types.*.string' => 'Naujas paslaugos tipas turi būti string tipo kintamasis.',
-            'new_service_types.*.min' => 'Naujas paslaugos tipas turi būti ne trumpesnis nei 3 simboliai.',
-            'new_service_types.*.max' => 'Naujas paslaugos tipas turi būti ne ilgesnis nei 120 simbolių.',
             'id.required' => 'Norimos redaguoti paslaugos id yra privalomas.',
             'id.integer' => 'Norimos redaguoti paslaugos id turi būti sveikasis skaičius.',
             'id.required' => 'Norima redaguoti paslauga turi egzistuoti duomenų bazėje.',
@@ -115,9 +106,9 @@ class ServiceController extends Controller
             'priority' => $data['priority'],
         ]);
         $service->serviceTypes()->delete();
-        if($data['service_type']){
-            collect($data['service_type'])->each(function($serviceType) use ($id, &$serviceTypes){
-                $serviceType = ServiceType::create([
+        if($data['service_types']){
+            collect($data['service_types'])->each(function($serviceType) use ($id){
+                ServiceType::create([
                     'service_type' => $serviceType,
                     'service_id'=> $id,
                 ]);

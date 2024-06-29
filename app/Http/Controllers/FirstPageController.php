@@ -39,15 +39,16 @@ class FirstPageController extends Controller
     // about
     public function updateAbout(Request $request)
     {
+        $data = $request->all();
         // validacija, kad ne per daug raidziu butu
-        $validator = Validator::make($request->all(), [
-            'about' => 'required|max:5000|string',
+        $validator = Validator::make($data, [
+            'about_me' => 'required|max:5000|string',
         ]);
         if($validator->fails()){
             return response()->json(['errors' => $validator->errors()->all()]);
         };
-        FirstPage::where('user_id', Auth::user()->id)->update(['about_me' => $request->about]);
-        return response()->json(['message' =>'Informacija apie tave, mama, yra pakeista.']);
+        FirstPage::where('user_id', Auth::user()->id)->update(['about_me' => $data['about_me']]);
+        return response()->json(['message' => ['Informacija apie tave, mama, yra pakeista.']]);
     }
 
 

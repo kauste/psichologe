@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Validator;
 class EducationController extends Controller
 {
     public function store(Request $request){
-        $data = $request->data;
+        $data = $request->all();
+        dump( $data );
         $data['priority'] = (int) $data['priority'] ? (int) $data['priority'] : null;
 
         $validator = Validator::make($data, [
@@ -38,7 +39,9 @@ class EducationController extends Controller
     }
     public function update(Request $request)
     {
-        $data = $request->data;
+        $data = $request->all();
+        dump( $data );
+
         $data['priority'] = (int) $data['priority'] ? (int) $data['priority'] : null;
 
         $id = (int) $request->id;

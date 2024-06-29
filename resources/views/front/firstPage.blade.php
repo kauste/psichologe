@@ -30,7 +30,7 @@
                     </ul>
                 </div>
                 <div class="swiper-button-next">
-                    <div class="round-button pink">
+                    <div class="button round pink bg-electric">
                         <svg class="chevron chevron-right">
                             <use xlink:href="#chevron"></use>
                         </svg>
@@ -48,14 +48,14 @@
             <a class="email" href="mailto:{{$contacts->email}}?subject=Mail from site">{{$contacts->email}}</a>
             <div class="media">
                 @if($contacts->facebook)
-                <a class="round-button pink" href="{{$contacts->facebook}}" target="_blank">
+                <a class="button round pink bg-light-electric" href="{{$contacts->facebook}}" target="_blank">
                     <svg>
                         <use xlink:href="#fb"></use>
                     </svg>
                 </a>
                 @endif
                 @if($contacts->linkedin)
-                <a class="round-button pink" href="{{$contacts->linkedin}}" target="_blank">
+                <a class="button round pink bg-light-electric" href="{{$contacts->linkedin}}" target="_blank">
                     <svg>
                         <use xlink:href="#linkedin"></use>
                     </svg>
@@ -69,8 +69,10 @@
             <div class="heading-box --heading">
                 <h2>Apie mane</h2>
             </div>
-            <div class="--paragraph paragraph">
-                <p>{{$data->about_me}}</p>
+            <div class="paragraph-box">
+                <div class="data --data">
+                    <p>{{$data->about_me}}</p>
+                </div>
             </div>
             <svg class="bamboo --bamboo">
                 <use xlink:href="#bamboo"></use>
@@ -95,12 +97,12 @@
                         @endforelse
                     </ul>
                 </div>
-                <div class="swiper-button-prev round-button electric lardge swiper--button--prev disabled">
+                <div class="swiper-button-prev button round electric bg-light-sand lardge swiper--button--prev ">
                     <svg class="chevron chevron-up">
                         <use xlink:href="#chevron"></use>
                     </svg>
                 </div>
-                <div class="swiper-button-next round-button electric lardge swiper--button--next">
+                <div class="swiper-button-next button round electric bg-light-sand lardge swiper--button--next">
                     <svg class="chevron chevron-down">
                         <use xlink:href="#chevron"></use>
                     </svg>
@@ -126,12 +128,12 @@
                         @endforelse
                     </ul>
                 </div>
-                <div class="swiper-button-prev round-button pink lardge swiper--button--prev disabled">
+                <div class="swiper-button-prev button round pink bg-electric lardge swiper--button--prev ">
                     <svg class="chevron chevron-up">
                         <use xlink:href="#chevron"></use>
                     </svg>
                 </div>
-                <div class="swiper-button-next round-button lardge pink swiper--button--next">
+                <div class="swiper-button-next button round lardge pink bg-electric swiper--button--next">
                     <svg class="chevron chevron-down">
                         <use xlink:href="#chevron"></use>
                     </svg>

@@ -11,7 +11,7 @@ class CitationController extends Controller
 {
     public function store(Request $request)
     {
-        $data = $request->data;
+        $data = $request->all();
         $validator = Validator::make($data, [
             'citation' => 'required|min:4|max:150',
             'author' => 'nullable|string|min:1|max:50',
@@ -34,7 +34,7 @@ class CitationController extends Controller
     }
     public function update(Request $request)
     {
-        $data = $request->data;
+        $data = $request->all();
         $id = (int) $request->id;
         $validator = Validator::make($data, [
             'citation' => 'required|min:4|max:150',

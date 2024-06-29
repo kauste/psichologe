@@ -14,7 +14,7 @@
             </div>
             <div class="message --message"></div>
         </div>
-        <div class="modal-ul-box">
+        <div class="modal-items-box">
             <ul class="items--parent">
                 @forelse ($citations as $citation)
                 <li class="one-item one-citation one--item" data-id="{{$citation->id}}">

@@ -11,7 +11,15 @@ class Article extends Model
 {
     use HasFactory;
     
-    protected $fillable = ['title', 'article', 'youtube', 'link', 'img_1', 'img_2', 'img_3', 'extra_data'];
+    protected $fillable = ['url',
+                           'title', 
+                           'article', 
+                           'youtube', 
+                           'link', 
+                           'img_1', 
+                           'img_2', 
+                           'img_3', 
+                           'extra_data'];
 
     protected $casts = ['article' => 'array',
                         'link' => 'array', 

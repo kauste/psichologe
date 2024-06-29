@@ -13,14 +13,25 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poiret+One&family=Quicksand:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script async defer src="https://apis.google.com/js/api.js"></script>
+    <script async defer src="https://accounts.google.com/gsi/client"></script>
+
+
     {{-- <link rel="stylesheet" href="{{asset('/build/assets/app-ef36beef.css?v='. time())}}">
     <script src="{{asset('/build/assets/app-375155f2.js?v='). time() }}" type="module" defer></script> --}}
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <script>
+        const routes = {
+            registrationStoreRoute: "{{route('registration-store')}}"
+        , }
+
+    </script>
 </head>
 <body>
     @inject('contacts', 'App\Services\Contacts')
+    @include('parts.top-message')
     @include('parts.loader')
     <div class="in-body">
         <div class="nav-box">
@@ -28,16 +39,8 @@
                 <a href="{{route('first-page')}}" class="{{isset($pageName) && $pageName === 'firstPage' ? 'active' : ''}}">Apie&nbsp;mane</a>
                 <a href="{{route('services')}}" class="{{isset($pageName) && $pageName === 'services' ? 'active' : ''}}">Paslaugos</a>
                 <a href="{{route('contacts')}}" class="{{isset($pageName) && $pageName === 'contacts' ? 'active' : ''}}">Kontaktai</a>
-                <a href="#">Registracija</a>
+                <a href="{{route('registration')}}" class="{{isset($pageName) && $pageName === 'registration' ? 'active' : ''}}">Registracija</a>
                 <a href="{{route('articles-list')}}" class="{{isset($pageName) && $pageName === 'articles' ? 'active' : ''}}">Straipsniai</a>
-                @if(Auth::user()?->role === 7)
-                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    {{ __('Logout') }}
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                    @csrf
-                </form>
-                @endif
             </nav>
         </div>
         <main>
@@ -144,6 +147,9 @@
             <g transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)" fill="inherit" stroke="none">
                 <path d="M668 11315 c-5 -5 -8 -66 -8 -136 l0 -127 78 -7 c131 -11 204 -25 296 -56 255 -85 417 -265 493 -546 l27 -98 6 -825 c7 -771 9 -835 29 -979 127 -905 494 -1586 1131 -2098 690 -554 1690 -885 2813 -929 l177 -7 -1 -871 c-1 -479 -4 -1233 -8 -1676 l-7 -805 -31 -93 c-76 -226 -222 -385 -454 -496 -104 -50 -229 -89 -359 -112 -129 -22 -363 -36 -478 -29 l-103 7 3 -118 3 -118 105 2 c1490 25 2490 25 3980 0 l105 -2 3 118 3 118 -103 -7 c-116 -7 -349 7 -481 30 -132 24 -252 61 -356 111 -232 111 -374 265 -453 494 l-33 95 -6 840 c-4 462 -7 1216 -8 1676 l-1 836 178 7 c996 39 1904 306 2577 756 256 172 531 422 704 640 362 457 568 966 663 1635 19 139 21 210 28 975 l6 825 27 98 c83 307 269 493 572 571 50 13 232 36 281 36 12 0 14 23 12 133 l-3 132 -170 -1 c-614 -2 -1170 -217 -1550 -598 -218 -219 -361 -461 -470 -791 -84 -254 -121 -497 -135 -876 -5 -141 -17 -321 -25 -400 -76 -689 -287 -1278 -618 -1719 -84 -112 -261 -297 -367 -383 -306 -247 -688 -404 -1125 -462 -134 -18 -491 -32 -548 -21 l-37 7 0 1752 c1 1890 7 2247 39 2389 72 316 274 541 579 644 203 69 424 94 660 75 81 -6 157 -14 170 -17 22 -6 22 -6 22 125 l0 131 -2130 0 -2130 0 0 -131 c0 -131 0 -131 23 -125 12 3 88 11 169 17 236 19 457 -6 660 -75 290 -98 495 -315 567 -598 45 -174 44 -133 48 -2205 l5 -1982 -38 -7 c-58 -11 -414 3 -549 21 -437 58 -819 215 -1125 462 -106 86 -283 271 -367 383 -203 270 -365 606 -472 976 -105 362 -154 692 -171 1143 -14 386 -51 621 -140 891 -248 755 -829 1224 -1673 1351 -138 21 -496 37 -509 24z" />
             </g>
+        </symbol>
+        <symbol id="arrow-return" viewBox="0 0 26 23" fill="inherit">
+            <path d="M25.0002 0.0769043C25.51 0.0769043 25.9233 0.49018 25.9233 0.999981V9.86152C25.9233 12.4105 23.8569 14.4769 21.3079 14.4769H3.22873L9.40679 20.655C9.76727 21.0154 9.76727 21.5999 9.40679 21.9604C9.0463 22.3209 8.46184 22.3209 8.10136 21.9604L0.347511 14.2065C-0.0129726 13.8461 -0.0129726 13.2616 0.347511 12.9011L7.73213 5.5165C8.09261 5.15601 8.67707 5.15601 9.03755 5.5165C9.39804 5.87698 9.39804 6.46144 9.03755 6.82193L3.22873 12.6308H21.3079C22.8373 12.6308 24.0771 11.3909 24.0771 9.86152V0.999981C24.0771 0.49018 24.4904 0.0769043 25.0002 0.0769043Z" fill="inherit" />
         </symbol>
     </svg>
 </body>

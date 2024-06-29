@@ -26,56 +26,106 @@ body:has(.contacts-page) {
         left: 0;
         background-color: #17453f87;
     }
+    footer {
+        margin-top: 0;
+    }
     .in-body {
         background: $bg;
         border-radius: $radius;
         height: 100%;
-        main{
-            position:relative;
+        main {
+            position: relative;
         }
     }
-    .contacts-page section{
+    .contacts-page section {
         display: flex;
         justify-content: center;
         .in-section {
             width: min(1200px, 90%);
-
+            display: flex;
+            gap: 80px;
+            justify-content: space-between;
+            align-items: center;
             .one-contact {
-                width: 50%;
-                padding-top: 200px;
-                display:flex;
+                width: 100%;
+                max-width: 600px;
+                display: flex;
                 flex-direction: column;
-                gap:10px;
-                .var-box{
-                    display:flex;
-                    gap:5px;
-                    div, a{
+                gap: 10px;
+                .var-box {
+                    display: flex;
+                    gap: 5px;
+                    flex-wrap: wrap;
+                    div,
+                    a {
                         font-size: 22px;
-                        color:$black;
+                        color: $black;
                     }
-                    .heading{
+                    .heading {
                         font-weight: 600;
-                        color:$electric;
+                        color: $electric;
                     }
                 }
             }
-            .map-box {
-                position:absolute;
-                top:200px;
-                left:55%;
-                opacity:0;
-                animation:animate-pop 0.2s 0.3s cubic-bezier(.26,.53,.74,0.48) forwards;
-                img {
-                    width: 100%;
-                    min-width: 300px;
-                    max-width: 500px;
-                    object-fit: cover;
-                    border-radius: 20px;
+            .img-box-container {
+                position: relative;
+                width: 100%;
+                min-width: 400px;
+                max-width: 500px;
+                border-radius: 60px;
+                // box-shadow: 0 0 0 18px $bg, 
+                // 0 0 0 20px $electric;
+                // transition:all 0.3s linear;
+                // background: $electricRadialGradient;
+                padding:20px;
+                .map-box {
+                    border-radius: 60px;
+                    overflow: hidden;
+                    &::before {
+                        content: "";
+                        display: block;
+                        padding-top: 75%;
+                    }
+                    img {
+                        position: absolute;
+                        top: 2px;
+                        right: 2px;
+                        width: calc(100% - 4px);
+                        height: calc(100% - 4px);
+                        object-fit: cover;
+                        border-radius: inherit;
+                    }
+                }
+                // &:hover{
+                //     // box-shadow: 0px 0px 0 -2px $bg, 
+                //     // 0px 0px 0 $electric;
+                //     box-shadow: -20px 20px 0 -2px $bg, 
+                //     -20px 20px 0 $electric;
+                // }
+            }
+            @media (max-width: 1100px) {
+                flex-direction: column;
+                align-items: center;
+                gap: 40px;
+                .img-box-container {
+                    height: 375px;
+                    min-width: 200px;
+                    .map-box {
+                        top: 0;
+                    }
+                }
+            }
+            @media (max-width: 500px) {
+                gap: 30px;
+                .img-box-container {
+                    height: 275px;
+                }
+            }
+            @media (max-width: 350px) {
+                .img-box-container {
+                    height: 205px;
                 }
             }
         }
-    }
-    footer{
-        margin-top:0;
     }
 }

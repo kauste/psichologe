@@ -1,7 +1,7 @@
 <div class="data --data">
     <div class="var --var" data-name="service_title" contenteditable="false">{{$service->service_title}}</div>
     <div class="var list-input-box list--box">
-        <ul data-name="service_type">
+        <ul data-name="service_types">
             @forelse ($service->serviceTypes ?? [] as $key => $oneService)
             <li data-item-id="{{$oneService->id}}">
                 <div class="svg-box delete-svg delete--item">

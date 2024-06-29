@@ -1,4 +1,4 @@
-import ItemInUse from "../CRUD/parts/itemInUse";
+import ItemInUse from "../../CRUD/parts/itemInUse";
 
 class NavigateModal{
     constructor(selector) {

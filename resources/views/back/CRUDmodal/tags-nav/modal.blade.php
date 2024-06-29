@@ -14,7 +14,7 @@
             </div>
             <div class="message --message"></div>
         </div>
-        <div class="modal-ul-box">
+        <div class="modal-items-box">
             <ul class="items--parent">
                 @forelse ($tags->tags as $tag)
                 <li class="one-item one-tagsNav one--item" data-id="{{$tag->id}}" data-priority="{{$tag->priority}}">
@@ -23,7 +23,7 @@
                         <div class="var list-input-box list--box">
                             <ul data-name="articles">
                                 @foreach ($tag->articles ?? [] as $key => $article)
-                                <li data-id="{{$article->id}}">
+                                <li data-item-id="{{$article->id}}">
                                     <div class="svg-box delete-svg delete--item">
                                         <svg class="delete-svg ">
                                             <use xlink:href="#delete"></use>

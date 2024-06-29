@@ -13,7 +13,7 @@
         display: flex;
         justify-content: center;
         align-items: end;
-        background: $electricGradient;
+        background: $electricRadialGradient;
         img {
             object-fit: contain;
             width: 470px;
@@ -167,10 +167,10 @@
                 height: 20px;
                 display: inline-block;
                 position: absolute;
-                bottom: 0px;
-                right: -19px;
+                bottom: -5px;
+                right: -20px;
                 border-bottom-left-radius: $radius;
-                box-shadow: -4px 7px 0 $bg;
+                box-shadow: -4px 4px 0 4px $bg;
             }
         }
         .full-name {

@@ -22,13 +22,4 @@
         </ul>
     </div>
 </section>
-<svg class="psychology-svg">
-    <defs>
-        <linearGradient id="gradient" x1="30%" y1="10%" x2="100%" y2="60%">
-            <stop offset="0%" stop-color="#6E717B"" />
-            <stop offset=" 100%" stop-color="#b5b3b1eb" />
-        </linearGradient>
-    </defs>
-    <use xlink:href="#psychology"></use>
-</svg>
 @endsection

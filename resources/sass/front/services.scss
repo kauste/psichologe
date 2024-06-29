@@ -1,7 +1,5 @@
 body:has(.services-list) {
-    background-color: #e9c1c8;
-    padding: $biggerPgPadding;
-    position:relative;
+    position: relative;
     &:before {
         content: "";
         background-image: url("../../../public/images/bg3.webp");
@@ -25,24 +23,16 @@ body:has(.services-list) {
         z-index: -1;
         top: 0;
         left: 0;
-        background-color: #e9c1c8af;
+        background-color: $bgLittleTransp;
     }
+
     .in-body {
-        background: $bg;
         border-radius: $radius;
         height: 100%;
-        .psychology-svg {
-            width: 120px;
-            height: 100px;
-            position: absolute;
-            bottom: 90px;
-            right: max(95px, calc((100vw - $footerWidth) / 2));
-            fill: url(#gradient) $pink;
-        }
+
     }
 
     .services-list {
-        padding-top: 145px;
         .ul-box {
             display: flex;
             justify-content: center;
@@ -60,27 +50,31 @@ body:has(.services-list) {
             .one-service {
                 width: max(290px, calc(50% - 40px));
                 height: fit-content;
-                padding: 40px;
+                padding: 30px 50px 30px 65px;
                 position: relative;
-                border-radius: 30px;
+                border-radius: 80px;
                 z-index: 0;
                 top: 0;
                 left: 0;
                 z-index: 1;
-                box-shadow: 5px 5px 30px #bf9fa4, -5px -5px 30px #fff;
-                background-color: $bg;
-                opacity:0;
+                background-color:$bg;
+                opacity: 0;
                 @for $i from 1 through 10 {
                     &:nth-child(#{$i}) {
-                        animation: animate-pop .2s #{(0.3  + $i * .2) + 0.2}s cubic-bezier(.26,.53,.74,0.48) forwards;
+                        animation: animate-pop
+                            0.2s
+                            #{(0.3 + $i * 0.2) +
+                            0.2}s
+                            cubic-bezier(0.26, 0.53, 0.74, 0.48)
+                            forwards;
                     }
                 }
-                    h3 {
-                        font-size: 34px;
-                        color: $electric;
-                        letter-spacing: 5px;
-                        text-align: center;
-                    }
+                h3 {
+                    font-size: 34px;
+                    color: $electric;
+                    letter-spacing: 5px;
+                    text-align: start;
+                }
                 ul {
                     padding-top: 10px;
                     list-style: none;
@@ -95,17 +89,15 @@ body:has(.services-list) {
                             left: -20px;
                             top: 50%;
                             transform: translateY(-50%);
-                            width: 10px;
-                            height: 10px;
+                            width: 12px;
+                            height: 12px;
                             border-radius: 50%;
-                            background-color: $electric;
-                            box-shadow: inset 0px -3px 0 0px $electric,
-                                inset 0px -5px 0 0px $pink;
+                            background-color: $bg;
+                            border: 1px solid $electric;
                         }
                     }
                 }
             }
         }
     }
-
 }

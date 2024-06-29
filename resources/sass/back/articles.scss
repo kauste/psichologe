@@ -83,16 +83,13 @@
                     resize: vertical;
                     max-height:300px;
                 }
-                textarea, input{
+                textarea, div.var, input{
                     padding:2px 8px;
                     width:100%;
                     background-color:$bg;
                     border:1px solid $black;
                 }
-                .img-input-delete{
-                    display:grid;
-                    grid-template-columns: 60px auto;
-                }
+
             }
         }
         .update-actions, .store-actions{

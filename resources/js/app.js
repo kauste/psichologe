@@ -2,48 +2,39 @@ import 'bootstrap';
 import axios from 'axios';
 window.axios = axios;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-import Swiper from 'swiper';
-import { Navigation, Autoplay, EffectFade } from 'swiper/modules';
 
-// form back and front'
-import './backAndFront/appBackAndFront';
-import ListSwiper from './backAndFront/firstPage/listSwiper';
+import AnimationRouter from './animations/animationRouter';
+import CrossFadeSwiper from './animations/firstPage/crossFadeSwiper';
+import LimitedSwiper from './animations/limitedSwiper';
+import CRUDactivator from './CRUD/CRUDactivator';
+import AppendSlots from './front/appendSlots';
+import CreateActivator from './CRUD/activators/createActivator';
 
-// firt page
-if(document.querySelector('.about--me--page')){
-    // sec 1
-    new Swiper('.citations--swiper', {
-        speed: 1000,
-        loop: true,
-        autoplay:{
-            delay:20000,
-            pauseOnMouseEnter:true,
-        },
-        slidesPerView: 'auto',
-        modules: [ Navigation, Autoplay, EffectFade ],
-        wrapperClass: 'swiper-wrapper',
-        navigation: {
-            nextEl: '.swiper-button-next',
-          },
-        effect: 'fade',
-        fadeEffect: {
-            crossFade: true,
-          },
-          centeredSlides:true,
+window.onload = function (){
+    new AnimationRouter;
 
-      });
-    // sec 3
-    new ListSwiper('#education')
-    // sec 4
-    new ListSwiper('#work')
+    if(document.querySelector('.about--me--page')){
+        new CrossFadeSwiper('.citations--swiper');
+        new LimitedSwiper('#education', 'vertical', 5, 5);
+        new LimitedSwiper('#work', 'vertical', 5, 5);
+    }
+    if(document.querySelector('.registration-page')){
+        const createActivator = new CreateActivator( 'registration',
+                                                    document,
+                                                    document.querySelector(`.--form`),
+                                                    {
+                                                        openBtnSelector:null, 
+                                                        cancelBtnSelector:null,
+                                                        actionBtnSelector:'.store--actions .--store'
+                                                    },
 
+                                                 );
+        const registrationSwiper = new LimitedSwiper('.--registration', 'horizontal', 1, 1);
+        new AppendSlots(registrationSwiper, createActivator);
+        
+
+    }
 }
-// articles page
-if(document.querySelector('.articles--page') 
-|| document.querySelector('.article--page')){
-    // const articlesTagsNav = new NavStyles('.tags--nav', '#EFEFEF', '#E9C1C8', '19px', '19.2px', '0')
-    // articlesTagsNav.animation();
 
-}
 
 

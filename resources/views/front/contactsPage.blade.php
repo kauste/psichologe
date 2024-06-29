@@ -18,8 +18,10 @@
                     <a class="email" href="mailto:{{$contacts->email}}?subject=Mail from site">{{$contacts->email}}</a>
                 </div>
             </div>
-            <div class="map-box">
-                <img src="{{asset('images/map.png')}}" alt="psichologes kabinetas zemelapyje">
+            <div class="img-box-container button electric bg-sand-blur">
+                <a href="{{$contacts->map_link}}" class="map-box" target="_blank">
+                    <img src="{{asset('images/' . $contacts->map)}}" alt="psichologes kabinetas zemelapyje">
+                </a>
             </div>
         </div>
     </section>

@@ -1,10 +1,8 @@
-import Swiper from 'swiper';
-import { Navigation, Autoplay, EffectFade } from 'swiper/modules';
 import Msg from './msg';
-import ListSwiper from '../backAndFront/firstPage/listSwiper';
 import ModalActivaror from './modal/modalActivator';
-import CRUDactivator from './CRUD/activators/CRUDactivator';
-
+import CRUDactivator from '../CRUD/CRUDactivator';
+import CrossFadeSwiper from '../animations/firstPage/crossFadeSwiper';
+import LimitedSwiper from '../animations/limitedSwiper';
 
 class Router{
     constructor(){
@@ -39,59 +37,52 @@ class Router{
         }
     }
     firstPage(){
-        const citationSwiper = new Swiper('.citations--swiper', {
-            speed: 1000,
-            loop: true,
-            autoplay:{
-                delay:20000,
-                pauseOnMouseEnter:true,
-            },
-            slidesPerView: 'auto',
-            modules: [ Navigation, Autoplay, EffectFade ],
-            wrapperClass: 'swiper-wrapper',
-            navigation: {
-                nextEl: '.swiper-button-next',
-              },
-            effect: 'fade',
-            fadeEffect: {
-                crossFade: true,
-              },
-              centeredSlides:true,
-    
-        });
         new ModalActivaror('citation',
                            {
                                activateModalNavigation:true,
                                activateCRUD:{
-                                    activateEdits:true,
-                                    activateDeletes:true,
-                                    activateCreate:true,
-                               }
+                                    CRUDactivations:{
+                                        activateEdits:true,
+                                        activateDeletes:true,
+                                        activateCreate:true,
+                                    },
+                                    CRUDoptionalFeatures:null,
+                               },
                            },
-                           citationSwiper);
+                           new CrossFadeSwiper('.citations--swiper'))
+        
 
-        // new SecondSectionUpdate('#about', new TopMessage);
+        new CRUDactivator(  'about',
+                             document,
+                            { activateEdit:[document.querySelector('#about .--item')] },
+                         );
         new ModalActivaror('education', 
                             {
                                 activateModalNavigation:true,
                                 activateCRUD:{
-                                    activateEdits:true,
-                                    activateDeletes:true,
-                                    activateCreate:true,
-                               }
+                                    CRUDactivations:{
+                                        activateEdits:true,
+                                        activateDeletes:true,
+                                        activateCreate:true,
+                                    },
+                                    CRUDoptionalFeatures:null,
+                               },
                             },
-                            new ListSwiper('#education'))
+                            new LimitedSwiper('#education', 'vertical', 5, 5));
 
         new ModalActivaror('work',
                            {
                                activateModalNavigation:true,
                                activateCRUD:{
-                                    activateEdits:true,
-                                    activateDeletes:true,
-                                    activateCreate:true,
-                                }
+                                    CRUDactivations:{
+                                        activateEdits:true,
+                                        activateDeletes:true,
+                                        activateCreate:true,
+                                    },
+                                    CRUDoptionalFeatures:null,
+                                },
                            },
-                             new ListSwiper('#work'))
+                           new LimitedSwiper('#work', 'vertical', 5, 5))
 
     }
     articlesPage(){
@@ -100,63 +91,86 @@ class Router{
                            {
                                activateModalNavigation:true,
                                activateCRUD:{
-                                    activateEdits:true,
-                                    activateDeletes:true,
-                                    activateCreate:true,
-                                    activateSelectLists:true,
+                                    CRUDactivations:{
+                                        activateEdits:true,
+                                        activateDeletes:true,
+                                        activateCreate:true,
+                                    },
+                                    CRUDoptionalFeatures:{
+                                        lists:true
+                                    },
                                 },
+
+
                            });
 
         new CRUDactivator(  null,
-                            { activateDeletes:true },
                             document.querySelector('#articles'),
+                            { activateDeletes:true },
                          );
 
     }
     articlePage(){
         new CRUDactivator(  null,
-                            { activateDeletes:true },
                             document,
+                            { activateDeletes:true },
                          );
     }
     articleCreatePage(){
-        new CRUDactivator(null,
-                            { activateCreate:true,
-                              activateSelectList:true,
+        const imgRatio = 400 / 828;
+        new CRUDactivator('article',
+                           document,
+                            { activateCreate:true },
+                            {
+                                lists:true,
+                                images:imgRatio,
                             },
-                            document,
+                            null,
                           );
         
     }
     articleEditPage(){
-        new CRUDactivator(  null,
-                            {   
-                                activateEdits:true,
-                                activateSelectList:true,
-                            },
+        const imgRatio = 400 / 828;
+
+        new CRUDactivator( 'article',
                            document,
-                         );
+                           { activateEdits:true },
+                           {
+                               lists:true,
+                               images:imgRatio,
+                           }
+                        );
     }
     servicesPage(){
         new ModalActivaror('service',
-                           {
-                               activateModalNavigation:true,
+                            {activateModalNavigation:true,
                                 activateCRUD:{
-                                    activateEdits:true,
-                                    activateDeletes:true,
-                                    activateCreate:true,
-                                    activateInputLists: true,
+                                    CRUDactivations:{
+                                        activateEdits:true,
+                                        activateDeletes:true,
+                                        activateCreate:true,
+                                    },
+                                    CRUDoptionalFeatures:{
+                                        lists:true
+                                    },
                                 },
-                           });
+                            } );
 
     }
     contactsPage(){
+        const imgRatio = 0.75 ;
         new ModalActivaror('contact',
-                           {
-                                activateCRUD:{
-                                    activateEdit:[document.querySelector('.contact--modal--box .one--item')],
+                            {activateCRUD:
+                                {
+                                    CRUDactivations:{
+                                        activateEdit:[document.querySelector('.contact--modal--box .one--item')],
+                                    },
+                                    CRUDoptionalFeatures:{
+                                        images:imgRatio,
+                                    }
                                 },
-                           });
+                            } );
+        
     }
 }
 export default Router;

@@ -15,20 +15,7 @@ select {
     border: 1px solid #333;
     height: fit-content;
 }
-.message {
-    padding: 4px;
-    background-color: $hotPink;
-    border-radius: 6px 0 12px 0px;
-    color: $bg;
-    display: none;
-    &.top-message {
-        position: fixed;
-        left: 0;
-        top: 0;
-        right: 0;
-        z-index: 2;
-    }
-}
+
 .error {
     color: $hotPink;
     font-size: 14px;
@@ -79,7 +66,7 @@ select {
     align-items: end;
     button,
     a {
-        display:inline-block;
+        display: inline-block;
         text-decoration: none;
         color: $black;
         border: 2px solid $black;
@@ -88,28 +75,29 @@ select {
         height: fit-content;
         text-align: center;
     }
-    .update-btn, .store-btn {
+    .update-btn,
+    .store-btn {
         background-color: $electric;
         color: $bg;
-        &:hover{
+        &:hover {
             background: $electricDark;
         }
     }
     .cancel-btn {
         background: #ccc;
-        &:hover{
+        &:hover {
             background: #aaa;
         }
     }
     .delete-btn {
         background-color: $pink;
-        &:hover{
+        &:hover {
             background: $pinkDark;
         }
     }
 }
 
-.modal-ul-box li,
+.modal-items-box li,
 .article-box {
     .edit-actions {
         display: flex;
@@ -192,24 +180,24 @@ select {
 }
 
 //scrollbar
-.modal-ul-box,
+.modal-items-box,
 .modal-add-box,
 .article-text {
     overflow-y: auto;
     scroll-behavior: smooth;
 }
-.modal-ul-box::-webkit-scrollbar,
+.modal-items-box::-webkit-scrollbar,
 .modal-add-box::-webkit-scrollbar,
 .article-text::-webkit-scrollbar {
     width: 10px;
     margin-right: 10px;
 }
-.modal-ul-box::-webkit-scrollbar-track,
+.modal-items-box::-webkit-scrollbar-track,
 .modal-add-box::-webkit-scrollbar-track,
 .article-text::-webkit-scrollbar-track {
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
-.modal-ul-box::-webkit-scrollbar-thumb,
+.modal-items-box::-webkit-scrollbar-thumb,
 .modal-add-box::-webkit-scrollbar-thumb,
 .article-text::-webkit-scrollbar-thumb {
     background-color: $electric;
@@ -237,6 +225,112 @@ select {
         input {
             width: 80%;
             padding: 4px 8px;
+        }
+    }
+}
+.img-input-delete {
+    display: grid;
+    grid-template-columns: 60px auto;
+    .img-input-box {
+        background: $electric;
+        display: flex;
+        align-items: flex-start;
+        width: fit-content;
+        .img-box {
+            overflow: visible;
+            width: 100%;
+            box-sizing: border-box;
+            padding-left: 20px;
+            padding-right: 20px;
+            max-width: 500px;
+            .line {
+                display: inline-block;
+            }
+            img {
+                width: 100%;
+                height: auto;
+                margin-top: var(--marginHeight);
+                cursor: crosshair;
+                object-fit: contain;
+            }
+            position: relative;
+            &:before {
+                content: "";
+                display: inline-block;
+                position: absolute;
+                width: 100%;
+                backdrop-filter: blur(5px);
+                background-color: #999999a5;
+                top: 0;
+                left: 0;
+                height: var(--borderHeight);
+
+            }
+            &:after {
+                height: var(--borderHeight);
+                content: "";
+                display: inline-block;
+                position: absolute;
+                width: 100%;
+                background-color: #999999a5;
+                backdrop-filter: blur(5px);
+                bottom: 0;
+                left: 0;
+                // height:calc(100% - $ratio);
+            }
+        }
+        .file-input-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            height: 40px;
+            text-align: left;
+            padding: 26px;
+            // max-width: calc(100% - 150px);
+            // width: calc(100% - 150px);
+            width: fit-content;
+            max-width: 500px;
+            position: relative;
+            border-radius: 3px;
+            > input[type="file"] {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+                z-index: 10;
+                cursor: pointer;
+            }
+
+            .button {
+                padding: 1px 12px;
+                // border: solid 2px $violet;
+                border-radius: 14px;
+                color: $black;
+                background-color: $bg;
+            }
+            &:hover > .button {
+                background: $pink;
+                color: white;
+            }
+
+            > .label {
+                color: $black;
+                white-space: nowrap;
+                opacity: 0.6;
+                display: inline-block;
+                max-width: 400px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                font-style: italic;
+                color: $bg;
+                span {
+                    font-weight: 700;
+                    text-transform: uppercase;
+                }
+            }
         }
     }
 }
@@ -291,28 +385,39 @@ select {
     .edit-actions {
         display: none;
     }
-    .delete-actions {
-        display: none;
-    }
-    .var {
-        padding: 4px 8px 4px 4px;
-        border: 1px $black solid;
-        &:not(.last) {
-            border-right: none;
+    :not(.paragraph-box) {
+        .delete-actions {
+            display: none;
         }
-    }
-    .list-input-box {
-        ul {
-            li {
-                padding-bottom: 5px;
-                .svg-box.delete-svg {
-                    display: flex;
+        .var {
+            padding: 4px 8px 4px 4px;
+            border: 1px $black solid;
+            &:not(.last) {
+                border-right: none;
+            }
+        }
+        .list-input-box {
+            ul {
+                li {
+                    padding-bottom: 5px;
+                    .svg-box.delete-svg {
+                        display: flex;
+                    }
                 }
             }
         }
+        .input-box {
+            display: flex;
+        }
     }
-    .input-box {
-        display: flex;
+
+    .paragraph-box {
+        .var {
+            padding: 10px 10px 20px;
+        }
+        .update-actions {
+            flex-direction: row;
+        }
     }
 }
 .one-item.let--delete {
@@ -371,12 +476,12 @@ select {
         display: flex;
     }
 }
-.one-item.border--warning .data, .form.border--warning .data{
+.one-item.border--warning .data,
+.form.border--warning .data {
     .var {
-        border:2px solid #ba2f47;
+        border: 2px solid #ba2f47;
         &:not(.last) {
             border-right: none;
         }
     }
-
 }

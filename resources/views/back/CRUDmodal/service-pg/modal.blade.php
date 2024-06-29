@@ -14,14 +14,14 @@
             </div>
             <div class="message --message"></div>
         </div>
-        <div class="modal-ul-box">
+        <div class="modal-items-box">
             <ul class="items--parent">
                 @forelse ($services as $service)
                 <li class="one-item one-service one--item" data-id="{{$service->id}}" data-priority="{{$service->priority}}">
                     <div class="data --data">
                         <div class="var --var" data-name="service_title" contenteditable="false">{{$service->service_title}}</div>
                         <div class="var list-input-box list--box">
-                            <ul data-name="service_type">
+                            <ul data-name="service_types">
                                 @forelse ($service->serviceTypes ?? [] as $key => $oneService)
                                 <li data-item-id="{{$oneService->id}}">
                                     <div class="svg-box delete-svg delete--item">

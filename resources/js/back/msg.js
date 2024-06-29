@@ -9,12 +9,10 @@ class Msg{
 
     }
     showMsg(msg){
-        console.log('ce')
         let msgHTML = '';
         msg.forEach(error => {
             msgHTML += `<div>${error}</div>`
         })
-        console.log(msgHTML);
         this.messageDOM.innerHTML = msgHTML;;
         this.messageDOM.style.display = 'block';
         this.removeMsg();
@@ -29,4 +27,7 @@ class Msg{
         }
     }
 }
+
+
 export default Msg;
+

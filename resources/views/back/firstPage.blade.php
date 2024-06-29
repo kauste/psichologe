@@ -17,7 +17,7 @@
                 @endforeach
             </ul>
         </div>
-        <div id="citation"  class="citations-box">
+        <div id="citation" class="citations-box">
             <div class="edit-svg-box --edit">
                 <svg>
                     <use xlink:href="#edit"></use>
@@ -28,15 +28,15 @@
                 <div class="swiper citations--swiper">
                     <ul class="swiper-wrapper items--parent">
                         @foreach ($citations ?? [] as $citation)
-                        <li class="swiper-slide one--item" data-id="{{$citation->id}}">
+                        <li class="swiper-slide one-citation one--item" data-id="{{$citation->id}}">
                             <div class="--var" data-name="citation">{{$citation->citation}}</div>
-                            <small class="--var"  data-name="author">{{$citation->author ?? ''}}</small>
+                            <small class="--var" data-name="author">{{$citation->author ?? ''}}</small>
                         </li>
                         @endforeach
                     </ul>
                 </div>
                 <div class="swiper-button-next">
-                    <div class="round-button pink">
+                    <div class="button round pink bg-electric">
                         <svg class="chevron chevron-right">
                             <use xlink:href="#chevron"></use>
                         </svg>
@@ -54,14 +54,14 @@
             <a class="email" href="mailto:{{$contacts->email}}?subject=Mail from site">{{$contacts->email}}</a>
             <div class="media">
                 @if($contacts->facebook)
-                <a class="round-button pink" href="{{$contacts->facebook}}" target="_blank">
+                <a class="button round pink bg-light-electric" href="{{$contacts->facebook}}" target="_blank">
                     <svg>
                         <use xlink:href="#fb"></use>
                     </svg>
                 </a>
                 @endif
                 @if($contacts->linkedin)
-                <a class="round-button pink" href="{{$contacts->linkedin}}" target="_blank">
+                <a class="button round pink bg-light-electric" href="{{$contacts->linkedin}}" target="_blank">
                     <svg>
                         <use xlink:href="#linkedin"></use>
                     </svg>
@@ -71,23 +71,26 @@
         </div>
     </section>
     <section id="about" class="section-2">
-        <div class="in-sec-2">
-            <div class="edit-svg-box --edit">
-                <svg>
-                    <use xlink:href="#edit"></use>
-                </svg>
+        <div class="in-sec-2 --item one-item">
+            <div class="edit-actions edit--actions">
+                <div class="edit-svg-box --edit">
+                    <svg>
+                        <use xlink:href="#edit"></use>
+                    </svg>
+                </div>
             </div>
             <div class="heading-box --heading">
                 <h2>Apie mane</h2>
             </div>
-            <div class="--paragraph paragraph">
-                <p>{{$data->about_me}}</p>
-                <div class="update-actions update--actions" style="display:none">
+            <div class="paragraph-box">
+                <div class="data --data">
+                    <p class="var last --var" data-name="about_me">{{$data->about_me}}</p>
+                </div>
+                <div class="update-actions update--actions">
                     <button class="cancel-btn --cancel" type="button">Atšaukti</button>
                     <button class="update-btn --update" type="button">Redaguoti</button>
                 </div>
             </div>
-
             <svg class="bamboo --bamboo">
                 <use xlink:href="#bamboo"></use>
             </svg>
@@ -107,7 +110,7 @@
                 <div class="swiper --swiper">
                     <ul class="swiper-wrapper items--parent">
                         @forelse ($data->educations as $edu)
-                        <li class="swiper-slide one--item" data-id="{{$edu->id}}" data-priority={{$edu->priority ?? null}}>
+                        <li class="swiper-slide one-education one--item" data-id="{{$edu->id}}" data-priority={{$edu->priority ?? null}}>
                             <div class="date --var" data-name="date">{{$edu->date}}</div>
                             <div class="about-edu --var" data-name="about">{{$edu->about}}</div>
                         </li>
@@ -116,12 +119,12 @@
                         @endforelse
                     </ul>
                 </div>
-                <div class="swiper-button-prev round-button electric lardge swiper--button--prev disabled">
+                <div class="swiper-button-prev button round electric bg-light-sand lardge swiper--button--prev ">
                     <svg class="chevron chevron-up">
                         <use xlink:href="#chevron"></use>
                     </svg>
                 </div>
-                <div class="swiper-button-next round-button electric lardge swiper--button--next">
+                <div class="swiper-button-next button round electric bg-light-sand lardge swiper--button--next">
                     <svg class="chevron chevron-down">
                         <use xlink:href="#chevron"></use>
                     </svg>
@@ -143,7 +146,7 @@
                 <div class="swiper --swiper">
                     <ul class="swiper-wrapper items--parent">
                         @forelse ($data->works as $key => $work)
-                        <li class="swiper-slide one--item" data-id="{{$work->id}}" data-priority={{$work->priority ?? null}}>
+                        <li class="swiper-slide one-work one--item" data-id="{{$work->id}}" data-priority={{$work->priority ?? null}}>
                             <div class="date --var" data-name="date">{{$work->date}}</div>
                             <div class="about-work --var" data-name="about">{{$work->about}}</div>
                         </li>
@@ -152,12 +155,12 @@
                         @endforelse
                     </ul>
                 </div>
-                <div class="swiper-button-prev round-button pink lardge swiper--button--prev disabled">
+                <div class="swiper-button-prev button round pink bg-electric lardge swiper--button--prev ">
                     <svg class="chevron chevron-up">
                         <use xlink:href="#chevron"></use>
                     </svg>
                 </div>
-                <div class="swiper-button-next round-button pink lardge swiper--button--next">
+                <div class="swiper-button-next button round pink bg-electric lardge swiper--button--next">
                     <svg class="chevron chevron-down">
                         <use xlink:href="#chevron"></use>
                     </svg>

@@ -11,7 +11,7 @@ class WorkController extends Controller
 {
     public function store(Request $request)
     {
-        $data = $request->data;
+        $data = $request->all();
         $data['priority'] = (int) $data['priority'] ? (int) $data['priority'] : null;
 
         $validator = Validator::make($data, [
@@ -39,7 +39,7 @@ class WorkController extends Controller
     }
     public function update(Request $request)
     {
-        $data = $request->data;
+        $data = $request->all();
         $data['priority'] = (int) $data['priority'] ? (int) $data['priority'] : null;
 
         $id = (int) $request->id;
@@ -61,7 +61,7 @@ class WorkController extends Controller
         return response()->json(['message' => ['Informacija apie darbo patirtį yra pakeista.']]);
     }
     public function delete(Request $request){
-        Education::destroy((int) $request->id);
+        Work::destroy((int) $request->id);
         return response()->json(['message' => ['Darbo patirties punktas yra ištrintas.']]);
     }
 }

@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('linkedin', 100)->nullable();
             $table->string('adress', 40)->default('Jotvingių g. 10-1, 7kab.');
             $table->string('city', 20)->default('Alytus');
-            $table->string('map', 50)->default('map.png');
+            $table->string('map', 100)->default('map.png');
+            $table->string('map_link', 100)->default('https://maps.app.goo.gl/i2CWtdZaVC7RUtkp9');
             $table->timestamps();
         });
     }

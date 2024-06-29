@@ -1,11 +1,11 @@
 <div>
-    <h3>{{$service->service_title}}</h3>
+    <h3 class="--var" data-name="service_title" >{{$service->service_title}}</h3>
 </div>
 @if($service->serviceTypes)
-<div>
-    <ul>
+<div class="list--box">
+    <ul data-name="service_types">
         @foreach ($service->serviceTypes ?? [] as $oneService)
-        <li data-service-type-id="{{$oneService->id}}">{{$oneService->service_type}}</li>
+        <li>{{$oneService->service_type}}</li>
         @endforeach
     </ul>
 </div>

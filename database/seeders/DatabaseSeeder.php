@@ -80,6 +80,7 @@ class DatabaseSeeder extends Seeder
             'telephone_number'=> '61212345',
             'facebook'=> 'https://www.facebook.com/romalda.stasioniene',
             'linkedin' => 'https://www.linkedin.com/in/romalda-stasioniene-a26167212/',
+            'map' => 'map.png',
         ]);
         foreach(range(1, 10) as $key => $_){
             DB::table('education')->insert([

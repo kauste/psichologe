@@ -30,8 +30,10 @@
                     <div class="email --var" data-name="telephone_number">{{$contacts->email}}</div>
                 </div>
             </div>
-            <div class="map-box">
-                <img src="{{asset('images/map.png')}}" alt="psichologes kabinetas zemelapyje">
+            <div class="img-box-container button electric bg-sand-blur">
+                <a href="{{$contacts->map_link}}" class="map-box" target="_blank">
+                    <img src="{{asset('images/' . $contacts->map)}}" alt="psichologes kabinetas zemelapyje">
+                </a>
             </div>
         </div>
     </section>

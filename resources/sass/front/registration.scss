@@ -1,0 +1,251 @@
+body:has(.registration-page, .registration-unable-page, .registered-page) {
+    background: $northenGradient;
+    .in-body {
+        border-radius: $radius;
+        height: 100%;
+        margin: 10px;
+        background-color: $bg;
+    }
+    main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100vh - $footerHeight - 2 * 10px);
+    }
+    footer {
+        margin-top: 0;
+        .content-container {
+            bottom: -10px;
+            left: -10px;
+        }
+    }
+}
+.registration-page, .registration-unable-page, .registered-page {
+    width: min(1200px, 90%);
+    display: flex;
+    gap: 80px;
+    .container {
+        display: flex;
+        font-size: 20px;
+        gap: 10%;
+        justify-content: space-around;
+        .card-header {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            height: 51px;
+        }
+    }
+}
+.registration-unable-page, .registered-page{
+    .card-header h2{
+        color:$electric;
+    }
+    span{
+        color:$electric;
+        letter-spacing:0.5px;
+        &.bold{
+            font-weight: 600;
+        }
+
+
+    }
+}
+.callendars-box {
+    width: 410px;
+    .swiper {
+        position: relative;
+        width: 410px;
+        overflow: hidden;
+        .swiper-button-prev {
+            z-index: 2;
+            left: 90px;
+            top: 7px;
+        }
+        .swiper-button-next {
+            z-index: 2;
+            right: 90px;
+            top: 7px;
+        }
+        .swiper-wrapper {
+            display: grid;
+            grid-template-columns: repeat(2, 410px);
+            padding: 4px;
+            box-sizing: border-box;
+            .callendar {
+                width: 410px;
+                display: flex;
+                flex-direction: column;
+                gap: 25px;
+                padding: 4px;
+                box-sizing: border-box;
+                .card-header {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 3px;
+                    .year {
+                        font-weight: 600;
+                        line-height: 20px;
+                    }
+                    .month {
+                        font-family: $headings-family;
+                        font-size: 28px;
+                        line-height: 28px;
+                    }
+                }
+                .table-box {
+                    text-align: center;
+                    table {
+                        width: 100%;
+                        height: 260px;
+                        border-spacing: 0 10px;
+                        display: grid;
+                        grid-template-rows: 1fr 5fr;
+                        thead {
+                            width: 100%;
+                            tr {
+                                display: grid;
+                                grid-template-columns: repeat(7, 1fr);
+                            }
+                            &.header {
+                                border-bottom: 14px solid transparent;
+                            }
+                            &:not(.header) {
+                                display: grid;
+                                grid-template-rows: repeat(5, 1fr);
+                                tr > .one-day {
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                    button {
+                                        border: none;
+                                        width: 35px;
+                                        height: 35px;
+                                        &:not(.round.button) {
+                                            background: transparent;
+                                        }
+                                        &.--disabled:not(.round.button) {
+                                            color: #b5b3b1eb;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+.registration-container.swiper {
+    height:100%;
+    width: 410px;
+    padding: 0 4px 60px 4px;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+    .swiper-wrapper {
+        display: grid;
+        grid-template-columns: repeat(2, 410px);
+        box-sizing: border-box;
+    }
+    .swiper-button-prev,
+    .swiper-button-next {
+        position: absolute;
+        bottom: 30px;
+        z-index: 2;
+    }
+    .swiper-button-prev {
+        left: 22px;
+    }
+    .swiper-button-next {
+        right: 22px;
+    }
+}
+.slots-form.swiper-slide {
+    height: 100%;
+    padding: 4px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    .slots-box {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        .slots {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            column-gap: 40px;
+            flex-wrap: wrap;
+            height: 240px;
+        }
+    }
+}
+.personal-data-form.swiper-slide {
+    height: 100%;;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    .form {
+        height: calc(100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        .with-error-box {
+            height: 55px;
+            width: 400px;
+            .item-box {
+                display: flex;
+                gap: 12px;
+                .label {
+                    display: flex;
+                    gap: 2px;
+                }
+                .input {
+                    padding: 7px 14px;
+                    font-size: 14px;
+                    width: 100%;
+                    border-radius: 10px;
+                    box-shadow: inset 3px 3px 3px #d3cfc4,
+                        inset -3px -3px 3px #fdf7ea;
+                    background-color: rgba(227, 222, 209, 0.44);
+                    &:focus {
+                        border: none;
+                        outline: none;
+                    }
+                }
+            }
+            .error {
+                font-size: 12px;
+                color: $hotPink;
+            }
+        }
+        .required-box {
+            width: 400px;
+            display: flex;
+            gap: 6px;
+            span {
+                font-size: 14px;
+                color: $hotPink;
+            }
+        }
+    }
+}
+.slots-form,
+.personal-data-form {
+    .card-header {
+        div {
+            font-weight: 600;
+            font-size: 24px;
+            font-family: $headings-family;
+        }
+    }
+}

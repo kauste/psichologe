@@ -8,6 +8,11 @@
         <a href="{{route('articles-list') . '?filter='. $tag->id}}">{{$tag->tag}}</a>
         @endforeach
     </div>
+    <a class="back-btn button round electric bg-sand lardge" href="{{url()->previous()}}">
+        <svg>
+            <use xlink:href="#arrow-return"></use>
+        </svg>
+    </a>
     <section class="article-box article--box">
         <h2>{{$article->title}}</h2>
         @if($article->youtube)
@@ -17,7 +22,7 @@
         @endif
         <div class="article">
             @foreach ($article->article ?? [] as $key => $paragraph)
-            @if( $article->img_1 && $key === $article->img_1['paragraph_before'])
+            @if( $article->img_1 && $key + 1 === $article->img_1['paragraph_before'])
             <div class="img-box">
                 <img style="object-position:0px {{isset($article->img_1['object_position']) ? $article->img_1['object_position'] : '0'}}%" src="{{asset('images/articlesImgs') . '/' . $article->img_1['path']}}">
                 @if(isset($article->img_1['extra_data']) && $article->img_1['extra_data'])
@@ -28,7 +33,7 @@
                 @endif
             </div>
             @endif
-            @if( $article->img_2 && $key === $article->img_2['paragraph_before'])
+            @if( $article->img_2 && $key + 1 === $article->img_2['paragraph_before'])
             <div class="img-box">
                 <img style="object-position:0px {{isset($article->img_2['object_position']) ? $article->img_2['object_position'] : '0'}}%" src="{{asset('images/articlesImgs') . '/' . $article->img_2['path']}}">
                 @if(isset($article->img_2['extra_data']) && $article->img_2['extra_data'])
@@ -39,7 +44,7 @@
                 @endif
             </div>
             @endif
-            @if( $article->img_3 && $key === $article->img_3['paragraph_before'])
+            @if( $article->img_3 && $key + 1 === $article->img_3['paragraph_before'])
             <div class="img-box">
                 <img style="object-position:0px {{isset($article->img_3['object_position']) ? $article->img_3['object_position'] : '0'}}%" src="{{asset('images/articlesImgs') . '/' . $article->img_3['path']}}">
                 @if(isset($article->img_3['extra_data']) && $article->img_3['extra_data'])
@@ -52,6 +57,39 @@
             @endif
             <p>{{$paragraph}}</p>
             @endforeach
+            @if( $article->img_1 && count($article->article) + 1 === $article->img_1['paragraph_before'])
+            <div class="img-box">
+                <img style="object-position:0px {{isset($article->img_1['object_position']) ? $article->img_1['object_position'] : '0'}}%" src="{{asset('images/articlesImgs') . '/' . $article->img_1['path']}}">
+                @if(isset($article->img_1['extra_data']) && $article->img_1['extra_data'])
+                <div class="extra-data">{{$article->img_1['extra_data']}}</div>
+                @endif
+                @if(isset($article->img_1['author']) && $article->img_1['author'])
+                <div class="author">&#169; {{$article->img_1['author']}} nuotrauka</div>
+                @endif
+            </div>
+            @endif
+            @if( $article->img_2 && count($article->article) + 1 === $article->img_2['paragraph_before'])
+            <div class="img-box">
+                <img style="object-position:0px {{isset($article->img_2['object_position']) ? $article->img_2['object_position'] : '0'}}%" src="{{asset('images/articlesImgs') . '/' . $article->img_2['path']}}">
+                @if(isset($article->img_2['extra_data']) && $article->img_2['extra_data'])
+                <div class="extra-data">{{$article->img_2['extra_data']}}</div>
+                @endif
+                @if(isset($article->img_2['author']) && $article->img_2['author'])
+                <div class="author">&#169; {{$article->img_2['author']}} nuotrauka</div>
+                @endif
+            </div>
+            @endif
+            @if( $article->img_3 && count($article->article) + 1 === $article->img_3['paragraph_before'])
+            <div class="img-box">
+                <img style="object-position:0px {{isset($article->img_3['object_position']) ? $article->img_3['object_position'] : '0'}}%" src="{{asset('images/articlesImgs') . '/' . $article->img_3['path']}}">
+                @if(isset($article->img_3['extra_data']) && $article->img_3['extra_data'])
+                <div class="extra-data">{{$article->img_3['extra_data']}}</div>
+                @endif
+                @if(isset($article->img_3['author']) && $article->img_3['author'])
+                <div class="author">&#169; {{$article->img_3['author']}} nuotrauka</div>
+                @endif
+            </div>
+            @endif
         </div>
         @if(isset($article->link) && $article->link && isset($article->link['link']) && $article->link['link'])
         <div class="media-link-box">

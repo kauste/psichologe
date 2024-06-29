@@ -1,4 +1,4 @@
-import ItemInUse from "../CRUD/parts/itemInUse";
+import ItemInUse from "../../CRUD/parts/itemInUse";
 
 class ToggleModal{
     constructor(selector){
@@ -6,7 +6,6 @@ class ToggleModal{
         this.modalBoxDOM;
         this.modalDOM;
         this.editSectionBtnDOM;
-        this.itemInUse = ItemInUse;
         this.init();
     }
 
@@ -14,7 +13,6 @@ class ToggleModal{
         this.setDOMS()
         this.editSectionBtnDOM.addEventListener('click', this.showModalHandler)
         this.modalBoxDOM.addEventListener('click', this.closeModalHandler)
-
     }
     setDOMS(){
         this.modalBoxDOM = document.querySelector(`.${this.selector}--modal--box`);
@@ -24,19 +22,19 @@ class ToggleModal{
     }
 
     showModalHandler = () => {
-        this.modalBoxDOM.classList.add('show');
+        if(ItemInUse.isOpenItem()) return;
+        this.modalDOM.classList.add('show');
         this.modalBoxDOM.style.animation = 'open-modal-box 0.5s ease forwards';
         this.modalDOM.style.animation = 'open-modal 0.5s ease forwards';
     }
 
     closeModalHandler = (e) => {
         if(e.target === this.modalBoxDOM){
-            const itemInUse = this.itemInUse.getItem();
-            if(itemInUse) return itemInUse.classList.add('border--warning');
+            if(ItemInUse.isOpenItem()) return;
             this.modalDOM.style.animation = 'close-modal 0.5s ease forwards';
             this.modalBoxDOM.style.animation = 'close-modal-box 0.5s ease forwards';
             setTimeout(() => {
-                this.modalBoxDOM.classList.remove('show');
+                this.modalDOM.classList.remove('show');
             }, 100)
         }
     }

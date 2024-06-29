@@ -30,5 +30,11 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+    
+    'google' => [
+        'calendar_id' => env('GOOGLE_CALENDAR_ID'),
+        'impersonated_user' => env('GOOGLE_CALENDAR_IMPERSONATE'),
+        'credentials_path' => storage_path('app/google-calendar/service-account-credentials.json'),
+    ],
 
 ];

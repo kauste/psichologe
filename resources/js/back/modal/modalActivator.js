@@ -1,6 +1,6 @@
 import NavigateModal from "./navigateModal";
 import ToggleModal from "./toggleModal";
-import CRUDactivator from "../CRUD/activators/CRUDactivator";
+import CRUDactivator from "../../CRUD/CRUDactivator";
 
 class ModalActivaror{
     constructor(selector, activations, swiper){
@@ -21,7 +21,7 @@ class ModalActivaror{
 
     activateModalNavigation = () => new NavigateModal(this.selector);
     
-    activateCRUD = () => new CRUDactivator(this.selector, this.activations.activateCRUD, this.modalDOM, this.swiper);
+    activateCRUD = () => new CRUDactivator(this.selector, this.modalDOM, this.activations.activateCRUD.CRUDactivations, this.activations.activateCRUD.CRUDoptionalFeatures, this.swiper);
 
 }
 export default ModalActivaror;

@@ -14,7 +14,7 @@
             </div>
             <div class="message --message"></div>
         </div>
-        <div class="modal-ul-box">
+        <div class="modal-items-box">
             <ul class="items--parent">
                 @forelse ($data->educations as $edu)
                 <li class="one-item one-education one--item" data-id="{{$edu->id}}" data-priority="{{$edu->priority}}">

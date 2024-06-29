@@ -77,12 +77,14 @@ class ArticleController extends Controller
 
         $imgsValidator = [];
         $imgsErrors = [];
-        $imgs->each(function($img, $key) use (&$imgsValidator, &$imgsErrors, $articleText){
+        $maxImgPos = (count($articleText) + 1);
+
+        $imgs->each(function($img, $key) use (&$imgsValidator, &$imgsErrors, $maxImgPos){
             $index = substr($key, -1);
             $imgsValidator = [...$imgsValidator,             
                             'img_' . $index => 'nullable|file|mimes:jpg,png,webp,mbp',
                             'object_position_'. $index => 'nullable|numeric',
-                            'img_position_' . $index => 'required|integer|min:1|max:'.count($articleText),
+                            'img_position_' . $index => 'required|integer|min:1|max:'.$maxImgPos,
                             'img_author_' . $index => 'nullable|string|max:100',
                             'extra_data_' . $index => 'nullable|string|max:300',
                             'extra_data_' . $index => 'nullable|string|max:300',
@@ -137,13 +139,14 @@ class ArticleController extends Controller
             $formatedErrors = collect($formatedErrors)->map(function($error) {
                 return $error[0];
             })->toArray();
-            return response()->json(['errors' => $formatedErrors]);
+            return response()->json(['errorsObj' => $formatedErrors]);
         }
         $url = strtolower(str_replace(' ', '-', $data['title']));
         $i = 1;
         while(Article::where('url', $url)->exists()){
-            $url = strtolower(str_replace(' ', '-', $article['title'])) . '-' . $i++;
+            $url = strtolower(str_replace(' ', '-', $data['title'])) . '-' . $i++;
         }
+
         $article = Article::create([
             'url' => $url,
             'title' => $data['title'],
@@ -173,10 +176,9 @@ class ArticleController extends Controller
             $article->tags()->attach($data['tags']);
         }
 
-        return response()->json(['message' => 'Naujas straipsnis sukurtas',
-                                'url' => $article->url]);
+        return response()->json(['redirectRoute' => route('back-article-page', $article->url)]);
     }
-    public function articleUpdate(Request $request)
+    public function articleUpdate(Request $request, $id)
     {
 
         $articleText = explode("\r\n", trim($request->article));
@@ -195,20 +197,22 @@ class ArticleController extends Controller
             }
             return $item;
         })->toArray();
+        $data['id'] = $id;
+
         $imgs = collect($data)->filter(function($item, $key){
             return str_starts_with($key, 'img_') && strlen($key) === 5;
         });
 
         $imgsValidator = [];
         $imgsErrors = [];
-        $imgs->each(function($img, $key) use (&$imgsValidator, &$imgsErrors, $articleText){
+        $maxImgPos = (count($articleText) + 1);
+        $imgs->each(function($img, $key) use (&$imgsValidator, &$imgsErrors, $maxImgPos){
             $index = substr($key, -1);
             $imgsValidator = [...$imgsValidator,             
                             'img_' . $index => 'nullable|file|mimes:jpg,png,webp,mbp',
                             'object_position_'. $index => 'nullable|numeric',
-                            'img_position_' . $index => 'required|integer|min:1|max:'.count($articleText),
+                            'img_position_' . $index => 'required|integer|min:1|max:'. $maxImgPos,
                             'img_author_' . $index => 'nullable|string|max:100',
-                            'extra_data_' . $index => 'nullable|string|max:300',
                             'extra_data_' . $index => 'nullable|string|max:300',
                             ];
             $imgsErrors = [...$imgsErrors,
@@ -230,15 +234,27 @@ class ArticleController extends Controller
         });
         $oldImgsValidator = [];
         $oldImgsErrors = [];
-        $oldImgs->each(function($oldImg, $key) use (&$oldImgsValidator, &$oldImgsErrors, $articleText){
+        $oldImgs->each(function($oldImg, $key) use (&$oldImgsValidator, &$oldImgsErrors, $maxImgPos){
             $index = substr($key, -1);
             $oldImgsValidator = [...$oldImgsValidator,             
                             'img_old_' . $index => 'nullable|boolean',
+                            'object_position_'. $index => 'nullable|numeric',
+                            'img_position_' . $index => 'required|integer|min:1|max:'. $maxImgPos,
+                            'img_author_' . $index => 'nullable|string|max:100',
+                            'extra_data_' . $index => 'nullable|string|max:300',
 
                             ];
             $oldImgsErrors = [...$oldImgsErrors,
                             'img_old_' . $index .'.boolean' => 'Turi būti pažymėta, ar naudojama sena nuotrauka "boolean" kintamuoju.',
-                            ];
+                            'object_position_'. $index . '.numeric' => 'Nuotraukos pozicija turi būti skaičius.',
+                            'img_position_'. $index .'.required' => 'Nuotraukos ('. $index .') pozicija straipsnyje yra privaloma.', 
+                            'img_position_'. $index .'.max' => 'Nuotraukos ('. $index .') pozicija straipsnyje turi neviršyti straipsnio pastraipų skaičiaus.', 
+                            'img_position_'. $index .'.min' => 'Nuotraukos ('. $index .') pozicija straipsnyje turi būti nustatyta bent jau prieš pirmą paragrfą.', 
+                            'img_position_'. $index .'.integer' => 'Nuotraukos ('. $index .') pozicija po paragrafo turi būti skaičius.',
+                            'img_author_'. $index .'.string' => 'Nuotraukos ('. $index .') autorius turi buti string tipo',
+                            'img_author_'. $index .'.max' => 'Nuotraukos ('. $index .') pozicija straipsnyje turi neviršyti 100 simbolių.', 
+                            'extra_data_'. $index .'.max' => 'Nuotraukos ('. $index .') pozicija straipsnyje turi neviršyti 300 simbolių.', 
+                        ];
         });
         $validator = Validator::make($data, [
                                                 'id' => 'required|exists:articles,id',
@@ -281,7 +297,7 @@ class ArticleController extends Controller
             $formatedErrors = collect($formatedErrors)->map(function($error) {
                 return $error[0];
             })->toArray();
-            return response()->json(['errors' => $formatedErrors]);
+            return response()->json(['errorsObj' => $formatedErrors]);
         }
         $article = Article::find($request->id);
 
@@ -345,8 +361,7 @@ class ArticleController extends Controller
             $article->tags()->attach($data['tags']);
         }
 
-        return response()->json(['message' => 'Straipsnio informacija pakeista',
-                                'url' => $article->url]);
+        return response()->json(['redirectRoute' => route('back-article-page', $article->url)]);
     }
     public function articledelete($id)
     {
