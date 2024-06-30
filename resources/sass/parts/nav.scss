@@ -1,9 +1,9 @@
 .nav-box {
     position: absolute;
-    top:0;
-    right:0;
-    height:110px;
-    width:100vw;
+    top: 0;
+    right: 0;
+    height: 110px;
+    width: 100vw;
     overflow: hidden;
 
     nav {
@@ -16,7 +16,7 @@
         right: -5%;
         padding: 20px;
         border-bottom-left-radius: $radius;
-        z-index: 1;
+        z-index: 2;
         background-color: $bgTransp;
         backdrop-filter: blur(10px);
         border-bottom: $electric 2px solid;
@@ -55,5 +55,60 @@ body:has(#hero, .articles-list) {
     }
     100% {
         right: 0;
+    }
+}
+@media (max-width: 1300px) {
+    body:has(.services-list, .articles-list) {
+        .nav-box {
+            height: 100vh;
+            width: 250px;
+            nav {
+                flex-direction: column;
+                height: fit-content;
+                gap: 10px;
+                padding: 50px 10px;
+                a {
+                    width: 171px;
+                    padding: 10px 0;
+                    height: auto;
+                }
+            }
+        }
+    }
+}
+@media (max-width: 1200px) {
+    body:has(.registration-page) {
+        .nav-box {
+            height: 100vh;
+            width: 250px;
+            nav {
+                flex-direction: column;
+                height: fit-content;
+                gap: 10px;
+                padding: 50px 10px;
+                a {
+                    width: 171px;
+                    padding: 10px 0;
+                    height: auto;
+                }
+            }
+        }
+    }
+}
+@media (max-width: 1000px) {
+    .nav-box {
+        height: 100vh;
+        width: 250px;
+        nav {
+            flex-direction: column;
+            height: fit-content;
+            gap: 10px;
+            padding: 50px 10px;
+            a {
+                width: 171px;
+                padding: 10px 0;
+                height: auto;
+            }
+        }
     }
 }

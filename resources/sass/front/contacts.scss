@@ -35,6 +35,7 @@ body:has(.contacts-page) {
         height: 100%;
         main {
             position: relative;
+            padding-bottom:50px;
         }
     }
     .contacts-page section {
@@ -47,8 +48,6 @@ body:has(.contacts-page) {
             justify-content: space-between;
             align-items: center;
             .one-contact {
-                width: 100%;
-                max-width: 600px;
                 display: flex;
                 flex-direction: column;
                 gap: 10px;

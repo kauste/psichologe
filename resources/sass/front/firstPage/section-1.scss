@@ -110,9 +110,10 @@
         height: auto;
         border-radius: $radius;
         display: flex;
-        align-items: center;
-        gap: 20px;
-        bottom: 30px;
+        flex-direction:column;
+        align-items: end;
+        gap: 10px;
+        bottom: 50px;
         right: 50px;
         .media {
             display: flex;

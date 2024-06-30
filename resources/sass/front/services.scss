@@ -43,12 +43,12 @@ body:has(.services-list) {
             flex-wrap: wrap;
             gap: 40px;
             align-items: center;
-            justify-content: center;
+            justify-content: space-around;
             list-style: none;
             padding: 0;
 
             .one-service {
-                width: max(290px, calc(50% - 40px));
+                width: max(580px, calc(50% - 40px));
                 height: fit-content;
                 padding: 30px 50px 30px 65px;
                 position: relative;

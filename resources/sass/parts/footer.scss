@@ -105,11 +105,6 @@ body {
     }
 }
 
-body:has(.services-list, .login-page) {
-    footer {
-        margin-top: 0;
-    }
-}
 body:has(.services-list) {
     footer .psychology-svg {
         fill: url(#sand-gradient);
@@ -154,3 +149,46 @@ body:has(.articles-list, .article-page, .article-edit, .article-create) {
         left: 0;
     }
 }
+@media (max-width:1300px) {
+    body footer{
+        .psychology-svg{
+            bottom: 120px;
+            right: 60px;
+        }
+    }
+}
+@media (max-width:1200px) {
+    body:has(.article-page, .articles-list, .registration-page, .services-list) footer{
+        .psychology-svg{
+            bottom: 240px;
+        }
+    }
+
+}
+@media (max-width:1200px) {
+        body footer{
+        height: 170px;
+        .content-container{
+            height: 170px;
+            width: 660px;
+            .content-box .content{
+                grid-template-columns: 1fr 1fr;
+                padding: 25px 10px;
+                gap: 7px;
+                .footer-nav {
+                    grid-column: 1 / span 2;
+                    ul {
+                    padding-left: 0;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    .nav-column{
+                        padding: 0 0 8px 8px;
+                        flex-direction: row;
+                    }
+                }
+            }
+            }
+        }
+    }
+}
+

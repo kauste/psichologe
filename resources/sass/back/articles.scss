@@ -49,14 +49,14 @@
     .article-create, .article-edit {
         display: flex;
         justify-content: center;
+        .article{
+            padding-bottom: 60px;
+        }
         .form-box {
             width: min(1000px, 100vw - 230px);
             color: #161616;
             background-color: #e8e3d7;
-            box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, 0.3) inset,
-                -4px -4px 6px 0 rgba(0, 0, 0, 0.25) inset;
             padding: 50px 70px 70px 70px;
-            border-radius: 20px;
             .form .data{
                 display:flex;
                 flex-direction: column;

@@ -8,16 +8,8 @@
         <a href="{{route('back-articles-list') . '?filter='. $tag->id}}">{{$tag->tag}}</a>
         @endforeach
     </div>
-    <a class="back-btn" href="{{url()->previous()}}">
+    <a class="back-btn button round electric bg-sand lardge" href="{{url()->previous()}}">
         <svg>
-            <defs>
-                <radialGradient id="radial-gradient" cx="18%" cy="71%" r="28%" fx="18%" fy="71%">
-                    <stop offset="4%" style="stop-color:#E9C1C8;stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:#d5d0c5;stop-opacity:1" />
-                </radialGradient>
-
-
-            </defs>
             <use xlink:href="#arrow-return"></use>
         </svg>
     </a>
