@@ -15,8 +15,8 @@ window.onload = function (){
 
     if(document.querySelector('.about--me--page')){
         new CrossFadeSwiper('.citations--swiper');
-        new LimitedSwiper('#education', 'vertical', 5, 5);
-        new LimitedSwiper('#work', 'vertical', 5, 5);
+        new LimitedSwiper('#education', 'vertical', 5, 5, true);
+        new LimitedSwiper('#work', 'vertical', 5, 5, true);
     }
     if(document.querySelector('.registration-page')){
         const createActivator = new CreateActivator( 'registration',

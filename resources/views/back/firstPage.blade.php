@@ -7,67 +7,69 @@
     @include('back.CRUDmodal.education.modal')
     @include('back.CRUDmodal.work.modal')
     <section id="hero" class="section-1">
-        <div class="img-box">
-            <img src="{{asset('images/psichologe-alytuje-1.webp')}}">
-        </div>
-        <div class="services">
-            <ul>
-                @foreach ($services as $service)
-                <li>{{$service->service_title}}</li>
-                @endforeach
-            </ul>
-        </div>
-        <div id="citation" class="citations-box">
-            <div class="edit-svg-box --edit">
-                <svg>
-                    <use xlink:href="#edit"></use>
-                </svg>
+        <div class="box">
+            <div class="services">
+                <ul>
+                    @foreach ($services as $service)
+                    <li class="service-item">{{$service->service_title}}</li>
+                    @endforeach
+                </ul>
             </div>
-            <img src="{{asset('images/bg3.webp')}}">
-            <div class="citations" id="citation">
-                <div class="swiper citations--swiper">
-                    <ul class="swiper-wrapper items--parent">
-                        @foreach ($citations ?? [] as $citation)
-                        <li class="swiper-slide one-citation one--item" data-id="{{$citation->id}}">
-                            <div class="--var" data-name="citation">{{$citation->citation}}</div>
-                            <small class="--var" data-name="author">{{$citation->author ?? ''}}</small>
-                        </li>
-                        @endforeach
-                    </ul>
+            <div class="img-box">
+                <img src="{{asset('images/psichologe-alytuje-1.webp')}}">
+            </div>
+            <div id="citation" class="citations-box">
+                <div class="edit-svg-box --edit">
+                    <svg>
+                        <use xlink:href="#edit"></use>
+                    </svg>
                 </div>
-                <div class="swiper-button-next">
-                    <div class="button round pink bg-electric">
-                        <svg class="chevron chevron-right">
-                            <use xlink:href="#chevron"></use>
-                        </svg>
+                <img src="{{asset('images/bg3.webp')}}">
+                <div class="citations" id="citation">
+                    <div class="swiper citations--swiper">
+                        <ul class="swiper-wrapper items--parent">
+                            @foreach ($citations ?? [] as $citation)
+                            <li class="swiper-slide one-citation one--item" data-id="{{$citation->id}}">
+                                <div class="--var" data-name="citation">{{$citation->citation}}</div>
+                                <small class="--var" data-name="author">{{$citation->author ?? ''}}</small>
+                            </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    <div class="swiper-button-next">
+                        <div class="button round pink bg-electric">
+                            <svg class="chevron chevron-right">
+                                <use xlink:href="#chevron"></use>
+                            </svg>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <h1>
-            <div class="duties">Psichologė Alytuje</div>
-            <div class="full-name">Romalda Stasionienė</div>
-        </h1>
-        <div class="contacts">
-            <div style="display:block" class="tel-num tel-desktop">&#43;370 {{substr($contacts->telephone_number, 0, 3)}} {{substr($contacts->telephone_number, 2, 5)}}</div>
-            <a style="display:none" class=" tel-num tel-mobile" href="tel:+370{{str_replace([' ', '-'], '', $contacts->telephone_number)}}" target="_blank">&#43;370 {{substr($contacts->telephone_number, 0, 3)}} {{substr($contacts->telephone_number, 2, 5)}}</a>
-            <a class="email" href="mailto:{{$contacts->email}}?subject=Mail from site">{{$contacts->email}}</a>
-            <div class="media">
-                @if($contacts->facebook)
-                <a class="button round pink bg-light-electric" href="{{$contacts->facebook}}" target="_blank">
-                    <svg>
-                        <use xlink:href="#fb"></use>
-                    </svg>
-                </a>
-                @endif
-                @if($contacts->linkedin)
-                <a class="button round pink bg-light-electric" href="{{$contacts->linkedin}}" target="_blank">
-                    <svg>
-                        <use xlink:href="#linkedin"></use>
-                    </svg>
-                </a>
-                @endif
+            <div class="contacts">
+                <div style="display:block" class="tel-num tel-desktop">&#43;370 {{substr($contacts->telephone_number, 0, 3)}} {{substr($contacts->telephone_number, 2, 5)}}</div>
+                <a style="display:none" class=" tel-num tel-mobile" href="tel:+370{{str_replace([' ', '-'], '', $contacts->telephone_number)}}" target="_blank">&#43;370 {{substr($contacts->telephone_number, 0, 3)}} {{substr($contacts->telephone_number, 2, 5)}}</a>
+                <a class="email" href="mailto:{{$contacts->email}}?subject=Mail from site">{{$contacts->email}}</a>
+                <div class="media">
+                    @if($contacts->facebook)
+                    <a class="button round pink bg-light-electric" href="{{$contacts->facebook}}" target="_blank">
+                        <svg>
+                            <use xlink:href="#fb"></use>
+                        </svg>
+                    </a>
+                    @endif
+                    @if($contacts->linkedin)
+                    <a class="button round pink bg-light-electric" href="{{$contacts->linkedin}}" target="_blank">
+                        <svg>
+                            <use xlink:href="#linkedin"></use>
+                        </svg>
+                    </a>
+                    @endif
+                </div>
             </div>
+            <h1>
+                <div class="duties">Psichologė Alytuje</div>
+                <div class="full-name">Romalda Stasionienė</div>
+            </h1>
         </div>
     </section>
     <section id="about" class="section-2">

@@ -49,8 +49,8 @@
         , };
 
     </script>
-    {{-- <link rel="stylesheet" href="{{asset('/build/assets/appBack-1863782e.css?v='. time())}}">
-    <script src="{{asset('/build/assets/appBack-904c81f8.js?v='). time()}}" type="module" defer></script> --}}
+    {{-- <link rel="stylesheet" href="{{asset('/build/assets/appBack-ca40b154.css?v=2'. time())}}">
+    <script src="{{asset('/build/assets/appBack-c47ce8e9.js?v=2'). time()}}" type="module" defer></script> --}}
     @vite(['resources/sass/appBack.scss', 'resources/js/appBack.js'])
 </head>
 <body class="back-office">
@@ -62,7 +62,7 @@
                 <a href="{{route('back-first-pg')}}" class="{{isset($pageName) && $pageName === 'firstPage' ? 'active' : ''}}">Apie&nbsp;mane</a>
                 <a href="{{route('back-services-list')}}" class="{{isset($pageName) && $pageName === 'services' ? 'active' : ''}}">Paslaugos</a>
                 <a href="{{route('back-contacts')}}" class="{{isset($pageName) && $pageName === 'contacts' ? 'active' : ''}}">Kontaktai</a>
-                <a href="#">Registracija</a>
+                {{-- <a href="#">Registracija</a> --}}
                 <a href="{{route('back-articles-list')}}" class="{{isset($pageName) && $pageName === 'articles' ? 'active' : ''}}">Straipsniai</a>
                 @if(Auth::user()?->role === 7)
                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

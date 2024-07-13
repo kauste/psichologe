@@ -5,7 +5,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Google\Client as GoogleClient;
 use Google\Service\Calendar as GoogleCalendar;
-// use Spatie\GoogleCalendar\Event;
 
 class GoogleCalendarController extends Controller{
     protected $calendarId;

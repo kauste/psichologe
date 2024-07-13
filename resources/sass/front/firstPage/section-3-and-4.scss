@@ -4,15 +4,12 @@
     display: flex;
     justify-content: center;
     opacity: 0.5;
-    @media (max-width: 600px) {
-        padding: 80px 0 40px;
-    }
     .work-box {
         background-size: 100% 100%;
-        background-position: 0px 0px,0px 0px,0px 0px,0px 0px,0px 0px;
+        background-position: 0px 0px, 0px 0px, 0px 0px, 0px 0px, 0px 0px;
         background-image: $northenGradient;
-        position:relative;
-        color:$bg;
+        position: relative;
+        color: $bg;
     }
     .education-box {
         background-color: #f0eadd;
@@ -21,41 +18,28 @@
     .work-box {
         border-radius: 20px;
         box-sizing: border-box;
-        width: min(900px, 100vw);
+        width: min(900px, 100%);
         padding: 60px 100px 60px 60px;
         position: relative;
-        @media (max-width: 900px) {
-            padding: 40px 60px 40px 3vw;
-        }
-        @media (max-width: 650px) {
-            padding: 40px 3vw 40px 15px;
-        }
         .heading-box {
             margin-bottom: 30px;
-            @media (max-width: 650px) {
-                display: flex;
-                justify-content: center;
-            }
         }
         .education-swiper-box,
         .work-swiper-box {
             position: relative;
             .swiper {
-                height: 300px;
+                height: 350px;
                 overflow: hidden;
                 .swiper-wrapper {
                     list-style: none;
                     padding: 0;
                     li {
-                        height: 60px;
                         display: grid;
                         grid-template-columns: 150px 1fr;
                         padding: 2.5px 20px;
                         line-height: 1.15em;
                         @media (max-width: 500px) {
-                            grid-template-columns: 70px 1fr;
-                            height: 75px;
-                            padding: 0;
+     
                         }
                         @media (max-width: 400px) {
                             height: 100px;
@@ -70,23 +54,13 @@
                     }
                 }
             }
-            .swiper-button-prev, .swiper-button-next {
-                    &:has(.chevron-up) {
-                        top: -20px;
-                        right: -50px;
-                        @media (max-width: 650px) {
-                            right: 0;
-                            top: -125px;
-                        }
-                    }
-                    &:has(.chevron-down) {
-                        bottom: -20px;
-                        right: -50px;
-                        @media (max-width: 650px) {
-                            right: 0;
-                            bottom: -60px;
-                        }
-                    }
+            .swiper-button-prev {
+                top: -20px;
+                right: -50px;
+            }
+            .swiper-button-next {
+                bottom: -20px;
+                right: -50px;
             }
         }
     }
@@ -99,5 +73,120 @@
         position: absolute;
         right: 20px;
         top: 20px;
+    }
+}
+@media (max-width: 900px) {
+    .section-3,
+    .section-4 {
+        .education-box,
+        .work-box {
+            padding: 40px 60px 40px 3vw;
+            .education-swiper-box,
+            .work-swiper-box {
+                .swiper {
+                    height: 270px;
+                }
+            }
+        }
+    }
+}
+@media (max-width: 650px) {
+    .section-3,
+    .section-4 {
+        .education-box,
+        .work-box {
+            padding: 40px 3vw 60px 15px;
+            .heading-box {
+                display: flex;
+                justify-content: center;
+            }
+            .education-swiper-box {
+                .swiper-button-prev {
+                    right: 0;
+                    top: -125px;
+                }
+                .swiper-button-next {
+                    right: 0;
+                    bottom: -80px;
+                }
+                .swiper-button-disabled, .--disabled {
+                    background-color: #f0eadd;
+                    opacity: 1;
+                    box-shadow: 12px 12px 50px 0 hsla(43, 19%, 56%, 0.15) inset,
+                        -12px -12px 12px 0 rgba(255, 250, 237, 0.07) inset,
+                        10px 10px 20px rgb(201 194 179 / 67%),
+                        -10px -10px 20px rgb(255 255 255 / 19%);
+                }
+            }
+            .work-swiper-box {
+                .swiper-button-prev {
+                    right: 0;
+                    top: -125px;
+                }
+                .swiper-button-next {
+                    right: 0;
+                    bottom: -80px;
+                }
+                .swiper-button-disabled, .--disabled {
+                    background-color: $electric;
+                    opacity: 1;
+                    box-shadow: inset 12px 12px 16px 0 rgba(0, 0, 0, 0.049),
+                        inset -12px -12px 12px 0 rgb(255 255 255 / 16%),
+                        10px 10px 20px #0f1111b3,
+                        -5px -5px 15px rgb(252 252 252 / 28%);
+                }
+            }
+        }
+    }
+}
+@media (max-width: 600px) {
+    .section-3,
+    .section-4 {
+        .education-box,
+        .work-box {
+            border-radius: 0;
+        }
+    }
+}
+@media (max-width: 540px) {
+    .section-3,
+    .section-4 {
+        padding-left: 0;
+        padding-right: 0;
+        .education-box,
+        .work-box {
+            .education-swiper-box,
+            .work-swiper-box {
+                .swiper {
+                    height: 255px;
+
+                .swiper-wrapper li {
+                    grid-template-columns: 100px 1fr;
+                    gap:10px;
+                    padding: 0;
+                }
+            }
+            }
+        }
+    }
+}
+@media (max-width: 380px) {
+    .section-3,
+    .section-4 {
+        .education-box,
+        .work-box {
+            .education-swiper-box,
+            .work-swiper-box {
+                .swiper  {
+                    height: 240px;
+
+                    .swiper-wrapper li {
+                    grid-template-columns: 65px 1fr;
+                    gap:5px;
+                    font-size: 12px;
+                }
+            }
+            }
+        }
     }
 }

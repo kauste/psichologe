@@ -1,11 +1,13 @@
-import NavStyles from './nav';
+import { MobileNav, NavStyles }from './nav';
 import AppearOnScroll from './firstPage/appearOnScroll';
 import BambooAnim from './firstPage/bambooAnim';
 import LimitedSwiper from './limitedSwiper';
 
+
 class AnimationRouter{
     constructor(){
         this.route();
+        new MobileNav('.--nav', '.nav--toggle');
     }
     currentPage(selector){
       return !!document.querySelector(selector); 
@@ -69,8 +71,6 @@ class AnimationRouter{
 
     whitePinkNavAnimation = () => this.navAnimation('#EFEFEF', '#E9C1C8')
 
-    whiteNavAnimation = () => this.navAnimation('#EFEFEF', '#E9C1C8')
-
     articlesTagsAnimation () {
         const articlesTagsNav = new NavStyles('.tags--nav', '#EFEFEF', '#E9C1C8', '19px', '19.2px', '0')
         articlesTagsNav.animation();
@@ -93,13 +93,17 @@ class AnimationRouter{
         this.articlesTagsAnimation();
         this.lightFooterAnimation();
         this.lightContactsAnimation();
+        new MobileNav('.tags--nav--box', '.toggle--btn');
+
     }
     articlePage(){
-        this.whitePinkNavAnimation();
+        this.greenNavAnimation();
         this.articlesTagsAnimation();
         if(document.querySelector('.media--link--box')) this.mediaLinkAnimation();
         this.lightFooterAnimation();
         this.lightContactsAnimation();
+        new MobileNav('.tags--nav--box', '.toggle--btn');
+
     }
     servicesPage(){
         this.greenNavAnimation();
@@ -123,7 +127,7 @@ class AnimationRouter{
         this.darkContactsAnimation();
     }
     articleEditPage(){
-        this.whiteNavAnimation();
+        this.whitePinkNavAnimation();
         this.lightFooterAnimation();
         this.lightContactsAnimation();
     }

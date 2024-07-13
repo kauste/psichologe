@@ -14,7 +14,6 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ArticleTagController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ContactController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,8 +25,6 @@ use App\Http\Controllers\ContactController;
 |
 */
 
-
-Auth::routes(['register' => false]);
 Route::get('/', [FrontController::class, 'firstPage'])->name('first-page');
 Route::get('/straipsniai', [FrontController::class, 'articlesList'])->name('articles-list');
 Route::get('/straipsnis/{article}', [FrontController::class, 'articlePage'])->name('article-page');
@@ -80,3 +77,4 @@ Route::prefix('admin')->name('back-')->middleware(['auth'])->group(function(){
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Auth::routes(['register' => false]);

@@ -1,12 +1,12 @@
 .back-office{
-    position:relative;
-    .section-1-box{
+    // position:relative;
+    .section-1 .box .citations-box{
         position:relative;
         .edit-svg-box{
             position:absolute;
             z-index: 2;
-            top:100px;
-            right:calc((100vw - min(1000px, 100vw)) / 2 + 20px)
+            top:20px;
+            right:20px;
         }
     }
 }

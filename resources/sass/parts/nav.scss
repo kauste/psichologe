@@ -1,37 +1,37 @@
 .nav-box {
     position: absolute;
+    width: 100%;
+    height: 110px;
+    overflow: hidden;
     top: 0;
     right: 0;
-    height: 110px;
-    width: 100vw;
-    overflow: hidden;
-
     nav {
-        font-family: $nav-family;
+        height: 110px;
+        width: 1000px;
         display: flex;
         align-items: center;
-        justify-content: right;
+        justify-content: space-around;
         position: absolute;
-        top: 0px;
-        right: -5%;
-        padding: 20px;
-        border-bottom-left-radius: $radius;
-        z-index: 2;
-        background-color: $bgTransp;
-        backdrop-filter: blur(10px);
-        border-bottom: $electric 2px solid;
-        border-left: $electric 2px solid;
-        height: 110px;
+        z-index: 4;
+        top: 0;
+        right: 0;
         animation: nav-appear calc($navAppearDelay * 1s) 0.3s ease forwards;
         overflow: hidden;
+        font-family: $nav-family;
+        padding: 30px 20px 20px;
+        border-bottom: $electric 2px solid;
+        border-left: $electric 2px solid;
+        border-bottom-left-radius: $radius;
+        background-color: $bgTransp;
+        backdrop-filter: blur(10px);
+        webkit-backdrop-filter: blur(10px) ;
 
         a {
             width: fit-content;
             text-decoration: none;
             padding: 10px 30px;
             line-height: 25px;
-            height: 25px;
-            font-size: 400;
+            height: 45px;
             transition: all 0.2s 0.2s cubic-bezier(0.96, 0.83, 0.74, 0.88);
             display: inline-block;
             font-variation-settings: "wght" 600;
@@ -40,15 +40,24 @@
             font-size: 22px;
         }
     }
-}
-body:has(#hero, .articles-list) {
-    .nav-box {
-        nav {
-            border-bottom: $bg 2px solid;
-            border-left: $bg 2px solid;
-        }
+    .toggle-buttons-box {
+        display: none;
+    }
+    .transp-bg {
+        display: none;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
     }
 }
+body:has(#hero, .articles-list) {
+    .nav-box nav {
+        border-bottom: $bg 2px solid;
+        border-left: $bg 2px solid;
+    }
+}
+
 @keyframes nav-appear {
     0% {
         right: -5%;
@@ -57,16 +66,16 @@ body:has(#hero, .articles-list) {
         right: 0;
     }
 }
+
 @media (max-width: 1300px) {
     body:has(.services-list, .articles-list) {
         .nav-box {
-            height: 100vh;
-            width: 250px;
+            height: 400px;
+            width: 210px;
             nav {
+                height: 400px;
+                width: 210px;
                 flex-direction: column;
-                height: fit-content;
-                gap: 10px;
-                padding: 50px 10px;
                 a {
                     width: 171px;
                     padding: 10px 0;
@@ -79,13 +88,13 @@ body:has(#hero, .articles-list) {
 @media (max-width: 1200px) {
     body:has(.registration-page) {
         .nav-box {
-            height: 100vh;
-            width: 250px;
+            height: 400px;
+            width: 210px;
             nav {
+                height: 400px;
+                width: 210px;
                 flex-direction: column;
-                height: fit-content;
-                gap: 10px;
-                padding: 50px 10px;
+                padding: 40px 10px;
                 a {
                     width: 171px;
                     padding: 10px 0;
@@ -96,18 +105,187 @@ body:has(#hero, .articles-list) {
     }
 }
 @media (max-width: 1000px) {
-    .nav-box {
-        height: 100vh;
-        width: 250px;
-        nav {
-            flex-direction: column;
-            height: fit-content;
-            gap: 10px;
-            padding: 50px 10px;
-            a {
-                width: 171px;
-                padding: 10px 0;
-                height: auto;
+    body:has(
+            .registration-page,
+            .article-page,
+            .articles-list,
+            .article-create,
+            .article-edit,
+            .contacts-page,
+            .services-list
+        ) {
+        .nav-box,
+        .in-body .nav-box {
+            nav {
+                height: 400px;
+                width: 210px;
+                flex-direction: column;
+                padding: 40px 10px;
+                a {
+                    width: 171px;
+                    padding: 10px 0;
+                    height: auto;
+                }
+            }
+        }
+    }
+    body:has(#hero, .login-page) {
+        .nav-box,
+        .in-body .nav-box {
+            nav {
+                width: 100%;
+                border-radius: 0;
+                justify-content: space-between;
+                a {
+                    padding: 10px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 800px) {
+    body:has(#hero, .login-page) {
+        .nav-box,
+        .in-body .nav-box {
+            height: 400px;
+            width: 330px;
+            nav {
+                height: 400px;
+                flex-direction: column;
+                border-bottom-left-radius: 80px;
+                width: 330px;
+                a {
+                    width: 171px;
+                    height: auto;
+                }
+            }
+        }
+    }
+    body:has(
+            #hero,
+            .login-page,
+            .registration-page,
+            .article-page,
+            .articles-list,
+            .article-create,
+            .article-edit,
+            .contacts-page,
+            .services-list
+        ) {
+        .in-body .nav-box,
+        .nav-box {
+            top: 0;
+            right: 0;
+            width: 330px;
+            nav {
+                width: 330px;
+                padding: 40px 10px 90px 10px;
+                transform: translate(100px, -290px);
+                transition: transform 0.4s 0.14s
+                    cubic-bezier(0.265, 0.84, 0.64, 1);
+                .toggle-buttons-box {
+                    width: 100px;
+                    height: 100px;
+                    position: absolute;
+                    bottom: 0px;
+                    left: 0px;
+                    z-index: 5;
+                    display: flex;
+                    .stick {
+                        height: 2px;
+                        border-radius: 1px;
+                        background-color: $electric;
+                        position: absolute;
+                        width: 70px;
+                        transition: all 0.3s linear;
+                    }
+                    .stick-1 {
+                        transform: translate(-20px, 42px);
+                    }
+                    .stick-2 {
+                        transform: translate(0px, 59px);
+                    }
+                    .stick-3 {
+                        transform: translate(-10px, 76px);
+                    }
+                    &:hover {
+                        cursor: pointer;
+                        .stick {
+                            background-color: $bg;
+                        }
+                    }
+                }
+                a {
+                    opacity: 0;
+                    padding: 20px;
+                }
+
+                &:not(&.--open):hover {
+                    cursor: pointer;
+                    .stick {
+                        background-color: $bg;
+                    }
+                    .stick-1 {
+                        transform: translate(-10px, 42px);
+                    }
+                    .stick-2 {
+                        transform: translate(10px, 59px);
+                    }
+                    .stick-3 {
+                        transform: translate(0, 76px);
+                    }
+                }
+                &.--open {
+                    transform: translate(0px, 0px);
+                    .stick-1,
+                    .stick-3 {
+                        transform: rotate(45deg) translate(40px, 0px);
+                    }
+                    .stick-2 {
+                        transform: rotate(-45deg) translate(0px, 40px);
+                    }
+                    a {
+                        opacity: 1;
+                    }
+                    + .transp-bg {
+                        display: block;
+                    }
+                }
+            }
+            &:has(.--open){
+                height: 100%;
+                width:100%
+            }
+        }
+
+    }
+}
+@media (max-width: 540px) {
+    body:has(
+            #hero,
+            .login-page,
+            .registration-page,
+            .articles-list,
+            .article-page,
+            // .articles-page,
+            .article-create,
+            .article-edit,
+            .contacts-page,
+            .services-list
+        ) {
+        .nav-box,
+        .in-body .nav-box {
+            height: 50px;
+            width: 100%;
+            background-color: #00000013;
+            nav {
+                height: 400px;
+                width: 100%;
+                transform: translate(0px, -350px);
+                border-bottom-left-radius: 0;
+                border-left: unset;
+                box-shadow: 0px 10px 20px #00000036;
             }
         }
     }

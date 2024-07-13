@@ -1,38 +1,76 @@
-$nav-family: 'Quicksand', sans-serif;
-$headings-family: 'Poiret One', cursive;
-$pink: #E9C1C8;
-$pinkDark:#cdaaaf;
-$electric:#17453F;
-$electricDark:#133833;
+$nav-family: "Quicksand", sans-serif;
+$headings-family: "Poiret One", cursive;
+$pink: #e9c1c8;
+$pinkDark: #cdaaaf;
+$electric: #17453f;
+$electricDark: #133833;
 
-$electricTransp:#17453fe7;
-$bg:#E8E3D7;
-$bgLittleTransp:#e8e3d7da;
-$bgLight:#f0eadd;
-$darkerBg:#d5d0c5;
-$bgTransp:#e8e3d720;
-$violet: #7E3F54;
-$northenGradient: radial-gradient(18% 28% at 18% 71%, #FFFFFF4D 4%, #073AFF00 100%),radial-gradient(31% 43% at 7% 98%, #17453fe7 96%, #073AFF00 100%),radial-gradient(35% 56% at 91% 74%, #17453F 66%, #073AFF00 100%),radial-gradient(74% 86% at 67% 38%, #E9C1C826 1%, #073AFF00 100%),linear-gradient(125deg, #427A6DFF 1%, #17453FFF 100%);
-$electricRadialGradient:radial-gradient(circle, rgb(249 237 207) 0%, rgba(43,86,80,0.8556696360184699) 100%);
-$lightnGradient: radial-gradient(18% 28% at 18% 71%, #E8E3D7 4%, #073AFF00 100%),radial-gradient(31% 43% at 7% 98%, #e8e3d7da 96%, #073AFF00 100%),radial-gradient(35% 56% at 91% 74%, #E9C1C8 66%, #073AFF00 100%),radial-gradient(74% 86% at 67% 38%, #E9C1C826 1%, #073AFF00 100%),linear-gradient(125deg, #cdaaaf 1%, #E8E3D7 100%);
+$electricTransp: #17453fe7;
+$bg: #e8e3d7;
+$bgLittleTransp: #e8e3d7da;
+$bgLight: #f0eadd;
+$darkerBg: #d5d0c5;
+$bgTransp: #e8e3d720;
+$violet: #7e3f54;
+$northenGradient: radial-gradient(
+        18% 28% at 18% 71%,
+        #ffffff4d 4%,
+        #073aff00 100%
+    ),
+    radial-gradient(31% 43% at 7% 98%, #17453fe7 96%, #073aff00 100%),
+    radial-gradient(35% 56% at 91% 74%, #17453f 66%, #073aff00 100%),
+    radial-gradient(74% 86% at 67% 38%, #e9c1c826 1%, #073aff00 100%),
+    linear-gradient(125deg, #427a6dff 1%, #17453fff 100%);
+$electricRadialGradient: radial-gradient(
+    circle,
+    rgb(249 237 207) 0%,
+    rgba(43, 86, 80, 0.8556696360184699) 100%
+);
+$lightnGradient: radial-gradient(18% 28% at 18% 71%, #e8e3d7 4%, #073aff00 100%),
+    radial-gradient(31% 43% at 7% 98%, #e8e3d7da 96%, #073aff00 100%),
+    radial-gradient(35% 56% at 91% 74%, #e9c1c8 66%, #073aff00 100%),
+    radial-gradient(74% 86% at 67% 38%, #e9c1c826 1%, #073aff00 100%),
+    linear-gradient(125deg, #cdaaaf 1%, #e8e3d7 100%);
 
-$grey:#6E717B;
-$greyTransp:#6e717b6b;
-$lightGrey:#B9B8B8;
+$grey: #6e717b;
+$greyTransp: #6e717b6b;
+$lightGrey: #b9b8b8;
 $black: #161616;
 
-$hotPink:#f26d85;
+$hotPink: #f26d85;
 
 //sizes
 $ratio: min(calc(500px * 9 / 16), calc(60vw * 9 / 16));
-$footerHeight: 140px;
-$footerMargin:50px;
-$footerWidth:min(1000px, 87%);
-$mainMinHeight: calc(100vh - $footerHeight - 50px);
-$radius:80px;
-$biggerPgPadding:10px;
-$navAppearDelay:0.3;
-:root{
-    --sec-1-height:100vh;
-}
+$footerMargin: 50px;
 
+$radius: 80px;
+$biggerPgPadding: 10px;
+$navAppearDelay: 0.3;
+:root {
+    --sec-1-height: 100vh;
+    --footer-height: 140px;
+    --footer-width: min(1000px, 87%);
+    @media (max-width: 1000px) {
+        --footer-height: 170px;
+        --footer-width: 660px;
+
+    }
+    @media (max-width: 850px) {
+        --footer-height: 220px;
+        --footer-width: 550px;
+
+    }
+    @media (max-width: 800px) {
+        --footer-width: 450px;
+    }
+    @media (max-width: 600px) {
+        --footer-height: 300px;
+        --footer-width: min(290px, calc(100vw - 150px));
+
+    }
+    @media (max-width: 400px) {
+        --footer-height: 400px;
+        --footer-width: 100%
+
+    }
+}

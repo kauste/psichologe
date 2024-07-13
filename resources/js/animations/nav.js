@@ -46,8 +46,7 @@ class NavStyles{
             }else{
                 navLink.style.cssText = `font-variation-settings: 'wght' 400; letter-spacing: 0; font-size: ${this.fontSize}; color: ${this.color}; border-bottom: none`;
             } 
-            const linkWidth = navLink.offsetWidth;
-            navLink.style.width = linkWidth + 20 + 'px';
+            navLink.style.width = navLink.offsetWidth + 20 + 'px';
         })
     }
     animation(){
@@ -69,5 +68,36 @@ class NavStyles{
         }
     }
 }
+class MobileNav{
+    constructor(navSelector, btnSelector){
+        this.navSelector = navSelector;
+        this.btnSelector = btnSelector;
+        this.bodyDOM;
+        this.navDOM;
+        this.toggleBtnDOM;
+        this.init();
+    }
+    init(){
+        this.bodyDOM = document.querySelector('body');
 
-export default NavStyles;
+        this.navDOM = this.bodyDOM.querySelector(this.navSelector);
+        this.toggleBtnDOM = this.navDOM.querySelector(this.btnSelector);
+        this.navDOM.addEventListener('click', this.openNav, {once:true})
+    }
+
+    openNav = (e) => {
+        e.stopImmediatePropagation()
+        this.navDOM.classList.add('--open')
+        console.log('open');
+        this.bodyDOM.addEventListener('click', this.removeClass);
+    }
+    removeClass = (e) => {
+        if(this.navDOM.contains(e.target) && !this.toggleBtnDOM.contains(e.target)) return;
+        this.navDOM.classList.remove('--open');
+        this.bodyDOM.removeEventListener('click', this.removeClass);
+        this.navDOM.addEventListener('click', this.openNav, {once:true})
+    }
+
+}
+
+export { NavStyles, MobileNav };

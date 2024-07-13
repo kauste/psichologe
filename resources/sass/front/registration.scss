@@ -1,26 +1,20 @@
 body:has(.registration-page, .registration-unable-page, .registered-page) {
     background: $northenGradient;
+    padding: $biggerPgPadding;
+
     .in-body {
         border-radius: $radius;
-        height: 100%;
-        margin: 10px;
         background-color: $bg;
     }
     main {
         display: flex;
         justify-content: center;
         align-items: center;
-        min-height: calc(100vh - $footerHeight - 2 * 10px);
-    }
-    footer {
-        margin-top: 0;
-        .content-container {
-            bottom: -10px;
-            left: -10px;
-        }
     }
 }
-.registration-page, .registration-unable-page, .registered-page {
+.registration-page,
+.registration-unable-page,
+.registered-page {
     width: min(1200px, 90%);
     display: flex;
     gap: 80px;
@@ -37,28 +31,27 @@ body:has(.registration-page, .registration-unable-page, .registered-page) {
             justify-content: center;
             align-items: center;
             height: 51px;
+            padding-bottom: 15px;
         }
     }
 }
-.registration-unable-page, .registered-page{
-    .card-header h2{
-        color:$electric;
+.registration-unable-page,
+.registered-page {
+    .card-header h2 {
+        color: $electric;
     }
-    span{
-        color:$electric;
-        letter-spacing:0.5px;
-        &.bold{
+    span {
+        color: $electric;
+        letter-spacing: 0.5px;
+        &.bold {
             font-weight: 600;
         }
-
-
     }
 }
 .callendars-box {
-    width: 410px;
     .swiper {
         position: relative;
-        width: 410px;
+        width: min(410px, 90vw);
         overflow: hidden;
         .swiper-button-prev {
             z-index: 2;
@@ -72,7 +65,7 @@ body:has(.registration-page, .registration-unable-page, .registered-page) {
         }
         .swiper-wrapper {
             display: grid;
-            grid-template-columns: repeat(2, 410px);
+            grid-template-columns: repeat(2, 1fr);
             padding: 4px;
             box-sizing: border-box;
             .callendar {
@@ -125,6 +118,9 @@ body:has(.registration-page, .registration-unable-page, .registered-page) {
                                         border: none;
                                         width: 35px;
                                         height: 35px;
+                                        &:not(.--disabled){
+                                            color:$black;
+                                        }
                                         &:not(.round.button) {
                                             background: transparent;
                                         }
@@ -142,15 +138,15 @@ body:has(.registration-page, .registration-unable-page, .registered-page) {
     }
 }
 .registration-container.swiper {
-    height:100%;
-    width: 410px;
+    height: 100%;
+    width: min(410px, 90vw);
     padding: 0 4px 60px 4px;
     box-sizing: border-box;
     position: relative;
     overflow: hidden;
     .swiper-wrapper {
         display: grid;
-        grid-template-columns: repeat(2, 410px);
+        grid-template-columns: repeat(2, 1fr);
         box-sizing: border-box;
     }
     .swiper-button-prev,
@@ -189,7 +185,7 @@ body:has(.registration-page, .registration-unable-page, .registered-page) {
     }
 }
 .personal-data-form.swiper-slide {
-    height: 100%;;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -201,9 +197,10 @@ body:has(.registration-page, .registration-unable-page, .registered-page) {
         flex-direction: column;
         align-items: center;
         width: 100%;
+        justify-content: center;
         .with-error-box {
             height: 55px;
-            width: 400px;
+            width: min(400px, 100%);
             .item-box {
                 display: flex;
                 gap: 12px;
@@ -231,7 +228,7 @@ body:has(.registration-page, .registration-unable-page, .registered-page) {
             }
         }
         .required-box {
-            width: 400px;
+            width: min(400px, 100%);
             display: flex;
             gap: 6px;
             span {
@@ -251,9 +248,54 @@ body:has(.registration-page, .registration-unable-page, .registered-page) {
         }
     }
 }
-@media (max-width:1200px) {
-    .registration-page .container{
+@media (max-width: 1200px) {
+    .registration-page .container {
         flex-direction: column;
-         align-items: center;
+        align-items: center;
+    }
+}
+@media (max-width: 600px) {
+    .registration-page,
+    .registration-unable-page,
+    .registered-page {
+        width: 100%;
+    }
+    .registered-page {
+        .container {
+            .callendars-box .swiper-wrapper .callendar .table-box table {
+                height: 320px;
+            }
+            .registration-container .swiper-wrapper {
+                .slots-form.swiper-slide .slots-box .slots {
+                    height: fit-content;
+                }
+            }
+            .swiper-button-prev {
+                left: 0;
+            }
+            .swiper-button-next {
+                right: 0;
+            }
+        }
+    }
+}
+@media (max-width: 600px) {
+    .registration-page .container .callendars-box .swiper{
+        .swiper-button-prev {
+            left: 70px;
+        }
+        .swiper-button-next {
+            right: 70px;
+        }
+    }
+}
+@media (max-width: 400px) {
+    .registration-page .container .callendars-box .swiper{
+        .swiper-button-prev {
+            left: 50px;
+        }
+        .swiper-button-next {
+            right: 50px;
+        }
     }
 }

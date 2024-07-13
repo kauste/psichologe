@@ -8,12 +8,12 @@
         <a href="{{route('back-articles-list') . '?filter='. $tag->id}}">{{$tag->tag}}</a>
         @endforeach
     </div>
-    <a class="back-btn button round electric bg-sand lardge" href="{{url()->previous()}}">
+    <section class="article-box one-item one--item">
+        <a class="back-btn button round electric bg-sand lardge" href="{{url()->previous()}}">
         <svg>
             <use xlink:href="#arrow-return"></use>
         </svg>
     </a>
-    <section class="article-box one-item one--item">
         <div class="title-box ">
             <h2>{{$article->title}}</h2>
             <div>

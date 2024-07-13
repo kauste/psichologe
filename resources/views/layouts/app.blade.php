@@ -17,8 +17,8 @@
     <script async defer src="https://accounts.google.com/gsi/client"></script>
 
 
-    {{-- <link rel="stylesheet" href="{{asset('/build/assets/app-ef36beef.css?v='. time())}}">
-    <script src="{{asset('/build/assets/app-375155f2.js?v='). time() }}" type="module" defer></script> --}}
+    {{-- <link rel="stylesheet" href="{{asset('/build/assets/app-e6c005d3.css?v=2'. time())}}">
+    <script src="{{asset('/build/assets/app-ef55338c.js?v=2'). time() }}" type="module" defer></script> --}}
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -41,7 +41,13 @@
                 <a href="{{route('contacts')}}" class="{{isset($pageName) && $pageName === 'contacts' ? 'active' : ''}}">Kontaktai</a>
                 <a href="{{route('registration')}}" class="{{isset($pageName) && $pageName === 'registration' ? 'active' : ''}}">Registracija</a>
                 <a href="{{route('articles-list')}}" class="{{isset($pageName) && $pageName === 'articles' ? 'active' : ''}}">Straipsniai</a>
+                <div class="toggle-buttons-box nav--toggle">
+                    <div class="stick-1 stick"></div>
+                    <div class="stick-2 stick"></div>
+                    <div class="stick-3 stick"></div>
+                </div>
             </nav>
+            <div class="transp-bg"></div>
         </div>
         <main>
             @yield('content')

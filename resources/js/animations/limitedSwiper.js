@@ -2,11 +2,12 @@ import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
 
 class LimitedSwiper{
-    constructor(selector, direction, slidesPerView, slidesPerGroup){
+    constructor(selector, direction, slidesPerView, slidesPerGroup, isResponsive){
         this.selector = selector;
         this.slidesPerView = slidesPerView;
         this.slidesPerGroup = slidesPerGroup;
         this.direction = direction;
+        this.isResponsive = isResponsive;
         this.parentDOM;
         this.nextBtnDOM;
         this.prevBtnDOM;
@@ -38,8 +39,19 @@ class LimitedSwiper{
             // speed: 900,
             modules: [ Navigation ],
             initialSlide: 0,
-            slidesPerView: this.slidesPerView,
-            slidesPerGroup: this.slidesPerGroup,
+            slidesPerView: this.isResponsive ? this.slidesPerView - 2 : this.slidesPerView,
+            slidesPerGroup: this.isResponsive ? this.slidesPerGroup - 2 : this.slidesPerGroup,
+
+            breakpoints:{
+                900: {
+                    slidesPerView: this.slidesPerView,
+                    slidesPerGroup: this.slidesPerGroup,
+                },
+                540 :{
+                    slidesPerView: this.isResponsive ? this.slidesPerView - 1 : this.slidesPerView,
+                    slidesPerGroup: this.isResponsive ? this.slidesPerGroup - 1 : this.slidesPerGroup,
+                }
+            },
             // loop: false,
             spaceBetween:10,
             navigation: {

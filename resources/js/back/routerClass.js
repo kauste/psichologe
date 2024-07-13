@@ -68,7 +68,7 @@ class Router{
                                     CRUDoptionalFeatures:null,
                                },
                             },
-                            new LimitedSwiper('#education', 'vertical', 5, 5));
+                            new LimitedSwiper('#education', 'vertical', 5, 5, true));
 
         new ModalActivaror('work',
                            {
@@ -82,7 +82,7 @@ class Router{
                                     CRUDoptionalFeatures:null,
                                 },
                            },
-                           new LimitedSwiper('#work', 'vertical', 5, 5))
+                           new LimitedSwiper('#work', 'vertical', 5, 5, true))
 
     }
     articlesPage(){

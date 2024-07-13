@@ -3,8 +3,8 @@ body:has(.contacts-page) {
     padding: $biggerPgPadding;
     &:before {
         content: "";
-        background-image: url("../../../public/images/bg3.webp");
-        // background-image: url('../../images/bg3.webp');
+        // background-image: url("../../../public/images/bg3.webp");
+        background-image: url('../../images/bg3.webp');
         width: 100%;
         height: 100%;
         display: inline-block;
@@ -26,17 +26,9 @@ body:has(.contacts-page) {
         left: 0;
         background-color: #17453f87;
     }
-    footer {
-        margin-top: 0;
-    }
     .in-body {
         background: $bg;
         border-radius: $radius;
-        height: 100%;
-        main {
-            position: relative;
-            padding-bottom:50px;
-        }
     }
     .contacts-page section {
         display: flex;
@@ -72,11 +64,7 @@ body:has(.contacts-page) {
                 min-width: 400px;
                 max-width: 500px;
                 border-radius: 60px;
-                // box-shadow: 0 0 0 18px $bg, 
-                // 0 0 0 20px $electric;
-                // transition:all 0.3s linear;
-                // background: $electricRadialGradient;
-                padding:20px;
+                padding: 20px;
                 .map-box {
                     border-radius: 60px;
                     overflow: hidden;
@@ -95,12 +83,6 @@ body:has(.contacts-page) {
                         border-radius: inherit;
                     }
                 }
-                // &:hover{
-                //     // box-shadow: 0px 0px 0 -2px $bg, 
-                //     // 0px 0px 0 $electric;
-                //     box-shadow: -20px 20px 0 -2px $bg, 
-                //     -20px 20px 0 $electric;
-                // }
             }
             @media (max-width: 1100px) {
                 flex-direction: column;
@@ -114,6 +96,9 @@ body:has(.contacts-page) {
                     }
                 }
             }
+            @media (max-width: 800px) {
+                width: 100%;
+            }
             @media (max-width: 500px) {
                 gap: 30px;
                 .img-box-container {
@@ -123,6 +108,21 @@ body:has(.contacts-page) {
             @media (max-width: 350px) {
                 .img-box-container {
                     height: 205px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    body:has(.contacts-page) {
+        .contacts-page section .in-section .one-contact {
+            gap:15px;
+            .var-box {
+                flex-direction: column;
+                gap:0;
+                div, a {
+                    font-size: 18px;
                 }
             }
         }

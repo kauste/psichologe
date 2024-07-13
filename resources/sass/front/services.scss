@@ -2,8 +2,8 @@ body:has(.services-list) {
     position: relative;
     &:before {
         content: "";
-        background-image: url("../../../public/images/bg3.webp");
-        // background-image: url('../../images/bg3.webp');
+        // background-image: url("../../../public/images/bg3.webp");
+        background-image: url("../../images/bg3.webp");
         width: 100%;
         height: 100%;
         display: inline-block;
@@ -29,10 +29,10 @@ body:has(.services-list) {
     .in-body {
         border-radius: $radius;
         height: 100%;
-
     }
 
     .services-list {
+        padding: 0 20px 0 0;
         .ul-box {
             display: flex;
             justify-content: center;
@@ -48,7 +48,7 @@ body:has(.services-list) {
             padding: 0;
 
             .one-service {
-                width: max(580px, calc(50% - 40px));
+                width: max(550px, calc(50% - 40px));
                 height: fit-content;
                 padding: 30px 50px 30px 65px;
                 position: relative;
@@ -57,7 +57,7 @@ body:has(.services-list) {
                 top: 0;
                 left: 0;
                 z-index: 1;
-                background-color:$bg;
+                background-color: $bg;
                 opacity: 0;
                 @for $i from 1 through 10 {
                     &:nth-child(#{$i}) {
@@ -70,9 +70,7 @@ body:has(.services-list) {
                     }
                 }
                 h3 {
-                    font-size: 34px;
                     color: $electric;
-                    letter-spacing: 5px;
                     text-align: start;
                 }
                 ul {
@@ -81,7 +79,6 @@ body:has(.services-list) {
                     padding-left: 20px;
                     li {
                         position: relative;
-                        font-size: 18px;
                         &::before {
                             content: "";
                             display: inline-block;
@@ -96,6 +93,46 @@ body:has(.services-list) {
                             border: 1px solid $electric;
                         }
                     }
+                }
+            }
+        }
+    }
+}
+@media (max-width: 700px) {
+    body:has(.services-list)
+        .in-body
+        .services-list
+        .ul-box
+        .services-box
+        .one-service {
+        width: min(550px, 100%);
+    }
+}
+
+@media (max-width: 600px) {
+    body:has(.services-list) {
+        .in-body .services-list {
+            padding: 0 0 0 0;
+            .ul-box .services-box {
+                padding: 0 5% 5%;
+                gap: 25px;
+                .one-service {
+                    padding: 20px 30px 20px 40px;
+                }
+            }
+        }
+    }
+}
+@media (max-width: 500px) {
+    body:has(.services-list) {
+        .in-body .services-list {
+            padding: 0 0 0 0;
+            .ul-box .services-box {
+                padding: 0 2% 2%;
+                gap: 25px;
+                .one-service {
+                    border-radius: 0 40px 40px;
+                    padding: 20px;
                 }
             }
         }

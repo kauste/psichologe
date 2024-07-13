@@ -2,22 +2,36 @@
 @section('content')
 @inject('tags', 'App\Services\ArticlesTags')
 <div class="article--page article-page">
-    <div class="tags-nav tags--nav">
-        <a href="{{route('articles-list')}}" class="active">All</a>
-        @foreach ($tags->tags as $tag)
-        <a href="{{route('articles-list') . '?filter='. $tag->id}}">{{$tag->tag}}</a>
-        @endforeach
+    <div class="tags-nav-box tags--nav--box">
+        <div class="chevron-svg-box toggle--btn">
+            <svg class="chevron-svg">
+                <use xlink:href="#chevron"></use>
+            </svg>
+        </div>
+        <ul class="tags-nav tags--nav">
+            <li>
+                <a href="{{route('articles-list')}}">All</a>
+            </li>
+            @foreach ($tags->tags as $tag)
+            <li>
+                <a href="{{route('articles-list') . '?filter=' .$tag->id}}">{{$tag->tag}}</a>
+            </li>
+            @endforeach
+
+        </ul>
     </div>
-    <a class="back-btn button round electric bg-sand lardge" href="{{url()->previous()}}">
-        <svg>
-            <use xlink:href="#arrow-return"></use>
-        </svg>
-    </a>
     <section class="article-box article--box">
+        <a class="back-btn button round electric bg-sand lardge" href="{{url()->previous()}}">
+            <svg>
+                <use xlink:href="#arrow-return"></use>
+            </svg>
+        </a>
         <h2>{{$article->title}}</h2>
         @if($article->youtube)
-        <div class="youtube-box">
-            <iframe src={{"https://www.youtube.com/embed/" . $article->youtube}} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        <div class="youtube-box-container">
+            <div class="youtube-box">
+                <iframe src={{"https://www.youtube.com/embed/" . $article->youtube}} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
         </div>
         @endif
         <div class="article">
